@@ -1,0 +1,51 @@
+# @hostName = https://instancereportbackend.deepseahost.com
+@hostName = http://localhost:5053
+@dataInterfaceId = 67b9a6b49ba999fb461fb8dd
+# @dataInterfaceId = 6780aca31e108275dd35e27b
+# @dataInterfaceId = 676e2dbc1064972a10d06737/301/101/1
+# @dataInterfaceId = 676e2dbc1064972a10d06737/301
+
+@gsmToken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExMDAxMSwicGFzc3dvcmQiOiIkMmEkMTAkTTFTaGQuMDJGMXNqMThpektVYllRdW5CeDcud1hIZHdFd25aeUxZeldZV2IxdDJOd2JPTjYiLCJfaWQiOiI2N2IwMjFiMjU4NWU5ODQ5NGE1Y2VjNjUiLCJ1c2VyUm9sZSI6ImFkbWluIiwiaWF0IjoxNzQwNTYyOTY0fQ.OVqaUDAOc6TCBm-S-Otg2by0fDuE_BCZKEKd7Blv0mY
+
+# get all thana data
+GET  {{hostName}}/sums-thana-data/{{dataInterfaceId}}
+Authorization: myworld {{gsmToken}}
+
+
+# get day by day zonal data
+GET  {{hostName}}/sums-zonal-data-by-branch/{{dataInterfaceId}}
+Authorization: myworld {{gsmToken}}
+
+
+
+
+###
+GET  {{hostName}}/sums-day-by-day-zonal-data/{{dataInterfaceId}}
+Authorization: myworld {{gsmToken}}
+
+
+
+###
+GET  {{hostName}}/admin/data-interface/{{dataInterfaceId}}
+Authorization: myworld {{gsmToken}}
+
+###
+GET  {{hostName}}/sums-Totol-day-thana-data/{{dataInterfaceId}}
+Authorization: myworld {{gsmToken}}
+
+
+
+###
+GET  {{hostName}}/sums-total-days-branch-data/{{dataInterfaceId}}
+Authorization: myworld {{gsmToken}}
+
+
+
+###
+POST {{hostName}}/submit
+Content-Type: application/json
+
+{
+    "userId": 110011,
+ "password": "1122"
+}  
