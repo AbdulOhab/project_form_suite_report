@@ -1,13 +1,8 @@
-// module.exports = `mongodb+srv://NB2024:2eqUZChMGC5yxdBm@cluster0.0fsdqn6.mongodb.net/noticeboard`;
-// module.exports = `mongodb://159.89.172.251:26028/noticeboard`;
-// module.exports = `mongodb://localhost:27017/noticeboard`;
-// module.exports = `mongodb://localhost:27017/MY_TEST`;
+require('dotenv').config();
 
-// module.exports = `mongodb://<username>:<password>@159.89.172.251:26028/noticeboard?authSource=admin`;
+const dbUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/instancereport';
 
-// module.exports = `mongodb://admin:Str0n9M0ng0!P%40ss%232024@159.89.172.251:26028/noticeboard?authSource=admin`;
-
-module.exports = `mongodb://instancereport:MXediRwNxNP7KWrk@159.89.172.251:27017/instancereport`
+module.exports = dbUri;
 
 
 

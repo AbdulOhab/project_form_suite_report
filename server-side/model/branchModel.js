@@ -1,0 +1,31 @@
+const mongoose = require("mongoose");
+
+const branchSchema = new mongoose.Schema({
+  userName: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  userRole: {
+    type: String,
+    default: "branch",
+  },
+  branchCode: {
+    type: Number,
+    required: true,
+  },
+  zonalCode: {
+    type: Number,
+    required: true,
+  },
+});
+
+module.exports = mongoose.model("Branch", branchSchema);
