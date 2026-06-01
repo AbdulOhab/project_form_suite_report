@@ -30,7 +30,7 @@ function EditQuestionAnswer() {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "myworld " + window.localStorage.getItem("gsmToken"),
+                "Bearer " + window.localStorage.getItem("gsmToken"),
             },
           }
         );
@@ -103,7 +103,7 @@ function EditQuestionAnswer() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+          Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
         },
         body: JSON.stringify({
           document_name: notice.document_name,

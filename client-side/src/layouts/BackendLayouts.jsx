@@ -17,7 +17,7 @@ const BackendLayouts = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         })
           .then((res) => res.json())
@@ -37,7 +37,7 @@ const BackendLayouts = () => {
     const checkUser = async () => {
       let req = await fetch(`${BASE_URL}/check-user`, {
         headers: {
-          Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+          Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
         },
       });
       const response = await req.json();

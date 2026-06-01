@@ -1,29 +1,29 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const jwt = require("jsonwebtoken");
 const formData = require("express-form-data");
 
 const allRouter = require("./router/allRouter");
 const dbConnector = require("./config/dbConnector");
 
 const server = express();
-const port = 5053;
+const port = process.env.PORT || 5053;
 
 // 1. Configure CORS options
 const corsOptions = {
-  origin: "*",
-  // origin: "https://instancereport.deepseahost.com",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Allowed HTTP methods
+  origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: [
     "Origin",
     "X-Requested-With",
     "Content-Type",
     "Accept",
     "Authorization",
-  ], // Allowed headers
-  credentials: true, // If you need to send cookies or auth headers
+  ],
+  credentials: true,
 };
 
 // 2. Use CORS middleware with the specified options
@@ -49,8 +49,7 @@ server.use(allRouter());
 // 6. Connect to MongoDB and Start the Server
 mongoose.connect(dbConnector).then((a) => {
   console.log(`Connected to MongoDB ${a.connections[0].name}`);
-  server.listen(port, (a) => {
-
+  server.listen(port, () => {
     console.log(`App is listening on http://localhost:${port}`);
   });
 });

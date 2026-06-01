@@ -26,7 +26,7 @@ const UploadUserFile = () => {
       const response = await fetch(`${BASE_URL}/upload-user-file`, {
         method: "POST",
         headers: {
-          Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+          Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           Accept: "application/json",
           // Note: Do not set the Content-Type header manually
         },

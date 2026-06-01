@@ -1,0 +1,20 @@
+1. Finished Seeder
+Phase 2️⃣ — Auth Middleware যুক্ত করা
+৮টি route file-এ authentication middleware দেওয়া (এখন শূন্য আছে!)
+Role-based access control (RBAC) implement
+Phase 3️⃣ — Security Hardening
+Helmet, rate-limit যোগ করা
+CORS ঠিক করা (origin: "*" এখন কাজ করছে না)
+Global error handler
+Phase 4️⃣ — Broken Code ঠিক করা
+answerController.update — .save() await করা হয়নি
+Logout endpoint ভাঙা (server-e window.localStorage ব্যবহার!)
+Notice ID generation backend-এ নেওয়া
+Phase 5️⃣ — Cleanup
+Dead code মুছে ফেলা (Redux, Axios, unused models, weather module)
+৩১৭টি typo ঠিক করা ("Dadeline" → "Deadline")
+time.js, request.http মুছে ফেলা
+Phase 6️⃣ — Docker & Production Build
+Server + Client Dockerfile তৈরি
+docker-compose.yml আপডেট
+Nginx config

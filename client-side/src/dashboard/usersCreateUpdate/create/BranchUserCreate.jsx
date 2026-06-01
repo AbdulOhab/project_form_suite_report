@@ -12,7 +12,7 @@ function BranchUserCreate() {
     fetch(`${BASE_URL}/create-branch-users`, {
       method: "POST",
       headers: {
-        Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+        Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
       },
       body: formData,
     })

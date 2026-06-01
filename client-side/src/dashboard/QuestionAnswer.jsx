@@ -35,7 +35,7 @@ const QuestionAnswer = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         });
         let data = await response.json();
@@ -102,7 +102,7 @@ const QuestionAnswer = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+        Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
       },
       body: JSON.stringify({
         document_name: notice.document_name,
@@ -175,7 +175,7 @@ const QuestionAnswer = () => {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "myworld " + window.localStorage.getItem("gsmToken"),
+                "Bearer " + window.localStorage.getItem("gsmToken"),
             },
           }
         );

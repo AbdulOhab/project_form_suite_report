@@ -36,7 +36,7 @@ const NoticeBoard = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
           body: JSON.stringify({
             query: searchData,
@@ -118,7 +118,7 @@ const NoticeBoard = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         });
         await response.json();

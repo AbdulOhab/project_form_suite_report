@@ -3,6 +3,28 @@ var bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const thanaModel = require("../model/thanaModel");
 
+/**
+ * Generates a JWT token without including the password.
+ */
+const generateToken = (payload) => {
+  return jwt.sign(payload, process.env.JWT_SECRET);
+};
+
+/**
+ * Returns a standardized error response for invalid credentials.
+ */
+const authError = (res) => {
+  return res.status(422).json({
+    errors: [
+      {
+        path: "password",
+        msg: "password does not match",
+      },
+    ],
+    msg: "validation Error",
+  });
+};
+
 module.exports = {
   form_submit: async (req, res, next) => {
     const errors = validationResult(req);
@@ -16,124 +38,34 @@ module.exports = {
       .findOne({ userId: id })
       .select("-_id")
       .then(async (user) => {
-        if (user) {
-          if (user.userRole === "admin") {
-            const pass = await bcrypt.compare(password, user.password);
-
-            if (pass) {
-              const { userId, password, userRole } = user;
-              let token = jwt.sign(
-                { userId, password, userRole },
-                "3e9b2825-cfe3-422e-8177-bac1b129a320"
-              );
-              return res
-                .status(200)
-                .json({ message: "Logged In Successfully", userId, token });
-            } else {
-              let errors = {
-                errors: [
-                  {
-                    path: "password",
-                    msg: "password does not match",
-                  },
-                ],
-                msg: "validation Error",
-              };
-              return res.status(422).json(errors);
-            }
-          } else if (user.thanaCode) {
-            const pass = await bcrypt.compare(password, user.password);
-            if (pass) {
-              const {
-                userId,
-                password,
-                thanaCode,
-                branchCode,
-                zonalCode,
-
-                userRole,
-              } = user;
-              let token = jwt.sign(
-                {
-                  userId,
-                  password,
-
-                  thanaCode,
-                  branchCode,
-                  zonalCode,
-                  userRole,
-                },
-                "3e9b2825-cfe3-422e-8177-bac1b129a320"
-              );
-              return res
-                .status(200)
-                .json({ message: "Logged In Successfully", userId, token });
-            } else {
-              let errors = {
-                errors: [
-                  {
-                    path: "password",
-                    msg: "password does not match",
-                  },
-                ],
-                msg: "validation Error",
-              };
-
-              return res.status(422).json(errors);
-            }
-          } else if (user.branchCode) {
-            const pass = await bcrypt.compare(password, user.password);
-            if (pass) {
-              const { userId, password, branchCode, zonalCode, userRole } =
-                user;
-              let token = jwt.sign(
-                { userId, password, branchCode, zonalCode, userRole },
-                "3e9b2825-cfe3-422e-8177-bac1b129a320"
-              );
-              return res
-                .status(200)
-                .json({ message: "Logged In Successfully", userId, token });
-            } else {
-              let errors = {
-                errors: [
-                  {
-                    path: "password",
-                    msg: "password does not match",
-                  },
-                ],
-                msg: "validation Error",
-              };
-
-              return res.status(422).json(errors);
-            }
-          } else if (user.zonalCode) {
-            const pass = await bcrypt.compare(password, user.password);
-            if (pass) {
-              const { userId, password, zonalCode, userRole } = user;
-              let token = jwt.sign(
-                { userId, password, zonalCode, userRole },
-                "3e9b2825-cfe3-422e-8177-bac1b129a320"
-              );
-              return res
-                .status(200)
-                .json({ message: "Logged In Successfully", userId, token });
-            } else {
-              let errors = {
-                errors: [
-                  {
-                    path: "password",
-                    msg: "password does not match",
-                  },
-                ],
-                msg: "validation Error",
-              };
-
-              return res.status(422).json(errors);
-            }
-          }
-        } else {
+        if (!user) {
           return res.status(404).json({ message: "user not found" });
         }
+
+        const pass = await bcrypt.compare(password, user.password);
+        if (!pass) {
+          return authError(res);
+        }
+
+        // Build token payload WITHOUT password
+        const { userId, userRole } = user;
+        let tokenPayload = { userId, userRole };
+
+        if (user.thanaCode) {
+          tokenPayload.thanaCode = user.thanaCode;
+          tokenPayload.branchCode = user.branchCode;
+          tokenPayload.zonalCode = user.zonalCode;
+        } else if (user.branchCode) {
+          tokenPayload.branchCode = user.branchCode;
+          tokenPayload.zonalCode = user.zonalCode;
+        } else if (user.zonalCode) {
+          tokenPayload.zonalCode = user.zonalCode;
+        }
+
+        let token = generateToken(tokenPayload);
+        return res
+          .status(200)
+          .json({ message: "Logged In Successfully", userId, token });
       })
       .catch((err) => {
         console.log(`err`, err);
@@ -148,13 +80,12 @@ module.exports = {
       .where({
         userId,
       })
-      .select("-_id")
+      .select("-_id -password")
       .then((user) => {
         if (user) {
           next();
           return res.status(200).json(user);
         } else {
-          // console.log("authorized fails");
           return res.status(401).json("unauthorized access");
         }
       })
@@ -163,8 +94,7 @@ module.exports = {
       });
   },
   logout: async (req, res, next) => {
-    req.isAuth = false;
-    window.localStorage.removeItem("gsmToken");
-    return res.render("/");
+    // Client handles token removal from localStorage
+    return res.status(200).json({ message: "Logged out successfully" });
   },
 };

@@ -1,24 +1,40 @@
 const mongoose = require("mongoose");
 const dbConnector = require("../../config/dbConnector");
-var bcrypt = require("bcryptjs");
-const adminModel = require("../adminModel");
+const bcrypt = require("bcryptjs");
+const thanaModel = require("../thanaModel");
 
-module.exports = () =>
-  mongoose.connect(dbConnector).then(async () => {
-console.log('Delete previous admin user');
-    await adminModel.deleteMany({});
-    console.log('start create new Admin user');
-    const email1 = "my@gmail.com";
-    const password1 = "1122";
-    const password2 = await bcrypt.hash(password1, 10);
-    const role = "admin";
-    await adminModel.deleteMany({});
-    await adminModel.create({
-      email: email1,
-      password: password2,
-      userRole: role,
-      userCode: 101,
+const PASSWORD = "1122";
+
+const adminSeeder = async () => {
+  try {
+    await mongoose.connect(dbConnector);
+
+    const hashedPassword = await bcrypt.hash(PASSWORD, 10);
+
+    // Remove old admins from users collection
+    await thanaModel.deleteMany({ userRole: "admin" });
+
+    // Create admin user
+    await thanaModel.create({
+      userId: 110012,
+      userName: "Admin User",
+      email: "admin@instance.com",
+      password: hashedPassword,
+      userRole: "admin",
     });
 
-    console.log("admin user is created");
-  });
+    console.log("Admin user created successfully");
+    console.log(`  Login -> userId: 110011, password: ${PASSWORD}`);
+  } catch (error) {
+    console.error("Admin seed error:", error.message);
+  } finally {
+    await mongoose.connection.close();
+  }
+};
+
+module.exports = adminSeeder;
+
+// Run directly: node model/seeders/adminSeeder.js
+if (require.main === module) {
+  adminSeeder();
+}

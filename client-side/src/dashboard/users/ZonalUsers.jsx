@@ -18,7 +18,7 @@ function ZonalUsers() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         });
         let data = await response.json();

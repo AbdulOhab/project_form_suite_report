@@ -32,7 +32,7 @@ function ZonalTableBody({ users }) {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         });
         await response.json();

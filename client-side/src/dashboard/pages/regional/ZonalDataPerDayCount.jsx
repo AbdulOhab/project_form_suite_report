@@ -27,7 +27,7 @@ function ZonalDataPerDayCount() {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "myworld " + window.localStorage.getItem("gsmToken"),
+                "Bearer " + window.localStorage.getItem("gsmToken"),
             },
           }
         );

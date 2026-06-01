@@ -18,7 +18,7 @@ function RegionalUsersUpdate() {
       await fetch(`${BASE_URL}/get-zonal-users/${id}`, {
         method: "GET",
         headers: {
-          Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+          Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
         },
       })
         .then((res) => res.json())
@@ -45,7 +45,7 @@ function RegionalUsersUpdate() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+        Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
       },
       body: JSON.stringify({
         userId: userId,

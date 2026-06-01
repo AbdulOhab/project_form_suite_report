@@ -11,7 +11,7 @@ function ThanaUsersCreate() {
     fetch(`${BASE_URL}/create-thana-users`, {
       method: "POST",
       headers: {
-        Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+        Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
       },
       body: formData,
     })

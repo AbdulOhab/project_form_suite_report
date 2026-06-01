@@ -23,7 +23,7 @@ function AdminDataInterface() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         });
         const data = await response.json();
