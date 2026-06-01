@@ -1,8 +1,24 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import BASE_URL from "../../../auth/dbUrl";
-import { Button } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import convertToBengaliNumber from "../../time/NumberConverter";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 
@@ -18,7 +34,6 @@ const SumsZonalDataByBranch = () => {
   const [notice, setNotice] = useState();
   const [questions, setQuestions] = useState();
   const [totalData, setTotalData] = useState();
-  console.log(qId, zId);
 
   useEffect(() => {
     const getZonalaDataByBranch = async () => {
@@ -109,138 +124,203 @@ const SumsZonalDataByBranch = () => {
     return sortableData;
   }, [tempData, sortConfig]);
 
+  const sortIndicator = (key) => {
+    if (sortConfig.key !== key) return null;
+    return sortConfig.direction === "ascending" ? " ▲" : " ▼";
+  };
+
   return (
     <>
-      <div className="card border-0 my-1">
-        <div className="card-header border-0">
-          <div className="myTopCard col-lg-8 col-md-6 col-sm-12 m-auto">
-            {descriptionAlert && (
-              <div className="docsPopUp">
-                <Button
-                  onClick={descriptionCloserHandler}
-                  className=" float-end"
-                >
-                  <Close />
-                </Button>
-                {notice?.doc_desc}
-              </div>
+      {/* Description Dialog */}
+      <Dialog
+        open={descriptionAlert}
+        onClose={descriptionCloserHandler}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
+          <IconButton onClick={descriptionCloserHandler}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Typography>{notice?.doc_desc}</Typography>
+        </DialogContent>
+      </Dialog>
+
+      <Paper elevation={2} sx={{ p: 2, my: 1 }}>
+        {/* Header Section */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 2,
+            mb: 2,
+          }}
+        >
+          {/* Left - Date Info */}
+          <Paper variant="outlined" sx={{ p: 1.5, flex: "1 1 auto", minWidth: 200 }}>
+            {validCardData(notice?.endDadeline) < 0 ? (
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  fontSize: "1.25rem",
+                  fontWeight: "bold",
+                  color: "error.main",
+                }}
+              >
+                নোটিশ শেষ হয়েছে{" "}
+                {convertToBengaliNumber(
+                  Math.abs(validCardData(notice?.endDadeline))
+                )}{" "}
+                দিন আগে
+              </Typography>
+            ) : (
+              <DateDifferenceComponent
+                startDadeline={notice?.startDadeline}
+                range={notice?.range}
+                timeStart={notice?.timeStart}
+                timeEnd={notice?.timeEnd}
+                endDadeline={notice?.endDadeline}
+              />
             )}
-          </div>
-          <div className="card-header">
-            <div className="d-flex justify-content-between align-items-center">
-              <div className="answerLeft  p-3">
-                <div className="border p-2">
-                  {validCardData(notice?.endDadeline) < 0 ? (
-                    <p className="text-center fs-4 fw-bold text-danger">
-                      নোটিশ শেষ হয়েছে{" "}
-                      {convertToBengaliNumber(
-                        Math.abs(validCardData(notice?.endDadeline))
-                      )}{" "}
-                      দিন আগে
-                    </p>
-                  ) : (
-                    <DateDifferenceComponent
-                      startDadeline={notice?.startDadeline}
-                      range={notice?.range}
-                      timeStart={notice?.timeStart}
-                      timeEnd={notice?.timeEnd}
-                      endDadeline={notice?.endDadeline}
-                    />
-                  )}
-                </div>
-              </div>
+          </Paper>
 
-              <div className="answerMiddle">
-                <p className="text-center fs-2 fw-semibold text-success">
-                  {notice?.document_name}
-                </p>
-                {notice?.sub_title && (
-                  <p className="text-center fs-6">{notice?.sub_title}</p>
-                )}
-              </div>
-              <div className="answerRight">
-                <div className="d-flex align-items-end justify-content-center flex-column">
-                  {!descriptionAlert && (
-                    <Button
-                      onClick={descriptionHandler}
-                      className="text-center border border-success fw-semibold "
-                    >
-                      Notice
-                    </Button>
-                  )}
-                  <Link
-                    className="button btn btn-success p-2"
-                    to={`/dashboard/sums-all-zonal-data/${qId}`}
-                  >
-                    <span>Back</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+          {/* Middle - Title */}
+          <Box sx={{ textAlign: "center", flex: "2 1 auto" }}>
+            <Typography
+              variant="h5"
+              sx={{
+                textAlign: "center",
+                fontWeight: 600,
+                color: "primary.main",
+              }}
+            >
+              {notice?.document_name}
+            </Typography>
+            {notice?.sub_title && (
+              <Typography variant="body2" sx={{ textAlign: "center" }}>
+                {notice?.sub_title}
+              </Typography>
+            )}
+          </Box>
 
-        <div className="card-body">
-          <table className="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th onClick={() => handleSort("zonalCode")}>
-                  Branch Code
-                  {sortConfig.key === "zonalCode" &&
-                    (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                </th>
-                <th onClick={() => handleSort("userName")}>
-                  Branch name
-                  {sortConfig.key === "userName" &&
-                    (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                </th>
+          {/* Right - Actions */}
+          <Stack
+            direction="column"
+            alignItems="flex-end"
+            justifyContent="flex-end"
+            spacing={1}
+            sx={{ flex: "1 1 auto", minWidth: 120 }}
+          >
+            {!descriptionAlert && (
+              <Button variant="outlined" onClick={descriptionHandler}>
+                Notice
+              </Button>
+            )}
+            <Button
+              component={Link}
+              variant="contained"
+              to={`/dashboard/sums-all-zonal-data/${qId}`}
+            >
+              Back
+            </Button>
+          </Stack>
+        </Box>
+
+        {/* Table Section */}
+        <TableContainer component={Paper} variant="outlined">
+          <Table size="small">
+            <TableHead>
+              <TableRow
+                sx={{
+                  bgcolor: "primary.main",
+                  "& th": {
+                    color: "white",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                  },
+                }}
+              >
+                <TableCell onClick={() => handleSort("zonalCode")}>
+                  Branch Code{sortIndicator("zonalCode")}
+                </TableCell>
+                <TableCell onClick={() => handleSort("userName")}>
+                  Branch name{sortIndicator("userName")}
+                </TableCell>
                 {questions?.questions?.map((question, index) => (
-                  <th
+                  <TableCell
                     key={index}
                     onClick={() => handleSort(question.questionText)}
                   >
-                    {question.questionText}{" "}
-                    {sortConfig.key === question.questionText &&
-                      (sortConfig.direction === "ascending" ? "▲" : "▼")}
-                  </th>
+                    {question.questionText}
+                    {sortIndicator(question.questionText)}
+                  </TableCell>
                 ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="text-center bg-primary fs-5">
-                <th colSpan={2} className="text-light ">
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {/* Total Row */}
+              <TableRow
+                sx={{
+                  bgcolor: "primary.main",
+                  "& th, & td": { color: "white", fontWeight: "bold" },
+                }}
+              >
+                <TableCell
+                  colSpan={2}
+                  sx={{ color: "white", fontWeight: "bold" }}
+                >
                   Total
-                </th>
-
+                </TableCell>
                 {totalData?.length
                   ? totalData?.map((value, index) => (
-                      <th className="text-light fs-6" key={index}>
+                      <TableCell
+                        sx={{ color: "white", fontWeight: "bold" }}
+                        key={index}
+                      >
                         {value[index]}
-                      </th>
+                      </TableCell>
                     ))
                   : notice?.questions?.map((value, index) => (
-                      <th className="text-light fs-6" key={index}>
+                      <TableCell
+                        sx={{ color: "white", fontWeight: "bold" }}
+                        key={index}
+                      >
                         0
-                      </th>
+                      </TableCell>
                     ))}
-              </tr>
-            </tbody>
-            <tbody>
+              </TableRow>
+
+              {/* Data Rows */}
               {sortedData?.map((branch, zonalIndex) => (
-                <tr key={zonalIndex} className="text-center">
-                  <td>{branch.branchCode}</td>
-                  <td>{branch.userName}</td>
+                <TableRow
+                  key={zonalIndex}
+                  hover
+                  sx={{ "&:hover": { bgcolor: "action.hover" } }}
+                >
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {branch.branchCode}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {branch.userName}
+                  </TableCell>
                   {notice?.questions?.map((question, questionIndex) => (
-                    <td key={`${zonalIndex}-${questionIndex}`}>
+                    <TableCell
+                      key={`${zonalIndex}-${questionIndex}`}
+                      sx={{ textAlign: "center" }}
+                    >
                       {branch[question.questionText] || 0}
-                    </td>
+                    </TableCell>
                   ))}
-                </tr>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
     </>
   );
 };

@@ -1,7 +1,16 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  Box,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import BASE_URL from "../../../auth/dbUrl";
-import Swal from "sweetalert2";
+
 function UpdateBranchPassword() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -9,10 +18,19 @@ function UpdateBranchPassword() {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
 
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
+
   // update handler function
   function updateHandler(e) {
     e.preventDefault();
-    // const formData = new FormData(e.target);
     fetch(`${BASE_URL}/update-branch-password/${id}`, {
       method: "POST",
       headers: {
@@ -33,76 +51,81 @@ function UpdateBranchPassword() {
       })
       .then((res) => {
         if (res.status === 200) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Password updated Successfully",
-            showConfirmButton: false,
-            timer: 1500,
+          setSnackbar({
+            open: true,
+            message: "Password updated Successfully",
+            severity: "success",
           });
-          navigate("/dashboard/branch-users");
+          setTimeout(() => navigate("/dashboard/branch-users"), 1500);
         } else {
-          Swal.fire({
-            icon: "error",
-            title: "Password does not match!",
-            // title: "Oops...",
-            // text: "Password does not match!",
+          setSnackbar({
+            open: true,
+            message: "Password does not match!",
+            severity: "error",
           });
         }
       });
   }
 
   return (
-    <div className="col-md-6 col-lg-6 col-sm-12 m-auto ">
-      <div className="my-5">
-        <div className=" p-1 rounded">
-          <div className="card shadow ">
-            <div className="card-header bg-secondary bg-opacity-75 border border-5 border-light">
-              <h2 className="text-center text-uppercase text-light">
-                Update Branch
-              </h2>
-            </div>
-            <div className="card-body bg-body-secondary  border border-5 border-light">
-              <form onSubmit={updateHandler}>
-                <div className="form-group mt-3">
-                  {/* <label htmlFor="password">Password</label> */}
-                  <input
-                    type="password"
-                    name="password1"
-                    className="form-control"
-                    id="password1"
-                    placeholder="New Password"
-                    required
-                    value={password1}
-                    onChange={(e) => setPassword1(e.target.value)}
-                  />
-                </div>
-                <div className="form-group mt-3">
-                  {/* <label htmlFor="password">Password</label> */}
-                  <input
-                    type="password"
-                    name="password2"
-                    className="form-control"
-                    id="password2"
-                    placeholder="New Password"
-                    required
-                    value={password2}
-                    onChange={(e) => setPassword2(e.target.value)}
-                  />
-                </div>
+    <Box sx={{ maxWidth: 500, mx: "auto", my: 5 }}>
+      <Paper elevation={3} sx={{ borderRadius: 2, overflow: "hidden" }}>
+        <Box sx={{ bgcolor: "#2e7d32", p: 2 }}>
+          <Typography
+            variant="h5"
+            sx={{ textAlign: "center", color: "#fff", fontWeight: "bold" }}
+          >
+            Update Branch Password
+          </Typography>
+        </Box>
+        <Box sx={{ p: 3, bgcolor: "grey.50" }}>
+          <form onSubmit={updateHandler}>
+            <TextField
+              fullWidth
+              type="password"
+              name="password1"
+              label="New Password"
+              placeholder="New Password"
+              required
+              value={password1}
+              onChange={(e) => setPassword1(e.target.value)}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              type="password"
+              name="password2"
+              label="Confirm New Password"
+              placeholder="New Password"
+              required
+              value={password2}
+              onChange={(e) => setPassword2(e.target.value)}
+              sx={{ mb: 2 }}
+            />
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+              <Button type="submit" variant="contained" color="primary">
+                Update Password
+              </Button>
+            </Box>
+          </form>
+        </Box>
+      </Paper>
 
-                <button
-                  type="submit"
-                  className="btn btn-secondary mt-3 float-end"
-                >
-                  Update Password
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </Box>
   );
 }
 

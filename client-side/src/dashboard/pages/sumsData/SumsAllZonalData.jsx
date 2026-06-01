@@ -1,9 +1,29 @@
 import React, { useEffect, useMemo, useState } from "react";
-import BASE_URL from "../../../auth/dbUrl";
 import { Link, useParams } from "react-router-dom";
+import BASE_URL from "../../../auth/dbUrl";
+import {
+  Box,
+  Button,
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Stack,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import AddIcon from "@mui/icons-material/Add";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import LockIcon from "@mui/icons-material/Lock";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
-import { Button } from "@mui/material";
-import { Close } from "@mui/icons-material";
 import convertToBengaliNumber from "../../time/NumberConverter";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
@@ -138,165 +158,244 @@ const SumsAllZonalData = () => {
     saveAs(blob, "ZonalData.xlsx");
   };
 
+  const sortIndicator = (key) => {
+    if (sortConfig.key !== key) return null;
+    return sortConfig.direction === "ascending" ? " ▲" : " ▼";
+  };
+
   return (
-    <div className="card">
-      <div className="myTopCard col-lg-8 col-md-6 col-sm-12 m-auto">
-        {descriptionAlert && (
-          <div className="docsPopUp">
-            <Button onClick={descriptionCloserHandler} className=" float-end">
-              <Close />
-            </Button>
-            {notice?.doc_desc}
-          </div>
-        )}
-      </div>
-      <div className="card-header">
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="answerLeft">
-            <div className="border p-2">
-              {validCardData(notice?.endDadeline) < 0 ? (
-                <p className="text-center fs-4 fw-bold text-danger">
-                  নোটিশ শেষ হয়েছে{" "}
-                  {convertToBengaliNumber(
-                    Math.abs(validCardData(notice?.endDadeline))
-                  )}{" "}
-                  দিন আগে
-                </p>
-              ) : (
-                <DateDifferenceComponent
-                  startDadeline={notice?.startDadeline}
-                  range={notice?.range}
-                  timeStart={notice?.timeStart}
-                  timeEnd={notice?.timeEnd}
-                  endDadeline={notice?.endDadeline}
-                />
-              )}
-            </div>
-          </div>
+    <Paper elevation={2} sx={{ p: 2 }}>
+      {/* Description Dialog */}
+      <Dialog
+        open={descriptionAlert}
+        onClose={descriptionCloserHandler}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
+          <IconButton onClick={descriptionCloserHandler}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Typography>{notice?.doc_desc}</Typography>
+        </DialogContent>
+      </Dialog>
 
-          <div className="answerMiddle ">
-            <p className="text-center fs-2 fw-semibold text-success">
-              {notice?.document_name}
-            </p>
-            {notice?.sub_title && (
-              <p className="text-center fs-6">{notice?.sub_title}</p>
-            )}
+      {/* Header Section */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: 2,
+          mb: 2,
+        }}
+      >
+        {/* Left - Date Info */}
+        <Paper variant="outlined" sx={{ p: 1.5, flex: "1 1 auto", minWidth: 200 }}>
+          {validCardData(notice?.endDadeline) < 0 ? (
+            <Typography
+              sx={{
+                textAlign: "center",
+                fontSize: "1.25rem",
+                fontWeight: "bold",
+                color: "error.main",
+              }}
+            >
+              নোটিশ শেষ হয়েছে{" "}
+              {convertToBengaliNumber(
+                Math.abs(validCardData(notice?.endDadeline))
+              )}{" "}
+              দিন আগে
+            </Typography>
+          ) : (
+            <DateDifferenceComponent
+              startDadeline={notice?.startDadeline}
+              range={notice?.range}
+              timeStart={notice?.timeStart}
+              timeEnd={notice?.timeEnd}
+              endDadeline={notice?.endDadeline}
+            />
+          )}
+        </Paper>
 
-            <p className="text-center">
-              <span className="fs-3 fw-bold text-highlight bg-success rounded px-2">
-                এক নজরে অঞ্চল সমূহের পূর্ণাঙ্গ রিপোর্ট
-              </span>
-            </p>
-          </div>
-          <div className="answerRight">
-            <div className="d-flex align-items-end justify-content-end flex-column">
-              {!descriptionAlert && (
-                <button
-                  onClick={descriptionHandler}
-                  className="text-center border border-success fw-semibold btn text-primary"
-                >
-                  Notice
-                </button>
-              )}
-              <Link
-                className="button fs-5 p-2"
-                to={`/dashboard/admin-data-interface/${qId}`}
-              >
-                <span>Back</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+        {/* Middle - Title */}
+        <Box sx={{ textAlign: "center", flex: "2 1 auto" }}>
+          <Typography
+            variant="h5"
+            sx={{
+              textAlign: "center",
+              fontWeight: 600,
+              color: "primary.main",
+            }}
+          >
+            {notice?.document_name}
+          </Typography>
+          {notice?.sub_title && (
+            <Typography variant="body2" sx={{ textAlign: "center" }}>
+              {notice?.sub_title}
+            </Typography>
+          )}
+          <Typography sx={{ textAlign: "center", mt: 1 }}>
+            <Typography
+              component="span"
+              sx={{
+                fontSize: "1.5rem",
+                fontWeight: "bold",
+                bgcolor: "primary.main",
+                color: "white",
+                borderRadius: 1,
+                px: 1.5,
+              }}
+            >
+              এক নজরে অঞ্চল সমূহের পূর্ণাঙ্গ রিপোর্ট
+            </Typography>
+          </Typography>
+        </Box>
 
-      <div className="card-body">
-        <div className="text-end">
-          <button className="btn btn-primary mb-2" onClick={exportToExcel}>
-            Export to Excel
-          </button>
-        </div>
-        <table
-          className="table table-hover table-bordered table-responsive"
-          border={1}
+        {/* Right - Actions */}
+        <Stack
+          direction="column"
+          alignItems="flex-end"
+          justifyContent="flex-end"
+          spacing={1}
+          sx={{ flex: "1 1 auto", minWidth: 120 }}
         >
-          <thead>
-            <tr className="text-center bg-primary">
-              <th onClick={() => handleSort("zonalCode")}>
-                Zonal Code
-                {sortConfig.key === "zonalCode" &&
-                  (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-              </th>
-              <th onClick={() => handleSort("userName")}>
-                Zonal Name
-                {sortConfig.key === "userName" &&
-                  (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-              </th>
+          {!descriptionAlert && (
+            <Button variant="outlined" onClick={descriptionHandler}>
+              Notice
+            </Button>
+          )}
+          <Button
+            component={Link}
+            variant="contained"
+            to={`/dashboard/admin-data-interface/${qId}`}
+          >
+            Back
+          </Button>
+        </Stack>
+      </Box>
+
+      {/* Table Section */}
+      <Box sx={{ textAlign: "end", mb: 1 }}>
+        <Button
+          variant="contained"
+          startIcon={<FileDownloadIcon />}
+          onClick={exportToExcel}
+        >
+          Export to Excel
+        </Button>
+      </Box>
+
+      <TableContainer component={Paper} variant="outlined">
+        <Table size="small">
+          <TableHead>
+            <TableRow
+              sx={{
+                bgcolor: "primary.main",
+                "& th": { color: "white", fontWeight: "bold", cursor: "pointer" },
+              }}
+            >
+              <TableCell onClick={() => handleSort("zonalCode")}>
+                Zonal Code{sortIndicator("zonalCode")}
+              </TableCell>
+              <TableCell onClick={() => handleSort("userName")}>
+                Zonal Name{sortIndicator("userName")}
+              </TableCell>
               {notice?.questions?.map((question, index) => (
-                <th
+                <TableCell
                   key={index}
-                  onClick={() => handleSort(question.questionText)} // Pass question text as key
+                  onClick={() => handleSort(question.questionText)}
                 >
                   {question?.questionText}
-                  {sortConfig.key === question.questionText &&
-                    (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                </th>
+                  {sortIndicator(question.questionText)}
+                </TableCell>
               ))}
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="text-center bg-primary fs-5">
-              <th colSpan={2} className="text-light ">
+              <TableCell>Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {/* Total Row */}
+            <TableRow
+              sx={{
+                bgcolor: "primary.main",
+                "& th, & td": { color: "white", fontWeight: "bold" },
+              }}
+            >
+              <TableCell colSpan={2} sx={{ color: "white", fontWeight: "bold" }}>
                 Total
-              </th>
+              </TableCell>
               {totalData?.length
                 ? totalData?.map((value, index) => (
-                    <th className="text-light fs-6" key={index}>
+                    <TableCell
+                      sx={{ color: "white", fontWeight: "bold" }}
+                      key={index}
+                    >
                       {value[index]}
-                    </th>
+                    </TableCell>
                   ))
                 : notice?.questions?.map((value, index) => (
-                    <th className="text-light fs-6" key={index}>
+                    <TableCell
+                      sx={{ color: "white", fontWeight: "bold" }}
+                      key={index}
+                    >
                       0
-                    </th>
+                    </TableCell>
                   ))}
-              <th>
-                <i className="fa fa-lock text-danger" aria-hidden="true"></i>
-              </th>
-            </tr>
-          </tbody>
-          <tbody className="bg-white">
+              <TableCell>
+                <LockIcon sx={{ color: "error.main" }} />
+              </TableCell>
+            </TableRow>
+
+            {/* Data Rows */}
             {sortedData?.map((zonal, zonalIndex) => (
-              <tr key={zonalIndex} className="text-center">
-                <td>{zonal.zonalCode}</td>
-                <td>{zonal.userName}</td>
+              <TableRow
+                key={zonalIndex}
+                hover
+                sx={{ "&:hover": { bgcolor: "action.hover" } }}
+              >
+                <TableCell sx={{ textAlign: "center" }}>
+                  {zonal.zonalCode}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {zonal.userName}
+                </TableCell>
                 {notice?.questions?.map((question, questionIndex) => (
-                  <td key={`${zonalIndex}-${questionIndex}`}>
+                  <TableCell
+                    key={`${zonalIndex}-${questionIndex}`}
+                    sx={{ textAlign: "center" }}
+                  >
                     {zonal[question.questionText] || 0}
-                  </td>
+                  </TableCell>
                 ))}
-                <td>
-                  <div className="d-flex justify-content-center gap-1">
-                    <Link
+                <TableCell>
+                  <Stack direction="row" spacing={1} justifyContent="center">
+                    <IconButton
+                      component={Link}
                       to={`/dashboard/sums-zonal-data-by-branch/${qId}/${zonal.zonalCode}`}
-                      className="btn btn-outline-success"
+                      color="primary"
+                      size="small"
                     >
-                      <i className="fa fa-plus" aria-hidden="true"></i>
-                    </Link>
-                    <Link
+                      <AddIcon />
+                    </IconButton>
+                    <IconButton
+                      component={Link}
                       to={`/dashboard/sums-day-by-day-zonal-data/${qId}/${zonal.zonalCode}`}
-                      className="btn btn-outline-success"
+                      color="primary"
+                      size="small"
                     >
-                      <i className="fa fa-address-book" aria-hidden="true"></i>
-                    </Link>
-                  </div>
-                </td>
-              </tr>
+                      <VisibilityIcon />
+                    </IconButton>
+                  </Stack>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 };
 

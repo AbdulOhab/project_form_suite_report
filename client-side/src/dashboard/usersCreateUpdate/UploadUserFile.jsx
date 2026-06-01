@@ -1,13 +1,28 @@
-import React from "react";
-import BASE_URL from "../../auth/dbUrl";
-import Swal from "sweetalert2";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import SweetAlert from "../time/SweetAlert";
+import {
+  Box,
+  Paper,
+  Typography,
+  Button,
+  Snackbar,
+  Alert,
+} from "@mui/material";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import BASE_URL from "../../auth/dbUrl";
 
 const UploadUserFile = () => {
   const navigate = useNavigate();
   const [isUploading, setIsUploading] = useState(false);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
 
   const csvfileHandler = async (e) => {
     e.preventDefault();
@@ -20,15 +35,14 @@ const UploadUserFile = () => {
     }
 
     const formData = new FormData();
-    formData.append("csvFile", file); // Note the key "csvFile" matches what the server expects
-    setIsUploading(true); // Set uploading state to true
+    formData.append("csvFile", file);
+    setIsUploading(true);
     try {
       const response = await fetch(`${BASE_URL}/upload-user-file`, {
         method: "POST",
         headers: {
           Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           Accept: "application/json",
-          // Note: Do not set the Content-Type header manually
         },
         body: formData,
       });
@@ -36,50 +50,82 @@ const UploadUserFile = () => {
       const data = await response.json();
 
       if (response.status === 200) {
-        SweetAlert({
+        setSnackbar({
+          open: true,
           message: "Uploaded successfully",
-          icon: "success",
+          severity: "success",
         });
-        navigate("/dashboard");
+        setTimeout(() => navigate("/dashboard"), 1200);
       } else {
-        SweetAlert({
+        setSnackbar({
+          open: true,
           message: "Failed to upload",
-          icon: "error",
+          severity: "error",
         });
         console.error(`Error: ${response.status}`, data);
       }
     } catch (error) {
       console.error("Error uploading file:", error);
     } finally {
-      setIsUploading(false); // Set uploading state to false after fetch completes
+      setIsUploading(false);
       setTimeout(() => {
-        setIsUploading(false); // Ensure uploading state is false after 5 seconds (in case of error)
+        setIsUploading(false);
       }, 5000);
     }
   };
 
   return (
-    <div className="w-50 m-auto my-5">
-      <div className="card">
-        <div className="card-header">
-          <p className="fw-bold text-center fs-2 text-highlight bg-success rounded">Upload Your CSV File</p>
-        </div>
-        <div className="card-body">
+    <Box sx={{ maxWidth: 500, mx: "auto", my: 5 }}>
+      <Paper elevation={3} sx={{ borderRadius: 2, overflow: "hidden" }}>
+        <Box sx={{ bgcolor: "#2e7d32", p: 2 }}>
+          <Typography
+            variant="h5"
+            sx={{ textAlign: "center", color: "#fff", fontWeight: "bold" }}
+          >
+            Upload Your CSV File
+          </Typography>
+        </Box>
+        <Box sx={{ p: 3 }}>
           <form onSubmit={csvfileHandler}>
-            <input type="file" id="file" name="file" />
-            <div className="my-3 text-end mx-5">
-              <button
+            <Button
+              component="label"
+              variant="outlined"
+              startIcon={<UploadFileIcon />}
+              fullWidth
+              sx={{ mb: 3 }}
+            >
+              Choose CSV File
+              <input type="file" id="file" name="file" hidden />
+            </Button>
+            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <Button
                 type="submit"
-                className="btn btn-success"
+                variant="contained"
+                color="primary"
                 disabled={isUploading}
               >
                 {isUploading ? "Uploading..." : "Upload"}
-              </button>
-            </div>
+              </Button>
+            </Box>
           </form>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Paper>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </Box>
   );
 };
 

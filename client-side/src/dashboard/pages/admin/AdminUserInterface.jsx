@@ -1,9 +1,18 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-// import { AuthContext } from "../../../contexts/AuthContext";
 import { Link, useParams } from "react-router-dom";
-import { Button } from "@mui/material";
-import Close from "@mui/icons-material/Close";
+import {
+  Box,
+  Button,
+  Paper,
+  Typography,
+  Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
+} from "@mui/material";
+import { Close, ArrowBack } from "@mui/icons-material";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import AdminZonalDayCount from "./AdminZonalDayCount";
 import BASE_URL from "../../../auth/dbUrl";
@@ -51,13 +60,11 @@ function AdminUserInterface() {
           throw new Error("Failed to fetch");
         }
       } catch (error) {
-        // Handle error
         console.error("Error fetching notice data:", error);
       }
     };
     getZonalUsers();
   }, [noticeId, dayId]);
-
 
   const descriptionHandler = () => {
     setDescriptionAlert(true);
@@ -86,132 +93,204 @@ function AdminUserInterface() {
   };
 
   return (
-    <div className="card border-0 my-1">
-      <div className="card-header border-0">
-        <div className="myTopCard col-lg-8 col-md-6 col-sm-12 m-auto">
-          {descriptionAlert && (
-            <div className="docsPopUp">
-              <Button onClick={descriptionCloserHandler} className=" float-end">
-                <Close />
-              </Button>
-              {notice?.doc_desc}
-            </div>
-          )}
-        </div>
-        <div className="card-header">
-          <div className="row">
-            <div className="answerLeft col-lg-3 col-md-3 col-sm-12 m-auto">
-              <div className="border p-2">
-                {validCardData(notice?.endDadeline) < 0 ? (
-                  <p className="text-center fs-6 fw-bold text-danger">
-                    নোটিশ প্রদানের সময় শেষ হয়েছে{" "}
-                    {convertToBengaliNumber(
-                      Math.abs(validCardData(notice?.endDadeline))
-                    )}{" "}
-                    দিন পূর্বে
-                  </p>
-                ) : (
-                  <DateDifferenceComponent
-                    startDadeline={notice?.startDadeline}
-                    range={notice?.range}
-                    timeStart={notice?.timeStart}
-                    timeEnd={notice?.timeEnd}
-                    endDadeline={notice?.endDadeline}
-                  />
-                )}
-              </div>
-            </div>
+    <Paper elevation={0} sx={{ my: 0.5 }}>
+      {/* Description Dialog */}
+      <Dialog
+        open={descriptionAlert}
+        onClose={descriptionCloserHandler}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <IconButton onClick={descriptionCloserHandler} size="small">
+            <Close />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Typography>{notice?.doc_desc}</Typography>
+        </DialogContent>
+      </Dialog>
 
-            <div className="answerMiddle col-lg-6 col-md-6 col-sm-12 m-auto mt-0">
-              <p className="text-center fs-2 fw-semibold text-success">
-                {notice?.document_name}
-              </p>
-              {notice?.sub_title && (
-                <p className="text-center fs-6">{notice?.sub_title}</p>
-              )}
-
-              <p className="text-center">
-                <span className="fs-3 fw-bold text-highlight bg-success rounded px-2">
-                  এক নজরে অঞ্চল ও শাখা সমূহের রিপোর্ট
-                </span>
-              </p>
-            </div>
-            <div className="answerRight col-lg-3 col-md-3 col-sm-12 m-auto mt-0">
-              <div className="d-flex align-items-end justify-content-end flex-column">
-                {!descriptionAlert && (
-                  <Button
-                    onClick={descriptionHandler}
-                    className="text-center border border-success fw-semibold w-50"
-                  >
-                    Notice
-                  </Button>
-                )}
-                <Link
-                  className="button fs-5 p-2"
-                  to={`/dashboard/admin-data-interface/${noticeId}`}
+      {/* Header Section */}
+      <Paper elevation={0} sx={{ p: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          {/* Left - Deadline */}
+          <Box sx={{ flex: { lg: 3, md: 3, sm: 12 }, width: "100%" }}>
+            <Paper variant="outlined" sx={{ p: 2 }}>
+              {validCardData(notice?.endDadeline) < 0 ? (
+                <Typography
+                  align="center"
+                  fontWeight="bold"
+                  color="error"
+                  fontSize="1rem"
                 >
-                  <span>Back</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="card-body d-flex gap-5">
-        <button
-          className={`btn btn-success ${zonalShow ? "text-highlight" : ""}`}
+                  নোটিশ প্রদানের সময় শেষ হয়েছে{" "}
+                  {convertToBengaliNumber(
+                    Math.abs(validCardData(notice?.endDadeline))
+                  )}{" "}
+                  দিন পূর্বে
+                </Typography>
+              ) : (
+                <DateDifferenceComponent
+                  startDadeline={notice?.startDadeline}
+                  range={notice?.range}
+                  timeStart={notice?.timeStart}
+                  timeEnd={notice?.timeEnd}
+                  endDadeline={notice?.endDadeline}
+                />
+              )}
+            </Paper>
+          </Box>
+
+          {/* Middle - Title */}
+          <Box sx={{ flex: { lg: 6, md: 6, sm: 12 }, width: "100%" }}>
+            <Typography
+              align="center"
+              variant="h4"
+              fontWeight={600}
+              color="success.main"
+            >
+              {notice?.document_name}
+            </Typography>
+            {notice?.sub_title && (
+              <Typography align="center" variant="body1">
+                {notice?.sub_title}
+              </Typography>
+            )}
+            <Box sx={{ textAlign: "center", mt: 1 }}>
+              <Chip
+                label="এক নজরে অঞ্চল ও শাখা সমূহের রিপোর্ট"
+                sx={{
+                  fontWeight: "bold",
+                  fontSize: "1.25rem",
+                  px: 2,
+                  py: 2.5,
+                  bgcolor: "success.main",
+                  color: "white",
+                }}
+              />
+            </Box>
+          </Box>
+
+          {/* Right - Actions */}
+          <Box
+            sx={{
+              flex: { lg: 3, md: 3, sm: 12 },
+              width: "100%",
+              display: "flex",
+              alignItems: "flex-end",
+              justifyContent: "flex-end",
+              flexDirection: "column",
+              gap: 1,
+            }}
+          >
+            {!descriptionAlert && (
+              <Button
+                variant="outlined"
+                color="success"
+                onClick={descriptionHandler}
+                sx={{ fontWeight: 600, width: "50%" }}
+              >
+                Notice
+              </Button>
+            )}
+            <Button
+              component={Link}
+              to={`/dashboard/admin-data-interface/${noticeId}`}
+              variant="text"
+              startIcon={<ArrowBack />}
+              sx={{ fontSize: "1.1rem", p: 1 }}
+            >
+              Back
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+
+      {/* Toggle Buttons */}
+      <Box sx={{ display: "flex", gap: 3, p: 2 }}>
+        <Button
+          variant="contained"
+          color="success"
           onClick={handleZonal}
+          sx={{
+            fontWeight: zonalShow ? "bold" : "normal",
+            textDecoration: zonalShow ? "underline" : "none",
+          }}
         >
           জোন ডাটা
-        </button>
-        <button
-          className={`btn btn-success ${branchShow ? "text-highlight" : ""}`}
+        </Button>
+        <Button
+          variant="contained"
+          color="success"
           onClick={handleBranch}
+          sx={{
+            fontWeight: branchShow ? "bold" : "normal",
+            textDecoration: branchShow ? "underline" : "none",
+          }}
         >
           ব্রাঞ্চ ডাটা
-        </button>
-      </div>
-      {/* এক নজরে অঞ্চল সমূহের রিপোর্ট table */}
-      <div
-        className={`card-body shadow p-3 rounded ${
-          zonalShow ? "d-block" : "d-none"
-        }`}
-      >
-        <div className="card-header">
-          <h5 className="card-title text-center ">
-            <span className="bg-primary px-3 py-2 rounded text-light">
-              এক নজরে অঞ্চল সমূহের রিপোর্ট
-            </span>
-          </h5>
-        </div>
-        <div className="card-body">
-          <AdminZonalDayCount
-            startDadeline={notice?.startDadeline}
-            range={notice?.range}
-            questions={notice?.questions}
-            zonalReport={zonalReport}
-            totalData={totalData}
-            branchData={tempData}
-            countUnSubmit={totalUnsubmitted}
-            countSubmit={totalSubmitted}
-          />
-        </div>
-      </div>
+        </Button>
+      </Box>
 
-      {/* এক নজরে জেলা সমূহের রিপোর্ট table */}
-      <div className={`card-body shadow ${branchShow ? "d-block" : "d-none"}`}>
-        <div className="card-header">
-          <h5 className="card-title text-center">
-            <span className="bg-primary px-3 py-2 rounded text-light">
-              এক নজরে শাখা সমূহের রিপোর্ট
-            </span>
-          </h5>
-        </div>
-        <div className="card-body">
-          <AdminAllBranchDayCount />
-        </div>
-      </div>
-    </div>
+      {/* Zonal Table */}
+      {zonalShow && (
+        <Paper elevation={3} sx={{ p: 2, borderRadius: 1 }}>
+          <Box sx={{ textAlign: "center", mb: 2 }}>
+            <Chip
+              label="এক নজরে অঞ্চল সমূহের রিপোর্ট"
+              sx={{
+                bgcolor: "primary.main",
+                color: "white",
+                px: 3,
+                py: 2.5,
+                fontSize: "1rem",
+              }}
+            />
+          </Box>
+          <Box>
+            <AdminZonalDayCount
+              startDadeline={notice?.startDadeline}
+              range={notice?.range}
+              questions={notice?.questions}
+              zonalReport={zonalReport}
+              totalData={totalData}
+              branchData={tempData}
+              countUnSubmit={totalUnsubmitted}
+              countSubmit={totalSubmitted}
+            />
+          </Box>
+        </Paper>
+      )}
+
+      {/* Branch Table */}
+      {branchShow && (
+        <Paper elevation={3} sx={{ p: 2 }}>
+          <Box sx={{ textAlign: "center", mb: 2 }}>
+            <Chip
+              label="এক নজরে শাখা সমূহের রিপোর্ট"
+              sx={{
+                bgcolor: "primary.main",
+                color: "white",
+                px: 3,
+                py: 2.5,
+                fontSize: "1rem",
+              }}
+            />
+          </Box>
+          <Box>
+            <AdminAllBranchDayCount />
+          </Box>
+        </Paper>
+      )}
+    </Paper>
   );
 }
 

@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import {
+  Box,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+  Stack,
+  Divider,
+} from "@mui/material";
 import BASE_URL from "../../../auth/dbUrl";
-import {  useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useState } from "react";
-import SweetAlert from "../../time/SweetAlert";
 
 function ThanaUsersUpdate() {
   const { id } = useParams();
@@ -14,8 +22,17 @@ function ThanaUsersUpdate() {
   const [branchCode, setBranchCode] = useState("");
   const [zonalCode, setZonalCode] = useState("");
 
-  // get thana data from database
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
+
+  // get thana data from database
   useEffect(() => {
     async function getThanaUser() {
       await fetch(`${BASE_URL}/get-thana-users-for-update/${id}`, {
@@ -39,7 +56,6 @@ function ThanaUsersUpdate() {
   // update handler function
   function updateHandler(e) {
     e.preventDefault();
-    // const formData = new FormData(e.target);
     fetch(`${BASE_URL}/update-thana-users/${id}`, {
       method: "POST",
       headers: {
@@ -63,22 +79,25 @@ function ThanaUsersUpdate() {
       })
       .then((res) => {
         if (res.status === 200) {
-          SweetAlert({
-            icon: "success",
-            message: res.data,
+          setSnackbar({
+            open: true,
+            message: typeof res.data === "string" ? res.data : "Updated successfully",
+            severity: "success",
           });
-          reset()
+          reset();
         } else {
-          SweetAlert({
-            icon: "error",
-            message: res.data,
+          setSnackbar({
+            open: true,
+            message: typeof res.data === "string" ? res.data : "Update failed",
+            severity: "error",
           });
         }
       })
       .catch((err) => {
-        SweetAlert({
-          icon: "error",
+        setSnackbar({
+          open: true,
           message: err.message,
+          severity: "error",
         });
       });
   }
@@ -89,108 +108,112 @@ function ThanaUsersUpdate() {
     setThanaCode("");
     setBranchCode("");
     setZonalCode("");
-  }
+  };
+
   return (
-    <div className="col-md-5 col-lg-5 col-sm-12 m-auto ">
-      <div className="my-5">
-        <div className=" p-1 rounded">
-          <div className="card shadow ">
-            <div className="card-header bg-success text-highlight border border-5 border-light">
-              <h1 className="text-center">থানার তথ্য হালনাগাদ করুন</h1>
-            </div>
-            <div className="card-body card-hover   border border-5 border-light">
-              <form onSubmit={updateHandler}>
-                <div className="form-group  d-flex justify-content-between align-items-center border-bottom border-light border-3 pb-2">
-                  <label htmlFor="userId" className="form-label w-25 pt-2">
-                    User ID
-                  </label>
-                  <input
-                    type="number"
-                    name="userId"
-                    className="form-control w-75"
-                    id="UserId"
-                    placeholder="Enter UserId"
-                    required
-                    value={userId}
-                    onChange={(e) => setUserId(e.target.value)}
-                  />
-                </div>
+    <Box sx={{ maxWidth: 500, mx: "auto", my: 5 }}>
+      <Paper elevation={3} sx={{ borderRadius: 2, overflow: "hidden" }}>
+        <Box sx={{ bgcolor: "#2e7d32", p: 2 }}>
+          <Typography
+            variant="h5"
+            sx={{ textAlign: "center", color: "#fff", fontWeight: "bold" }}
+          >
+            থানার তথ্য হালনাগাদ করুন
+          </Typography>
+        </Box>
+        <Box sx={{ p: 3 }}>
+          <form onSubmit={updateHandler}>
+            <Stack spacing={2} divider={<Divider />}>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Typography sx={{ minWidth: 120 }}>User ID</Typography>
+                <TextField
+                  fullWidth
+                  type="number"
+                  name="userId"
+                  placeholder="Enter UserId"
+                  required
+                  value={userId}
+                  onChange={(e) => setUserId(e.target.value)}
+                  size="small"
+                />
+              </Stack>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Typography sx={{ minWidth: 120 }}>User Name</Typography>
+                <TextField
+                  fullWidth
+                  type="text"
+                  name="userName"
+                  placeholder="User Name"
+                  required
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  size="small"
+                />
+              </Stack>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Typography sx={{ minWidth: 120 }}>Thana Code</Typography>
+                <TextField
+                  fullWidth
+                  type="number"
+                  name="thanaCode"
+                  placeholder="Thana Code"
+                  required
+                  value={thanaCode}
+                  onChange={(e) => setThanaCode(e.target.value)}
+                  size="small"
+                />
+              </Stack>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Typography sx={{ minWidth: 120 }}>Branch Code</Typography>
+                <TextField
+                  fullWidth
+                  type="number"
+                  name="branchCode"
+                  placeholder="Branch Code"
+                  required
+                  value={branchCode}
+                  onChange={(e) => setBranchCode(e.target.value)}
+                  size="small"
+                />
+              </Stack>
+              <Stack direction="row" alignItems="center" spacing={2}>
+                <Typography sx={{ minWidth: 120 }}>Zonal Code</Typography>
+                <TextField
+                  fullWidth
+                  type="number"
+                  name="zonalCode"
+                  placeholder="Zonal Code"
+                  required
+                  value={zonalCode}
+                  onChange={(e) => setZonalCode(e.target.value)}
+                  size="small"
+                />
+              </Stack>
+            </Stack>
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 3 }}>
+              <Button type="submit" variant="contained" color="primary">
+                Update
+              </Button>
+            </Box>
+          </form>
+        </Box>
+      </Paper>
 
-                <div className="form-group d-flex justify-content-between align-items-center pb-2 my-3 border-bottom border-light border-3">
-                  <label htmlFor="userName" className="form-label w-25 pt-2">
-                    User Name
-                  </label>
-                  <input
-                    type="text"
-                    name="userName"
-                    className="form-control w-75"
-                    id="userName"
-                    placeholder="User Name"
-                    required
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
-                  />
-                </div>
-                <div className="form-group d-flex justify-content-between align-items-center pb-2 my-3  border-bottom border-light border-3">
-                  <label htmlFor="thanaCode" className="form-label w-25 pt-2">
-                    Thana Code
-                  </label>
-                  <input
-                    type="number"
-                    name="thanaCode"
-                    className="form-control w-75"
-                    id="thanaCode"
-                    placeholder="Thana Code"
-                    required
-                    value={thanaCode}
-                    onChange={(e) => setThanaCode(e.target.value)}
-                  />
-                </div>
-
-                <div className="form-group d-flex justify-content-between align-items-center pb-2 my-3  border-bottom border-light border-3">
-                  <label htmlFor="branchCode" className="form-label w-25 pt-2">
-                    Branch Code
-                  </label>
-                  <input
-                    type="number"
-                    name="branchCode"
-                    className="form-control w-75"
-                    id="branchCode"
-                    placeholder="Branch Code"
-                    required
-                    value={branchCode}
-                    onChange={(e) => setBranchCode(e.target.value)}
-                  />
-                </div>
-
-                <div className="form-group d-flex justify-content-between align-items-center pb-2 my-3  border-bottom border-light border-3">
-                  <label htmlFor="zonalCode" className="form-label w-25 pt-2">
-                    Zonal Code
-                  </label>
-                  <input
-                    type="number"
-                    name="zonalCode"
-                    className="form-control w-75"
-                    id="zonalCode"
-                    placeholder="Zonal Code"
-                    required
-                    value={zonalCode}
-                    onChange={(e) => setZonalCode(e.target.value)}
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="btn btn-success text-highlight mt-3 float-end"
-                >
-                  Update
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </Box>
   );
 }
 

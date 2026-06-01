@@ -1,8 +1,28 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import BASE_URL from "../../../auth/dbUrl";
-import { Button } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import AddIcon from "@mui/icons-material/Add";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import LockIcon from "@mui/icons-material/Lock";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import convertToBengaliNumber from "../../time/NumberConverter";
 import * as XLSX from "xlsx";
@@ -131,177 +151,254 @@ const SumsAllBranchData = () => {
     saveAs(blob, "BranchData.xlsx");
   };
 
+  const sortIndicator = (key) => {
+    if (sortConfig.key !== key) return null;
+    return sortConfig.direction === "ascending" ? " ▲" : " ▼";
+  };
+
   return (
     <>
-      <div className="card">
-        <div className="card-header">
-          <div className="myTopCard col-lg-8 col-md-6 col-sm-12 m-auto">
-            {descriptionAlert && (
-              <div className="docsPopUp">
-                <Button
-                  onClick={descriptionCloserHandler}
-                  className="float-end"
-                >
-                  <Close />
-                </Button>
-                {data.notice?.doc_desc}
-              </div>
+      {/* Description Dialog */}
+      <Dialog
+        open={descriptionAlert}
+        onClose={descriptionCloserHandler}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
+          <IconButton onClick={descriptionCloserHandler}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Typography>{data.notice?.doc_desc}</Typography>
+        </DialogContent>
+      </Dialog>
+
+      <Paper elevation={2} sx={{ p: 2 }}>
+        {/* Header Section */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 2,
+            mb: 2,
+          }}
+        >
+          {/* Left - Date Info */}
+          <Paper variant="outlined" sx={{ p: 1.5, flex: "1 1 auto", minWidth: 200 }}>
+            {validCardData(data.notice?.endDadeline) < 0 ? (
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  fontSize: "1.25rem",
+                  fontWeight: "bold",
+                  color: "error.main",
+                }}
+              >
+                নোটিশ শেষ হয়েছে{" "}
+                {convertToBengaliNumber(
+                  Math.abs(validCardData(data.notice?.endDadeline))
+                )}{" "}
+                দিন আগে
+              </Typography>
+            ) : (
+              <DateDifferenceComponent
+                startDadeline={data.notice?.startDadeline}
+                range={data.notice?.range}
+                timeStart={data.notice?.timeStart}
+                timeEnd={data.notice?.timeEnd}
+                endDadeline={data.notice?.endDadeline}
+              />
             )}
-          </div>
-          <div className="card-header">
-            <div className="d-flex justify-content-between align-items-center">
-              <div className="answerLeft">
-                <div className="border p-2">
-                  {validCardData(data.notice?.endDadeline) < 0 ? (
-                    <p className="text-center fs-4 fw-bold text-danger">
-                      নোটিশ শেষ হয়েছে{" "}
-                      {convertToBengaliNumber(
-                        Math.abs(validCardData(data.notice?.endDadeline))
-                      )}{" "}
-                      দিন আগে
-                    </p>
-                  ) : (
-                    <DateDifferenceComponent
-                      startDadeline={data.notice?.startDadeline}
-                      range={data.notice?.range}
-                      timeStart={data.notice?.timeStart}
-                      timeEnd={data.notice?.timeEnd}
-                      endDadeline={data.notice?.endDadeline}
-                    />
-                  )}
-                </div>
-              </div>
+          </Paper>
 
-              <div className="answerMiddle">
-                <p className="text-center fs-2 fw-semibold text-success">
-                  {data.notice?.document_name}
-                </p>
-                {data.notice?.sub_title && (
-                  <p className="text-center fs-6">{data.notice?.sub_title}</p>
-                )}
+          {/* Middle - Title */}
+          <Box sx={{ textAlign: "center", flex: "2 1 auto" }}>
+            <Typography
+              variant="h5"
+              sx={{
+                textAlign: "center",
+                fontWeight: 600,
+                color: "primary.main",
+              }}
+            >
+              {data.notice?.document_name}
+            </Typography>
+            {data.notice?.sub_title && (
+              <Typography variant="body2" sx={{ textAlign: "center" }}>
+                {data.notice?.sub_title}
+              </Typography>
+            )}
+            <Typography sx={{ textAlign: "center", mt: 1 }}>
+              <Typography
+                component="span"
+                sx={{
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  bgcolor: "primary.main",
+                  color: "white",
+                  borderRadius: 1,
+                  px: 1.5,
+                }}
+              >
+                এক নজরে শাখা সমূহের পূর্ণাঙ্গ রিপোর্ট
+              </Typography>
+            </Typography>
+          </Box>
 
-                <p className="text-center">
-                  <span className="fs-3 fw-bold text-highlight bg-success rounded px-2">
-                    এক নজরে শাখা সমূহের পূর্ণাঙ্গ রিপোর্ট
-                  </span>
-                </p>
-              </div>
-              <div className="answerRight">
-                <div className="d-flex align-items-end justify-content-end flex-column">
-                  {!descriptionAlert && (
-                    <button
-                      onClick={descriptionHandler}
-                      className="text-center border border-success fw-semibold btn text-primary"
-                    >
-                      Notice
-                    </button>
-                  )}
-                  <Link
-                    className="button fs-5 p-2"
-                    to={`/dashboard/admin-data-interface/${qId}`}
-                  >
-                    <span>Back</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="card-body">
-        <div className="text-end my-3">
-          <button className="btn btn-primary" onClick={exportToExcel}>
+          {/* Right - Actions */}
+          <Stack
+            direction="column"
+            alignItems="flex-end"
+            justifyContent="flex-end"
+            spacing={1}
+            sx={{ flex: "1 1 auto", minWidth: 120 }}
+          >
+            {!descriptionAlert && (
+              <Button variant="outlined" onClick={descriptionHandler}>
+                Notice
+              </Button>
+            )}
+            <Button
+              component={Link}
+              variant="contained"
+              to={`/dashboard/admin-data-interface/${qId}`}
+            >
+              Back
+            </Button>
+          </Stack>
+        </Box>
+
+        {/* Table Section */}
+        <Box sx={{ textAlign: "end", mb: 1, mt: 2 }}>
+          <Button
+            variant="contained"
+            startIcon={<FileDownloadIcon />}
+            onClick={exportToExcel}
+          >
             Export to Excel
-          </button>
-        </div>
+          </Button>
+        </Box>
+
         {sortedData.length ? (
-          <table className="table table-hover table-bordered table-responsive">
-            <thead>
-              <tr className="text-center bg-primary">
-                <th onClick={() => handleSort("branchCode")}>
-                  Branch Code{" "}
-                  {sortConfig.key === "branchCode" &&
-                    (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                </th>
-                <th onClick={() => handleSort("userName")}>
-                  Branch Name{" "}
-                  {sortConfig.key === "userName" &&
-                    (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                </th>
-
-                {data.questions?.map((question, index) => (
-                  <th
-                    key={index}
-                    onClick={() => handleSort(question.questionText)}
-                  >
-                    {question?.questionText}
-                    {sortConfig.key === question.questionText &&
-                      (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                  </th>
-                ))}
-
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="text-center bg-primary fs-5">
-                <th className="text-light">Total</th>
-                <th></th>
-                {data.totalData.length
-                  ? data.totalData?.map((value, index) => (
-                      <th className="text-light fs-6" key={index}>
-                        {value[index]}
-                      </th>
-                    ))
-                  : data.questions?.map((value, index) => (
-                      <th className="text-light fs-6" key={index}>
-                        0
-                      </th>
-                    ))}
-                <th className="text-danger">
-                  <i className="fa fa-lock" aria-hidden="true"></i>
-                </th>
-              </tr>
-            </tbody>
-            <tbody className="bg-white">
-              {sortedData.map((branch, branchIndex) => (
-                <tr key={branchIndex} className="text-center">
-                  <td className="text-dark">{branch.branchCode}</td>
-                  <td className="text-dark">{branch.userName}</td>
-                  {data.questions?.map((question, qIndex) => (
-                    <td key={`${branchIndex}-${qIndex}`} className="text-dark">
-                      {branch?.[question.questionText] || 0}
-                    </td>
+          <TableContainer component={Paper} variant="outlined">
+            <Table size="small">
+              <TableHead>
+                <TableRow
+                  sx={{
+                    bgcolor: "primary.main",
+                    "& th": {
+                      color: "white",
+                      fontWeight: "bold",
+                      cursor: "pointer",
+                    },
+                  }}
+                >
+                  <TableCell onClick={() => handleSort("branchCode")}>
+                    Branch Code{sortIndicator("branchCode")}
+                  </TableCell>
+                  <TableCell onClick={() => handleSort("userName")}>
+                    Branch Name{sortIndicator("userName")}
+                  </TableCell>
+                  {data.questions?.map((question, index) => (
+                    <TableCell
+                      key={index}
+                      onClick={() => handleSort(question.questionText)}
+                    >
+                      {question?.questionText}
+                      {sortIndicator(question.questionText)}
+                    </TableCell>
                   ))}
-                  <td>
-                    <div className="d-flex gap-2">
-                      <Link
-                        to={`/dashboard/sums-thana-by-branch/${qId}/${branch?.branchCode}`}
-                        className="btn btn-outline-success"
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {/* Total Row */}
+                <TableRow
+                  sx={{
+                    bgcolor: "primary.main",
+                    "& th, & td": { color: "white", fontWeight: "bold" },
+                  }}
+                >
+                  <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                    Total
+                  </TableCell>
+                  <TableCell sx={{ color: "white" }}></TableCell>
+                  {data.totalData.length
+                    ? data.totalData?.map((value, index) => (
+                        <TableCell
+                          sx={{ color: "white", fontWeight: "bold" }}
+                          key={index}
+                        >
+                          {value[index]}
+                        </TableCell>
+                      ))
+                    : data.questions?.map((value, index) => (
+                        <TableCell
+                          sx={{ color: "white", fontWeight: "bold" }}
+                          key={index}
+                        >
+                          0
+                        </TableCell>
+                      ))}
+                  <TableCell>
+                    <LockIcon sx={{ color: "error.main" }} />
+                  </TableCell>
+                </TableRow>
+
+                {/* Data Rows */}
+                {sortedData.map((branch, branchIndex) => (
+                  <TableRow
+                    key={branchIndex}
+                    hover
+                    sx={{ "&:hover": { bgcolor: "action.hover" } }}
+                  >
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {branch.branchCode}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {branch.userName}
+                    </TableCell>
+                    {data.questions?.map((question, qIndex) => (
+                      <TableCell
+                        key={`${branchIndex}-${qIndex}`}
+                        sx={{ textAlign: "center" }}
                       >
-                        <i className="fas fa-plus" aria-hidden="true"></i>
-                      </Link>
-                      <Link
-                        to={`/dashboard/sums-day-by-day-branch-data/${qId}/${branch?.zonalCode}/${branch?.branchCode}`}
-                        className="btn btn-outline-success"
-                      >
-                        <i
-                          className="fa fa-address-book"
-                          aria-hidden="true"
-                        ></i>
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                        {branch?.[question.questionText] || 0}
+                      </TableCell>
+                    ))}
+                    <TableCell>
+                      <Stack direction="row" spacing={1} justifyContent="center">
+                        <IconButton
+                          component={Link}
+                          to={`/dashboard/sums-thana-by-branch/${qId}/${branch?.branchCode}`}
+                          color="primary"
+                          size="small"
+                        >
+                          <AddIcon />
+                        </IconButton>
+                        <IconButton
+                          component={Link}
+                          to={`/dashboard/sums-day-by-day-branch-data/${qId}/${branch?.zonalCode}/${branch?.branchCode}`}
+                          color="primary"
+                          size="small"
+                        >
+                          <VisibilityIcon />
+                        </IconButton>
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
         ) : (
-          <>
-            <Loader />
-          </>
+          <Loader />
         )}
-      </div>
+      </Paper>
     </>
   );
 };

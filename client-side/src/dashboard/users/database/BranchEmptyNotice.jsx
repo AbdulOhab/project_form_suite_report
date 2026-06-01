@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import moment from "moment";
-import { FormControlLabel, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Paper,
+  Typography,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Radio,
+  Snackbar,
+  Alert,
+  Container,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+} from "@mui/material";
 import SortTextIcon from "@mui/icons-material/ShortText";
 import SortNumericIcon from "@mui/icons-material/NumbersSharp";
-import Swal from "sweetalert2";
 import BASE_URL from "../../../auth/dbUrl";
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
+
 function BranchEmptyNotice() {
   const { firstId, secondId } = useParams();
 
@@ -24,6 +38,22 @@ function BranchEmptyNotice() {
       required: false,
     },
   ]);
+
+  // Snackbar state
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  // Confirmation dialog state
+  const [confirmDialog, setConfirmDialog] = useState({
+    open: false,
+  });
+
+  const handleSnackbarClose = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
 
   // get answer form database
   useEffect(() => {
@@ -46,11 +76,11 @@ function BranchEmptyNotice() {
         }
       } catch (error) {
         console.error("Error fetching notice data:", error);
-        // Handle error
       }
     };
     getQuestionFromDb();
   }, [secondId]);
+
   const selectInput = (qText, value, qIndex, required, questionType) => {
     setAnswer((prevAnswer) => {
       const newAnswer = [...prevAnswer];
@@ -109,7 +139,6 @@ function BranchEmptyNotice() {
         thanaCode: firstId,
         branchCode: userInfo?.branchCode,
         zonalCode: userInfo?.zonalCode,
-
         answers: answer,
       }),
     });
@@ -118,55 +147,66 @@ function BranchEmptyNotice() {
       throw new Error("Network response was not ok");
     }
     if (response.status === 200) {
-      Swal.fire({
-        title: "Do you want to save the changes?",
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: "Save",
-        denyButtonText: `Don't save`,
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          Swal.fire("Update your data successfully", "", "success");
-          navigate(`/dashboard/branch-data-interface/${secondId}`);
-        } else if (result.isDenied) {
-          Swal.fire("Changes are not saved", "", "info");
-        }
-      });
+      setConfirmDialog({ open: true });
     }
   };
 
-  return (
-    <div className="container">
-      <div className="card">
-        <div className="card-header">
-          <Typography className="text-center">
-            {notice?.document_name}
-          </Typography>
-          <Typography className="text-center">{notice?.doc_desc}</Typography>
-        </div>
+  const handleConfirmSave = () => {
+    setConfirmDialog({ open: false });
+    setSnackbar({
+      open: true,
+      message: "Update your data successfully",
+      severity: "success",
+    });
+    navigate(`/dashboard/branch-data-interface/${secondId}`);
+  };
 
-        <form onSubmit={submitHandler}>
+  const handleDenySave = () => {
+    setConfirmDialog({ open: false });
+    setSnackbar({
+      open: true,
+      message: "Changes are not saved",
+      severity: "info",
+    });
+  };
+
+  return (
+    <Container maxWidth="md">
+      <Paper>
+        <Paper
+          elevation={0}
+          sx={{ p: 2, bgcolor: "grey.100", borderRadius: "4px 4px 0 0" }}
+        >
+          <Typography align="center">{notice?.document_name}</Typography>
+          <Typography align="center">{notice?.doc_desc}</Typography>
+        </Paper>
+
+        <Box component="form" onSubmit={submitHandler}>
           {notice?.questions?.map((question, qIndex) => (
-            <div
-              className="card-body col-lg-6 col-md-8 col-sm-12 m-auto border  shadow mt-3"
+            <Paper
               key={qIndex}
+              variant="outlined"
+              elevation={2}
+              sx={{
+                maxWidth: { lg: "50%", md: "66%", sm: "100%" },
+                mx: "auto",
+                p: 2,
+                mt: 1.5,
+              }}
             >
               <Typography>
-                {qIndex + 1}. {question?.questionText}{" "}
+                {qIndex + 1}. {question?.questionText}
               </Typography>
               {question?.options?.map((opText, index) => (
-                <div key={index}>
-                  <div className="d-flex align-items-center">
-                    <div className=" bg-danger">{question?.required}</div>
-                    <FormControlLabel
-                      control={
-                        question.questionType !== "text" &&
-                        question.questionType !== "number" ? (
-                          <input
-                            type={question.questionType}
-                            name={qIndex}
-                            className=" text-primary mx-2"
+                <Box key={index} sx={{ display: "flex", alignItems: "center" }}>
+                  <Box sx={{ display: "none" }}>{question?.required}</Box>
+                  <FormControlLabel
+                    control={
+                      question.questionType !== "text" &&
+                      question.questionType !== "number" ? (
+                        question.questionType === "checkbox" ? (
+                          <Checkbox
+                            name={String(qIndex)}
                             required={question?.required}
                             onChange={() =>
                               selectCheck(
@@ -178,51 +218,109 @@ function BranchEmptyNotice() {
                               )
                             }
                           />
-                        ) : question?.questionType === "number" ? (
-                          <SortNumericIcon className="me-1" />
                         ) : (
-                          <SortTextIcon className="me-1" />
-                        )
-                      }
-                      label={
-                        question.questionType !== "text" &&
-                        question.questionType !== "number" ? (
-                          <Typography className="text-capitalize text-center">
-                            {opText?.optionsText}
-                          </Typography>
-                        ) : (
-                          <input
-                            type={question.questionType}
-                            name={qIndex}
-                            className="text_input mx-1"
+                          <Radio
+                            name={String(qIndex)}
                             required={question?.required}
-                            // placeholder={opText?.optionsText}
-                            onChange={(e) =>
-                              selectInput(
+                            onChange={() =>
+                              selectCheck(
                                 question?.questionText,
-                                e.target.value,
+                                opText.optionsText,
+                                question.questionType,
                                 qIndex,
-                                question?.required,
-                                question?.questionType
+                                question?.required
                               )
                             }
                           />
                         )
-                      }
-                    />
-                  </div>
-                </div>
+                      ) : question?.questionType === "number" ? (
+                        <SortNumericIcon sx={{ mr: 0.5 }} />
+                      ) : (
+                        <SortTextIcon sx={{ mr: 0.5 }} />
+                      )
+                    }
+                    label={
+                      question.questionType !== "text" &&
+                      question.questionType !== "number" ? (
+                        <Typography
+                          sx={{
+                            textTransform: "capitalize",
+                            textAlign: "center",
+                          }}
+                        >
+                          {opText?.optionsText}
+                        </Typography>
+                      ) : (
+                        <TextField
+                          type={question.questionType}
+                          name={String(qIndex)}
+                          size="small"
+                          required={question?.required}
+                          onChange={(e) =>
+                            selectInput(
+                              question?.questionText,
+                              e.target.value,
+                              qIndex,
+                              question?.required,
+                              question?.questionType
+                            )
+                          }
+                        />
+                      )
+                    }
+                  />
+                </Box>
               ))}
-            </div>
+            </Paper>
           ))}
-          <div className="col-lg-6 col-md-8 col-sm-10 m-auto">
-            <button className="btn  btn-success text-uppercase text-ligh my-3 mx-5 float-end">
+          <Box sx={{ maxWidth: { lg: "50%", md: "66%", sm: "83%" }, mx: "auto" }}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="success"
+              sx={{
+                textTransform: "uppercase",
+                my: 1.5,
+                mx: 2,
+                float: "right",
+              }}
+            >
               Submit
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+
+      {/* Confirmation Dialog */}
+      <Dialog open={confirmDialog.open} onClose={handleDenySave}>
+        <DialogTitle>Do you want to save the changes?</DialogTitle>
+        <DialogActions>
+          <Button onClick={handleDenySave} color="inherit">
+            Don&apos;t save
+          </Button>
+          <Button onClick={handleConfirmSave} variant="contained" color="success">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </Container>
   );
 }
 

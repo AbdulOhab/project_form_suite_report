@@ -1,8 +1,32 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import BASE_URL from "../../../auth/dbUrl";
-import { Button } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import LockIcon from "@mui/icons-material/Lock";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import convertToBengaliNumber from "../../time/NumberConverter";
 import * as XLSX from "xlsx";
@@ -234,283 +258,353 @@ const SumsAllThanaData = () => {
 
   const pages = getPageNumbers();
 
+  const sortIndicator = (key) => {
+    if (sortConfig.key !== key) return null;
+    return sortConfig.direction === "ascending" ? " ▲" : " ▼";
+  };
+
   return (
     <>
-      <div className="card">
-        <div className="card-header">
-          <div className="myTopCard col-lg-8 col-md-6 col-sm-12 m-auto">
-            {descriptionAlert && (
-              <div className="docsPopUp">
-                <Button
-                  onClick={descriptionCloserHandler}
-                  className=" float-end"
-                >
-                  <Close />
-                </Button>
-                {notice?.doc_desc}
-              </div>
-            )}
-          </div>
-          <div className="card-header">
-            <div className="d-flex justify-content-between align-items-center">
-              <div className="answerLeft">
-                <div className="border p-2">
-                  {validCardData(notice?.endDadeline) < 0 ? (
-                    <p className="text-center fs-4 fw-bold text-danger">
-                      নোটিশ শেষ হয়েছে{" "}
-                      {convertToBengaliNumber(
-                        Math.abs(validCardData(notice?.endDadeline))
-                      )}{" "}
-                      দিন আগে
-                    </p>
-                  ) : (
-                    <DateDifferenceComponent
-                      startDadeline={notice?.startDadeline}
-                      range={notice?.range}
-                      timeStart={notice?.timeStart}
-                      timeEnd={notice?.timeEnd}
-                      endDadeline={notice?.endDadeline}
-                    />
-                  )}
-                </div>
-              </div>
+      {/* Description Dialog */}
+      <Dialog
+        open={descriptionAlert}
+        onClose={descriptionCloserHandler}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
+          <IconButton onClick={descriptionCloserHandler}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Typography>{notice?.doc_desc}</Typography>
+        </DialogContent>
+      </Dialog>
 
-              <div className="answerMiddle ">
-                <p className="text-center fs-2 fw-semibold text-success">
-                  {notice?.document_name}
-                </p>
-                {notice?.sub_title && (
-                  <p className="text-center fs-6">{notice?.sub_title}</p>
-                )}
-
-                <p className="text-center">
-                  <span className="fs-3 fw-bold text-highlight bg-success rounded px-2">
-                    এক নজরে সকল থানার পূর্ণাঙ্গ রিপোর্ট
-                  </span>
-                </p>
-              </div>
-              <div className="answerRight">
-                <div className="d-flex align-items-end justify-content-end flex-column">
-                  {!descriptionAlert && (
-                    <button
-                      onClick={descriptionHandler}
-                      className="text-center border border-success fw-semibold btn text-primary"
-                    >
-                      Notice
-                    </button>
-                  )}
-                  <Link
-                    className="button fs-5 p-2"
-                    to={`/dashboard/admin-data-interface/${qId}`}
-                  >
-                    <span>Back</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="card-body">
-        <div className="pagination-value m-3">
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="">
-              <select
-                onChange={selectHandler}
-                className="form-select-custom"
-                value={usersPerPage}
-              >
-                <option value={25}>25</option>
-                <option value={Math.ceil(sortedData?.length / 16 || 0)}>
-                  {Math.ceil(sortedData?.length / 16 || 0)}
-                </option>
-                <option value={Math.ceil(sortedData?.length / 8 || 0)}>
-                  {Math.ceil(sortedData?.length / 8 || 0)}
-                </option>
-                <option value={Math.ceil(sortedData?.length / 4 || 0)}>
-                  {Math.ceil(sortedData?.length / 4 || 0)}
-                </option>
-                <option value={Math.ceil(sortedData?.length / 2 || 0)}>
-                  {Math.ceil(sortedData?.length / 2 || 0)}
-                </option>
-                <option value={Math.ceil(sortedData?.length || 0)}>
-                  {Math.ceil(sortedData?.length || 0)}
-                </option>
-              </select>
-            </div>
-            <div className="export-btn ">
-              <div className="d-flex gap-5">
-                <button className="btn btn-success " onClick={exportToExcel}>
-                  Export This Page
-                </button>
-                <button
-                  className="btn btn-primary "
-                  onClick={exportToExcelByTotal}
-                >
-                  Export Total Thana Data
-                </button>
-              </div>
-            </div>
-            <div className="search-result">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search..."
-                onChange={(e) => {
-                  setSearch(e.target.value);
+      <Paper elevation={2} sx={{ p: 2 }}>
+        {/* Header Section */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 2,
+            mb: 2,
+          }}
+        >
+          {/* Left - Date Info */}
+          <Paper variant="outlined" sx={{ p: 1.5, flex: "1 1 auto", minWidth: 200 }}>
+            {validCardData(notice?.endDadeline) < 0 ? (
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  fontSize: "1.25rem",
+                  fontWeight: "bold",
+                  color: "error.main",
                 }}
+              >
+                নোটিশ শেষ হয়েছে{" "}
+                {convertToBengaliNumber(
+                  Math.abs(validCardData(notice?.endDadeline))
+                )}{" "}
+                দিন আগে
+              </Typography>
+            ) : (
+              <DateDifferenceComponent
+                startDadeline={notice?.startDadeline}
+                range={notice?.range}
+                timeStart={notice?.timeStart}
+                timeEnd={notice?.timeEnd}
+                endDadeline={notice?.endDadeline}
               />
-            </div>
-          </div>
-        </div>
+            )}
+          </Paper>
+
+          {/* Middle - Title */}
+          <Box sx={{ textAlign: "center", flex: "2 1 auto" }}>
+            <Typography
+              variant="h5"
+              sx={{
+                textAlign: "center",
+                fontWeight: 600,
+                color: "primary.main",
+              }}
+            >
+              {notice?.document_name}
+            </Typography>
+            {notice?.sub_title && (
+              <Typography variant="body2" sx={{ textAlign: "center" }}>
+                {notice?.sub_title}
+              </Typography>
+            )}
+            <Typography sx={{ textAlign: "center", mt: 1 }}>
+              <Typography
+                component="span"
+                sx={{
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  bgcolor: "primary.main",
+                  color: "white",
+                  borderRadius: 1,
+                  px: 1.5,
+                }}
+              >
+                এক নজরে সকল থানার পূর্ণাঙ্গ রিপোর্ট
+              </Typography>
+            </Typography>
+          </Box>
+
+          {/* Right - Actions */}
+          <Stack
+            direction="column"
+            alignItems="flex-end"
+            justifyContent="flex-end"
+            spacing={1}
+            sx={{ flex: "1 1 auto", minWidth: 120 }}
+          >
+            {!descriptionAlert && (
+              <Button variant="outlined" onClick={descriptionHandler}>
+                Notice
+              </Button>
+            )}
+            <Button
+              component={Link}
+              variant="contained"
+              to={`/dashboard/admin-data-interface/${qId}`}
+            >
+              Back
+            </Button>
+          </Stack>
+        </Box>
+
+        {/* Controls: Per-page, Export, Search */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 2,
+            my: 2,
+          }}
+        >
+          <FormControl size="small" sx={{ minWidth: 100 }}>
+            <InputLabel>Rows</InputLabel>
+            <Select value={usersPerPage} onChange={selectHandler} label="Rows">
+              <MenuItem value={25}>25</MenuItem>
+              <MenuItem
+                value={Math.ceil(sortedData?.length / 16 || 0)}
+              >
+                {Math.ceil(sortedData?.length / 16 || 0)}
+              </MenuItem>
+              <MenuItem
+                value={Math.ceil(sortedData?.length / 8 || 0)}
+              >
+                {Math.ceil(sortedData?.length / 8 || 0)}
+              </MenuItem>
+              <MenuItem
+                value={Math.ceil(sortedData?.length / 4 || 0)}
+              >
+                {Math.ceil(sortedData?.length / 4 || 0)}
+              </MenuItem>
+              <MenuItem
+                value={Math.ceil(sortedData?.length / 2 || 0)}
+              >
+                {Math.ceil(sortedData?.length / 2 || 0)}
+              </MenuItem>
+              <MenuItem value={Math.ceil(sortedData?.length || 0)}>
+                {Math.ceil(sortedData?.length || 0)}
+              </MenuItem>
+            </Select>
+          </FormControl>
+
+          <Stack direction="row" spacing={2}>
+            <Button
+              variant="contained"
+              startIcon={<FileDownloadIcon />}
+              onClick={exportToExcel}
+            >
+              Export This Page
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<FileDownloadIcon />}
+              onClick={exportToExcelByTotal}
+            >
+              Export Total Thana Data
+            </Button>
+          </Stack>
+
+          <TextField
+            size="small"
+            label="Search..."
+            variant="outlined"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </Box>
+
+        {/* Table */}
         {paginatedData.length ? (
           <>
-            <table
-              className="table table-hover table-bordered table-responsive"
-              border={1}
-            >
-              <thead>
-                <tr className="text-center bg-primary">
-                  <th onClick={() => handleSort("thanaCode")}>
-                    Thana Code{" "}
-                    {sortConfig.key === "thanaCode" &&
-                      (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                  </th>
-                  <th onClick={() => handleSort("userName")}>
-                    Thana Name{" "}
-                    {sortConfig.key === "userName" &&
-                      (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                  </th>
-                  {questions?.map((question, index) => (
-                    <th
-                      key={index}
-                      onClick={() => handleSort(question.questionText)}
-                    >
-                      {question?.questionText}{" "}
-                      {sortConfig.key === question.questionText &&
-                        (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                    </th>
-                  ))}
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="text-center bg-primary fs-5">
-                  <th className="text-light" colSpan={2}>
-                    Total
-                  </th>
-
-                  {totalData?.length > 0 ? (
-                    totalData?.map((element, index) => (
-                      <th className="text-light fs-6" key={index}>
-                        {element ? element[index] : 0}
-                      </th>
-                    ))
-                  ) : (
-                    <th className="text-light fs-6">0</th>
-                  )}
-                  <th>
-                    <i
-                      className="fa fa-lock text-danger"
-                      aria-hidden="true"
-                    ></i>
-                  </th>
-                </tr>
-              </tbody>
-              <tbody className="bg-white">
-                {paginatedData.map((thana, thanaIndex) => (
-                  <tr key={thanaIndex} className="text-center">
-                    <td>{thana.thanaCode}</td>
-                    <td>{thana.userName}</td>
-                    {questions?.map((question, qIndex) => (
-                      <td key={`${thanaIndex}-${qIndex}`}>
-                        {thana?.[question.questionText] || 0}
-                      </td>
-                    ))}
-                    <td>
-                      <Link
-                        className="btn btn-sm btn-outline-success"
-                        to={`/dashboard/sums-Totol-day-thana-data/${qId}/${thana?.zonalCode}/${thana?.branchCode}/${thana.thanaCode}`}
-                      >
-                        View
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            <div>
-              <div className="bg-light px-3 py-2 rounded text-success">
-                Total: {sortedData?.length}
-                <span>
-                  | {paginatedData.length} of {sortedData?.length}
-                </span>
-                <span>
-                  | Page {currentPage} of{" "}
-                  {Math.ceil(sortedData?.length / usersPerPage || 0)}
-                </span>
-              </div>
-              <ul className="pagination justify-content-end">
-                {/* Previous Button */}
-                <li
-                  className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
-                >
-                  <button
-                    className="page-link text-success"
-                    onClick={() => setCurrentPage(currentPage - 1)}
-                    disabled={currentPage === 1}
+            <TableContainer component={Paper} variant="outlined">
+              <Table size="small">
+                <TableHead>
+                  <TableRow
+                    sx={{
+                      bgcolor: "primary.main",
+                      "& th": {
+                        color: "white",
+                        fontWeight: "bold",
+                        cursor: "pointer",
+                      },
+                    }}
                   >
-                    Previous
-                  </button>
-                </li>
+                    <TableCell onClick={() => handleSort("thanaCode")}>
+                      Thana Code{sortIndicator("thanaCode")}
+                    </TableCell>
+                    <TableCell onClick={() => handleSort("userName")}>
+                      Thana Name{sortIndicator("userName")}
+                    </TableCell>
+                    {questions?.map((question, index) => (
+                      <TableCell
+                        key={index}
+                        onClick={() => handleSort(question.questionText)}
+                      >
+                        {question?.questionText}
+                        {sortIndicator(question.questionText)}
+                      </TableCell>
+                    ))}
+                    <TableCell>Action</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {/* Total Row */}
+                  <TableRow
+                    sx={{
+                      bgcolor: "primary.main",
+                      "& th, & td": { color: "white", fontWeight: "bold" },
+                    }}
+                  >
+                    <TableCell
+                      colSpan={2}
+                      sx={{ color: "white", fontWeight: "bold" }}
+                    >
+                      Total
+                    </TableCell>
+                    {totalData?.length > 0 ? (
+                      totalData?.map((element, index) => (
+                        <TableCell
+                          sx={{ color: "white", fontWeight: "bold" }}
+                          key={index}
+                        >
+                          {element ? element[index] : 0}
+                        </TableCell>
+                      ))
+                    ) : (
+                      <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                        0
+                      </TableCell>
+                    )}
+                    <TableCell>
+                      <LockIcon sx={{ color: "error.main" }} />
+                    </TableCell>
+                  </TableRow>
 
-                {/* Page Numbers */}
+                  {/* Data Rows */}
+                  {paginatedData.map((thana, thanaIndex) => (
+                    <TableRow
+                      key={thanaIndex}
+                      hover
+                      sx={{ "&:hover": { bgcolor: "action.hover" } }}
+                    >
+                      <TableCell sx={{ textAlign: "center" }}>
+                        {thana.thanaCode}
+                      </TableCell>
+                      <TableCell sx={{ textAlign: "center" }}>
+                        {thana.userName}
+                      </TableCell>
+                      {questions?.map((question, qIndex) => (
+                        <TableCell
+                          key={`${thanaIndex}-${qIndex}`}
+                          sx={{ textAlign: "center" }}
+                        >
+                          {thana?.[question.questionText] || 0}
+                        </TableCell>
+                      ))}
+                      <TableCell sx={{ textAlign: "center" }}>
+                        <IconButton
+                          component={Link}
+                          to={`/dashboard/sums-Totol-day-thana-data/${qId}/${thana?.zonalCode}/${thana?.branchCode}/${thana.thanaCode}`}
+                          color="primary"
+                          size="small"
+                        >
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+
+            {/* Pagination Info & Controls */}
+            <Box sx={{ mt: 2 }}>
+              <Paper variant="outlined" sx={{ p: 1, mb: 1 }}>
+                <Typography variant="body2" sx={{ color: "primary.main" }}>
+                  Total: {sortedData?.length}
+                  <Typography component="span" sx={{ mx: 1 }}>|</Typography>
+                  {paginatedData.length} of {sortedData?.length}
+                  <Typography component="span" sx={{ mx: 1 }}>|</Typography>
+                  Page {currentPage} of{" "}
+                  {Math.ceil(sortedData?.length / usersPerPage || 0)}
+                </Typography>
+              </Paper>
+
+              <Stack direction="row" spacing={1} justifyContent="flex-end">
+                <Button
+                  size="small"
+                  variant="outlined"
+                  disabled={currentPage === 1}
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                >
+                  Previous
+                </Button>
+
                 {pages.map((page, index, arr) => (
                   <React.Fragment key={page}>
                     {index > 0 && page !== arr[index - 1] + 1 && (
-                      <li className="page-item disabled">
-                        <span className="page-link">...</span>
-                      </li>
+                      <Button size="small" disabled>
+                        ...
+                      </Button>
                     )}
-                    <li
-                      className={`page-item ${
-                        currentPage === page ? "active" : ""
-                      }`}
+                    <Button
+                      size="small"
+                      variant={currentPage === page ? "contained" : "outlined"}
+                      onClick={() => setCurrentPage(page)}
                     >
-                      <button
-                        className="page-link"
-                        onClick={() => setCurrentPage(page)}
-                      >
-                        {page}
-                      </button>
-                    </li>
+                      {page}
+                    </Button>
                   </React.Fragment>
                 ))}
 
-                {/* Next Button */}
-                <li
-                  className={`page-item ${
-                    currentPage === totalPages ? "disabled" : ""
-                  }`}
+                <Button
+                  size="small"
+                  variant="outlined"
+                  disabled={currentPage === totalPages}
+                  onClick={() => setCurrentPage(currentPage + 1)}
                 >
-                  <button
-                    className="page-link text-success"
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                  >
-                    Next
-                  </button>
-                </li>
-              </ul>
-            </div>
+                  Next
+                </Button>
+              </Stack>
+            </Box>
           </>
         ) : (
-          <div>
-            <Loader />
-          </div>
+          <Loader />
         )}
-      </div>
+      </Paper>
     </>
   );
 };

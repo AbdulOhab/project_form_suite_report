@@ -1,36 +1,40 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Box, Container, Paper, Typography, TextField, Button, Alert, Snackbar, Collapse, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { AuthContext } from "../contexts/AuthContext";
 import BASE_URL from "../auth/dbUrl";
-import SweetAlert from "../dashboard/time/SweetAlert";
 
 const Login = () => {
-  const [formErrors, setFormErrors] = useState();
+  const [formErrors, setFormErrors] = useState({});
+  const [snackbar, setSnackbar] = useState({ open: false, severity: "success", message: "" });
   const { checkAuth, setcheckAuth } = useContext(AuthContext);
 
   const navigate = useNavigate();
+
   useEffect(() => {
     const storedPath = sessionStorage.getItem("authPrevlink") || "/dashboard";
     const pathName = window?.authPrevlink?.pathname || storedPath;
 
     if (checkAuth?.isAuth && pathName) {
       navigate(pathName);
-      sessionStorage.setItem("authPrevlink", pathName); // Store the last visited path
+      sessionStorage.setItem("authPrevlink", pathName);
     } else if (checkAuth?.isAuth) {
       navigate("/dashboard");
     } else {
       navigate("/login");
     }
-
-    // Optionally, remove the global variable if no longer needed
-    // delete window.authPrevlink;
   }, [checkAuth, navigate]);
+
+  const handleCloseSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
 
   async function submitHandler(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
 
-    setFormErrors({}); // Initialize formErrors as an empty object
+    setFormErrors({});
 
     await fetch(`${BASE_URL}/submit`, {
       method: "POST",
@@ -53,14 +57,7 @@ const Login = () => {
             if (!tempError[e.path]) {
               tempError[e.path] = [];
             }
-            tempError[e.path].push(
-              <li
-                key={index}
-                className="alert alert-danger mt-1 text-center fw-bold text-capitalize"
-              >
-                {e.msg}
-              </li>
-            );
+            tempError[e.path].push(e.msg);
           });
           setFormErrors(tempError);
         }
@@ -70,86 +67,99 @@ const Login = () => {
             isAuth: true,
             gsmToken: res.data.token,
           });
-          SweetAlert({
-            icon: "success",
-            message: res.data.message,
-          });
+          setSnackbar({ open: true, severity: "success", message: res.data.message });
         } else if (res.status === 404) {
-          SweetAlert({
-            icon: "error",
-            message: res.data.message,
-          });
+          setSnackbar({ open: true, severity: "error", message: res.data.message });
         } else {
-          SweetAlert({
-            icon: "error",
-            message: res.data.errors[0].msg,
-          });
+          setSnackbar({ open: true, severity: "error", message: res.data.errors[0].msg });
         }
       })
       .catch((err) => {
         console.log(err, "error");
-        SweetAlert({
-          icon: "error",
-          message: err.message,
-        });
+        setSnackbar({ open: true, severity: "error", message: err.message });
       });
   }
 
   return (
     <>
       {!checkAuth?.isAuth ? (
-        <div className="loginPage">
-          <div className="container">
-            <div className="col-lg-6 col-md-6 col-ms-12 m-auto">
-              <div className="card shadow rounded my-3">
-                <div className="shadow">
-                  <h3 className="text-center text-success fw-bold  my-4">
-                    Login
-                  </h3>
-                </div>
-                <div className="card-body">
-                  <form
-                    method="POST"
-                    onSubmit={submitHandler}
-                    encType="multipart/form-data"
-                    action="/submit"
-                  >
-                    <div className="form-floating mb-3">
-                      <input
-                        className="form-control"
-                        id="userId"
-                        type="number"
-                        name="userId"
-                        placeholder="userId"
-                      />
-                      <label htmlFor="userId">User ID</label>
-                      <ul className="list-unstyled">{formErrors?.userId}</ul>
-                    </div>
+        <Container maxWidth="sm">
+          <Paper elevation={3} sx={{ p: 4, mt: 8 }}>
+            <Typography variant="h4" align="center" color="primary" fontWeight="bold" gutterBottom>
+              রিপোর্ট সেন্টার
+            </Typography>
+            <Typography variant="subtitle1" align="center" color="text.secondary" sx={{ mb: 3 }}>
+              Login to your account
+            </Typography>
 
-                    <div className="form-floating mb-3">
-                      <input
-                        className="form-control"
-                        id="inputPassword"
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                      />
-                      <label htmlFor="inputPassword">Password</label>
-                      <ul className="list-unstyled">{formErrors?.password}</ul>
-                    </div>
+            <Box component="form" onSubmit={submitHandler} encType="multipart/form-data" noValidate>
+              <TextField
+                fullWidth
+                id="userId"
+                name="userId"
+                label="ইউজার আইডি"
+                type="number"
+                margin="normal"
+                variant="outlined"
+                placeholder="ইউজার আইডি"
+                error={!!formErrors?.userId?.length}
+                helperText={
+                  formErrors?.userId?.length
+                    ? formErrors.userId.map((msg, i) => (
+                        <span key={i} style={{ display: "block" }}>{msg}</span>
+                      ))
+                    : ""
+                }
+              />
 
-                    <button type="submit" className="btn btn-success float-end">
-                      Submit
-                    </button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
+              <TextField
+                fullWidth
+                id="password"
+                name="password"
+                label="পাসওয়ার্ড"
+                type="password"
+                margin="normal"
+                variant="outlined"
+                placeholder="পাসওয়ার্ড"
+                error={!!formErrors?.password?.length}
+                helperText={
+                  formErrors?.password?.length
+                    ? formErrors.password.map((msg, i) => (
+                        <span key={i} style={{ display: "block" }}>{msg}</span>
+                      ))
+                    : ""
+                }
+              />
+
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                size="large"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                জমা দিন
+              </Button>
+            </Box>
+          </Paper>
+
+          <Snackbar
+            open={snackbar.open}
+            autoHideDuration={4000}
+            onClose={handleCloseSnackbar}
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert
+              onClose={handleCloseSnackbar}
+              severity={snackbar.severity}
+              variant="filled"
+              sx={{ width: "100%" }}
+            >
+              {snackbar.message}
+            </Alert>
+          </Snackbar>
+        </Container>
+      ) : null}
     </>
   );
 };

@@ -1,20 +1,18 @@
 import React from "react";
-import { RotatingLines } from "react-loader-spinner";
+import { CircularProgress, Box } from "@mui/material";
+
 const Loader = () => {
   return (
-    <div className="w-25 m-auto my-5">
-      <RotatingLines
-        visible={true}
-        height="96"
-        width="96"
-        color="grey"
-        strokeWidth="5"
-        animationDuration="0.75"
-        ariaLabel="rotating-lines-loading"
-        wrapperStyle={{}}
-        wrapperClass=""
-      />
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        my: 5,
+      }}
+    >
+      <CircularProgress size={60} sx={{ color: "#2e7d32" }} />
+    </Box>
   );
 };
 

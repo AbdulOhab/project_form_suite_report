@@ -1,10 +1,7 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
-import Home from "./frontend/Home";
-// import About from "./frontend/About";
-// import Contact from "./frontend/Contact";
 import Login from "./frontend/Login";
-import FrontentLayouts from "./layouts/FrontentLayouts";
-import BackendLayouts from "./layouts/BackendLayouts";
+import PublicLayout from "./layouts/PublicLayout";
+import DashboardLayout from "./layouts/DashboardLayout";
 import Notice from "./dashboard/Notice";
 import NoticeBoard from "./dashboard/NoticeBoard";
 import AuthContextProvider from "./contexts/AuthContext";
@@ -12,7 +9,6 @@ import AuthRoutes from "./routes/AuthRoutes";
 import NoticeTable from "./dashboard/QuestionAnswer";
 import ZonalUsers from "./dashboard/users/ZonalUsers";
 import BranchUsers from "./dashboard/users/BranchUsers";
-// import BranchSubmission from "./dashboard/users/database/BranchSubmission";
 import ZonalSubmission from "./dashboard/users/database/ZonalSubmission";
 import AdminReview from "./dashboard/users/database/AdminReview";
 import Success from "./frontend/Success";
@@ -60,8 +56,8 @@ function App() {
     <AuthContextProvider>
       <HashRouter>
         <Routes>
-          <Route path="/" element={<FrontentLayouts />}>
-            <Route index element={<Home />} />
+          <Route path="/" element={<PublicLayout />}>
+            <Route index element={<Login />} />
             <Route path="login" element={<Login />} />
             <Route path={"success"} element={<Success />} />
           </Route>
@@ -70,7 +66,7 @@ function App() {
             path="dashboard"
             element={
               <AuthRoutes>
-                <BackendLayouts />
+                <DashboardLayout />
               </AuthRoutes>
             }
           >
@@ -78,12 +74,10 @@ function App() {
             <Route path={"notice/:id"} element={<Notice />} />
             <Route path={"notice-edit/:id"} element={<NoticeEditor />} />
             <Route path={"notice-answer/:id"} element={<NoticeTable />} />
-            {/* user csv  file upoloader  path  */}
             <Route path={"upload-user-file"} element={<UploadUserFile />} />
             <Route path={"branch-users"} element={<BranchUsers />} />
             <Route path={"branch-thana/:branchId"} element={<ThanaUsers />} />
             <Route path={"zonal-users"} element={<ZonalUsers />} />
-            {/* zonal ==> branch ==> thana  */}
             <Route
               path={"zonal-branch/:zonalId/branch-thana/:branchId"}
               element={<ZonalBranchThana />}
@@ -92,7 +86,6 @@ function App() {
               path={"zonal-branch/:zonalId"}
               element={<ZonalBranchUsersTable />}
             />
-            {/* user create and update  */}
             <Route path={"create-branch"} element={<BranchUserCreate />} />
             <Route path={"update-branch/:id"} element={<BranchUsersUpdate />} />
             <Route
@@ -114,7 +107,6 @@ function App() {
               path={"update-thana-password/:id"}
               element={<UpdateThanaPassword />}
             />
-            {/* branch data interface  */}
             <Route
               path={"branch-interface/:dayId/:noticeId"}
               element={<BranchUserInterface />}
@@ -131,7 +123,6 @@ function App() {
               path={"branch-data-interface/:id"}
               element={<BranchDataInterface />}
             />
-            {/* thana user data submit and edit and update  */}
             <Route
               path={"thana-empty-answer/:id"}
               element={<ThanaEmptyNotice />}
@@ -144,7 +135,6 @@ function App() {
               path={"thana-submission/:id"}
               element={<ThanaUserInterface />}
             />
-            {/* zonal user data submit and edit and update  */}
             <Route
               path={"zonal-submission/:id"}
               element={<ZonalSubmission />}
@@ -161,7 +151,6 @@ function App() {
               path={"zonal-interface/:dayId/:noticeId"}
               element={<ZonalUserInterface />}
             />
-            {/* admin user data submit and edit and update  */}
             <Route
               path={"admin-data-interface/:id"}
               element={<AdminDataInterface />}
@@ -174,10 +163,6 @@ function App() {
               path={"admin-branch-interface/:dayId/:zonalId/:noticeId"}
               element={<AdminBranchUserInterface />}
             />
-            {/* <Route
-              path={"admin-all-branch-interface/:dayId/:zonalId/:noticeId"}
-              element={<AdminAllBranchUserInterface />}
-            /> */}
             <Route
               path={
                 "admin-data-perDayCount/:dayId/:zonalId/:branchId/:noticeId"
@@ -185,7 +170,6 @@ function App() {
               element={<AdminDataPerDayCount />}
             />
             <Route path={"admin-submission"} element={<AdminReview />} />
-            {/* susms all data  */}
             <Route
               path={"sums-all-zonal-data/:qId"}
               element={<SumsAllZonalData />}
@@ -213,7 +197,7 @@ function App() {
             <Route
               path={"sums-thana-by-branch/:qId/:bId"}
               element={<SumsThanaByBranches />}
-            />{" "}
+            />
             <Route
               path={"sums-day-by-day-branch-data/:qId/:zId/:bId"}
               element={<SumsDayByDayBranchData />}

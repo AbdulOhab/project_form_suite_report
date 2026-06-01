@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import BASE_URL from "../../../auth/dbUrl";
-import Swal from "sweetalert2";
-import SweetAlert from "../../time/SweetAlert";
 
 function RegionalUserCreate() {
   const navigate = useNavigate();
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
+
   function submitHandler(e) {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -18,7 +35,6 @@ function RegionalUserCreate() {
     })
       .then(async (res) => {
         let data = await res.json();
-        
         return {
           status: res.status,
           data,
@@ -26,90 +42,95 @@ function RegionalUserCreate() {
       })
       .then((res) => {
         if (res.status === 200) {
-          SweetAlert({
-            icon: "success",
-            message: res.data,
+          setSnackbar({
+            open: true,
+            message: typeof res.data === "string" ? res.data : "Created successfully",
+            severity: "success",
           });
-          navigate("/dashboard/zonal-users");
+          setTimeout(() => navigate("/dashboard/zonal-users"), 1200);
         } else {
-          SweetAlert({
-            icon: "error",
-            message: res.data,
+          setSnackbar({
+            open: true,
+            message: typeof res.data === "string" ? res.data : "Creation failed",
+            severity: "error",
           });
         }
       });
   }
+
   return (
-    <div className="col-md-5 col-lg-5 col-sm-12 m-auto ">
-      <div className="my-5">
-        <div className=" p-1 rounded">
-          <div className="card shadow ">
-            <div className="card-header bg-secondary bg-opacity-75 border border-5 border-light">
-              <h1 className="text-center text-uppercase text-highlight bg-success rounded">
-                Crate Regional
-              </h1>
-            </div>
-            <div className="card-body bg-body-secondary  border border-5 border-light">
-              <form onSubmit={submitHandler}>
-                <div className="form-group">
-                  {/* <label htmlFor="email">Email address</label> */}
-                  <input
-                    type="number"
-                    name="userId"
-                    className="form-control"
-                    id="userId"
-                    placeholder="Enter user ID"
-                    required
-                  />
-                </div>
-                <div className="form-group mt-3">
-                  {/* <label htmlFor="password">Password</label> */}
-                  <input
-                    type="password"
-                    name="password"
-                    className="form-control"
-                    id="password"
-                    placeholder="Password"
-                    required
-                  />
-                </div>
+    <Box sx={{ maxWidth: 500, mx: "auto", my: 5 }}>
+      <Paper elevation={3} sx={{ borderRadius: 2, overflow: "hidden" }}>
+        <Box sx={{ bgcolor: "#2e7d32", p: 2 }}>
+          <Typography
+            variant="h5"
+            sx={{ textAlign: "center", color: "#fff", fontWeight: "bold" }}
+          >
+            Create Regional
+          </Typography>
+        </Box>
+        <Box sx={{ p: 3, bgcolor: "grey.50" }}>
+          <form onSubmit={submitHandler}>
+            <TextField
+              fullWidth
+              type="number"
+              name="userId"
+              label="User ID"
+              placeholder="Enter User ID"
+              required
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              type="password"
+              name="password"
+              label="Password"
+              placeholder="Password"
+              required
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              type="text"
+              name="userName"
+              label="User Name"
+              placeholder="User Name"
+              required
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              type="number"
+              name="zonalCode"
+              label="Zonal Code"
+              placeholder="Zonal Code"
+              required
+              sx={{ mb: 2 }}
+            />
+            <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
+              <Button type="submit" variant="contained" color="primary">
+                Create
+              </Button>
+            </Box>
+          </form>
+        </Box>
+      </Paper>
 
-                <div className="form-group mt-3">
-                  {/* <label htmlFor="userName">User Name</label> */}
-                  <input
-                    type="text"
-                    name="userName"
-                    className="form-control"
-                    id="userName"
-                    placeholder="User Name"
-                    required
-                  />
-                </div>
-
-                <div className="form-group mt-3">
-                  {/* <label htmlFor="zonalCode">Zonal Code</label> */}
-                  <input
-                    type="number"
-                    name="zonalCode"
-                    className="form-control"
-                    id="zonalCode"
-                    placeholder="Zonal Code"
-                    required
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="btn btn-success text-highlight mt-3 float-end"
-                >
-                  Create
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </Box>
   );
 }
 

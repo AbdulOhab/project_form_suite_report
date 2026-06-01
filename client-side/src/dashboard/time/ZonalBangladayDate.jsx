@@ -1,9 +1,7 @@
 import React from "react";
+import { Box, Typography, Chip } from "@mui/material";
 
 function ZonalBangladayDate({ day, date, totalSubmitted, totalUnsubmitted }) {
-
-    console.log(totalSubmitted, totalUnsubmitted);
-  
   // Mapping for English to Bangla days and months
   const banglaDays = {
     Sun: "রবিবার",
@@ -30,7 +28,6 @@ function ZonalBangladayDate({ day, date, totalSubmitted, totalUnsubmitted }) {
     Dec: "ডিসেম্বর",
   };
 
-  // Function to convert numbers to Bengali digits
   const convertToBengaliNumber = (number) => {
     const bengaliNumbers = {
       0: "০",
@@ -61,31 +58,50 @@ function ZonalBangladayDate({ day, date, totalSubmitted, totalUnsubmitted }) {
     const banglaMonth = banglaMonths[month];
 
     return `${banglaDay}, ${dateNum} ${banglaMonth} ${year}`;
-  }; // Example date string
+  };
 
   const data = new Date(date);
   const banglaFormattedDate = getBanglaFormattedDate(data);
   const currentDayNotice = convertToBengaliNumber(day);
+
   return (
-    <div className="d-flex align-items-center justify-content-between my-3">
-      <div className="">
-        <span className="p-2 border border-primary text-success border-2  fw-bold">
-          Submited: &nbsp;{totalSubmitted}
-        </span>
-      </div>
-      <div className="">
-        <h3 className="text-center text-success fw-bold">
-          দিন {currentDayNotice}
-          {", "}
-          {banglaFormattedDate}
-        </h3>
-      </div>
-      <div className="">
-        <span className="p-2 border border-primary text-success border-2 fw-bold float-end">
-          UnSubmited:&nbsp;{totalUnsubmitted}
-        </span>
-      </div>
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        my: 3,
+      }}
+    >
+      <Chip
+        label={`Submited: ${totalSubmitted}`}
+        variant="outlined"
+        sx={{
+          p: 1,
+          borderColor: "primary.main",
+          color: "success.main",
+          fontWeight: "bold",
+          borderWidth: 2,
+        }}
+      />
+      <Typography
+        variant="h6"
+        sx={{ textAlign: "center", color: "success.main", fontWeight: "bold" }}
+      >
+        দিন {currentDayNotice}, {banglaFormattedDate}
+      </Typography>
+      <Chip
+        label={`UnSubmited: ${totalUnsubmitted}`}
+        variant="outlined"
+        sx={{
+          p: 1,
+          borderColor: "primary.main",
+          color: "success.main",
+          fontWeight: "bold",
+          borderWidth: 2,
+        }}
+      />
+    </Box>
   );
 }
 

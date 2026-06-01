@@ -2,6 +2,17 @@ import React, { useEffect, useState } from "react";
 import BranchBangladayDate from "./BranchBangladayDate";
 import { useParams } from "react-router-dom";
 import Loader from "./Loader";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  Box,
+} from "@mui/material";
 
 function ZonalDataPerDayInterface({
   startDadeline,
@@ -12,7 +23,6 @@ function ZonalDataPerDayInterface({
   branchName,
 }) {
   const { dayId } = useParams();
- 
 
   const [dateList, setDateList] = useState([]);
   const [countUnSubmit, setCountUnSubmit] = useState(0);
@@ -38,14 +48,12 @@ function ZonalDataPerDayInterface({
   useEffect(() => {
     const generateDateList = (start, range) => {
       const startDate = new Date(start);
-
       const dates = [];
       for (let i = 0; i < range; i++) {
         const currentDate = new Date(startDate);
         currentDate.setDate(startDate.getDate() + i);
         dates.push(currentDate);
       }
-
       return dates;
     };
 
@@ -86,14 +94,12 @@ function ZonalDataPerDayInterface({
           bValue = bAnswer ? bAnswer.data : "";
         }
 
-        // If the values are numbers, compare them numerically
         if (!isNaN(aValue) && !isNaN(bValue)) {
           return sortConfig.direction === "ascending"
             ? aValue - bValue
             : bValue - aValue;
         }
 
-        // If the values are not numbers, compare them as strings
         return sortConfig.direction === "ascending"
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue);
@@ -117,75 +123,84 @@ function ZonalDataPerDayInterface({
                   dataUnSubmit={countUnSubmit}
                   dataSubmit={countSubmit}
                 />
-                <h6 className="text-success fw-bold">
-                  Branch Name: {branchName?.userName}
-                </h6>
-                <table
-                  className="table table-striped table-hover table-bordered table-responsive"
-                  border={1}
+                <Typography
+                  variant="subtitle1"
+                  sx={{ color: "success.main", fontWeight: "bold" }}
                 >
-                  <thead>
-                    <tr className="text-center bg-primary">
-                      <th onClick={() => handleSort("thanaCode")}>
-                        Thana Code{" "}
-                        {sortConfig.key === "thanaCode" &&
-                          (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                      </th>
-                      <th onClick={() => handleSort("userName")}>
-                        Thana Name{" "}
-                        {sortConfig.key === "userName" &&
-                          (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                      </th>
-                      {questions?.map((question, index) => (
-                        <th
-                          key={index}
-                          onClick={() => handleSort(question.questionText)}
+                  Branch Name: {branchName?.userName}
+                </Typography>
+                <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
+                  <Table size="small" border={1}>
+                    <TableHead>
+                      <TableRow sx={{ bgcolor: "primary.main", textAlign: "center" }}>
+                        <TableCell
+                          sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                          onClick={() => handleSort("thanaCode")}
                         >
-                          {question?.questionText}{" "}
-                          {sortConfig.key === question.questionText &&
-                            (sortConfig.direction === "ascending"
-                              ? " ▲"
-                              : " ▼")}
-                        </th>
+                          Thana Code{" "}
+                          {sortConfig.key === "thanaCode" &&
+                            (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
+                        </TableCell>
+                        <TableCell
+                          sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                          onClick={() => handleSort("userName")}
+                        >
+                          Thana Name{" "}
+                          {sortConfig.key === "userName" &&
+                            (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
+                        </TableCell>
+                        {questions?.map((question, index) => (
+                          <TableCell
+                            sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                            key={index}
+                            onClick={() => handleSort(question.questionText)}
+                          >
+                            {question?.questionText}{" "}
+                            {sortConfig.key === question.questionText &&
+                              (sortConfig.direction === "ascending"
+                                ? " ▲"
+                                : " ▼")}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow sx={{ bgcolor: "info.main", textAlign: "center" }}>
+                        <TableCell sx={{ color: "error.main", textAlign: "center" }}></TableCell>
+                        <TableCell sx={{ color: "error.main", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
+                        {totalData.length
+                          ? totalData?.map((value, index) => (
+                              <TableCell sx={{ color: "error.main", textAlign: "center" }} key={index}>
+                                {value[index]}
+                              </TableCell>
+                            ))
+                          : questions.map((_, index) => (
+                              <TableCell sx={{ color: "error.main", textAlign: "center" }} key={index}>
+                                0
+                              </TableCell>
+                            ))}
+                      </TableRow>
+                    </TableBody>
+                    <TableBody>
+                      {sortedData.map((thana, thanaIndex) => (
+                        <TableRow key={thanaIndex} sx={{ textAlign: "center", "&:hover": { bgcolor: "action.hover" } }}>
+                          <TableCell sx={{ textAlign: "center" }}>{thana.thanaCode}</TableCell>
+                          <TableCell sx={{ textAlign: "center" }}>{thana.userName}</TableCell>
+                          {questions?.map((question, qIndex) => {
+                            const answer = thana?.answer?.answers?.find(
+                              (ans) => ans.questionText === question.questionText
+                            );
+                            return (
+                              <TableCell key={`${thanaIndex}-${qIndex}`} sx={{ textAlign: "center" }}>
+                                {answer ? answer.data : ""}
+                              </TableCell>
+                            );
+                          })}
+                        </TableRow>
                       ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="text-center bg-info fs-5">
-                      <th className="text-danger"></th>
-                      <th className="text-danger">Total</th>
-                      {totalData.length
-                        ? totalData?.map((value, index) => (
-                            <th className="text-danger fs-6" key={index}>
-                              {value[index]}
-                            </th>
-                          ))
-                        : questions.map((value, index) => (
-                            <th className="text-danger fs-6" key={index}>
-                              0
-                            </th>
-                          ))}
-                    </tr>
-                  </tbody>
-                  <tbody className="bg-white">
-                    {sortedData.map((thana, thanaIndex) => (
-                      <tr key={thanaIndex} className="text-center">
-                        <td>{thana.thanaCode}</td>
-                        <td>{thana.userName}</td>
-                        {questions?.map((question, qIndex) => {
-                          const answer = thana?.answer?.answers?.find(
-                            (ans) => ans.questionText === question.questionText
-                          );
-                          return (
-                            <td key={`${thanaIndex}-${qIndex}`}>
-                              {answer ? answer.data : ""}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </React.Fragment>
             );
           } else {

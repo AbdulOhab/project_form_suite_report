@@ -2,6 +2,17 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ZonalBangladayDate from "../../time/ZonalBangladayDate";
 import Loader from "../../time/Loader";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Box,
+} from "@mui/material";
 
 function AdminBranchDayCount({
   startDadeline,
@@ -18,7 +29,6 @@ function AdminBranchDayCount({
     key: null,
     direction: "ascending",
   });
-
 
   useEffect(() => {
     const generateDateList = (start, range) => {
@@ -38,7 +48,6 @@ function AdminBranchDayCount({
     }
   }, [startDadeline, range]);
 
-  // console.log(branchData);
   const handleSort = (key) => {
     let direction = "ascending";
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
@@ -54,7 +63,6 @@ function AdminBranchDayCount({
       sortableData.sort((a, b) => {
         let aValue, bValue;
 
-        // Check if sorting key is a predefined column or dynamic question
         if (
           sortConfig.key === "branchCode" ||
           sortConfig.key === "userName" ||
@@ -65,33 +73,28 @@ function AdminBranchDayCount({
           aValue = a[sortConfig.key];
           bValue = b[sortConfig.key];
         } else {
-          // Sort by question values dynamically
-          aValue = a[sortConfig.key] || 0; // Default to 0 if key doesn't exist
+          aValue = a[sortConfig.key] || 0;
           bValue = b[sortConfig.key] || 0;
         }
 
-        // Handle numeric sorting
         if (!isNaN(aValue) && !isNaN(bValue)) {
           return sortConfig.direction === "ascending"
             ? aValue - bValue
             : bValue - aValue;
         }
 
-        // Handle string sorting
         if (typeof aValue === "string" && typeof bValue === "string") {
           return sortConfig.direction === "ascending"
             ? aValue.localeCompare(bValue)
             : bValue.localeCompare(aValue);
         }
 
-        return 0; // Default case for undefined or mixed data
+        return 0;
       });
     }
 
     return sortableData;
   }, [tempData, sortConfig]);
-
-  // console.log(sortedData);
 
   return (
     <>
@@ -108,100 +111,119 @@ function AdminBranchDayCount({
                   totalUnsubmitted={totalUnsubmit}
                   totalSubmitted={totalSubmit}
                 />
-                <table
-                  className="table table-hover table-bordered table-responsive"
-                  border={1}
-                >
-                  <thead>
-                    <tr className="text-center bg-primary ">
-                      <th onClick={() => handleSort("branchCode")}>
-                        Branch Code
-                        {sortConfig.key === "branchCode" &&
-                          (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                      </th>
-                      <th onClick={() => handleSort("userName")}>
-                        Branch Name
-                        {sortConfig.key === "userName" &&
-                          (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                      </th>
-                      <th onClick={() => handleSort("totalThana")}>
-                        Total Thana
-                        {sortConfig.key === "totalThana" &&
-                          (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                      </th>
-                      <th onClick={() => handleSort("thanaAnsSubmit")}>
-                        Submit
-                        {sortConfig.key === "thanaAnsSubmit" &&
-                          (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                      </th>
-                      <th onClick={() => handleSort("thanaAnsUnsubmit")}>
-                        Unsubmit
-                        {sortConfig.key === "thanaAnsUnsubmit" &&
-                          (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                      </th>
-
-                      {questions?.map((question, index) => (
-                        <th
-                          key={index}
-                          onClick={() => handleSort(question.questionText)} // Pass question text as key
+                <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
+                  <Table size="small" border={1}>
+                    <TableHead>
+                      <TableRow sx={{ bgcolor: "primary.main", textAlign: "center" }}>
+                        <TableCell
+                          sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                          onClick={() => handleSort("branchCode")}
                         >
-                          {question?.questionText}
-                          {sortConfig.key === question.questionText &&
-                            (sortConfig.direction === "ascending"
-                              ? " ▲"
-                              : " ▼")}
-                        </th>
-                      ))}
-
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="text-center bg-primary fs-5">
-                      <th colSpan={5} className="text-light">
-                        Total
-                      </th>
-                      {totalData.length
-                        ? totalData?.map((value, index) => (
-                            <th className="text-light fs-6" key={index}>
-                              {value[index]}
-                            </th>
-                          ))
-                        : questions.map((value, index) => (
-                            <th className="text-light fs-6" key={index}>
-                              0
-                            </th>
-                          ))}
-                      <th className="text-danger">
-                        <i className="fa fa-lock" aria-hidden="true"></i>
-                      </th>
-                    </tr>
-                  </tbody>
-                  <tbody className="bg-white">
-                    {sortedData.map((branch, branchIndex) => (
-                      <tr key={branchIndex} className="text-center">
-                        <td>{branch.branchCode}</td>
-                        <td>{branch.userName}</td>
-                        <td>{branch.totalThana}</td>
-                        <td>{branch.submit}</td>
-                        <td>{branch.unsubmit}</td>
-                        {questions?.map((question, qIndex) => (
-                          <td key={`${branchIndex}-${qIndex}`}>
-                            {branch?.[question.questionText] || 0}
-                          </td>
-                        ))}
-                        <td>
-                          <Link
-                            to={`/dashboard/admin-data-perDayCount/${dayId}/${branch?.zonalCode}/${branch?.branchCode}/${noticeId}`}
-                            className="btn btn-success"
+                          Branch Code
+                          {sortConfig.key === "branchCode" &&
+                            (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
+                        </TableCell>
+                        <TableCell
+                          sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                          onClick={() => handleSort("userName")}
+                        >
+                          Branch Name
+                          {sortConfig.key === "userName" &&
+                            (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
+                        </TableCell>
+                        <TableCell
+                          sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                          onClick={() => handleSort("totalThana")}
+                        >
+                          Total Thana
+                          {sortConfig.key === "totalThana" &&
+                            (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
+                        </TableCell>
+                        <TableCell
+                          sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                          onClick={() => handleSort("thanaAnsSubmit")}
+                        >
+                          Submit
+                          {sortConfig.key === "thanaAnsSubmit" &&
+                            (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
+                        </TableCell>
+                        <TableCell
+                          sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                          onClick={() => handleSort("thanaAnsUnsubmit")}
+                        >
+                          Unsubmit
+                          {sortConfig.key === "thanaAnsUnsubmit" &&
+                            (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
+                        </TableCell>
+                        {questions?.map((question, index) => (
+                          <TableCell
+                            sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                            key={index}
+                            onClick={() => handleSort(question.questionText)}
                           >
-                            <i className="fas fa-plus" aria-hidden="true"></i>
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                            {question?.questionText}
+                            {sortConfig.key === question.questionText &&
+                              (sortConfig.direction === "ascending"
+                                ? " ▲"
+                                : " ▼")}
+                          </TableCell>
+                        ))}
+                        <TableCell sx={{ color: "common.white", textAlign: "center" }}>Actions</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow sx={{ bgcolor: "primary.main", textAlign: "center" }}>
+                        <TableCell
+                          sx={{ color: "common.white", fontWeight: "bold" }}
+                          colSpan={5}
+                        >
+                          Total
+                        </TableCell>
+                        {totalData.length
+                          ? totalData?.map((value, index) => (
+                              <TableCell sx={{ color: "common.white" }} key={index}>
+                                {value[index]}
+                              </TableCell>
+                            ))
+                          : questions.map((_, index) => (
+                              <TableCell sx={{ color: "common.white" }} key={index}>
+                                0
+                              </TableCell>
+                            ))}
+                        <TableCell sx={{ color: "error.main" }}>
+                          <Box component="span" sx={{ opacity: 0.5 }}>&#128274;</Box>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                    <TableBody>
+                      {sortedData.map((branch, branchIndex) => (
+                        <TableRow key={branchIndex} sx={{ textAlign: "center", "&:hover": { bgcolor: "action.hover" } }}>
+                          <TableCell sx={{ textAlign: "center" }}>{branch.branchCode}</TableCell>
+                          <TableCell sx={{ textAlign: "center" }}>{branch.userName}</TableCell>
+                          <TableCell sx={{ textAlign: "center" }}>{branch.totalThana}</TableCell>
+                          <TableCell sx={{ textAlign: "center" }}>{branch.submit}</TableCell>
+                          <TableCell sx={{ textAlign: "center" }}>{branch.unsubmit}</TableCell>
+                          {questions?.map((question, qIndex) => (
+                            <TableCell key={`${branchIndex}-${qIndex}`} sx={{ textAlign: "center" }}>
+                              {branch?.[question.questionText] || 0}
+                            </TableCell>
+                          ))}
+                          <TableCell sx={{ textAlign: "center" }}>
+                            <Button
+                              variant="contained"
+                              color="success"
+                              size="small"
+                              component={Link}
+                              to={`/dashboard/admin-data-perDayCount/${dayId}/${branch?.zonalCode}/${branch?.branchCode}/${noticeId}`}
+                            >
+                              +
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
               </React.Fragment>
             );
           } else {
