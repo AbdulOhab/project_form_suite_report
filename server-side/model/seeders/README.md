@@ -13,7 +13,8 @@ node server-side/model/seeders/wipeAllSeeder.js
 node server-side/model/seeders/adminSeeder.js
 
 
-cd server-side
+
+node server-side/model/seeders/wipeAllSeeder.js
 node server-side/model/seeders/zonalSeeder.js    
 node server-side/model/seeders/branchSeeder.js
 node server-side/model/seeders/adminSeeder.js    
