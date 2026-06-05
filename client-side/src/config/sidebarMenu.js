@@ -9,6 +9,7 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import HomeIcon from "@mui/icons-material/Home";
 import DataUsageIcon from "@mui/icons-material/DataUsage";
 import SubmitAnswerIcon from "@mui/icons-material/Assignment";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 
 const menuConfig = {
   admin: [
@@ -19,8 +20,8 @@ const menuConfig = {
       path: "/dashboard/notice/new",
     },
     {
-      label: "Create Users",
-      icon: <PersonAddIcon />,
+      label: "User Management",
+      icon: <ManageAccountsIcon />,
       children: [
         {
           label: "Upload CSV File",
@@ -42,12 +43,6 @@ const menuConfig = {
           icon: <PersonAddIcon />,
           path: "/dashboard/create-thana",
         },
-      ],
-    },
-    {
-      label: "Users List",
-      icon: <GroupIcon />,
-      children: [
         {
           label: "Zonal Users",
           icon: <PeopleIcon />,

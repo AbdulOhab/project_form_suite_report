@@ -20,7 +20,7 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import HomeIcon from "@mui/icons-material/Home";
 
-const DRAWER_WIDTH = 260;
+const DRAWER_WIDTH = 240;
 
 const SidebarContent = ({ role, onClose, isMobile }) => {
   const location = useLocation();
@@ -34,7 +34,7 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
 
   const isActive = (path) => {
     if (!path) return false;
-    return location.pathname.includes(path.split("/").pop());
+    return location.pathname === path;
   };
 
   const handleNavigate = (path) => {
@@ -44,9 +44,9 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
 
   return (
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <Toolbar>
+      <Toolbar variant="dense" sx={{ minHeight: 44, px: 2 }}>
         <Typography
-          variant="h6"
+          variant="subtitle1"
           sx={{ fontWeight: 700, color: "primary.main", flexGrow: 1 }}
         >
           Instance Report
@@ -54,25 +54,26 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
       </Toolbar>
       <Divider />
 
-      <List sx={{ flex: 1, px: 1, py: 1 }}>
+      <List sx={{ flex: 1, px: 0.75, py: 0.5 }}>
         {menuItems.map((item) => {
           if (item.children) {
             return (
-              <Box key={item.label} sx={{ mb: 0.5 }}>
+              <Box key={item.label} sx={{ mb: 0.25 }}>
                 <ListItem disablePadding>
                   <ListItemButton
                     onClick={() => toggleGroup(item.label)}
                     sx={{
-                      borderRadius: 2,
+                      borderRadius: 1,
+                      py: 0.75,
                       "&:hover": { bgcolor: "primary.light", color: "#fff", "& .MuiListItemIcon-root": { color: "#fff" } },
                     }}
                   >
-                    <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
-                    <ListItemText primary={item.label} />
+                    <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.label} primaryTypographyProps={{ fontSize: "0.875rem" }} />
                     {openGroups[item.label] ? (
-                      <ExpandLessIcon />
+                      <ExpandLessIcon fontSize="small" />
                     ) : (
-                      <ExpandMoreIcon />
+                      <ExpandMoreIcon fontSize="small" />
                     )}
                   </ListItemButton>
                 </ListItem>
@@ -81,13 +82,14 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
                   timeout="auto"
                   unmountOnExit
                 >
-                  <List component="div" disablePadding sx={{ pl: 2 }}>
+                  <List component="div" disablePadding sx={{ pl: 1.5 }}>
                     {item.children.map((child) => (
                       <ListItem key={child.label} disablePadding>
                         <ListItemButton
                           onClick={() => handleNavigate(child.path)}
                           sx={{
-                            borderRadius: 2,
+                            borderRadius: 1,
+                            py: 0.5,
                             bgcolor: isActive(child.path)
                               ? "primary.light"
                               : "transparent",
@@ -101,7 +103,7 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
                         >
                           <ListItemIcon
                             sx={{
-                              minWidth: 36,
+                              minWidth: 32,
                               color: isActive(child.path) ? "#fff" : "inherit",
                             }}
                           >
@@ -109,7 +111,7 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
                           </ListItemIcon>
                           <ListItemText
                             primary={child.label}
-                            primaryTypographyProps={{ fontSize: "0.875rem" }}
+                            primaryTypographyProps={{ fontSize: "0.8125rem" }}
                           />
                         </ListItemButton>
                       </ListItem>
@@ -121,11 +123,12 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
           }
 
           return (
-            <ListItem key={item.label} disablePadding sx={{ mb: 0.5 }}>
+            <ListItem key={item.label} disablePadding sx={{ mb: 0.25 }}>
               <ListItemButton
                 onClick={() => handleNavigate(item.path)}
                 sx={{
-                  borderRadius: 2,
+                  borderRadius: 1,
+                  py: 0.75,
                   bgcolor: isActive(item.path) ? "primary.main" : "transparent",
                   color: isActive(item.path) ? "#fff" : "text.primary",
                   "&:hover": {
@@ -137,13 +140,13 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
               >
                 <ListItemIcon
                   sx={{
-                    minWidth: 40,
+                    minWidth: 36,
                     color: isActive(item.path) ? "#fff" : "inherit",
                   }}
                 >
                   {item.icon}
                 </ListItemIcon>
-                <ListItemText primary={item.label} />
+                <ListItemText primary={item.label} primaryTypographyProps={{ fontSize: "0.875rem" }} />
               </ListItemButton>
             </ListItem>
           );
@@ -151,19 +154,19 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
       </List>
 
       <Divider />
-      <List sx={{ px: 1, py: 1 }}>
+      <List sx={{ px: 0.75, py: 0.5 }}>
         <ListItem disablePadding>
           <ListItemButton
             onClick={() => {
               if (isMobile) onClose();
               navigate("/");
             }}
-            sx={{ borderRadius: 2 }}
+            sx={{ borderRadius: 1, py: 0.75 }}
           >
-            <ListItemIcon sx={{ minWidth: 40 }}>
+            <ListItemIcon sx={{ minWidth: 36 }}>
               <HomeIcon />
             </ListItemIcon>
-            <ListItemText primary="Back to Home" />
+            <ListItemText primary="Back to Home" primaryTypographyProps={{ fontSize: "0.875rem" }} />
           </ListItemButton>
         </ListItem>
       </List>
@@ -186,6 +189,7 @@ const AppSidebar = ({ role, isOpen, onClose }) => {
         [`& .MuiDrawer-paper`]: {
           width: DRAWER_WIDTH,
           bgcolor: "#fff",
+          borderRadius: 0,
         },
       }}
     >

@@ -19,7 +19,7 @@ const PageNotFound = () => {
         <Paper elevation={3} sx={{ p: 5, textAlign: "center" }}>
           <SentimentDissatisfiedIcon sx={{ fontSize: 120, color: "text.secondary", mb: 2 }} />
           <Typography variant="h3" fontWeight="bold" gutterBottom>
-            ৪০৪ - পেজ পাওয়া যায়নি
+            404 - Page Not Found
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
             The page you are looking for does not exist.

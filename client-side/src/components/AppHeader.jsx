@@ -6,11 +6,8 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Chip,
-  Button,
   Menu,
   MenuItem,
-  Avatar,
   Box,
   useMediaQuery,
   useTheme,
@@ -18,7 +15,6 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 const roleLabels = {
   admin: "Admin",
@@ -49,58 +45,50 @@ const AppHeader = ({ onMenuToggle }) => {
       sx={{
         bgcolor: "primary.main",
         zIndex: (t) => t.zIndex.drawer + 1,
+        borderRadius: 0,
       }}
     >
-      <Toolbar sx={{ gap: 1 }}>
-        <IconButton
-          color="inherit"
-          edge="start"
-          onClick={onMenuToggle}
-          sx={{ mr: 1 }}
-        >
-          <MenuIcon />
-        </IconButton>
+      <Toolbar variant="dense" sx={{ gap: 1, minHeight: 44 }}>
+        {isMobile && (
+          <IconButton
+            color="inherit"
+            edge="start"
+            onClick={onMenuToggle}
+            sx={{ mr: 1 }}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
 
-        <Chip
-          label={roleLabels[role]}
-          size="small"
+        <Box
           sx={{
             bgcolor: "rgba(255,255,255,0.2)",
             color: "#fff",
             fontWeight: 600,
+            px: 1.5,
+            py: 0.5,
+            fontSize: "0.8125rem",
+            lineHeight: 1.5,
           }}
-        />
+        >
+          {roleLabels[role]}
+        </Box>
 
-        {!isMobile && (
-          <Typography
-            variant="body1"
-            sx={{ flexGrow: 1, color: "rgba(255,255,255,0.9)", ml: 1 }}
-          >
-            রিপোর্ট সেন্টারে আপনাকে স্বাগতম
-          </Typography>
-        )}
+        <Box sx={{ flexGrow: 1 }} />
 
-        <Box sx={{ flexGrow: isMobile ? 1 : 0 }} />
-
-        {role === "admin" && (
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{
-              borderColor: "rgba(255,255,255,0.5)",
-              color: "#fff",
-              "&:hover": { borderColor: "#fff", bgcolor: "rgba(255,255,255,0.1)" },
-            }}
-            onClick={() => navigate("/dashboard/notice/new")}
-            startIcon={<AddCircleOutlineIcon />}
-          >
-            Notice
-          </Button>
-        )}
-
-        <IconButton color="inherit" onClick={(e) => setAnchorEl(e.currentTarget)}>
-          <AccountCircleIcon />
-        </IconButton>
+        <Box
+          onClick={(e) => setAnchorEl(e.currentTarget)}
+          sx={{ display: "flex", alignItems: "center", cursor: "pointer", gap: 0.25 }}
+        >
+          <IconButton color="inherit">
+            <AccountCircleIcon />
+          </IconButton>
+          {!isMobile && (
+            <Typography variant="body2" sx={{ color: "#fff", fontWeight: 500 }}>
+              {userName}
+            </Typography>
+          )}
+        </Box>
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
