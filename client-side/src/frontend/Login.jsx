@@ -9,6 +9,7 @@ const Login = () => {
   const [formErrors, setFormErrors] = useState({});
   const [snackbar, setSnackbar] = useState({ open: false, severity: "success", message: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [quickLoading, setQuickLoading] = useState(false);
   const { checkAuth, setcheckAuth } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -30,6 +31,41 @@ const Login = () => {
   const handleCloseSnackbar = () => {
     setSnackbar((prev) => ({ ...prev, open: false }));
   };
+
+  const quickLogin = async (userId, password) => {
+    setQuickLoading(true);
+    setFormErrors({});
+    try {
+      const res = await fetch(`${BASE_URL}/submit`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, password }),
+      });
+      const data = await res.json();
+      if (res.status === 200) {
+        window.localStorage.setItem("gsmToken", data.token);
+        setcheckAuth({ isAuth: true, gsmToken: data.token });
+        setSnackbar({ open: true, severity: "success", message: data.message });
+      } else {
+        setSnackbar({ open: true, severity: "error", message: data.message || "Login failed" });
+      }
+    } catch (err) {
+      setSnackbar({ open: true, severity: "error", message: err.message });
+    } finally {
+      setQuickLoading(false);
+    }
+  };
+
+  const quickUsers = [
+    { label: "Admin 1", userId: "110011", color: "error" },
+    { label: "Admin 2", userId: "110012", color: "error" },
+    { label: "Zonal 1", userId: "201", color: "warning" },
+    { label: "Zonal 2", userId: "202", color: "warning" },
+    { label: "Branch 1", userId: "301", color: "info" },
+    { label: "Branch 2", userId: "302", color: "info" },
+    { label: "Thana 1", userId: "401", color: "success" },
+    { label: "Thana 2", userId: "402", color: "success" },
+  ];
 
   async function submitHandler(e) {
     e.preventDefault();
@@ -151,6 +187,24 @@ const Login = () => {
               >
                 Login
               </Button>
+
+              <Typography variant="caption" display="block" align="center" color="text.secondary" sx={{ mt: 1, mb: 1 }}>
+                — Quick Dev Login —
+              </Typography>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1, justifyContent: "center" }}>
+                {quickUsers.map((u) => (
+                  <Button
+                    key={u.userId}
+                    size="small"
+                    variant="outlined"
+                    color={u.color}
+                    disabled={quickLoading}
+                    onClick={() => quickLogin(u.userId, "1122")}
+                  >
+                    {u.label}
+                  </Button>
+                ))}
+              </Box>
             </Box>
           </Paper>
 
