@@ -52,4 +52,10 @@ router.get(
 );
 router.post("/delete-zonal-users/:id", usersController.deleteZonal);
 
+router.post("/create-admin-users", usersController.createAdmin);
+router.post("/update-admin-users/:id", usersController.updateAdmin);
+router.post("/update-admin-password/:id", usersController.updateAdminPassword);
+router.post("/get-admin-users/:id", usersController.getAdmin);
+router.post("/delete-admin-users/:id", usersController.deleteAdmin);
+
 module.exports = () => router;

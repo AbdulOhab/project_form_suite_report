@@ -34,6 +34,13 @@ const dsashboardController = {
 
     return res.status(200).json(branchUsers);
   },
+  getAllAdminUsers: async (req, res, next) => {
+    const adminUsers = await thanaModel.find({
+      userRole: "admin",
+    });
+
+    return res.status(200).json(adminUsers);
+  },
   //  getAllUsersSubmitData: async (req, res, next) => {
 
   //     let data = await formModel.findOne().where({

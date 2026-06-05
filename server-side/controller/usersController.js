@@ -433,4 +433,111 @@ module.exports = {
       });
     }
   },
+
+  // ===================== ADMIN CRUD =====================
+
+  createAdmin: async (req, res) => {
+    const { userId, password, userName, email } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user_id = await thanaModel.findOne({ userId });
+    const user_name = await thanaModel.findOne({ userName });
+    if (user_name) {
+      return res.status(400).json("User Name Already Exists");
+    } else if (user_id) {
+      return res.status(400).json("User ID Already Exists");
+    } else {
+      let admin = await new thanaModel({
+        userId,
+        password: hashedPassword,
+        userName,
+        email,
+        userRole: "admin",
+      });
+      admin
+        .save()
+        .then(() => {
+          return res.status(200).json("Admin user created successfully");
+        })
+        .catch((error) => {
+          return res.status(500).json({ error: error.message });
+        });
+    }
+  },
+  getAdmin: async (req, res) => {
+    const { id } = req.params;
+    const admin = await thanaModel.findOne({ _id: id, userRole: "admin" });
+    return res.status(200).json(admin);
+  },
+  updateAdmin: async (req, res) => {
+    const { id } = req.params;
+    let data = await thanaModel.findOne({ _id: id, userRole: "admin" });
+    const { userId, userName, email } = req.body;
+
+    if (
+      data.userId === userId &&
+      data.userName === userName &&
+      data.email === email
+    ) {
+      return res.status(400).json("No changes made");
+    }
+
+    if (data) {
+      let userID = await thanaModel.findOne({ userId });
+      let user_name = await thanaModel.findOne({ userName });
+      if (!userID || data.userId === userId) {
+        if (!user_name || data.userName === userName) {
+          await thanaModel
+            .findOneAndUpdate(
+              { _id: id, userRole: "admin" },
+              { userId, userName, email },
+              { new: true }
+            )
+            .then(() => {
+              return res.status(200).json("Updated data successfully");
+            })
+            .catch((error) => {
+              return res.status(500).json({ error: error.message });
+            });
+        } else {
+          return res.status(400).json("User Name Already Exists");
+        }
+      } else {
+        return res.status(400).json("User ID Already Exists");
+      }
+    } else {
+      return res.status(400).json("User not found");
+    }
+  },
+  updateAdminPassword: async (req, res) => {
+    const { id } = req.params;
+    let data = await thanaModel.findOne({ _id: id, userRole: "admin" });
+    if (data) {
+      const { password1, password2 } = req.body;
+      if (password1 === password2) {
+        const hashedPassword = await bcrypt.hash(password1, 10);
+        data.password = hashedPassword;
+        data.save();
+        return res.status(200).json("Updated password successfully");
+      } else {
+        return res.status(400).json("Password does not match");
+      }
+    } else {
+      return res.status(400).json("User not found");
+    }
+  },
+  deleteAdmin: async (req, res) => {
+    let { id } = req.params;
+    let data = await thanaModel.deleteOne({
+      _id: id,
+      userRole: "admin",
+    });
+    if (data.deletedCount) {
+      return res.status(200).json("Deleted successfully");
+    } else {
+      return res.status(400).json({
+        msg: "Failed to delete",
+        data,
+      });
+    }
+  },
 };

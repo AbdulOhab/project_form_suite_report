@@ -29,13 +29,17 @@ import NoticeEditor from "./dashboard/NoticeEditor";
 import BranchUserCreate from "./dashboard/usersCreateUpdate/create/BranchUserCreate";
 import RegionalUserCreate from "./dashboard/usersCreateUpdate/create/RegionalUserCreate";
 import ThanaUsersCreate from "./dashboard/usersCreateUpdate/create/ThanaUsersCreate";
+import UnifiedCreateUser from "./dashboard/usersCreateUpdate/create/UnifiedCreateUser";
+import UnifiedUsersList from "./dashboard/usersCreateUpdate/UnifiedUsersList";
 import BranchUsersUpdate from "./dashboard/usersCreateUpdate/update/BranchUsersUpdate";
 import RegionalUsersUpdate from "./dashboard/usersCreateUpdate/update/RegionalUsersUpdate";
 import ThanaUsersUpdate from "./dashboard/usersCreateUpdate/update/ThanaUsersUpdate";
+import AdminUsersUpdate from "./dashboard/usersCreateUpdate/update/AdminUsersUpdate";
 
 import UpdateRegionalPassword from "./dashboard/usersCreateUpdate/forgetPassword/UpdateRegionalPassword";
 import UpdateBranchPassword from "./dashboard/usersCreateUpdate/forgetPassword/UpdateBranchPassword";
 import UpdateThanaPassword from "./dashboard/usersCreateUpdate/forgetPassword/UpdateThanaPassword";
+import UpdateAdminPassword from "./dashboard/usersCreateUpdate/forgetPassword/UpdateAdminPassword";
 import UploadUserFile from "./dashboard/usersCreateUpdate/UploadUserFile";
 import PageNotFound from "./frontend/PageNotFound";
 import ZonalBranchUsersTable from "./dashboard/users/usersTable/ZonalBranchUsersTable";
@@ -75,6 +79,10 @@ function App() {
             <Route path={"notice-edit/:id"} element={<NoticeEditor />} />
             <Route path={"notice-answer/:id"} element={<NoticeTable />} />
             <Route path={"upload-user-file"} element={<UploadUserFile />} />
+            <Route path={"create-user"} element={<UnifiedCreateUser />} />
+            <Route path={"users-list"} element={<UnifiedUsersList />} />
+            <Route path={"update-admin/:id"} element={<AdminUsersUpdate />} />
+            <Route path={"update-admin-password/:id"} element={<UpdateAdminPassword />} />
             <Route path={"branch-users"} element={<BranchUsers />} />
             <Route path={"branch-thana/:branchId"} element={<ThanaUsers />} />
             <Route path={"zonal-users"} element={<ZonalUsers />} />

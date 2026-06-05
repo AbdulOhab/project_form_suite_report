@@ -58,13 +58,14 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
         {menuItems.map((item) => {
           if (item.children) {
             return (
-              <Box key={item.label} sx={{ mb: 0.25 }}>
+              <Box key={item.label} sx={{ mb: 2 }}>
                 <ListItem disablePadding>
                   <ListItemButton
                     onClick={() => toggleGroup(item.label)}
                     sx={{
                       borderRadius: 1,
                       py: 0.75,
+                      mb: 0.5,
                       "&:hover": { bgcolor: "primary.light", color: "#fff", "& .MuiListItemIcon-root": { color: "#fff" } },
                     }}
                   >
@@ -84,7 +85,7 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
                 >
                   <List component="div" disablePadding sx={{ pl: 1.5 }}>
                     {item.children.map((child) => (
-                      <ListItem key={child.label} disablePadding>
+                      <ListItem key={child.label} disablePadding sx={{ mb: 0.5 }}>
                         <ListItemButton
                           onClick={() => handleNavigate(child.path)}
                           sx={{
@@ -123,7 +124,7 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
           }
 
           return (
-            <ListItem key={item.label} disablePadding sx={{ mb: 0.25 }}>
+            <ListItem key={item.label} disablePadding sx={{ mb: 0.75 }}>
               <ListItemButton
                 onClick={() => handleNavigate(item.path)}
                 sx={{
@@ -151,24 +152,6 @@ const SidebarContent = ({ role, onClose, isMobile }) => {
             </ListItem>
           );
         })}
-      </List>
-
-      <Divider />
-      <List sx={{ px: 0.75, py: 0.5 }}>
-        <ListItem disablePadding>
-          <ListItemButton
-            onClick={() => {
-              if (isMobile) onClose();
-              navigate("/");
-            }}
-            sx={{ borderRadius: 1, py: 0.75 }}
-          >
-            <ListItemIcon sx={{ minWidth: 36 }}>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Back to Home" primaryTypographyProps={{ fontSize: "0.875rem" }} />
-          </ListItemButton>
-        </ListItem>
       </List>
     </Box>
   );
