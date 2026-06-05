@@ -13,7 +13,7 @@ module.exports = {
       }
 
       let jsonArray = await csv().fromFile(req.files?.csvFile?.path);
-      
+
       // Hash passwords in parallel using Promise.all
       jsonArray = await Promise.all(
         jsonArray.map(async (record) => {
@@ -32,92 +32,249 @@ module.exports = {
   },
 
   createThana: async (req, res) => {
-    const { userId, password, userName, thanaCode, branchCode, zonalCode } =
-      req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
+    try {
+      const { userId, password, userName, thanaCode, branchCode, zonalCode } = req.body;
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user_id = await thanaModel.findOne({ userId });
-    const user_name = await thanaModel.findOne({ userName });
-    const branch_code = await thanaModel.findOne({ branchCode, zonalCode });
-    const zonal_code = await thanaModel.findOne({ zonalCode });
-    if (user_name) {
-      return res.status(400).json("User Name Already Exists");
-    } else if (user_id) {
-      return res.status(400).json("User ID Already Exists");
-    } else if (!branch_code) {
-      return res.status(400).json("Branch Code && Zonal Code Does Not Match");
-    } else if (!zonal_code) {
-      return res.status(400).json("Zonal Code Does Not Exists");
-    } else if (zonal_code && branch_code) {
-      let thana = await thanaModel.create({
-        userId,
-        password: hashedPassword,
-        userName,
-        thanaCode,
-        branchCode,
-        zonalCode,
-        userRole: "thana",
-      });
-      thana.save();
-      return res.status(200).json(" User created successfully");
-    } else {
-      return res.status(400).json("Some error occurred!!!");
+      const user_id = await thanaModel.findOne({ userId });
+      const user_name = await thanaModel.findOne({ userName });
+      const branch_code = await thanaModel.findOne({ branchCode, zonalCode });
+      const zonal_code = await thanaModel.findOne({ zonalCode });
+      if (user_name) {
+        return res.status(400).json("User Name Already Exists");
+      } else if (user_id) {
+        return res.status(400).json("User ID Already Exists");
+      } else if (!branch_code) {
+        return res.status(400).json("Branch Code && Zonal Code Does Not Match");
+      } else if (!zonal_code) {
+        return res.status(400).json("Zonal Code Does Not Exists");
+      } else if (zonal_code && branch_code) {
+        let thana = await thanaModel.create({
+          userId,
+          password: hashedPassword,
+          userName,
+          thanaCode,
+          branchCode,
+          zonalCode,
+          userRole: "thana",
+        });
+        thana.save();
+        return res.status(200).json(" User created successfully");
+      } else {
+        return res.status(400).json("Some error occurred!!!");
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
+
   getThana: async (req, res) => {
-    const { branchId } = req.params;
-    const thana = await thanaModel
-      .find({
-        branchCode: branchId,
-        userRole: "thana",
-      })
-      .exec();
-    const branchName = await thanaModel
-      .findOne({
-        branchCode: branchId,
-        userRole: "branch",
-      })
-      .select("userName -_id")
-      .exec();
-    return res.status(200).json({ thana, branchName });
+    try {
+      const { branchId } = req.params;
+      const thana = await thanaModel
+        .find({
+          branchCode: branchId,
+          userRole: "thana",
+        })
+        .exec();
+      const branchName = await thanaModel
+        .findOne({
+          branchCode: branchId,
+          userRole: "branch",
+        })
+        .select("userName -_id")
+        .exec();
+      return res.status(200).json({ thana, branchName });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
   },
 
   getThanaUsersUpdate: async (req, res) => {
-    const { id } = req.params;
-    const thana = await thanaModel.findOne({ _id: id, userRole: "thana" });
-    return res.status(200).json(thana);
-  },
-  updateThana: async (req, res) => {
-    const { id } = req.params;
-
-    let data = await thanaModel.findOne({ _id: id });
-
-    const { userId, userName, thanaCode, branchCode, zonalCode } = req.body;
-    if (
-      data.userId === userId &&
-      data.userName === userName &&
-      data.thanaCode === thanaCode &&
-      data.branchCode === branchCode &&
-      data.zonalCode === zonalCode
-    ) {
-      return res.status(400).json("No change in data");
+    try {
+      const { id } = req.params;
+      const thana = await thanaModel.findOne({ _id: id, userRole: "thana" });
+      return res.status(200).json(thana);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
-    let user_id = await thanaModel.findOne({ userId });
-    const user_name = await thanaModel.findOne({ userName });
-    const thana_code = await thanaModel.findOne({ thanaCode });
-    const branch_code = await thanaModel.findOne({ branchCode });
-    const zonal_code = await thanaModel.findOne({ zonalCode });
+  },
 
-    if (!user_id || data.userId === userId) {
-      if (!user_name || data.userName === userName) {
-        if (thana_code || data.thanaCode === thanaCode || !thana_code) {
+  updateThana: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let data = await thanaModel.findOne({ _id: id });
+      const { userId, userName, thanaCode, branchCode, zonalCode } = req.body;
+      if (
+        data.userId === userId &&
+        data.userName === userName &&
+        data.thanaCode === thanaCode &&
+        data.branchCode === branchCode &&
+        data.zonalCode === zonalCode
+      ) {
+        return res.status(400).json("No change in data");
+      }
+      let user_id = await thanaModel.findOne({ userId });
+      const user_name = await thanaModel.findOne({ userName });
+      const thana_code = await thanaModel.findOne({ thanaCode });
+      const branch_code = await thanaModel.findOne({ branchCode });
+      const zonal_code = await thanaModel.findOne({ zonalCode });
+
+      if (!user_id || data.userId === userId) {
+        if (!user_name || data.userName === userName) {
+          if (thana_code || data.thanaCode === thanaCode || !thana_code) {
+            if (branch_code || data.branchCode === branchCode) {
+              if (zonal_code || data.zonalCode === zonalCode) {
+                await thanaModel
+                  .findOneAndUpdate(
+                    { _id: id },
+                    { userId, userName, branchCode, zonalCode },
+                    { new: true }
+                  )
+                  .then(() => {
+                    return res.status(200).json("Updated data successfully");
+                  })
+                  .catch((err) => {
+                    return res.status(500).json({ error: err.message });
+                  });
+              } else {
+                return res.status(400).json("Zonal Code Not found");
+              }
+            } else {
+              return res.status(400).json("Branch Code not found");
+            }
+          } else {
+            return res.status(400).json("Thana Code have something wrong");
+          }
+        } else {
+          return res.status(400).json("User Name Already Exists");
+        }
+      } else {
+        return res.status(400).json("User ID Already Exists");
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+  updateThanaPassword: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let data = await thanaModel.findOne({ _id: id });
+      if (data) {
+        const { password1, password2 } = req.body;
+        if (password1 === password2) {
+          const hashedPassword = await bcrypt.hash(password1, 10);
+          data.password = hashedPassword;
+          data.save();
+          return res.status(200).json("Updated data successfully");
+        } else {
+          return res.status(400).json("Password does not match");
+        }
+      } else {
+        return res.status(400).json("User not found");
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+  deleteThana: async (req, res) => {
+    try {
+      let { id } = req.params;
+      let data = await thanaModel.deleteOne({ _id: id });
+      if (data.deletedCount) {
+        return res.status(200).json("delete Item");
+      } else {
+        return res.status(400).json({ msg: "does not delete Item", data });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+  createBranch: async (req, res) => {
+    try {
+      const { userId, password, userName, branchCode, zonalCode } = req.body;
+
+      if (!userId || !password || !userName || !branchCode || !zonalCode) {
+        const missing = [];
+        if (!userId) missing.push("User ID");
+        if (!password) missing.push("Password");
+        if (!userName) missing.push("User Name");
+        if (!branchCode) missing.push("Branch Code");
+        if (!zonalCode) missing.push("Zonal Code");
+        return res.status(400).json(`${missing.join(", ")} is required`);
+      }
+
+      const user_id = await thanaModel.findOne({ userId });
+      const user_name = await thanaModel.findOne({ userName });
+      const branch_code = await thanaModel.findOne({ branchCode, userRole: "branch" });
+      const zonal_exists = await thanaModel.findOne({ zonalCode, userRole: "zonal" });
+
+      if (user_name) {
+        return res.status(400).json("User Name Already Exists");
+      } else if (user_id) {
+        return res.status(400).json("User ID Already Exists");
+      } else if (branch_code) {
+        return res.status(400).json("Branch Code Already Exists");
+      } else if (!zonal_exists) {
+        return res.status(400).json("Zonal Code does not exist. Create the zonal first.");
+      }
+
+      const hashedPassword = await bcrypt.hash(String(password), 10);
+      const user = new thanaModel({
+        userId: Number(userId),
+        password: hashedPassword,
+        userName,
+        branchCode: Number(branchCode),
+        zonalCode: Number(zonalCode),
+        userRole: "branch",
+      });
+
+      await user.save();
+      return res.status(200).json("Branch user created successfully");
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+  getBranch: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const branch = await thanaModel.findOne({ _id: id, userRole: "branch" });
+      return res.status(200).json(branch);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+  updateBranch: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let data = await thanaModel.findOne({ _id: id, userRole: "branch" });
+      const { userId, userName, branchCode, zonalCode } = req.body;
+      const user_id = await thanaModel.findOne({ userId });
+      const user_name = await thanaModel.findOne({ userName });
+      const branch_code = await thanaModel.findOne({ branchCode });
+      const zonal_code = await thanaModel.findOne({ zonalCode });
+
+      if (
+        userId === data.userId &&
+        userName === data.userName &&
+        branchCode === data.branchCode &&
+        zonalCode === data.zonalCode
+      ) {
+        return res.status(400).json("Data never changed");
+      }
+
+      if (!user_id || data.userId === userId) {
+        if (!user_name || data.userName === userName) {
           if (branch_code || data.branchCode === branchCode) {
-            if (zonal_code || data.zonalCode === zonalCode) {
+            if (!zonal_code || data.zonalCode === zonalCode) {
               await thanaModel
                 .findOneAndUpdate(
-                  {
-                    _id: id,
-                  },
+                  { _id: id },
                   { userId, userName, branchCode, zonalCode },
                   { new: true }
                 )
@@ -131,365 +288,275 @@ module.exports = {
               return res.status(400).json("Zonal Code Not found");
             }
           } else {
-            return res.status(400).json("Branch Code not found");
+            return res.status(400).json("Branch Code Already Exists");
           }
         } else {
-          return res.status(400).json("Thana Code have something wrong");
+          return res.status(400).json("Branch Name Already Exists");
         }
       } else {
-        return res.status(400).json("User Name Already Exists");
+        return res.status(400).json("User ID Already Exists");
       }
-    } else {
-      return res.status(400).json("User ID Already Exists");
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
 
-  updateThanaPassword: async (req, res) => {
-    const { id } = req.params;
-
-    let data = await thanaModel.findOne({ _id: id });
-
-    if (data) {
-      const { password1, password2 } = req.body;
-
-      if (password1 === password2) {
-        const hashedPassword = await bcrypt.hash(password1, 10);
-        (data.password = hashedPassword), data.save();
-
-        return res.status(200).json("Updated data successfully");
+  updateBranchPassword: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let data = await thanaModel.findOne({ _id: id, userRole: "branch" });
+      if (data) {
+        const { password1, password2 } = req.body;
+        if (password1 === password2) {
+          const hashedPassword = await bcrypt.hash(password1, 10);
+          data.password = hashedPassword;
+          data.save();
+          return res.status(200).json("Updated data successfully");
+        } else {
+          return res.status(400).json("Password does not match");
+        }
       } else {
-        return res.status(400).json("Password does not match");
+        return res.status(400).json("User not found");
       }
-    } else {
-      return res.status(400).json("User not found");
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
 
-  deleteThana: async (req, res) => {
-    let { id } = req.params;
-    let data = await thanaModel.deleteOne({
-      _id: id,
-    });
-    if (data.deletedCount) {
-      return res.status(200).json("delete Item");
-    } else {
-      return res.status(400).json({
-        msg: "does not delete Item",
-        data,
-      });
+  deleteBranch: async (req, res) => {
+    try {
+      let { id } = req.params;
+      let data = await thanaModel.deleteOne({ _id: id, userRole: "branch" });
+      if (data.deletedCount) {
+        return res.status(200).json("delete Item");
+      } else {
+        return res.status(400).json({ msg: "does not delete Item", data });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
 
-  createBranch: async (req, res) => {
-    const { userId, password, userName, branchCode, zonalCode } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user_id = await thanaModel.findOne({ userId });
-    const user_name = await thanaModel.findOne({ userName });
-    const branch_code = await thanaModel.findOne({ branchCode });
-    const zonal_code = await thanaModel.findOne({ zonalCode });
-    if (user_name) {
-      return res.status(400).json("User Name Already Exists");
-    } else if (user_id) {
-      return res.status(400).json("User ID Already Exists");
-    } else if (branch_code) {
-      return res.status(400).json("Branch Code Already Exists");
-    } else if (zonal_code) {
-      let thana = await thanaModel.create({
-        userId,
+  createZonal: async (req, res) => {
+    try {
+      const { userId, password, userName, zonalCode } = req.body;
+
+      if (!userId || !password || !userName || !zonalCode) {
+        const missing = [];
+        if (!userId) missing.push("User ID");
+        if (!password) missing.push("Password");
+        if (!userName) missing.push("User Name");
+        if (!zonalCode) missing.push("Zonal Code");
+        return res.status(400).json(`${missing.join(", ")} is required`);
+      }
+
+      const zonal_code = await thanaModel.findOne({ zonalCode, userRole: "zonal" });
+      const user_name = await thanaModel.findOne({ userName });
+      const user_id = await thanaModel.findOne({ userId });
+
+      if (zonal_code) {
+        return res.status(400).json("Zonal Code Already Exists");
+      } else if (user_name) {
+        return res.status(400).json("User Name Already Exists");
+      } else if (user_id) {
+        return res.status(400).json("User ID Already Exists");
+      }
+
+      const hashedPassword = await bcrypt.hash(String(password), 10);
+      const user = new thanaModel({
+        userId: Number(userId),
         password: hashedPassword,
         userName,
-        branchCode,
-        zonalCode,
-        userRole: "branch",
+        zonalCode: Number(zonalCode),
+        userRole: "zonal",
       });
-      thana.save();
-      return res.status(200).json("Branch user created successfully");
-    } else {
-      return res.status(400).json("Some error occurred!!!");
+
+      await user.save();
+      return res.status(200).json("Zonal user created successfully");
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
-  getBranch: async (req, res) => {
-    const { id } = req.params;
-    const branch = await thanaModel.findOne({ _id: id, userRole: "branch" });
-    return res.status(200).json(branch);
-  },
-  updateBranch: async (req, res) => {
-    const { id } = req.params;
 
-    let data = await thanaModel.findOne({ _id: id, userRole: "branch" });
-    const { userId, userName, branchCode, zonalCode } = req.body;
-    const user_id = await thanaModel.findOne({ userId });
-    const user_name = await thanaModel.findOne({ userName });
-    const branch_code = await thanaModel.findOne({ branchCode });
-    const zonal_code = await thanaModel.findOne({ zonalCode });
-
-    if (
-      userId === data.userId &&
-      userName === data.userName &&
-      branchCode === data.branchCode &&
-      zonalCode === data.zonalCode
-    ) {
-      return res.status(400).json("Data never changed");
+  getZonal: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const thana = await thanaModel.findOne({ _id: id, userRole: "zonal" });
+      return res.status(200).json(thana);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
+  },
 
-    if (!user_id || data.userId === userId) {
-      if (!user_name || data.userName === userName) {
-        if (branch_code || data.branchCode === branchCode) {
-          if (!zonal_code || data.zonalCode === zonalCode) {
+  getBranchByZonal: async (req, res) => {
+    try {
+      const { zonalId } = req.params;
+      const branch = await thanaModel
+        .find({ zonalCode: zonalId, userRole: "branch" })
+        .exec();
+      const zonalName = await thanaModel
+        .findOne({ zonalCode: zonalId, userRole: "zonal" })
+        .select("userName -_id")
+        .exec();
+      return res.status(200).json({ branch, zonalName });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
+  updateZonal: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let data = await thanaModel.findOne({ _id: id, userRole: "zonal" });
+      const { userId, userName, zonalCode } = req.body;
+      if (
+        data.userId === userId &&
+        data.userName === userName &&
+        data.zonalCode === zonalCode
+      ) {
+        return res.status(400).json("No changes made");
+      }
+
+      if (data) {
+        let zoneID = await thanaModel.findOne({ userId });
+        let zone_code = await thanaModel.findOne({ zonalCode });
+        if (!zoneID || data?.userId === userId) {
+          if (data?.zonalCode === zone_code?.zonalCode || !zone_code) {
             await thanaModel
               .findOneAndUpdate(
-                {
-                  _id: id,
-                },
-                { userId, userName, branchCode, zonalCode },
+                { _id: id, userRole: "zonal" },
+                { userId, userName, zonalCode },
                 { new: true }
               )
               .then(() => {
                 return res.status(200).json("Updated data successfully");
               })
-              .catch((err) => {
-                return res.status(500).json({ error: err.message });
+              .catch((error) => {
+                return res.status(500).json({ error: error.message });
               });
           } else {
-            return res.status(400).json("Zonal Code Not found");
+            return res.status(400).json("Zonal Code Already Exists");
           }
         } else {
-          return res.status(400).json("Branch Code Already Exists");
+          return res.status(400).json("User ID Aleardy exists");
         }
       } else {
-        return res.status(400).json("Branch Name Already Exists");
+        return res.status(400).json("User not found");
       }
-    } else {
-      return res.status(400).json("User ID Already Exists");
-    }
-  },
-  updateBranchPassword: async (req, res) => {
-    const { id } = req.params;
-
-    let data = await thanaModel.findOne({ _id: id, userRole: "branch" });
-
-    if (data) {
-      const { password1, password2 } = req.body;
-
-      if (password1 === password2) {
-        const hashedPassword = await bcrypt.hash(password1, 10);
-
-        (data.password = hashedPassword), data.save();
-
-        return res.status(200).json("Updated data successfully");
-      } else {
-        return res.status(400).json("Password does not match");
-      }
-    } else {
-      return res.status(400).json("User not found");
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
 
-  deleteBranch: async (req, res) => {
-    let { id } = req.params;
-    let data = await thanaModel.deleteOne({
-      _id: id,
-      userRole: "branch",
-    });
-    if (data.deletedCount) {
-      return res.status(200).json("delete Item");
-    } else {
-      return res.status(400).json({
-        msg: "does not delete Item",
-        data,
-      });
-    }
-  },
-
-  createZonal: async (req, res) => {
-    const { userId, password, userName, zonalCode } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const zonal_code = await thanaModel.findOne({ zonalCode });
-    const user_name = await thanaModel.findOne({ userName });
-    const user_id = await thanaModel.findOne({ userId });
-    if (zonal_code) {
-      return res.status(400).json("Zonal Code Already Exists");
-    } else if (user_name) {
-      return res.status(400).json("User Name Already Exists");
-    } else if (user_id) {
-      return res.status(400).json("User ID Already Exists");
-    } else {
-      let thana = await new thanaModel({
-        userId,
-        password: hashedPassword,
-        userName,
-        zonalCode,
-        userRole: "zonal",
-      });
-      thana
-        .save()
-        .then(() => {
-          return res.status(200).json("Zonal user created successfully");
-        })
-        .catch((error) => {
-          return res.status(500).json({ error: error.message });
-        });
-    }
-  },
-  getZonal: async (req, res) => {
-    const { id } = req.params;
-    const thana = await thanaModel.findOne({ _id: id, userRole: "zonal" });
-    return res.status(200).json(thana);
-  },
-  getBranchByZonal: async (req, res) => {
-    const { zonalId } = req.params;
-    const branch = await thanaModel
-      .find({
-        zonalCode: zonalId,
-        userRole: "branch",
-      })
-      .exec();
-    const zonalName = await thanaModel
-      .findOne({
-        zonalCode: zonalId,
-        userRole: "zonal",
-      })
-      .select("userName -_id")
-      .exec();
-
-    return res.status(200).json({ branch, zonalName });
-  },
-
-  updateZonal: async (req, res) => {
-    const { id } = req.params;
-
-    let data = await thanaModel.findOne({ _id: id, userRole: "zonal" });
-    const { userId, userName, zonalCode } = req.body;
-    if (
-      data.userId === userId &&
-      data.userName === userName &&
-      data.zonalCode === zonalCode
-    ) {
-      return res.status(400).json("No changes made");
-    }
-
-    if (data) {
-      let zoneID = await thanaModel.findOne({ userId });
-      // let user_name = await thanaModel.findOne({ userName})
-      let zone_code = await thanaModel.findOne({ zonalCode });
-      if (!zoneID || data?.userId === userId) {
-        if (data?.zonalCode === zone_code?.zonalCode || !zone_code) {
-          await thanaModel
-            .findOneAndUpdate(
-              { _id: id, userRole: "zonal" },
-              { userId, userName, zonalCode },
-              { new: true }
-            )
-            .then(() => {
-              return res.status(200).json("Updated data successfully");
-            })
-            .catch((error) => {
-              return res.status(500).json({ error: error.message });
-            });
-        } else {
-          return res.status(400).json("Zonal Code Already Exists");
-        }
-      } else {
-        return res.status(400).json("User ID Aleardy exists");
-      }
-    } else {
-      return res.status(400).json("User not found");
-    }
-  },
   updateZonalPassword: async (req, res) => {
-    const { id } = req.params;
-
-    let data = await thanaModel.findOne({ _id: id, userRole: "zonal" });
-
-    if (data) {
-      const { password1, password2 } = req.body;
-
-      if (password1 === password2) {
-        const hashedPassword = await bcrypt.hash(password1, 10);
-
-        (data.password = hashedPassword), data.save();
-
-        return res.status(200).json("Updated data successfully");
+    try {
+      const { id } = req.params;
+      let data = await thanaModel.findOne({ _id: id, userRole: "zonal" });
+      if (data) {
+        const { password1, password2 } = req.body;
+        if (password1 === password2) {
+          const hashedPassword = await bcrypt.hash(password1, 10);
+          data.password = hashedPassword;
+          data.save();
+          return res.status(200).json("Updated data successfully");
+        } else {
+          return res.status(400).json("Password does not match");
+        }
       } else {
-        return res.status(400).json("Password does not match");
+        return res.status(400).json("User not found");
       }
-    } else {
-      return res.status(400).json("User not found");
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
 
   deleteZonal: async (req, res) => {
-    let { id } = req.params;
-    let data = await thanaModel.deleteOne({
-      _id: id,
-      userRole: "zonal",
-    });
-    if (data.deletedCount) {
-      return res.status(200).json("delete Item");
-    } else {
-      return res.status(400).json({
-        msg: "does not delete Item",
-        data,
-      });
+    try {
+      let { id } = req.params;
+      let data = await thanaModel.deleteOne({ _id: id, userRole: "zonal" });
+      if (data.deletedCount) {
+        return res.status(200).json("delete Item");
+      } else {
+        return res.status(400).json({ msg: "does not delete Item", data });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
 
   // ===================== ADMIN CRUD =====================
 
   createAdmin: async (req, res) => {
-    const { userId, password, userName, email } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user_id = await thanaModel.findOne({ userId });
-    const user_name = await thanaModel.findOne({ userName });
-    if (user_name) {
-      return res.status(400).json("User Name Already Exists");
-    } else if (user_id) {
-      return res.status(400).json("User ID Already Exists");
-    } else {
-      let admin = await new thanaModel({
-        userId,
-        password: hashedPassword,
-        userName,
-        email,
-        userRole: "admin",
-      });
-      admin
-        .save()
-        .then(() => {
-          return res.status(200).json("Admin user created successfully");
-        })
-        .catch((error) => {
-          return res.status(500).json({ error: error.message });
+    try {
+      const { userId, password, userName, email } = req.body;
+      if (!userId || !password || !userName || isNaN(Number(userId))) {
+        return res.status(400).json("Invalid input. userId must be a number.");
+      }
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const user_id = await thanaModel.findOne({ userId: Number(userId) });
+      const user_name = await thanaModel.findOne({ userName });
+      if (user_name) {
+        return res.status(400).json("User Name Already Exists");
+      } else if (user_id) {
+        return res.status(400).json("User ID Already Exists");
+      } else {
+        let admin = await new thanaModel({
+          userId: Number(userId),
+          password: hashedPassword,
+          userName,
+          email,
+          userRole: "admin",
         });
+        admin
+          .save()
+          .then(() => {
+            return res.status(200).json("Admin user created successfully");
+          })
+          .catch((error) => {
+            return res.status(500).json({ error: error.message });
+          });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
+
   getAdmin: async (req, res) => {
-    const { id } = req.params;
-    const admin = await thanaModel.findOne({ _id: id, userRole: "admin" });
-    return res.status(200).json(admin);
-  },
-  updateAdmin: async (req, res) => {
-    const { id } = req.params;
-    let data = await thanaModel.findOne({ _id: id, userRole: "admin" });
-    const { userId, userName, email } = req.body;
-
-    if (
-      data.userId === userId &&
-      data.userName === userName &&
-      data.email === email
-    ) {
-      return res.status(400).json("No changes made");
+    try {
+      const { id } = req.params;
+      const admin = await thanaModel.findOne({ _id: id, userRole: "admin" });
+      return res.status(200).json(admin);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
+  },
 
-    if (data) {
-      let userID = await thanaModel.findOne({ userId });
+  updateAdmin: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let data = await thanaModel.findOne({ _id: id, userRole: "admin" });
+      const { userId, userName, email } = req.body;
+
+      if (!data) {
+        return res.status(400).json("User not found");
+      }
+
+      if (
+        data.userId == userId &&
+        data.userName === userName &&
+        data.email === email
+      ) {
+        return res.status(400).json("No changes made");
+      }
+
+      let userID = await thanaModel.findOne({ userId: Number(userId) });
       let user_name = await thanaModel.findOne({ userName });
-      if (!userID || data.userId === userId) {
+      if (!userID || data.userId == userId) {
         if (!user_name || data.userName === userName) {
           await thanaModel
             .findOneAndUpdate(
               { _id: id, userRole: "admin" },
-              { userId, userName, email },
+              { userId: Number(userId), userName, email },
               { new: true }
             )
             .then(() => {
@@ -504,40 +571,44 @@ module.exports = {
       } else {
         return res.status(400).json("User ID Already Exists");
       }
-    } else {
-      return res.status(400).json("User not found");
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
+
   updateAdminPassword: async (req, res) => {
-    const { id } = req.params;
-    let data = await thanaModel.findOne({ _id: id, userRole: "admin" });
-    if (data) {
-      const { password1, password2 } = req.body;
-      if (password1 === password2) {
-        const hashedPassword = await bcrypt.hash(password1, 10);
-        data.password = hashedPassword;
-        data.save();
-        return res.status(200).json("Updated password successfully");
+    try {
+      const { id } = req.params;
+      let data = await thanaModel.findOne({ _id: id, userRole: "admin" });
+      if (data) {
+        const { password1, password2 } = req.body;
+        if (password1 === password2) {
+          const hashedPassword = await bcrypt.hash(password1, 10);
+          data.password = hashedPassword;
+          data.save();
+          return res.status(200).json("Updated password successfully");
+        } else {
+          return res.status(400).json("Password does not match");
+        }
       } else {
-        return res.status(400).json("Password does not match");
+        return res.status(400).json("User not found");
       }
-    } else {
-      return res.status(400).json("User not found");
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
+
   deleteAdmin: async (req, res) => {
-    let { id } = req.params;
-    let data = await thanaModel.deleteOne({
-      _id: id,
-      userRole: "admin",
-    });
-    if (data.deletedCount) {
-      return res.status(200).json("Deleted successfully");
-    } else {
-      return res.status(400).json({
-        msg: "Failed to delete",
-        data,
-      });
+    try {
+      let { id } = req.params;
+      let data = await thanaModel.deleteOne({ _id: id, userRole: "admin" });
+      if (data.deletedCount) {
+        return res.status(200).json("Deleted successfully");
+      } else {
+        return res.status(400).json({ msg: "Failed to delete", data });
+      }
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
     }
   },
 };
