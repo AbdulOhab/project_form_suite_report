@@ -36,7 +36,6 @@ server.options("*", cors(corsOptions));
 server.set("json spaces", 4);
 server.use(express.json());
 server.use(bodyParser.json());
-server.use(formData.parse());
 server.use(
   bodyParser.urlencoded({
     extended: false,

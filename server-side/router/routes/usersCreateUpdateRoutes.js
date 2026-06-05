@@ -18,9 +18,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+router.get("/download-users-csv", usersController.downloadUsersCsv);
+
 router.post(
   "/upload-user-file",
-  //   upload.single("csvFile"),
+  upload.single("csvFile"),
   usersController.uploadUser
 );
 router.post("/create-thana-users", usersController.createThana);

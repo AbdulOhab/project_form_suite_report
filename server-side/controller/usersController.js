@@ -6,28 +6,83 @@ const path = require("path");
 const csv = require("csvtojson");
 
 module.exports = {
+  downloadUsersCsv: async (req, res) => {
+    try {
+      const users = await thanaModel.find({}).sort({ userRole: 1, userId: 1 }).lean();
+      const header = "userId,password,userName,email,zonalCode,branchCode,thanaCode,userRole";
+      const rows = users.map((u) =>
+        [u.userId, "", u.userName, u.email || "", u.zonalCode || "", u.branchCode || "", u.thanaCode || "", u.userRole].join(",")
+      );
+      const csvContent = [header, ...rows].join("\n");
+
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader("Content-Disposition", "attachment; filename=users_list.csv");
+      return res.status(200).send(csvContent);
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  },
+
   uploadUser: async (req, res) => {
     try {
-      if (!req.files) {
-        return res.status(400).json({ error: "No file uploaded" });
+      if (!req.file) {
+        return res.status(400).json("No file uploaded");
       }
 
-      let jsonArray = await csv().fromFile(req.files?.csvFile?.path);
+      let jsonArray = await csv().fromFile(req.file.path);
 
-      // Hash passwords in parallel using Promise.all
-      jsonArray = await Promise.all(
-        jsonArray.map(async (record) => {
-          const hashedPassword = await bcrypt.hash(record.password, 10);
-          return { ...record, password: hashedPassword };
-        })
-      );
+      if (!jsonArray.length) {
+        return res.status(400).json("CSV file is empty");
+      }
 
-      // Insert data into the database
-      await thanaModel.insertMany(jsonArray);
-      return res.status(200).json("Added successfully");
+      const bulkPassword = "";
+      let updated = 0;
+      let created = 0;
+
+      for (const record of jsonArray) {
+        const userId = Number(record.userId);
+        if (!userId || isNaN(userId)) continue;
+
+        const existing = await thanaModel.findOne({ userId });
+
+        const updateData = {
+          userName: record.userName,
+          email: record.email || undefined,
+          zonalCode: record.zonalCode ? Number(record.zonalCode) : undefined,
+          branchCode: record.branchCode ? Number(record.branchCode) : undefined,
+          thanaCode: record.thanaCode ? Number(record.thanaCode) : undefined,
+          userRole: record.userRole,
+        };
+
+        // Hash password from CSV password column
+        if (record.password && record.password.trim()) {
+          updateData.password = await bcrypt.hash(String(record.password), 10);
+        }
+
+        if (existing) {
+          await thanaModel.updateOne({ userId }, { $set: updateData });
+          updated++;
+        } else {
+          if (!updateData.password) {
+            updateData.password = await bcrypt.hash("1122", 10);
+          }
+          await thanaModel.create({ userId, ...updateData });
+          created++;
+        }
+      }
+
+      // Clean up uploaded file
+      fs.unlink(req.file.path, () => {});
+
+      const msg = [];
+      if (updated > 0) msg.push(`${updated} users updated`);
+      if (created > 0) msg.push(`${created} users created`);
+      if (bulkPassword) msg.push("password reset for all");
+
+      return res.status(200).json(msg.join(", ") || "No changes made");
     } catch (error) {
-      console.error("Error processing file:", error);
-      return res.status(500).json({ error: "Error processing file" });
+      if (req.file) fs.unlink(req.file.path, () => {});
+      return res.status(500).json({ error: error.message });
     }
   },
 
