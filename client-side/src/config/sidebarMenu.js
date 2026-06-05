@@ -22,11 +22,6 @@ const menuConfig = {
       icon: <ManageAccountsIcon />,
       children: [
         {
-          label: "Upload CSV File",
-          icon: <UploadFileIcon />,
-          path: "/dashboard/upload-user-file",
-        },
-        {
           label: "Create User",
           icon: <PersonAddIcon />,
           path: "/dashboard/create-user",
@@ -35,6 +30,11 @@ const menuConfig = {
           label: "Users List",
           icon: <GroupIcon />,
           path: "/dashboard/users-list",
+        },
+        {
+          label: "Import / Export Users",
+          icon: <UploadFileIcon />,
+          path: "/dashboard/upload-user-file",
         },
       ],
     },
