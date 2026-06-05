@@ -5,7 +5,7 @@ import { Box, Container, Toolbar, useMediaQuery, useTheme } from "@mui/material"
 import AppHeader from "../components/AppHeader";
 import AppSidebar from "../components/AppSidebar";
 
-const DRAWER_WIDTH = 260;
+const DRAWER_WIDTH = 240;
 
 const DashboardLayout = () => {
   const { userInfo } = useContext(AuthContext);
@@ -31,7 +31,7 @@ const DashboardLayout = () => {
           minHeight: "100vh",
         }}
       >
-        <Toolbar />
+        <Toolbar variant="dense" />
         <Container maxWidth="xl" sx={{ py: 3 }}>
           <Outlet />
         </Container>
