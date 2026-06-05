@@ -15,7 +15,6 @@ import BASE_URL from "../../auth/dbUrl";
 import AdminTableBody from "../users/usersTable/AdminTableBody";
 import ZonalTableBody from "../users/usersTable/ZonalTableBody";
 import BranchTableBody from "../users/usersTable/BranchTableBody";
-import ThanaUsers from "../users/ThanaUsers";
 
 const LIST_TABS = [
   { key: "admin", label: "Admin", endpoint: "/admin-users", type: "table" },

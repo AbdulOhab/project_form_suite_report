@@ -18,7 +18,6 @@ import {
 } from "@mui/material";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import HomeIcon from "@mui/icons-material/Home";
 
 const DRAWER_WIDTH = 240;
 

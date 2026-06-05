@@ -95,13 +95,14 @@ const AppHeader = ({ onMenuToggle }) => {
           onClose={() => setAnchorEl(null)}
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          slotProps={{ paper: { sx: { minWidth: 180, mt: 1 } } }}
         >
-          <MenuItem disabled>
-            <Typography variant="body2">{userName}</Typography>
+          <MenuItem disabled sx={{ justifyContent: "center" }}>
+            <Typography variant="subtitle2" fontWeight={600}>{userName}</Typography>
           </MenuItem>
-          <MenuItem onClick={handleLogout}>
-            <LogoutIcon fontSize="small" sx={{ mr: 1 }} />
-            Logout
+          <MenuItem onClick={handleLogout} sx={{ py: 1.25 }}>
+            <LogoutIcon fontSize="small" sx={{ mr: 1.5 }} />
+            <Typography variant="body2">Logout</Typography>
           </MenuItem>
         </Menu>
       </Toolbar>
