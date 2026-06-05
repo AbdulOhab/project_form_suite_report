@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Box, Container, Paper, Typography, TextField, Button, Alert, Snackbar, Collapse, IconButton } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
+import { Box, Container, Paper, Typography, TextField, Button, Alert, Snackbar, IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { AuthContext } from "../contexts/AuthContext";
 import BASE_URL from "../auth/dbUrl";
 
 const Login = () => {
   const [formErrors, setFormErrors] = useState({});
   const [snackbar, setSnackbar] = useState({ open: false, severity: "success", message: "" });
+  const [showPassword, setShowPassword] = useState(false);
   const { checkAuth, setcheckAuth } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -83,10 +84,10 @@ const Login = () => {
   return (
     <>
       {!checkAuth?.isAuth ? (
-        <Container maxWidth="sm">
-          <Paper elevation={3} sx={{ p: 4, mt: 8 }}>
+        <Container maxWidth="xs">
+          <Paper elevation={3} sx={{ p: 3, mt: 10 }}>
             <Typography variant="h4" align="center" color="primary" fontWeight="bold" gutterBottom>
-              রিপোর্ট সেন্টার
+              Login
             </Typography>
             <Typography variant="subtitle1" align="center" color="text.secondary" sx={{ mb: 3 }}>
               Login to your account
@@ -98,7 +99,8 @@ const Login = () => {
                 id="userId"
                 name="userId"
                 label="ইউজার আইডি"
-                type="number"
+                type="text"
+                inputMode="numeric"
                 margin="normal"
                 variant="outlined"
                 placeholder="ইউজার আইডি"
@@ -117,7 +119,7 @@ const Login = () => {
                 id="password"
                 name="password"
                 label="পাসওয়ার্ড"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 margin="normal"
                 variant="outlined"
                 placeholder="পাসওয়ার্ড"
@@ -129,6 +131,15 @@ const Login = () => {
                       ))
                     : ""
                 }
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
 
               <Button
@@ -138,7 +149,7 @@ const Login = () => {
                 size="large"
                 sx={{ mt: 3, mb: 2 }}
               >
-                জমা দিন
+                Login
               </Button>
             </Box>
           </Paper>
