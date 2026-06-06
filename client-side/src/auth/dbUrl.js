@@ -1,7 +1,3 @@
-// const BASE_URL = "https://instancereportbackend.deepseahost.com";
-
-
-
-const BASE_URL = "http://localhost:5053";
+const BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:5053";
 
 export default BASE_URL;

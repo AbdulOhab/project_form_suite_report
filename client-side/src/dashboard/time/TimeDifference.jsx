@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Paper } from "@mui/material";
 import DateDifferenceComponent from "./DateDifferenceComponent";
 function TimeDifference({ notice }) {
   const [noticeData, setNoticeData] = useState();
@@ -9,10 +10,8 @@ function TimeDifference({ notice }) {
   let { timeStart, timeEnd, endDadeline, startDadeline, range } =
     noticeData || {};
 
-  // Compare the formatted date strings
-
   return (
-    <div className="card shadow p-2 rounded">
+    <Paper elevation={3} sx={{ p: 1, borderRadius: 1 }}>
       <DateDifferenceComponent
         startDadeline={startDadeline}
         endDadeline={endDadeline}
@@ -20,7 +19,7 @@ function TimeDifference({ notice }) {
         timeStart={timeStart}
         timeEnd={timeEnd}
       />
-    </div>
+    </Paper>
   );
 }
 

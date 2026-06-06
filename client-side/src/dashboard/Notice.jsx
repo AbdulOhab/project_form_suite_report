@@ -1,23 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import AccordionSummary from "@mui/material/AccordionSummary";
-// import CropOriginalIcon from "@mui/icons-material/CropOriginal";
-import SortTextIcon from "@mui/icons-material/ShortText";
-import SortNumericIcon from "@mui/icons-material/NumbersSharp";
+import {
+  Typography,
+  FormControlLabel,
+  AccordionSummary,
+  AccordionDetails,
+  Accordion,
+  IconButton,
+  MenuItem,
+  Switch,
+  Select,
+  Paper,
+  TextField,
+  Button,
+  Box,
+  Checkbox,
+  FormControl,
+  InputLabel,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import SubjectIcon from "@mui/icons-material/Subject";
 import NumericIcon from "@mui/icons-material/Numbers";
-// import CloseIcon from "@mui/icons-material/Close";
+import SortTextIcon from "@mui/icons-material/ShortText";
+import SortNumericIcon from "@mui/icons-material/NumbersSharp";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import FilterNoneIcon from "@mui/icons-material/FilterNone";
-import { Typography } from "@mui/material";
-import Swal from "sweetalert2";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import AccordionDetails from "@mui/material/AccordionDetails";
-// import Checkbox from "@mui/material/Checkbox";
-import Accordion from "@mui/material/Accordion";
-import { BsTrash } from "react-icons/bs";
-import { IconButton, MenuItem, Switch } from "@mui/material";
-import Select from "@mui/material/Select";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useNavigate } from "react-router-dom";
 import BASE_URL from "../auth/dbUrl";
 
@@ -31,6 +42,7 @@ const Notice = () => {
   const [startDadeline, setStartDadeline] = useState(null);
   const [endDadeline, setEndDadeline] = useState(null);
   const [error, setError] = useState();
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
   const [timeEnd, setTimeEnd] = useState("00:00:00");
   const [timeStart, setTimeStart] = useState("00:00:00");
   const [thana, setThana] = useState(false);
@@ -50,8 +62,6 @@ const Notice = () => {
     },
   ]);
 
-
-
   const handleAddSubtitleClick = () => {
     setShowSubtitleField(true);
   };
@@ -64,8 +74,6 @@ const Notice = () => {
     setShowSubtitleField(true);
   };
 
-  
-
   useEffect(() => {
     const dateHandler = () => {
       const date = new Date(startDadeline);
@@ -74,18 +82,8 @@ const Notice = () => {
       date.setDate(newDate);
       const viewDate = new Date(date);
       const months = [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
       ];
       const formattedDate = `${viewDate.getDate()}-${
         months[viewDate.getMonth()]
@@ -98,6 +96,7 @@ const Notice = () => {
   const rangeHandler = (e) => {
     setRange(e.target.value);
   };
+
   function inputChangeHandler(text, i) {
     let newQuestion = [...question];
     newQuestion[i].questionText = text;
@@ -106,13 +105,11 @@ const Notice = () => {
 
   function addQuestionType(i, type) {
     let newType = [...question];
-
     newType[i].questionType = type;
     if (newType[i].questionType === "text") {
       newType[i].options = [{ optionsText: "Sort answer text" }];
       setQuestion(newType);
     }
-
     if (newType[i].questionType === "number") {
       newType[i].options = [{ optionsText: "Value must be number" }];
       setQuestion(newType);
@@ -124,15 +121,10 @@ const Notice = () => {
   };
 
   function changeValueHandler(text, i, j) {
-    // let newOption = [...question];
-    // console.log(text);
     const newOption = JSON.parse(JSON.stringify(question));
     newOption[i].options[j].optionsText = text;
     setQuestion(newOption);
   }
-
- 
-
 
   function copyQuestion(i) {
     expandcloseAll();
@@ -155,6 +147,16 @@ const Notice = () => {
     setQuestion(reqQuestion);
   }
 
+  function moveQuestion(i, direction) {
+    const newIndex = i + direction;
+    if (newIndex < 0 || newIndex >= question.length) return;
+    const updated = [...question];
+    [updated[i], updated[newIndex]] = [updated[newIndex], updated[i]];
+    expandcloseAll();
+    updated[newIndex].open = true;
+    setQuestion(updated);
+  }
+
   function addMoreQuestion(i) {
     expandcloseAll();
     let newQuestion = [
@@ -162,7 +164,14 @@ const Notice = () => {
       {
         questionText: "",
         questionType: selectedType,
-        options: [{ optionsText: selectedType ==='text'? "Sort answer text" : "Value must be number" }],
+        options: [
+          {
+            optionsText:
+              selectedType === "text"
+                ? "Sort answer text"
+                : "Value must be number",
+          },
+        ],
         open: true,
         required: false,
       },
@@ -192,212 +201,159 @@ const Notice = () => {
 
   function questionUI() {
     return question.map((que, i) => (
-      <div key={i}>
-        <Accordion
-          key={i}
-          expanded={question[i].open}
-          className={question[i].open ? "add_border" : ""}
-          onChange={() => {
-            handleExpandHandler(i);
-          }}
+      <Accordion
+        key={i}
+        expanded={question[i].open}
+        onChange={() => handleExpandHandler(i)}
+        sx={{
+          border: question[i].open ? 2 : 0,
+          borderColor: "primary.main",
+          my: 1,
+          borderRadius: 1,
+          "&:before": { display: "none" },
+          transition: "all 0.2s ease",
+        }}
+      >
+        <AccordionSummary
+          aria-controls="panella-content"
+          id="panella-header"
+          sx={{ width: "100%" }}
         >
-          <AccordionSummary
-            arrial-controlls="panella-centent"
-            id="panella-header"
-            elevation={1}
-            className="w-100 my-3"
-          >
-            {!question[i].open ? (
-              <div className="saved_question">
-                <Typography className="fs-5 lh-base pb-1">
-                  {i + 1}.{question[i].questionText}
+          {!question[i].open ? (
+            <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <IconButton size="small" disabled={i === 0} onClick={(e) => { e.stopPropagation(); moveQuestion(i, -1); }}>
+                  <ArrowUpwardIcon fontSize="inherit" />
+                </IconButton>
+                <IconButton size="small" disabled={i === question.length - 1} onClick={(e) => { e.stopPropagation(); moveQuestion(i, 1); }}>
+                  <ArrowDownwardIcon fontSize="inherit" />
+                </IconButton>
+              </Box>
+              <Box sx={{ flex: 1 }}>
+                <Typography variant="body1" fontWeight={500} sx={{ pb: 0.5 }}>
+                  {i + 1}. {question[i].questionText}
                   {question[i].required ? "*" : ""}
                 </Typography>
-                {que.options.map((opText, j) => (
-                  <div key={j}>
-                    <div className="d-flex">
-                      <FormControlLabel
-                        disabled
-                        control={
-                          que.questionType !== "text" &&
-                          que.questionType !== "number" ? (
-                            <input
-                              type={que.questionType}
-                              className="text-primary mx-1"
-                              inputProps={{
-                                "arial-label": "secondary checkbox",
-                              }}
-                              required={que.required}
-                              disabled
-                            />
-                          ) : question[i].questionType === "number" ? (
-                            <SortNumericIcon className="me-1" />
-                          ) : (
-                            <SortTextIcon className="me-1" />
-                          )
-                        }
-                        label={
-                          <Typography className="fs-6 fw-medium lh-1 text-dark px-2">
-                            {opText.optionsText}
-                          </Typography>
-                        }
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              ""
-            )}
-          </AccordionSummary>
-          {question[i].open ? (
-            <div className="questionBox d-flex flex-row justify-content-center">
-              <AccordionDetails className="addQuestion text-light border rounded p-3 text-capitalize d-flex flex-column pt-0 w-100 ms-1">
-                <div className="addQuestionTop d-flex flex-row align-items-center justify-content-between">
-                  <input
-                    type="text"
-                    className="questionCSS fw-medium text-black "
-                    onChange={(e) => inputChangeHandler(e.target.value, i)}
-                    placeholder="Question"
-                    value={que.questionText}
+              {que.options.map((opText, j) => (
+                <Box key={j} sx={{ display: "flex" }}>
+                  <FormControlLabel
+                    disabled
+                    control={
+                      que.questionType !== "text" &&
+                      que.questionType !== "number" ? (
+                        <input type={que.questionType} required={que.required} disabled />
+                      ) : question[i].questionType === "number" ? (
+                        <SortNumericIcon sx={{ mr: 1 }} fontSize="small" />
+                      ) : (
+                        <SortTextIcon sx={{ mr: 1 }} fontSize="small" />
+                      )
+                    }
+                    label={
+                      <Typography variant="body2" color="text.secondary">
+                        {opText.optionsText}
+                      </Typography>
+                    }
                   />
-                  {/* <CropOriginalIcon className="text-primary fs-4 mx-2" /> */}
-                  <Select
-                    value={selectedType}
-                    onChange={handleChange}
-                    className="select mt-2 "
-                  >
-                    <MenuItem
-                      id="text"
-                      value="text"
-                      selected
-                      onClick={() => addQuestionType(i, "text")}
-                    >
-                      <SubjectIcon className="me-1" />
+                </Box>
+              ))}
+              </Box>
+            </Box>
+          ) : null}
+        </AccordionSummary>
+        {question[i].open ? (
+          <Box sx={{ display: "flex", flexDirection: "row" }}>
+            <AccordionDetails
+              sx={{ display: "flex", flexDirection: "column", width: "100%", pt: 0 }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 1 }}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  variant="outlined"
+                  placeholder="Question"
+                  value={que.questionText}
+                  onChange={(e) => inputChangeHandler(e.target.value, i)}
+                />
+                <FormControl size="small">
+                  <Select value={selectedType} onChange={handleChange}>
+                    <MenuItem value="text" onClick={() => addQuestionType(i, "text")}>
+                      <SubjectIcon sx={{ mr: 1 }} fontSize="small" />
                       Paragraph
                     </MenuItem>
-
-                    <MenuItem
-                      id="number"
-                      value="number"
-                      onClick={() => addQuestionType(i, "number")}
-                    >
-                      <NumericIcon className="me-1" />
+                    <MenuItem value="number" onClick={() => addQuestionType(i, "number")}>
+                      <NumericIcon sx={{ mr: 1 }} fontSize="small" />
                       Number
                     </MenuItem>
-                  
-                   
                   </Select>
-                </div>
-                {que.options.map((op, j) => (
-                  <div
-                    key={j}
-                    className="add_questions_body fw-medium text-dark d-flex align-items-center"
-                  >
-                    {question[i].questionType === "number" ? (
-                      <SortNumericIcon className="me-1" />
-                    ) : question[i].questionType === "text" ? (
-                      <SortTextIcon className="me-1" />
-                    ) : (
-                      ""
-                    )}
-                    <div>
-                      <input
-                        type="text"
-                        disabled
-                        className="text_input"
-                        placeholder={op.optionsText}
-                        onChange={(e) => {
-                          changeValueHandler(e.target.value, i, j);
-                        }}
-                      />
-                    </div>
-                    
-                  </div>
-                ))}
-               
-                <div className="add_footer d-flex justify-content-between align-items-center">
-                  <div className="add_question_bottom_left">
-                   
-                  </div>
-                  <div className="add_question_bottom">
-                    <IconButton
-                      aria-label="copy"
-                      title="copy"
-                      onClick={() => {
-                        copyQuestion(i);
-                      }}
-                    >
-                      <FilterNoneIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="delete"
-                      title="delete"
-                      onClick={() => {
-                        deleteQuestion(i);
-                      }}
-                    >
-                      <BsTrash />
-                    </IconButton>
-                    <button aria-label="copy" className="border-0 rounded-3">
-                      <span className="text-secondary fs-4">required</span>
-                      <Switch
-                        name="checked"
-                        color="primary"
-                        title="required"
-                        onClick={() => requiredQuestion(i)}
-                      />
-                    </button>
-                  
-                  </div>
-                </div>
-              </AccordionDetails>
-              <div className="question_edit d-flex flex-column gap-3 ms-3 h-75 py-3 px-2 rounded">
-                <AddCircleOutlineIcon
-                  className="edit"
-                  titleAccess="New Question"
-                  onClick={() => addMoreQuestion(i)}
-                />
-               
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
-        </Accordion>
-      </div>
+                </FormControl>
+              </Box>
+              {que.options.map((op, j) => (
+                <Box key={j} sx={{ display: "flex", alignItems: "center", my: 0.5 }}>
+                  {question[i].questionType === "number" ? (
+                    <SortNumericIcon sx={{ mr: 1 }} fontSize="small" />
+                  ) : question[i].questionType === "text" ? (
+                    <SortTextIcon sx={{ mr: 1 }} fontSize="small" />
+                  ) : null}
+                  <TextField
+                    variant="standard"
+                    disabled
+                    placeholder={op.optionsText}
+                    onChange={(e) => changeValueHandler(e.target.value, i, j)}
+                    fullWidth
+                  />
+                </Box>
+              ))}
+              <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center", mt: 1, gap: 0.5 }}>
+                <IconButton size="small" title="Copy" onClick={() => copyQuestion(i)}>
+                  <FilterNoneIcon fontSize="small" />
+                </IconButton>
+                <IconButton size="small" title="Delete" onClick={() => deleteQuestion(i)}>
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+                <Box sx={{ display: "flex", alignItems: "center", ml: 1 }}>
+                  <Typography variant="caption" color="text.secondary">Required</Typography>
+                  <Switch size="small" color="primary" onClick={() => requiredQuestion(i)} />
+                </Box>
+              </Box>
+            </AccordionDetails>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, py: 1.5, px: 0.5 }}>
+              <AddCircleOutlineIcon
+                sx={{ cursor: "pointer" }}
+                titleAccess="New Question"
+                onClick={() => addMoreQuestion(i)}
+                fontSize="small"
+              />
+            </Box>
+          </Box>
+        ) : null}
+      </Accordion>
     ));
   }
 
-
   const submitHandler = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch(
-        `${BASE_URL}/create-notice/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
-          },
-          body: JSON.stringify({
-            document_name: documentName,
-            sub_title: subtitle,
-            doc_desc: documentDescription,
-            question: question,
-            range: range,
-            timeStart: timeStart,
-            timeEnd: timeEnd,
-            startDadeline: startDadeline,
-            endDadeline: endDadeline,
-            thana: thana,
-            branch: branch,
-            zonal: zonal,
-          }),
-        }
-      );
+      const response = await fetch(`${BASE_URL}/create-notice/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
+        },
+        body: JSON.stringify({
+          document_name: documentName,
+          sub_title: subtitle,
+          doc_desc: documentDescription,
+          question: question,
+          range: range,
+          timeStart: timeStart,
+          timeEnd: timeEnd,
+          startDadeline: startDadeline,
+          endDadeline: endDadeline,
+          thana: thana,
+          branch: branch,
+          zonal: zonal,
+        }),
+      });
       let data = await response.json();
       if (response.status === 422) {
         setError({});
@@ -409,30 +365,19 @@ const Notice = () => {
           timeStart: [],
           timeEnd: [],
         };
-        // console.log(data);
         data.errors.forEach((e, index) => {
-          // console.log(e.path);
           if (!tempErrors[e.path]) {
-            tempErrors[e.path] = []; // Initialize the array if it doesn't exist
+            tempErrors[e.path] = [];
           }
           tempErrors[e.path].push(
-            <li key={index} className="text-danger">
-              {e.msg}
-            </li>
+            <li key={index} style={{ color: "red" }}>{e.msg}</li>
           );
         });
         setError(tempErrors);
       }
-
       if (response.ok) {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Your Notice has been saved",
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        navigate("/dashboard");
+        setSnackbar({ open: true, message: "নোটিশ সফলভাবে সেভ হয়েছে", severity: "success" });
+        setTimeout(() => navigate("/dashboard"), 1500);
       }
     } catch (error) {
       console.error("Error:", error.message);
@@ -441,213 +386,180 @@ const Notice = () => {
 
   return (
     <>
-      <div className="card shadow col-md-8 m-auto ">
-        <h2 className="text-center fw-bold text-success my-3">Create Notice</h2>
-        <div className="card-header">
-          <div className="document-header">
-            <div className="mb-3">
-              <input
-                type="text"
-                className="fw-bold form-control fs-1 border-0 text-capitalize"
-                name="form"
-                id="form"
-                value={documentName}
-                placeholder="Name of then Notice"
-                onChange={(e) => setdocumentName(e.target.value)}
-              />
+      <Paper elevation={2} sx={{ maxWidth: 1000, mx: "auto", my: 3, borderRadius: 2, overflow: "hidden" }}>
+        <Box sx={{ bgcolor: "primary.main", px: 3, py: 2 }}>
+          <Typography variant="h5" sx={{ color: "#fff", fontWeight: "bold", textAlign: "center" }}>
+            Create Notice
+          </Typography>
+        </Box>
 
-              <ul className="list-unstyled">{error?.document_name}</ul>
-            </div>
-            <div className="mb-3">
-              {showSubtitleField && (
-                <input
-                  type="text"
-                  value={subtitle}
-                  className="form-control w-100 fs-5 border-0 text-capitalize"
-                  onChange={handleSubtitleChange}
-                  onBlur={handleSubtitleFieldBlur}
-                  placeholder="Enter subtitle"
-                />
-              )}
-              {!showSubtitleField && (
-                <AddCircleOutlineIcon
-                  className="edit"
-                  titleAccess="Add Subtitle"
-                  onClick={handleAddSubtitleClick}
-                />
-              )}
-            </div>
-            <div className="mb-3">
-              <textarea
-                type="text"
-                className="form-control w-100 fs-5 border-0 text-capitalize"
-                name="description"
-                id="description"
-                // value={documentDescription}
-                placeholder="Add Sort Desctiption"
-                onChange={(e) => setdocumentDescription(e.target.value)}
-              />
-              <ul className="list-unstyled">{error?.doc_desc}</ul>
-            </div>
-          </div>
-          <div className="notice-type-range-dadeline">
-            <div className="d-flex justify-content-around align-items-center gap-3">
-              <div className="mb-3 w-25">
-                <label htmlFor="noticeType" className="form-label">
-                  Notice Type
-                </label>
-                <select
-                  className="form-select"
-                  onChange={rangeHandler}
-                  name="noticeType"
-                  id="noticeType"
-                >
-                  <option defaultValue={''} >Select</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                  <option value="7">Weeckly</option>
-                  <option value="15">De-Weeckly</option>
-                  <option value="10">Occation</option>
-                </select>
+        <Box sx={{ p: 3 }}>
+          {/* Notice Name */}
+          <TextField
+            fullWidth
+            size="small"
+            variant="outlined"
+            label="Notice Title"
+            placeholder="Enter notice title"
+            value={documentName}
+            onChange={(e) => setdocumentName(e.target.value)}
+            sx={{ mb: 2 }}
+          />
+          <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
+            {error?.document_name}
+          </Box>
 
-                <ul className="list-unstyled">{error?.range}</ul>
-              </div>
-              <div className="mb-3 w-25">
-                <label htmlFor="startDadeline" className="form-label">
-                  Start Dadeline
-                </label>
-                <input
-                  type="Date"
-                  className="form-control"
-                  name="startDadeline"
-                  id="startDadeline"
-                  value={startDadeline}
-                  onChange={(e) => setStartDadeline(e.target.value)}
-                />
-                <ul className="list-unstyled">{error?.startDadeline}</ul>
-              </div>
-              <div className="mb-3 w-25">
-                <label htmlFor="timeStart" className="form-label">
-                  Time Start
-                </label>
-                <input
-                  type="time"
-                  className="form-control"
-                  name="timeStart"
-                  id="timeStart"
-                  min="00:00"
-                  max="22:00"
-                  value={timeStart}
-                  onChange={(e) => setTimeStart(e.target.value)}
-                />
-                <ul className="list-unstyled">{error?.timeSelect}</ul>
-              </div>
-              <div className="mb-3 w-25">
-                <label htmlFor="timeEnd" className="form-label">
-                  Time End
-                </label>
-                <input
-                  type="time"
-                  className="form-control"
-                  name="timeEnd"
-                  id="timeEnd"
-                  min="00:00"
-                  max="22:00"
-                  value={timeEnd}
-                  onChange={(e) => setTimeEnd(e.target.value)}
-                />
-                <ul className="list-unstyled">{error?.timeSelect}</ul>
-              </div>
-            </div>
-          </div>
-          <div className="notice-dadeline-show">
-            <div className="d-flex justify-content-around align-items-center gap-3">
-              <div className="data-permission">
-                <div className="notice-data-permission">
-                  <label className="form-label">Notice Data permission</label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="thana"
-                    name="thana"
-                    value={thana}
-                    onChange={(e) => setThana(e.target.checked)}
-                  />
-                  <label className="form-check-label" htmlFor="thana">
-                    Thana
-                  </label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="branch"
-                    name="branch"
-                    value={branch}
-                    onChange={(e) => setBranch(e.target.checked)}
-                  />
-                  <label className="form-check-label" htmlFor="branch">
-                    Branch
-                  </label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="zonal"
-                    name="zonal"
-                    value={zonal}
-                    onChange={(e) => setZonal(e.target.checked)}
-                  />
-                  <label className="form-check-label" htmlFor="zonal">
-                    Zonal
-                  </label>
-                </div>
-                <ul>{error?.zonal}</ul>
-              </div>
+          {/* Subtitle */}
+          {showSubtitleField ? (
+            <TextField
+              fullWidth
+              size="small"
+              variant="outlined"
+              label="Subtitle"
+              value={subtitle}
+              onChange={handleSubtitleChange}
+              onBlur={handleSubtitleFieldBlur}
+              placeholder="Enter subtitle"
+              sx={{ mb: 2 }}
+            />
+          ) : (
+            <Button
+              size="small"
+              startIcon={<AddCircleOutlineIcon />}
+              onClick={handleAddSubtitleClick}
+              sx={{ mb: 2 }}
+            >
+              Add Subtitle
+            </Button>
+          )}
 
-              <div className="mb-3 w-25">
-                <label htmlFor="" className="form-label">
-                  Notice Range
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="No Value"
-                  value={range}
-                  disabled
-                />
-              </div>
+          {/* Description */}
+          <TextField
+            fullWidth
+            size="small"
+            variant="outlined"
+            multiline
+            minRows={2}
+            label="Description"
+            placeholder="Add short description"
+            value={documentDescription}
+            onChange={(e) => setdocumentDescription(e.target.value)}
+            sx={{ mb: 2 }}
+          />
+          <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
+            {error?.doc_desc}
+          </Box>
 
-              <div className="mb-3 w-25">
-                <label htmlFor="endDadeline" className="form-label">
-                  End Dadeline
-                </label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="endDadeline"
-                  id="endDadeline"
-                  disabled
-                  value={endDadeline}
+          {/* Notice Type / Date / Time */}
+          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr 1fr" }, gap: 2, mb: 2 }}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Notice Type</InputLabel>
+              <Select value={range || ""} onChange={rangeHandler} label="Notice Type" name="noticeType">
+                <MenuItem value=""><em>Select</em></MenuItem>
+                <MenuItem value="1">One Day</MenuItem>
+                <MenuItem value="2">Two Days</MenuItem>
+                <MenuItem value="3">Three Days</MenuItem>
+                <MenuItem value="7">Weekly</MenuItem>
+                <MenuItem value="15">Bi-Weekly</MenuItem>
+                <MenuItem value="10">Occasion</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField
+              fullWidth
+              type="date"
+              label="Start Deadline"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+              value={startDadeline || ""}
+              onChange={(e) => setStartDadeline(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              type="time"
+              label="Time Start"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+              inputProps={{ min: "00:00", max: "22:00" }}
+              value={timeStart}
+              onChange={(e) => setTimeStart(e.target.value)}
+            />
+            <TextField
+              fullWidth
+              type="time"
+              label="Time End"
+              size="small"
+              InputLabelProps={{ shrink: true }}
+              inputProps={{ min: "00:00", max: "22:00" }}
+              value={timeEnd}
+              onChange={(e) => setTimeEnd(e.target.value)}
+            />
+          </Box>
+
+          {/* Permission + End Info */}
+          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr 1fr" }, gap: 2, mb: 2, alignItems: "start" }}>
+            <Box>
+              <Typography variant="body2" fontWeight={600} sx={{ mb: 1 }}>
+                Data Permission
+              </Typography>
+              <Box sx={{ display: "flex", gap: 1 }}>
+                <FormControlLabel
+                  control={<Checkbox size="small" checked={thana} onChange={(e) => setThana(e.target.checked)} />}
+                  label={<Typography variant="body2">Thana</Typography>}
                 />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="card-body ">{questionUI()}</div>
-        <div className=" py-3 px-3">
-          <button
-            className="btn btn-primary fw-bold fs-5"
-            onClick={submitHandler}
-          >
-            Save
-          </button>
-        </div>
-      </div>
+                <FormControlLabel
+                  control={<Checkbox size="small" checked={branch} onChange={(e) => setBranch(e.target.checked)} />}
+                  label={<Typography variant="body2">Branch</Typography>}
+                />
+                <FormControlLabel
+                  control={<Checkbox size="small" checked={zonal} onChange={(e) => setZonal(e.target.checked)} />}
+                  label={<Typography variant="body2">Zonal</Typography>}
+                />
+              </Box>
+            </Box>
+            <TextField
+              fullWidth
+              size="small"
+              label="Notice Range"
+              value={range ? `${range} day${range > 1 ? "s" : ""}` : "—"}
+              disabled
+            />
+            <TextField
+              fullWidth
+              size="small"
+              label="End Deadline"
+              value={endDadeline || "—"}
+              disabled
+            />
+          </Box>
+
+          {/* Question Builder */}
+          <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 1 }}>
+            Questions
+          </Typography>
+          <Box sx={{ mb: 2 }}>{questionUI()}</Box>
+
+          {/* Submit */}
+          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
+            <Button variant="outlined" onClick={() => navigate("/dashboard")}>
+              Cancel
+            </Button>
+            <Button variant="contained" size="large" onClick={submitHandler}>
+              Save Notice
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert severity={snackbar.severity} onClose={() => setSnackbar({ ...snackbar, open: false })}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

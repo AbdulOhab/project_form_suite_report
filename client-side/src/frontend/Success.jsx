@@ -1,29 +1,22 @@
 import React from "react";
+import { Container, Paper, Typography, Box } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
 function Success() {
   return (
-    <div className="container">
-      <div className="col-lg-5 col-md-6 col-sm-12 m-auto">
-        <div className="card shadow">
-          <div className="card-header">
-            <h1 className="text-center text-success">Success</h1>
-          </div>
-          <div className="card-body text-center">
-            <img
-              src="/assects/images/success_img.gif"
-              alt="successIimage"
-              className=" border border-success border-4 rounded"
-              width={250}
-            />
-          </div>
-          <div className="card-footer">
-            <p className="text-center text-bg-success p-1 rounded">
-              Your form has been submitted successfully
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Container maxWidth="sm">
+      <Paper elevation={3} sx={{ p: 4, mt: 8, textAlign: "center" }}>
+        <Box sx={{ mb: 3 }}>
+          <CheckCircleOutlineIcon sx={{ fontSize: 120, color: "success.main" }} />
+        </Box>
+        <Typography variant="h3" color="success.main" fontWeight="bold" gutterBottom>
+          Success
+        </Typography>
+        <Typography variant="body1" sx={{ mt: 2, p: 1.5, bgcolor: "success.light", borderRadius: 1, color: "success.contrastText" }}>
+          Your form has been submitted successfully
+        </Typography>
+      </Paper>
+    </Container>
   );
 }
 

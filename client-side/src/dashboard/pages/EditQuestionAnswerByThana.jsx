@@ -1,10 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { FormControlLabel, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Paper,
+  Typography,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+  Radio,
+  Snackbar,
+  Alert,
+  Container,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+} from "@mui/material";
 import SortTextIcon from "@mui/icons-material/ShortText";
 import SortNumericIcon from "@mui/icons-material/NumbersSharp";
-import Swal from "sweetalert2";
 import BASE_URL from "../../auth/dbUrl";
+
 function EditQuestionAnswerByThana() {
   const { id, answerId } = useParams();
 
@@ -12,7 +27,7 @@ function EditQuestionAnswerByThana() {
 
   const [notice, setNotice] = useState([]);
   console.log(notice);
-  
+
   const [answer, setAnswer] = useState([
     {
       questionText: "",
@@ -22,6 +37,22 @@ function EditQuestionAnswerByThana() {
     },
   ]);
 
+  // Snackbar state
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
+  // Confirmation dialog state
+  const [confirmDialog, setConfirmDialog] = useState({
+    open: false,
+  });
+
+  const handleSnackbarClose = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
+
   // get answer form database
   useEffect(() => {
     const getQuestionFromDb = async () => {
@@ -30,11 +61,10 @@ function EditQuestionAnswerByThana() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         });
         let data = await response.json();
-        // console.log(response.status);
         if (!response.ok) {
           throw new Error("get notice data failed");
         }
@@ -44,7 +74,6 @@ function EditQuestionAnswerByThana() {
         }
       } catch (error) {
         console.error("Error fetching notice data:", error);
-        // Handle error
       }
     };
     getQuestionFromDb();
@@ -99,7 +128,7 @@ function EditQuestionAnswerByThana() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+        Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
       },
       body: JSON.stringify({
         document_name: notice.document_name,
@@ -107,7 +136,6 @@ function EditQuestionAnswerByThana() {
         noticeId: id,
         thanaCode: notice.thanaCode,
         zonalCode: notice.zonalCode,
-        // submitId:
         answers: answer,
       }),
     });
@@ -116,83 +144,116 @@ function EditQuestionAnswerByThana() {
       throw new Error("Network response was not ok");
     }
     if (response.status === 200) {
-      Swal.fire({
-        title: "Do you want to save the changes?",
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: "Save",
-        denyButtonText: `Don't save`,
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          Swal.fire("Update your data successfully", "", "success");
-          navigate(`/dashboard/thana-submission/${id}`);
-        } else if (result.isDenied) {
-          Swal.fire("Changes are not saved", "", "info");
-        }
-      });
+      setConfirmDialog({ open: true });
     }
   };
 
-  return (
-    <div className="container">
-      <div className="card">
-        <div className="card-header">
-          <Typography className="text-center">
-            {notice?.document_name}
-          </Typography>
-          <Typography className="text-center">{notice?.doc_desc}</Typography>
-        </div>
+  const handleConfirmSave = () => {
+    setConfirmDialog({ open: false });
+    setSnackbar({
+      open: true,
+      message: "Update your data successfully",
+      severity: "success",
+    });
+    navigate(`/dashboard/thana-submission/${id}`);
+  };
 
-        <form onSubmit={updataHandler}>
+  const handleDenySave = () => {
+    setConfirmDialog({ open: false });
+    setSnackbar({
+      open: true,
+      message: "Changes are not saved",
+      severity: "info",
+    });
+  };
+
+  return (
+    <Container maxWidth="md">
+      <Paper>
+        <Paper
+          elevation={0}
+          sx={{ p: 2, bgcolor: "grey.100", borderRadius: "4px 4px 0 0" }}
+        >
+          <Typography align="center">{notice?.document_name}</Typography>
+          <Typography align="center">{notice?.doc_desc}</Typography>
+        </Paper>
+
+        <Box component="form" onSubmit={updataHandler}>
           {notice?.answers?.map((question, qIndex) => (
-            <div
-              className="card-body col-lg-6 col-md-8 col-sm-12 m-auto border  shadow mt-3"
+            <Paper
               key={qIndex}
+              variant="outlined"
+              elevation={2}
+              sx={{
+                maxWidth: { lg: "50%", md: "66%", sm: "100%" },
+                mx: "auto",
+                p: 2,
+                mt: 1.5,
+              }}
             >
               <Typography>
-                {qIndex + 1}. {question?.questionText}{" "}
+                {qIndex + 1}. {question?.questionText}
               </Typography>
 
-              <div>
-                <div className="d-flex align-items-center">
+              <Box>
+                <Box sx={{ display: "flex", alignItems: "center" }}>
                   <FormControlLabel
                     control={
                       question.questionType !== "text" &&
                       question.questionType !== "number" ? (
-                        <input
-                          type={question.questionType}
-                          name={qIndex}
-                          className=" text-primary mx-2"
-                          required={question?.required}
-                          value={question?.data}
-                          onChange={() =>
-                            selectCheck(
-                              question?.questionText,
-                              question.optionsText,
-                              qIndex,
-                              question?.required,
-                              question?.questionType
-                            )
-                          }
-                        />
+                        question.questionType === "checkbox" ? (
+                          <Checkbox
+                            name={String(qIndex)}
+                            required={question?.required}
+                            value={question?.data}
+                            onChange={() =>
+                              selectCheck(
+                                question?.questionText,
+                                question.optionsText,
+                                qIndex,
+                                question?.required,
+                                question?.questionType
+                              )
+                            }
+                          />
+                        ) : (
+                          <Radio
+                            name={String(qIndex)}
+                            required={question?.required}
+                            value={question?.data}
+                            onChange={() =>
+                              selectCheck(
+                                question?.questionText,
+                                question.optionsText,
+                                qIndex,
+                                question?.required,
+                                question?.questionType
+                              )
+                            }
+                          />
+                        )
                       ) : question?.questionType === "number" ? (
-                        <SortNumericIcon className="me-1" />
+                        <SortNumericIcon sx={{ mr: 0.5 }} />
                       ) : (
-                        <SortTextIcon className="me-1" />
+                        <SortTextIcon sx={{ mr: 0.5 }} />
                       )
                     }
                     label={
                       question.questionType !== "text" &&
                       question.questionType !== "number" ? (
-                        <Typography className="text-capitalize text-center">
+                        <Typography
+                          sx={{
+                            textTransform: "capitalize",
+                            textAlign: "center",
+                          }}
+                        >
                           {question?.optionsText}
                         </Typography>
                       ) : (
-                        <input
+                        <TextField
                           type={question.questionType}
-                          name={qIndex}
-                          className="text_input mx-1"
+                          name={String(qIndex)}
+                          size="small"
                           required={question?.required}
                           defaultValue={question?.data}
                           onChange={(e) =>
@@ -208,26 +269,66 @@ function EditQuestionAnswerByThana() {
                       )
                     }
                   />
-                </div>
-              </div>
-            </div>
+                </Box>
+              </Box>
+            </Paper>
           ))}
-          <div className="col-lg-6 col-md-8 col-sm-10 m-auto">
-            <div className="d-flex justify-content-around align-items-center m-4">
-              <button type="submit" className="btn btn-danger">
+          <Box sx={{ maxWidth: { lg: "50%", md: "66%", sm: "83%" }, mx: "auto" }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "center",
+                my: 2,
+              }}
+            >
+              <Button type="submit" variant="contained" color="error">
                 Update
-              </button>
-              <Link
-                className="btn btn-success mx-3"
+              </Button>
+              <Button
+                component={Link}
                 to={`/dashboard/thana-submission/${id}`}
+                variant="contained"
+                color="success"
+                sx={{ mx: 1.5 }}
               >
                 Back
-              </Link>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </Paper>
+
+      {/* Confirmation Dialog */}
+      <Dialog open={confirmDialog.open} onClose={handleDenySave}>
+        <DialogTitle>Do you want to save the changes?</DialogTitle>
+        <DialogActions>
+          <Button onClick={handleDenySave} color="inherit">
+            Don&apos;t save
+          </Button>
+          <Button onClick={handleConfirmSave} variant="contained" color="success">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={4000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleSnackbarClose}
+          severity={snackbar.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </Container>
   );
 }
 

@@ -1,11 +1,22 @@
 import React, { useEffect, useState, useMemo } from "react";
 import BangladayDate from "./BangladayDate";
 import { Link, useParams } from "react-router-dom";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Box,
+} from "@mui/material";
 
 function DateByDayCount({
   startDadeline,
   range,
-  thanaReport = [], // Assume thanaReports is an array
+  thanaReport = [],
   questions = [],
   totalData = [],
 }) {
@@ -30,15 +41,14 @@ function DateByDayCount({
 
     if (startDadeline && range) {
       const dates = generateDateList(startDadeline, range);
-
       setDateList(dates);
     }
   }, [startDadeline, range]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    if (isNaN(date)) return null; // Return null if the date is invalid
-    return date.toISOString().split("T")[0]; // Extract the date part in YYYY-MM-DD format
+    if (isNaN(date)) return null;
+    return date.toISOString().split("T")[0];
   };
 
   const handleSort = (key) => {
@@ -57,11 +67,9 @@ function DateByDayCount({
 
       const matchingReports = thanaReport.filter((report) => {
         const reportDate = formatDate(report.createdAt);
-
         return reportDate === formattedDate;
       });
 
-      // Aggregate data for this date
       const dataForDate = {};
       questions.forEach((q) => {
         dataForDate[q.questionText] = matchingReports
@@ -115,63 +123,78 @@ function DateByDayCount({
 
   return (
     <>
-      <table className="table table-hover table-bordered  text-center">
-        <thead>
-          <tr className="text-capitalize bg-primary">
-            <th onClick={() => handleSort("date")}>
-              দিন ও তারিখ{" "}
-              {sortConfig.key === "date" &&
-                (sortConfig.direction === "ascending" ? "▲" : "▼")}
-            </th>
-            {questions.map((question, index) => (
-              <th key={index} onClick={() => handleSort(question.questionText)}>
-                {question.questionText}{" "}
-                {sortConfig.key === question.questionText &&
+      <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
+        <Table size="small">
+          <TableHead>
+            <TableRow sx={{ bgcolor: "primary.main", textTransform: "capitalize" }}>
+              <TableCell
+                sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                onClick={() => handleSort("date")}
+              >
+                দিন ও তারিখ{" "}
+                {sortConfig.key === "date" &&
                   (sortConfig.direction === "ascending" ? "▲" : "▼")}
-              </th>
-            ))}
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="bg-primary fs-5">
-            <th className="text-light">Total</th>
-
-            {totalData?.length ? (
-              totalData?.map((sum, sIndex) => (
-                <th className="text-light" key={sIndex}>
-                  {Object.values(sum)[0]}
-                </th>
-              ))
-            ) : (
-              <th className="text-light">0</th>
-            )}
-            <th className="text-danger">
-              <i className="fa fa-lock" aria-hidden="true"></i>
-            </th>
-          </tr>
-          {sortedDataList.map((data, index) => (
-            <tr key={index} className="border">
-              <td>
-                <BangladayDate day={data.day + 1} date={data.date} />
-              </td>
-              {questions.map((question, qIndex) => (
-                <td key={qIndex}>{data[question.questionText]}</td>
-              ))}
-              <td>
-                <Link
-                  className={`btn btn-success ${
-                    data.answerId ? "active" : "disabled"
-                  }`}
-                  to={`/dashboard/thana-edit-answer/${id}/${data.answerId}`}
+              </TableCell>
+              {questions.map((question, index) => (
+                <TableCell
+                  sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                  key={index}
+                  onClick={() => handleSort(question.questionText)}
                 >
-                  <i className="fa fa-edit" aria-hidden="true"></i>
-                </Link>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  {question.questionText}{" "}
+                  {sortConfig.key === question.questionText &&
+                    (sortConfig.direction === "ascending" ? "▲" : "▼")}
+                </TableCell>
+              ))}
+              <TableCell sx={{ color: "common.white", textAlign: "center" }}>Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow sx={{ bgcolor: "primary.main" }}>
+              <TableCell sx={{ color: "common.white", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
+              {totalData?.length ? (
+                totalData?.map((sum, sIndex) => (
+                  <TableCell sx={{ color: "common.white", textAlign: "center" }} key={sIndex}>
+                    {Object.values(sum)[0]}
+                  </TableCell>
+                ))
+              ) : (
+                <TableCell sx={{ color: "common.white", textAlign: "center" }}>0</TableCell>
+              )}
+              <TableCell sx={{ color: "error.main", textAlign: "center" }}>
+                <Box component="span" sx={{ opacity: 0.5 }}>&#128274;</Box>
+              </TableCell>
+            </TableRow>
+            {sortedDataList.map((data, index) => (
+              <TableRow
+                key={index}
+                sx={{ "&:hover": { bgcolor: "action.hover" } }}
+              >
+                <TableCell sx={{ textAlign: "center" }}>
+                  <BangladayDate day={data.day + 1} date={data.date} />
+                </TableCell>
+                {questions.map((question, qIndex) => (
+                  <TableCell key={qIndex} sx={{ textAlign: "center" }}>
+                    {data[question.questionText]}
+                  </TableCell>
+                ))}
+                <TableCell sx={{ textAlign: "center" }}>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    size="small"
+                    disabled={!data.answerId}
+                    component={Link}
+                    to={`/dashboard/thana-edit-answer/${id}/${data.answerId}`}
+                  >
+                    &#9998;
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 }

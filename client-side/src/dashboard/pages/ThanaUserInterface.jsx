@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Button } from "@mui/material";
-import Close from "@mui/icons-material/Close";
+import {
+  Box,
+  Button,
+  Paper,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
+} from "@mui/material";
+import { Close, ArrowBack } from "@mui/icons-material";
 import DateDifferenceComponent from "../time/DateDifferenceComponent";
 import DateByDayCount from "../time/DateByDayCount";
 import BASE_URL from "../../auth/dbUrl";
@@ -23,7 +32,7 @@ function ThanaUserInterface() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         });
         const data = await response.json();
@@ -36,7 +45,6 @@ function ThanaUserInterface() {
           throw new Error("Failed to fetch");
         }
       } catch (error) {
-        // Handle error
         console.error("Error fetching notice data:", error);
       }
     };
@@ -52,65 +60,99 @@ function ThanaUserInterface() {
 
   return (
     <>
-      <div className="table-responsive">
-        <div className="card border-0 my-1">
-          <div className="card-header border-0">
-            <div className="myTopCard col-lg-8 col-md-6 col-sm-12 m-auto">
-              {descriptionAlert && (
-                <div className="docsPopUp">
-                  <Button
-                    onClick={descriptionCloserHandler}
-                    className=" float-end"
-                  >
-                    <Close />
-                  </Button>
-                  {notice?.doc_desc}
-                </div>
-              )}
-            </div>
-            <div className="card-header">
-              <div className="d-flex justify-content-between align-items-center">
-                <div className="answerLeft border p-3">
-                  <DateDifferenceComponent
-                    startDadeline={notice?.startDadeline}
-                    endDadeline={notice?.endDadeline}
-                    range={notice?.range}
-                    timeStart={notice?.timeStart}
-                    timeEnd={notice?.timeEnd}
-                  />
-                </div>
+      <Box>
+        <Paper elevation={0} sx={{ my: 0.5 }}>
+          {/* Description Dialog */}
+          <Dialog
+            open={descriptionAlert}
+            onClose={descriptionCloserHandler}
+            maxWidth="sm"
+            fullWidth
+          >
+            <DialogTitle sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <IconButton onClick={descriptionCloserHandler} size="small">
+                <Close />
+              </IconButton>
+            </DialogTitle>
+            <DialogContent>
+              <Typography>{notice?.doc_desc}</Typography>
+            </DialogContent>
+          </Dialog>
 
-                <div className="answerMiddle">
-                  <p className="text-center fs-2 fw-semibold text-success">
-                    {notice?.document_name}
-                  </p>
-                  {notice?.sub_title && (
-                    <p className="text-center fs-6">{notice?.sub_title}</p>
-                  )}
-                </div>
-                <div className="answerRight">
-                  <div className="d-flex align-items-end justify-content-center flex-column">
-                    {!descriptionAlert && (
-                      <Button
-                        onClick={descriptionHandler}
-                        className="text-center border border-success fw-semibold "
-                      >
-                        Notice
-                      </Button>
-                    )}
-                    <Link
-                      className="button btn btn-success p-2"
-                      to={`/dashboard`}
-                    >
-                      <span>Back</span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="card-body shadow my-3 bg-white p-3 rounded">
+          {/* Header Section */}
+          <Paper elevation={0} sx={{ p: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              {/* Left - Deadline */}
+              <Box sx={{ border: 1, borderColor: "divider", p: 1.5 }}>
+                <DateDifferenceComponent
+                  startDadeline={notice?.startDadeline}
+                  endDadeline={notice?.endDadeline}
+                  range={notice?.range}
+                  timeStart={notice?.timeStart}
+                  timeEnd={notice?.timeEnd}
+                />
+              </Box>
+
+              {/* Middle - Title */}
+              <Box>
+                <Typography
+                  align="center"
+                  variant="h4"
+                  fontWeight={600}
+                  color="success.main"
+                >
+                  {notice?.document_name}
+                </Typography>
+                {notice?.sub_title && (
+                  <Typography align="center" variant="body1">
+                    {notice?.sub_title}
+                  </Typography>
+                )}
+              </Box>
+
+              {/* Right - Actions */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  justifyContent: "center",
+                  flexDirection: "column",
+                  gap: 1,
+                }}
+              >
+                {!descriptionAlert && (
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    onClick={descriptionHandler}
+                    sx={{ fontWeight: 600 }}
+                  >
+                    Notice
+                  </Button>
+                )}
+                <Button
+                  component={Link}
+                  to="/dashboard"
+                  variant="contained"
+                  color="success"
+                  startIcon={<ArrowBack />}
+                  sx={{ p: 1 }}
+                >
+                  Back
+                </Button>
+              </Box>
+            </Box>
+          </Paper>
+        </Paper>
+
+        {/* Table Section */}
+        <Paper elevation={3} sx={{ my: 1.5, p: 2, borderRadius: 1 }}>
           <DateByDayCount
             startDadeline={notice?.startDadeline}
             range={notice?.range}
@@ -118,8 +160,8 @@ function ThanaUserInterface() {
             questions={notice?.questions}
             totalData={totalData}
           />
-        </div>
-      </div>
+        </Paper>
+      </Box>
     </>
   );
 }

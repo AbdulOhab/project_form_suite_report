@@ -2,6 +2,17 @@ import React, { useEffect, useState, useMemo } from "react";
 import BangladayDate from "./BangladayDate";
 import { Link, useParams } from "react-router-dom";
 import Loader from "./Loader";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Box,
+} from "@mui/material";
 
 function TableDataInterfce({
   startDadeline,
@@ -38,8 +49,8 @@ function TableDataInterfce({
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    if (isNaN(date)) return null; // Return null if the date is invalid
-    return date.toISOString().split("T")[0]; // Extract the date part in YYYY-MM-DD format
+    if (isNaN(date)) return null;
+    return date.toISOString().split("T")[0];
   };
 
   useEffect(() => {
@@ -109,14 +120,12 @@ function TableDataInterfce({
         const aValue = a[sortConfig.key];
         const bValue = b[sortConfig.key];
 
-        // If the values are numbers, compare them numerically
         if (!isNaN(aValue) && !isNaN(bValue)) {
           return sortConfig.direction === "ascending"
             ? aValue - bValue
             : bValue - aValue;
         }
 
-        // If the values are not numbers, compare them as strings
         return sortConfig.direction === "ascending"
           ? String(aValue).localeCompare(String(bValue))
           : String(bValue).localeCompare(String(aValue));
@@ -130,67 +139,78 @@ function TableDataInterfce({
       {!sortedDataListByDate?.length ? (
         <Loader />
       ) : (
-        <table
-          className="table table-hover table-bordered table-sm table-responsive-sm"
-          border={1}
-        >
-          <thead>
-            <tr className="bg-primary text-center">
-              <th className="text-center" onClick={() => handleSort("date")}>
-                দিন ও তারিখ
-                {sortConfig.key === "date" &&
-                  (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-              </th>
-              {questions?.map((question, index) => (
-                <th
-                  className="text-dark"
-                  key={index}
-                  onClick={() => handleSort(question.questionText)}
+        <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
+          <Table size="small" border={1}>
+            <TableHead>
+              <TableRow sx={{ bgcolor: "primary.main", textAlign: "center" }}>
+                <TableCell
+                  sx={{ color: "common.white", textAlign: "center", cursor: "pointer", fontWeight: "bold" }}
+                  onClick={() => handleSort("date")}
                 >
-                  {question?.questionText}{" "}
-                  {sortConfig.key === question.questionText &&
+                  দিন ও তারিখ
+                  {sortConfig.key === "date" &&
                     (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                </th>
-              ))}
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="text-center bg-info fs-5">
-              <th className="text-danger">Total</th>
-              {totalData.length
-                ? totalData?.map((total, totalIndex) => (
-                    <th className="text-danger" key={totalIndex}>
-                      {total[totalIndex]}
-                    </th>
-                  ))
-                : questions?.map((index) => <th className="text-danger" key={index}>0</th>)}
-                <th className="text-danger">
-                <i className="fas fa-lock" aria-hidden="true"></i>
-              </th>
-            </tr>
-          </tbody>
-          <tbody>
-            {sortedDataListByDate?.map((data, dateIndex) => {
-              return (
-                <tr key={dateIndex} className="text-center">
-                  <BangladayDate day={data.day + 1} date={data.date} />
-                  {questions.map((question, questionIndex) => (
-                    <td key={questionIndex}>{data[question.questionText]}</td>
-                  ))}
-                  <td>
-                    <Link
-                      className="btn btn-success"
-                      to={`/dashboard/branch-interface/${dateIndex + 1}/${id}`}
-                    >
-                      <i className="fa-solid fa-plus" aria-hidden="true"></i>
-                    </Link>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                </TableCell>
+                {questions?.map((question, index) => (
+                  <TableCell
+                    sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                    key={index}
+                    onClick={() => handleSort(question.questionText)}
+                  >
+                    {question?.questionText}{" "}
+                    {sortConfig.key === question.questionText &&
+                      (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
+                  </TableCell>
+                ))}
+                <TableCell sx={{ color: "common.white", textAlign: "center" }}>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow sx={{ bgcolor: "info.main", textAlign: "center" }}>
+                <TableCell sx={{ color: "error.main", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
+                {totalData.length
+                  ? totalData?.map((total, totalIndex) => (
+                      <TableCell sx={{ color: "error.main", textAlign: "center" }} key={totalIndex}>
+                        {total[totalIndex]}
+                      </TableCell>
+                    ))
+                  : questions?.map((_, index) => (
+                      <TableCell sx={{ color: "error.main", textAlign: "center" }} key={index}>0</TableCell>
+                    ))}
+                <TableCell sx={{ color: "error.main", textAlign: "center" }}>
+                  <Box component="span" sx={{ opacity: 0.5 }}>&#128274;</Box>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+            <TableBody>
+              {sortedDataListByDate?.map((data, dateIndex) => {
+                return (
+                  <TableRow key={dateIndex} sx={{ textAlign: "center", "&:hover": { bgcolor: "action.hover" } }}>
+                    <TableCell>
+                      <BangladayDate day={data.day + 1} date={data.date} />
+                    </TableCell>
+                    {questions.map((question, questionIndex) => (
+                      <TableCell key={questionIndex} sx={{ textAlign: "center" }}>
+                        {data[question.questionText]}
+                      </TableCell>
+                    ))}
+                    <TableCell sx={{ textAlign: "center" }}>
+                      <Button
+                        variant="contained"
+                        color="success"
+                        size="small"
+                        component={Link}
+                        to={`/dashboard/branch-interface/${dateIndex + 1}/${id}`}
+                      >
+                        +
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
       )}
     </React.Fragment>
   );

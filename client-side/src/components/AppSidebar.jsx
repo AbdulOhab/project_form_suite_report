@@ -1,0 +1,183 @@
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getMenuItems } from "../config/sidebarMenu";
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Collapse,
+  Toolbar,
+  Divider,
+  Box,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+const DRAWER_WIDTH = 240;
+
+const SidebarContent = ({ role, onClose, isMobile }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [openGroups, setOpenGroups] = useState({});
+  const menuItems = getMenuItems(role);
+
+  const toggleGroup = (label) => {
+    setOpenGroups((prev) => ({ ...prev, [label]: !prev[label] }));
+  };
+
+  const isActive = (path) => {
+    if (!path) return false;
+    return location.pathname === path;
+  };
+
+  const handleNavigate = (path) => {
+    if (isMobile) onClose();
+    navigate(path);
+  };
+
+  return (
+    <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+      <Toolbar variant="dense" sx={{ minHeight: 44, px: 2 }}>
+        <Typography
+          variant="subtitle1"
+          sx={{ fontWeight: 700, color: "primary.main", flexGrow: 1 }}
+        >
+          Instance Report
+        </Typography>
+      </Toolbar>
+      <Divider />
+
+      <List sx={{ flex: 1, px: 0.75, py: 0.5 }}>
+        {menuItems.map((item) => {
+          if (item.children) {
+            return (
+              <Box key={item.label} sx={{ mb: 2 }}>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => toggleGroup(item.label)}
+                    sx={{
+                      borderRadius: 1,
+                      py: 0.75,
+                      mb: 0.5,
+                      "&:hover": { bgcolor: "primary.light", color: "#fff", "& .MuiListItemIcon-root": { color: "#fff" } },
+                    }}
+                  >
+                    <ListItemIcon sx={{ minWidth: 36 }}>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.label} primaryTypographyProps={{ fontSize: "0.875rem" }} />
+                    {openGroups[item.label] ? (
+                      <ExpandLessIcon fontSize="small" />
+                    ) : (
+                      <ExpandMoreIcon fontSize="small" />
+                    )}
+                  </ListItemButton>
+                </ListItem>
+                <Collapse
+                  in={openGroups[item.label]}
+                  timeout="auto"
+                  unmountOnExit
+                >
+                  <List component="div" disablePadding sx={{ pl: 1.5 }}>
+                    {item.children.map((child) => (
+                      <ListItem key={child.label} disablePadding sx={{ mb: 0.5 }}>
+                        <ListItemButton
+                          onClick={() => handleNavigate(child.path)}
+                          sx={{
+                            borderRadius: 1,
+                            py: 0.5,
+                            bgcolor: isActive(child.path)
+                              ? "primary.light"
+                              : "transparent",
+                            color: isActive(child.path) ? "#fff" : "text.primary",
+                            "&:hover": {
+                              bgcolor: "primary.light",
+                              color: "#fff",
+                              "& .MuiListItemIcon-root": { color: "#fff" },
+                            },
+                          }}
+                        >
+                          <ListItemIcon
+                            sx={{
+                              minWidth: 32,
+                              color: isActive(child.path) ? "#fff" : "inherit",
+                            }}
+                          >
+                            {child.icon}
+                          </ListItemIcon>
+                          <ListItemText
+                            primary={child.label}
+                            primaryTypographyProps={{ fontSize: "0.8125rem" }}
+                          />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Collapse>
+              </Box>
+            );
+          }
+
+          return (
+            <ListItem key={item.label} disablePadding sx={{ mb: 0.75 }}>
+              <ListItemButton
+                onClick={() => handleNavigate(item.path)}
+                sx={{
+                  borderRadius: 1,
+                  py: 0.75,
+                  bgcolor: isActive(item.path) ? "primary.main" : "transparent",
+                  color: isActive(item.path) ? "#fff" : "text.primary",
+                  "&:hover": {
+                    bgcolor: isActive(item.path) ? "primary.dark" : "primary.light",
+                    color: "#fff",
+                    "& .MuiListItemIcon-root": { color: "#fff" },
+                  },
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 36,
+                    color: isActive(item.path) ? "#fff" : "inherit",
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText primary={item.label} primaryTypographyProps={{ fontSize: "0.875rem" }} />
+              </ListItemButton>
+            </ListItem>
+          );
+        })}
+      </List>
+    </Box>
+  );
+};
+
+const AppSidebar = ({ role, isOpen, onClose }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  return (
+    <Drawer
+      variant={isMobile ? "temporary" : "permanent"}
+      open={isMobile ? isOpen : true}
+      onClose={onClose}
+      sx={{
+        width: DRAWER_WIDTH,
+        flexShrink: 0,
+        [`& .MuiDrawer-paper`]: {
+          width: DRAWER_WIDTH,
+          bgcolor: "#fff",
+          borderRadius: 0,
+        },
+      }}
+    >
+      <SidebarContent role={role} onClose={onClose} isMobile={isMobile} />
+    </Drawer>
+  );
+};
+
+export default AppSidebar;

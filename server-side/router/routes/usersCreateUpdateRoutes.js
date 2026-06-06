@@ -18,9 +18,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+router.get("/download-users-csv", usersController.downloadUsersCsv);
+
 router.post(
   "/upload-user-file",
-  //   upload.single("csvFile"),
+  upload.single("csvFile"),
   usersController.uploadUser
 );
 router.post("/create-thana-users", usersController.createThana);
@@ -51,5 +53,11 @@ router.get(
   usersController.getBranchByZonal
 );
 router.post("/delete-zonal-users/:id", usersController.deleteZonal);
+
+router.post("/create-admin-users", usersController.createAdmin);
+router.post("/update-admin-users/:id", usersController.updateAdmin);
+router.post("/update-admin-password/:id", usersController.updateAdminPassword);
+router.post("/get-admin-users/:id", usersController.getAdmin);
+router.post("/delete-admin-users/:id", usersController.deleteAdmin);
 
 module.exports = () => router;

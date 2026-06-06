@@ -1,10 +1,19 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  Box,
+  Paper,
+  Typography,
+  TextField,
+  MenuItem,
+  Button,
+  Divider,
+  Stack,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Pagination from "./usersTable/Pagination";
 import BASE_URL from "../../auth/dbUrl";
 import ZonalTableBody from "./usersTable/ZonalTableBody";
-import { Link } from "react-router-dom";
 
 function ZonalUsers() {
   const [userData, setUserData] = useState([]);
@@ -18,21 +27,18 @@ function ZonalUsers() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         });
         let data = await response.json();
-        // console.log(response.status);
         if (!response.ok) {
           throw new Error("get notice data failed");
         }
         if (response.ok) {
-          // console.log(data);
           setUserData(data);
         }
       } catch (error) {
         console.error("Error fetching notice data:", error);
-        // Handle error
       }
     };
     getZonalUsers();
@@ -49,64 +55,76 @@ function ZonalUsers() {
   };
 
   const paginate = (pageNumber) => setCurrenPage(pageNumber);
+
+  const perPageOptions = [
+    25,
+    Math.ceil(userData?.length / 16),
+    Math.ceil(userData?.length / 8),
+    Math.ceil(userData?.length / 4),
+    Math.ceil(userData?.length / 2),
+    Math.ceil(userData?.length),
+  ].filter((v, i, a) => v > 0 && a.indexOf(v) === i);
+
   return (
-    <div className="mt-3">
-      <div className="bg-white p-3 rounded">
-        <div className="d-flex align-items-center justify-content-between">
-          <div className="mb-3">
-            <select
-              onChange={selectHandler}
-              className="form-select-custom"
-              name=""
-              value={usersPerPage}
-            >
-              <option value={25}>{25}</option>
-              <option value={Math.ceil(userData?.length / 16)}>
-                {Math.ceil(userData?.length / 16)}
-              </option>
-              <option value={Math.ceil(userData?.length / 8)}>
-                {Math.ceil(userData?.length / 8)}
-              </option>
-              <option value={Math.ceil(userData?.length / 4)}>
-                {Math.ceil(userData?.length / 4)}
-              </option>
-              <option value={Math.ceil(userData?.length / 2)}>
-                {Math.ceil(userData?.length / 2)}
-              </option>
-              <option value={Math.ceil(userData?.length)}>
-                {Math.ceil(userData?.length)}
-              </option>
-            </select>
-          </div>
-          <div className="">
-            <h2 className="text-center text-success fw-bold">
-              অঞ্চল সমূহ
-            </h2>
-          </div>
-          <div className="backButton">
-            <Link className="button fs-5 p-2" to={`/dashboard`}>
-              <span>Back</span>
-            </Link>
-          </div>
-        </div>
+    <Box sx={{ mt: 2 }}>
+      <Paper sx={{ p: 3, borderRadius: 2 }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <TextField
+            select
+            size="small"
+            value={usersPerPage}
+            onChange={selectHandler}
+            sx={{ minWidth: 100 }}
+          >
+            {perPageOptions.map((val) => (
+              <MenuItem key={val} value={val}>
+                {val}
+              </MenuItem>
+            ))}
+          </TextField>
+
+          <Typography
+            variant="h5"
+            sx={{ textAlign: "center", fontWeight: "bold", color: "#2e7d32" }}
+          >
+            অঞ্চল সমূহ
+          </Typography>
+
+          <Button
+            component={Link}
+            to="/dashboard"
+            variant="outlined"
+            startIcon={<ArrowBackIcon />}
+          >
+            Back
+          </Button>
+        </Stack>
+
+        <Divider sx={{ my: 2 }} />
 
         <ZonalTableBody users={currentUsers} />
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="userAndDataLength">
-            <p className="border p-2 rounded">
-              Showing {currentUsers.length} of {userData.length} users
-            </p>
-          </div>
-          <div className="pagination-container">
-            <Pagination
-              usersPerPage={usersPerPage}
-              totalUsers={userData.length}
-              paginate={paginate}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{ mt: 2 }}
+        >
+          <Typography variant="body2" sx={{ border: 1, p: 1, borderRadius: 1, borderColor: "divider" }}>
+            Showing {currentUsers.length} of {userData.length} users
+          </Typography>
+          <Pagination
+            usersPerPage={usersPerPage}
+            totalUsers={userData.length}
+            paginate={paginate}
+          />
+        </Stack>
+      </Paper>
+    </Box>
   );
 }
 

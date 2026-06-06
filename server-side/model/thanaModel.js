@@ -5,6 +5,7 @@ module.exports = mongoose.model(
   mongoose.Schema({
     userId: Number,
     userName: String,
+    email: String,
     password: String,
     thanaCode: Number,
     branchCode: Number,

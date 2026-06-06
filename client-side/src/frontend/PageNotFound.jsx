@@ -1,34 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Container, Paper, Typography, Button, Box } from "@mui/material";
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 
 const PageNotFound = () => {
   return (
-    <>
-      <div
-        className={`d-flex flex-column align-items-center gap-2 p-5 min-vh-100 container`}
+    <Container maxWidth="sm">
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+          py: 5,
+        }}
       >
-        <img
-          src="/assects/images/404.png"
-          alt="not found"
-          className={`img-thumbnail w-25 rounded-5`}
-        />
-        <h1 className="fw-bold text-white my-3 fs-1">Page Not Found</h1>
-
-        <p className="text-white fs-6">
-          <Link className="btn btn-light fs-5" to={`/`}>
+        <Paper elevation={3} sx={{ p: 5, textAlign: "center" }}>
+          <SentimentDissatisfiedIcon sx={{ fontSize: 120, color: "text.secondary", mb: 2 }} />
+          <Typography variant="h3" fontWeight="bold" gutterBottom>
+            404 - Page Not Found
+          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+            The page you are looking for does not exist.
+          </Typography>
+          <Button variant="contained" component={Link} to="/" size="large">
             Return Home Page
-          </Link>
-        </p>
-        <div className="mt-auto text-center">
-          <img
-            src="/assects/images/logo.webp"
-            alt="logo"
-            style={{ width: "80px", height: "80px" }}
-            className=" border border-3 border-success rounded-5 "
-          />
-        </div>
-      </div>
-    </>
+          </Button>
+        </Paper>
+      </Box>
+    </Container>
   );
 };
 

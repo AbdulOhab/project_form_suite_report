@@ -1,4 +1,5 @@
 import React from 'react'
+import { Box } from "@mui/material";
 
 const BangladayForOnce = ({day,date}) => {
   // Mapping for English to Bangla days and months
@@ -58,18 +59,21 @@ const BangladayForOnce = ({day,date}) => {
     const banglaMonth = banglaMonths[month];
 
     return `${banglaDay}, ${dateNum} ${banglaMonth} ${year}`;
-  }; // Example date string
+  };
 
   const data = new Date(date);
   const banglaFormattedDate = getBanglaFormattedDate(data);
   const currentDayNotice = convertToBengaliNumber(day);
   return (
-    <td className="text-center text-success fw-bold">
+    <Box
+      component="td"
+      sx={{ textAlign: "center", color: "success.main", fontWeight: "bold" }}
+    >
        দিন {currentDayNotice}{", "}
       {banglaFormattedDate}
-    </td>
+    </Box>
   );
-    
+
 }
 
 export default BangladayForOnce

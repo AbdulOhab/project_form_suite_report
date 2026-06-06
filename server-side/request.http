@@ -1,51 +1,403 @@
-# @hostName = https://instancereportbackend.deepseahost.com
+# ============================================
+# Instance Report API - Test Collection
+# ============================================
+# How to use:
+# 1. First run "Login - Admin" request to get token
+# 2. Copy the token from response
+# 3. Paste it in @gsmToken variable below
+# 4. Click "Send Request" above any request
+# ============================================
+
+# ---------- Variables ----------
 @hostName = http://localhost:5053
-@dataInterfaceId = 67b9a6b49ba999fb461fb8dd
-# @dataInterfaceId = 6780aca31e108275dd35e27b
-# @dataInterfaceId = 676e2dbc1064972a10d06737/301/101/1
-# @dataInterfaceId = 676e2dbc1064972a10d06737/301
+@gsmToken = PASTE_YOUR_TOKEN_HERE
+@noticeId = YOUR_NOTICE_ID
+@answerId = YOUR_ANSWER_ID
 
-@gsmToken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjExMDAxMSwicGFzc3dvcmQiOiIkMmEkMTAkTTFTaGQuMDJGMXNqMThpektVYllRdW5CeDcud1hIZHdFd25aeUxZeldZV2IxdDJOd2JPTjYiLCJfaWQiOiI2N2IwMjFiMjU4NWU5ODQ5NGE1Y2VjNjUiLCJ1c2VyUm9sZSI6ImFkbWluIiwiaWF0IjoxNzQwNTYyOTY0fQ.OVqaUDAOc6TCBm-S-Otg2by0fDuE_BCZKEKd7Blv0mY
+# ==========================================
+# AUTH - Login (No token needed)
+# ==========================================
 
-# get all thana data
-GET  {{hostName}}/sums-thana-data/{{dataInterfaceId}}
-Authorization: myworld {{gsmToken}}
-
-
-# get day by day zonal data
-GET  {{hostName}}/sums-zonal-data-by-branch/{{dataInterfaceId}}
-Authorization: myworld {{gsmToken}}
-
-
-
-
-###
-GET  {{hostName}}/sums-day-by-day-zonal-data/{{dataInterfaceId}}
-Authorization: myworld {{gsmToken}}
-
-
-
-###
-GET  {{hostName}}/admin/data-interface/{{dataInterfaceId}}
-Authorization: myworld {{gsmToken}}
-
-###
-GET  {{hostName}}/sums-Totol-day-thana-data/{{dataInterfaceId}}
-Authorization: myworld {{gsmToken}}
-
-
-
-###
-GET  {{hostName}}/sums-total-days-branch-data/{{dataInterfaceId}}
-Authorization: myworld {{gsmToken}}
-
-
-
-###
+### Login - Admin
 POST {{hostName}}/submit
 Content-Type: application/json
 
 {
     "userId": 110011,
- "password": "1122"
-}  
+    "password": "1122"
+}
+
+### Login - Thana User
+POST {{hostName}}/submit
+Content-Type: application/json
+
+{
+    "userId": 401,
+    "password": "1122"
+}
+
+### Login - Branch User
+POST {{hostName}}/submit
+Content-Type: application/json
+
+{
+    "userId": 301,
+    "password": "1122"
+}
+
+### Login - Zonal User
+POST {{hostName}}/submit
+Content-Type: application/json
+
+{
+    "userId": 201,
+    "password": "1122"
+}
+
+# ==========================================
+# AUTH CHECK (Token required)
+# ==========================================
+
+### Check logged-in user
+GET {{hostName}}/check-user
+Authorization: Bearer {{gsmToken}}
+
+### Logout
+GET {{hostName}}/logout
+Authorization: Bearer {{gsmToken}}
+
+# ==========================================
+# NOTICE BOARD
+# ==========================================
+
+### Create Notice
+POST {{hostName}}/create-notice/110011
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "noticeId": "notice_001",
+    "title": "Test Notice",
+    "deadline": "2026-06-30",
+    "questions": ["Question 1?", "Question 2?"]
+}
+
+### Get Notice
+GET {{hostName}}/get-notice/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Update Notice
+POST {{hostName}}/update-notice/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "title": "Updated Notice",
+    "deadline": "2026-07-15"
+}
+
+### Delete Notice
+POST {{hostName}}/delete-notice/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Get All Notices
+POST {{hostName}}/all-notice
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{}
+
+# ==========================================
+# ANSWERS
+# ==========================================
+
+### Create Answer
+POST {{hostName}}/create-answer/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "answers": ["Answer 1", "Answer 2"]
+}
+
+### Get Answer
+GET {{hostName}}/get-answer/{{answerId}}
+Authorization: Bearer {{gsmToken}}
+
+### Get Questions for Notice
+GET {{hostName}}/get-question/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Update Answer
+POST {{hostName}}/update-answer/{{answerId}}
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "answers": ["Updated Answer 1", "Updated Answer 2"]
+}
+
+### Get Branch Notice Answers
+GET {{hostName}}/notice-answer/branch
+Authorization: Bearer {{gsmToken}}
+
+# ==========================================
+# DATA CHECK - Thana
+# ==========================================
+
+### Thana Data Checkout
+GET {{hostName}}/thana/data-checkout/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Thana Find Data (specific day)
+GET {{hostName}}/thana/find-data-checkout/{{noticeId}}/1
+Authorization: Bearer {{gsmToken}}
+
+# ==========================================
+# DATA CHECK - Branch
+# ==========================================
+
+### Branch Data Checkout
+GET {{hostName}}/branch/data-checkout/1/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Branch Data Interface
+GET {{hostName}}/branch/data-interface/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+# ==========================================
+# DATA CHECK - Zonal
+# ==========================================
+
+### Zonal Data Checkout
+GET {{hostName}}/zonal/data-checkout/1/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Zonal Data Interface
+GET {{hostName}}/zonal/data-interface/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Zonal Day Count
+GET {{hostName}}/zonal/zonal-data-daycount/1/301/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+# ==========================================
+# DATA CHECK - Admin
+# ==========================================
+
+### Admin Data Interface
+GET {{hostName}}/admin/data-interface/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Admin Data Checkout
+GET {{hostName}}/admin/data-checkout/1/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Admin Branch Data Checkout
+GET {{hostName}}/admin/branch/data-checkout/1/201/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Admin Thana Day Count
+GET {{hostName}}/admin/thana-data-daycount/1/201/301/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Admin Get All Branches
+GET {{hostName}}/admin/get-all-branches/{{noticeId}}/1
+Authorization: Bearer {{gsmToken}}
+
+# ==========================================
+# SUMS DATA - Reports
+# ==========================================
+
+### Sums Zonal Data
+GET {{hostName}}/sums-zonal-data/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Sums Branch Data
+GET {{hostName}}/sums-branch-data/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Sums Total Days Branch Data
+GET {{hostName}}/sums-total-days-branch-data/{{noticeId}}/201/301
+Authorization: Bearer {{gsmToken}}
+
+### Sums Day by Day Zonal Data
+GET {{hostName}}/sums-day-by-day-zonal-data/{{noticeId}}/201
+Authorization: Bearer {{gsmToken}}
+
+### Sums Zonal Data by Branch
+GET {{hostName}}/sums-zonal-data-by-branch/{{noticeId}}/201
+Authorization: Bearer {{gsmToken}}
+
+### Sums Thana by Branch Data
+GET {{hostName}}/sums-thana-by-branch-data/{{noticeId}}/301
+Authorization: Bearer {{gsmToken}}
+
+### Sums Thana Data
+GET {{hostName}}/sums-thana-data/{{noticeId}}
+Authorization: Bearer {{gsmToken}}
+
+### Sums Total Day Thana Data
+GET {{hostName}}/sums-Totol-day-thana-data/{{noticeId}}/201/301/401
+Authorization: Bearer {{gsmToken}}
+
+# ==========================================
+# USER MANAGEMENT - Thana
+# ==========================================
+
+### Create Thana User
+POST {{hostName}}/create-thana-users
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "userName": "New Thana User",
+    "email": "newthana@test.com",
+    "password": "1122",
+    "thanaCode": 403,
+    "branchCode": 301,
+    "zonalCode": 201,
+    "userRole": "thana"
+}
+
+### Get Thana Users by Branch
+GET {{hostName}}/get-thana-users/301
+Authorization: Bearer {{gsmToken}}
+
+### Update Thana User
+POST {{hostName}}/update-thana-users/403
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "userName": "Updated Thana User",
+    "email": "updated@test.com"
+}
+
+### Update Thana Password
+POST {{hostName}}/update-thana-password/403
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "password": "newpassword"
+}
+
+### Delete Thana User
+POST {{hostName}}/delete-thana-users/403
+Authorization: Bearer {{gsmToken}}
+
+# ==========================================
+# USER MANAGEMENT - Branch
+# ==========================================
+
+### Create Branch User
+POST {{hostName}}/create-branch-users
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "userName": "New Branch User",
+    "email": "newbranch@test.com",
+    "password": "1122",
+    "branchCode": 303,
+    "zonalCode": 201,
+    "userRole": "branch"
+}
+
+### Get Branch Users
+POST {{hostName}}/get-branch-users/201
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{}
+
+### Get Thana Users for Update
+POST {{hostName}}/get-thana-users-for-update/301
+Authorization: Bearer {{gsmToken}}
+
+### Update Branch User
+POST {{hostName}}/update-branch-users/303
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "userName": "Updated Branch User"
+}
+
+### Update Branch Password
+POST {{hostName}}/update-branch-password/303
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "password": "newpassword"
+}
+
+### Delete Branch User
+POST {{hostName}}/delete-branch-users/303
+Authorization: Bearer {{gsmToken}}
+
+### Get Branch Users by Zonal
+GET {{hostName}}/get-branch-users-by-zonal/201
+Authorization: Bearer {{gsmToken}}
+
+# ==========================================
+# USER MANAGEMENT - Zonal
+# ==========================================
+
+### Create Zonal User
+POST {{hostName}}/create-zonal-users
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "userName": "New Zonal User",
+    "email": "newzonal@test.com",
+    "password": "1122",
+    "zonalCode": 203,
+    "userRole": "zonal"
+}
+
+### Get Zonal Users
+GET {{hostName}}/get-zonal-users/201
+Authorization: Bearer {{gsmToken}}
+
+### Update Zonal User
+POST {{hostName}}/update-zonal-users/203
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "userName": "Updated Zonal User"
+}
+
+### Update Zonal Password
+POST {{hostName}}/update-zonal-password/203
+Authorization: Bearer {{gsmToken}}
+Content-Type: application/json
+
+{
+    "password": "newpassword"
+}
+
+### Delete Zonal User
+POST {{hostName}}/delete-zonal-users/203
+Authorization: Bearer {{gsmToken}}
+
+# ==========================================
+# FILE UPLOAD
+# ==========================================
+
+### Upload User File
+# Change file path to your actual CSV/Excel file
+POST {{hostName}}/upload-user-file
+Authorization: Bearer {{gsmToken}}
+Content-Type: multipart/form-data; boundary=Boundary
+
+--Boundary
+Content-Disposition: form-data; name="file"; filename="users.csv"
+Content-Type: text/csv
+
+< ./model/seeders/thanaSeeder.js
+--Boundary--

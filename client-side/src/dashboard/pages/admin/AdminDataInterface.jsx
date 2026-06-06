@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from "react";
 import AdminTableDataInterfce from "./AdminTableDataInterfce";
 import { Link, useParams } from "react-router-dom";
-import { Button } from "@mui/material";
+import {
+  Box,
+  Button,
+  Paper,
+  Typography,
+  Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
+} from "@mui/material";
+import { Close, ArrowBack } from "@mui/icons-material";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
-import { Close } from "@mui/icons-material";
 import BASE_URL from "../../../auth/dbUrl";
 import convertToBengaliNumber from "../../time/NumberConverter";
 
@@ -23,7 +33,7 @@ function AdminDataInterface() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         });
         const data = await response.json();
@@ -36,12 +46,12 @@ function AdminDataInterface() {
           throw new Error("Failed to fetch");
         }
       } catch (error) {
-        // Handle error
         console.error("Error fetching notice data:", error);
       }
     };
     getZonalUsers();
   }, [id]);
+
   const descriptionHandler = () => {
     setDescriptionAlert(true);
   };
@@ -59,103 +69,172 @@ function AdminDataInterface() {
     return diffInDays;
   };
 
-  //  working ground 1এক নজরে দৈনিক রিপোর্ট
-
   return (
     <>
-      <div className="card border-0 my-1">
-        <div className="card-header border-0">
-          <div className="myTopCard">
-            {descriptionAlert && (
-              <div className="docsPopUp">
-                <Button
-                  onClick={descriptionCloserHandler}
-                  className=" float-end"
-                >
-                  <Close />
-                </Button>
-                {notice?.doc_desc}
-              </div>
-            )}
-          </div>
-          <div className="card-header">
-            <div className="d-flex justify-content-between align-items-center flex-column  flex-sm-row flex-md-row flex-lg-row">
-              <div className="answerLeft col-lg-3 col-md-3 col-sm-12 m-auto">
-                <div className="border p-2">
-                  {validCardData(notice?.endDadeline) < 0 ? (
-                    <p className="text-center fs-6 fw-bold text-danger">
-                      নোটিশ প্রদানের সময় শেষ হয়েছে{" "}
-                      {convertToBengaliNumber(
-                        Math.abs(validCardData(notice?.endDadeline))
-                      )}{" "}
-                      দিন পূর্বে
-                    </p>
-                  ) : (
-                    <DateDifferenceComponent
-                      startDadeline={notice?.startDadeline}
-                      range={notice?.range}
-                      timeStart={notice?.timeStart}
-                      timeEnd={notice?.timeEnd}
-                      endDadeline={notice?.endDadeline}
-                    />
-                  )}
-                </div>
-              </div>
+      <Paper elevation={0} sx={{ my: 0.5 }}>
+        {/* Description Dialog */}
+        <Dialog
+          open={descriptionAlert}
+          onClose={descriptionCloserHandler}
+          maxWidth="sm"
+          fullWidth
+        >
+          <DialogTitle sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <IconButton onClick={descriptionCloserHandler} size="small">
+              <Close />
+            </IconButton>
+          </DialogTitle>
+          <DialogContent>
+            <Typography>{notice?.doc_desc}</Typography>
+          </DialogContent>
+        </Dialog>
 
-              <div className="answerMiddle col-lg-6 col-md-6 col-sm-12 m-auto mt-0">
-                <p className="text-center fs-2 fw-semibold text-success">
-                  {notice?.document_name}
-                </p>
-                {notice?.sub_title && (
-                  <p className="text-center fs-6">{notice?.sub_title}</p>
+        {/* Header Section */}
+        <Paper elevation={0} sx={{ p: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexDirection: { xs: "column", sm: "row", md: "row", lg: "row" },
+              gap: 2,
+            }}
+          >
+            {/* Left - Deadline */}
+            <Box sx={{ flex: { lg: 3, md: 3, sm: 12 }, width: "100%" }}>
+              <Paper variant="outlined" sx={{ p: 2 }}>
+                {validCardData(notice?.endDadeline) < 0 ? (
+                  <Typography
+                    align="center"
+                    fontWeight="bold"
+                    color="error"
+                    fontSize="1rem"
+                  >
+                    নোটিশ প্রদানের সময় শেষ হয়েছে{" "}
+                    {convertToBengaliNumber(
+                      Math.abs(validCardData(notice?.endDadeline))
+                    )}{" "}
+                    দিন পূর্বে
+                  </Typography>
+                ) : (
+                  <DateDifferenceComponent
+                    startDadeline={notice?.startDadeline}
+                    range={notice?.range}
+                    timeStart={notice?.timeStart}
+                    timeEnd={notice?.timeEnd}
+                    endDadeline={notice?.endDadeline}
+                  />
                 )}
-                <p className="text-center">
-                  <span className="fs-3 fw-bold text-highlight bg-success rounded px-2">
-                    এক নজরে দৈনিক রিপোর্ট
-                  </span>
-                </p>
-              </div>
-              <div className="answerRight col-lg-3 col-md-3 col-sm-12 m-auto mt-0">
-                <div className="d-flex align-items-center justify-content-center flex-column">
-                  {!descriptionAlert && (
-                    <Button
-                      onClick={descriptionHandler}
-                      className="text-center border border-success fw-semibold"
-                    >
-                      Notice
-                    </Button>
-                  )}
-                  <Link className="button fs-5 p-2" to={`/dashboard`}>
-                    <span>Back</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* all data shower pages */}
-        <div className="d-flex justify-content-start align-items-center gap-5 mt-3 ms-5">
-          <Link
+              </Paper>
+            </Box>
+
+            {/* Middle - Title */}
+            <Box sx={{ flex: { lg: 6, md: 6, sm: 12 }, width: "100%" }}>
+              <Typography
+                align="center"
+                variant="h4"
+                fontWeight={600}
+                color="success.main"
+              >
+                {notice?.document_name}
+              </Typography>
+              {notice?.sub_title && (
+                <Typography align="center" variant="body1">
+                  {notice?.sub_title}
+                </Typography>
+              )}
+              <Box sx={{ textAlign: "center", mt: 1 }}>
+                <Chip
+                  label="এক নজরে দৈনিক রিপোর্ট"
+                  sx={{
+                    fontWeight: "bold",
+                    fontSize: "1.25rem",
+                    px: 2,
+                    py: 2.5,
+                    bgcolor: "success.main",
+                    color: "white",
+                  }}
+                />
+              </Box>
+            </Box>
+
+            {/* Right - Actions */}
+            <Box
+              sx={{
+                flex: { lg: 3, md: 3, sm: 12 },
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+                gap: 1,
+              }}
+            >
+              {!descriptionAlert && (
+                <Button
+                  variant="outlined"
+                  color="success"
+                  onClick={descriptionHandler}
+                  sx={{ fontWeight: 600 }}
+                >
+                  Notice
+                </Button>
+              )}
+              <Button
+                component={Link}
+                to="/dashboard"
+                variant="text"
+                startIcon={<ArrowBack />}
+                sx={{ fontSize: "1.1rem", p: 1 }}
+              >
+                Back
+              </Button>
+            </Box>
+          </Box>
+        </Paper>
+
+        {/* Link Buttons */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            gap: 3,
+            mt: 1.5,
+            ml: 3,
+          }}
+        >
+          <Button
+            component={Link}
             to={`/dashboard/sums-all-zonal-data/${notice?._id}`}
-            className="btn btn-success p-2"
+            variant="contained"
+            color="success"
+            sx={{ p: 1 }}
           >
             এক নজরে অঞ্চল
-          </Link>
-          <Link
+          </Button>
+          <Button
+            component={Link}
             to={`/dashboard/sums-all-branches-data/${notice?._id}`}
-            className="btn btn-success p-2"
+            variant="contained"
+            color="success"
+            sx={{ p: 1 }}
           >
             এক নজরে ব্রাঞ্চ
-          </Link>
-          <Link
+          </Button>
+          <Button
+            component={Link}
             to={`/dashboard/sums-all-thana-data/${notice?._id}`}
-            className="btn btn-success p-2"
+            variant="contained"
+            color="success"
+            sx={{ p: 1 }}
           >
             এক নজরে থানা
-          </Link>
-        </div>
-        {/* table for এক নজরে দৈনিক রিপোর্ট  */}
-        <div className="card-body shadow my-3">
+          </Button>
+        </Box>
+
+        {/* Table Section */}
+        <Paper elevation={3} sx={{ my: 1.5, p: 2 }}>
           <AdminTableDataInterfce
             startDadeline={notice?.startDadeline}
             range={notice?.range}
@@ -163,8 +242,8 @@ function AdminDataInterface() {
             questions={notice?.questions}
             zonalReport={zonalReport}
           />
-        </div>
-      </div>
+        </Paper>
+      </Paper>
     </>
   );
 }

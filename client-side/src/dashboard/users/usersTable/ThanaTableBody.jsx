@@ -1,120 +1,217 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  IconButton,
+  Tooltip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+  Snackbar,
+  Alert,
+  Typography,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import VpnKeyIcon from "@mui/icons-material/VpnKey";
+import DeleteIcon from "@mui/icons-material/Delete";
 import BASE_URL from "../../../auth/dbUrl";
-import { useState } from "react";
-import { useEffect } from "react";
-import Loader from "../../time/Loader";
 
 function ThanaTableBody({ users }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [deleteTargetId, setDeleteTargetId] = useState(null);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+
   useEffect(() => {
     setData(users);
   }, [users]);
-  
 
-  // delete item from database
-  const deleteItem = (e, id) => {
+  const handleDeleteClick = (e, id) => {
     e.preventDefault();
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
+    setDeleteTargetId(id);
+    setDeleteDialogOpen(true);
+  };
 
-        const response = await fetch(`${BASE_URL}/delete-thana-users/${id}`, {
+  const handleConfirmDelete = async () => {
+    setDeleteDialogOpen(false);
+    try {
+      const response = await fetch(
+        `${BASE_URL}/delete-thana-users/${deleteTargetId}`,
+        {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization:
+              "Bearer " + window.localStorage.getItem("gsmToken"),
           },
-        });
-        await response.json();
-        if (response.ok) {
-          const temp = [...data].filter((i) => i._id !== id);
-          setData(temp);
         }
+      );
+      await response.json();
+      if (response.ok) {
+        const temp = [...data].filter((i) => i._id !== deleteTargetId);
+        setData(temp);
+        setSnackbar({
+          open: true,
+          message: "Thana user has been deleted.",
+          severity: "success",
+        });
       }
-    });
+    } catch (error) {
+      setSnackbar({
+        open: true,
+        message: "Delete failed.",
+        severity: "error",
+      });
+    }
   };
+
+  const handleCancelDelete = () => {
+    setDeleteDialogOpen(false);
+    setDeleteTargetId(null);
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbar({ ...snackbar, open: false });
+  };
+
   return (
     <div>
-      {data.length ? (
-        <table
-          className="table table-responsive table-hover table-bordered  align-middle"
-          border={1}
-        >
-          <thead className="bg-hightlight">
-            <tr className="text-center text-capitalize">
-              <th>ইউজার আইডি</th>
-              {/* <th>user Password</th> */}
-              <th>থানার নাম</th>
-              <th>থানার আইডি</th>
-              <th>ব্রাঞ্চ আইডি</th>
-              <th>অঞ্চল আইডি</th>
-              <th>ইউজার রোল</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody className="">
-            {data?.map((element, index) => (
-              <tr key={index} className="text-center">
-                <td>{element.userId}</td>
-                {/* <td>{element.password}</td> */}
-                <td>{element.userName}</td>
-                <td>{element.thanaCode}</td>
-                <td>{element.branchCode}</td>
-                <td>{element.zonalCode}</td>
-                <td>{element.userRole}</td>
-                <td>
-                  <Link
-                    className="btn btn-success"
-                    to={`/dashboard/update-thana/${element._id}`}
-                    title="Edit User"
-                  >
-                    <i
-                      className="fa-solid fa-edit fa-beat"
-                      aria-hidden="true"
-                    ></i>
-                  </Link>{" "}
-                  &nbsp;
-                  <Link
-                    className="btn btn-outline-danger"
-                    to={`/dashboard/update-thana-password/${element._id}`}
-                    title="Forget Password"
-                  >
-                    <i className="fa-solid fa-key fa-shake"></i>
-                  </Link>{" "}
-                  &nbsp;
-                  <Link
-                    className="btn btn-danger"
-                    onClick={(e) => deleteItem(e, element._id)}
-                    to={`/dashboard/thana-users'`}
-                    title="Delete User"
-                  >
-                    <i
-                      className="fa-solid fa-trash fa-flip"
-                      aria-hidden="true"
-                    ></i>
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {data === null ? (
+        <Typography sx={{ textAlign: "center", py: 4, color: "text.secondary" }}>
+          Loading...
+        </Typography>
+      ) : data.length === 0 ? (
+        <Typography sx={{ textAlign: "center", py: 4, color: "text.secondary" }}>
+          No thana users found.
+        </Typography>
       ) : (
-        <Loader />
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                ইউজার আইডি
+              </TableCell>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                থানার নাম
+              </TableCell>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                থানার আইডি
+              </TableCell>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                ব্রাঞ্চ আইডি
+              </TableCell>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                অঞ্চল আইডি
+              </TableCell>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                ইউজার রোল
+              </TableCell>
+              <TableCell sx={{ textAlign: "center", fontWeight: "bold" }}>
+                Actions
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data?.map((element, index) => (
+              <TableRow key={index} hover>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {element.userId}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {element.userName}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {element.thanaCode}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {element.branchCode}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {element.zonalCode}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  {element.userRole}
+                </TableCell>
+                <TableCell sx={{ textAlign: "center" }}>
+                  <Tooltip title="Edit User">
+                    <IconButton
+                      component={Link}
+                      to={`/dashboard/update-thana/${element._id}`}
+                      color="primary"
+                      size="small"
+                    >
+                      <EditIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Forget Password">
+                    <IconButton
+                      component={Link}
+                      to={`/dashboard/update-thana-password/${element._id}`}
+                      color="warning"
+                      size="small"
+                    >
+                      <VpnKeyIcon />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Delete User">
+                    <IconButton
+                      color="error"
+                      size="small"
+                      onClick={(e) => handleDeleteClick(e, element._id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       )}
+
+      <Dialog open={deleteDialogOpen} onClose={handleCancelDelete}>
+        <DialogTitle>Are you sure?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            You won&apos;t be able to revert this! Do you want to delete this
+            thana user?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelDelete} color="inherit">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" variant="contained">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity={snackbar.severity}
+          variant="filled"
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

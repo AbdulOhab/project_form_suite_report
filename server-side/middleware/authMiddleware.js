@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const authMiddleware = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith("myworld ")) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       console.error("Authorization header missing or invalid");
       return res.status(401).json({ error: "User not authorized" });
     }
@@ -15,10 +15,7 @@ const authMiddleware = async (req, res, next) => {
     }
 
     try {
-      const decodeToken = jwt.verify(
-        token,
-        "3e9b2825-cfe3-422e-8177-bac1b129a320"
-      );
+      const decodeToken = jwt.verify(token, process.env.JWT_SECRET);
       req.userData = decodeToken;
       next();
     } catch (error) {

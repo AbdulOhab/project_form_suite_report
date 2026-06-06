@@ -1,38 +1,53 @@
 const mongoose = require("mongoose");
 const dbConnector = require("../../config/dbConnector");
+const bcrypt = require("bcryptjs");
+const thanaModel = require("../thanaModel");
 
-const bcrypt = require("bcrypt");
-const zonalModel = require("../zonalModel");
-const zonalDatabase = require("../../zonalDatabase");
+const PASSWORD = "1122";
 
-module.exports = async () => {
+/**
+ * Zonal Users - 5 total
+ *
+ * Zonal 201, 202, 203, 204, 205
+ */
+const zonalUsers = [
+  { userId: 201, userName: "Zonal User 1", email: "zonal1@instance.com", zonalCode: 201 },
+  { userId: 202, userName: "Zonal User 2", email: "zonal2@instance.com", zonalCode: 202 },
+  { userId: 203, userName: "Zonal User 3", email: "zonal3@instance.com", zonalCode: 203 },
+  { userId: 204, userName: "Zonal User 4", email: "zonal4@instance.com", zonalCode: 204 },
+  { userId: 205, userName: "Zonal User 5", email: "zonal5@instance.com", zonalCode: 205 },
+];
+
+const zonalSeeder = async () => {
   try {
-    // Connect to the MongoDB database
     await mongoose.connect(dbConnector);
 
-    // Delete all documents from the zonalModel collection
-    console.log("Delete previous ZonalModel collection");
-    await zonalModel.deleteMany({});
-    console.log("zonal email creating start");
-    // Loop to create new user documents
-    for (const element of zonalDatabase) {
-      const userEmail = element.email;
-      const hashedPassword = await bcrypt.hash(element.password, 10);
+    const hashedPassword = await bcrypt.hash(PASSWORD, 10);
 
-      await zonalModel.create({
-        userName: element.userName,
-        email: userEmail,
+    // Remove old zonal users
+    await thanaModel.deleteMany({ userRole: "zonal" });
+
+    // Create zonal users
+    for (const user of zonalUsers) {
+      await thanaModel.create({
+        ...user,
         password: hashedPassword,
-        userRole: element.userRole,
-        zonalCode: element.zonalCode,
+        userRole: "zonal",
       });
     }
 
-    console.log("zonal Users created successfully.");
+    console.log(`${zonalUsers.length} Zonal users created successfully`);
+    console.log(`  Login -> userId: 201-205, password: ${PASSWORD}`);
   } catch (error) {
-    console.error("Error creating users:", error);
+    console.error("Zonal seed error:", error.message);
   } finally {
-    // Close the MongoDB connection
     await mongoose.connection.close();
   }
 };
+
+module.exports = zonalSeeder;
+
+// Run directly: node model/seeders/zonalSeeder.js
+if (require.main === module) {
+  zonalSeeder();
+}

@@ -1,4 +1,5 @@
 import React from "react";
+import { Box, Typography, Chip } from "@mui/material";
 
 function BranchBangladayDate({ day, date, dataSubmit, dataUnSubmit }) {
   // Mapping for English to Bangla days and months
@@ -27,7 +28,6 @@ function BranchBangladayDate({ day, date, dataSubmit, dataUnSubmit }) {
     Dec: "ডিসেম্বর",
   };
 
-  // Function to convert numbers to Bengali digits
   const convertToBengaliNumber = (number) => {
     const bengaliNumbers = {
       0: "০",
@@ -58,31 +58,51 @@ function BranchBangladayDate({ day, date, dataSubmit, dataUnSubmit }) {
     const banglaMonth = banglaMonths[month];
 
     return `${banglaDay}, ${dateNum} ${banglaMonth} ${year}`;
-  }; // Example date string
+  };
 
   const data = new Date(date);
   const banglaFormattedDate = getBanglaFormattedDate(data);
   const currentDayNotice = convertToBengaliNumber(day);
+
   return (
-    <div className="d-flex align-items-center justify-content-between my-3 bg-white">
-      <div className=" ">
-        <span className="p-2 border border-primary text-success border-2  fw-bold">
-          Submited: &nbsp;{dataSubmit}
-        </span>
-      </div>
-      <div className="">
-        <h3 className="text-center text-success fw-bold">
-          দিন {currentDayNotice}
-          {", "}
-          {banglaFormattedDate}
-        </h3>
-      </div>
-      <div className="">
-        <span className="p-2 border border-primary text-success border-2 fw-bold float-end">
-          UnSubmited:&nbsp;{dataUnSubmit}
-        </span>
-      </div>
-    </div>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        my: 3,
+        bgcolor: "background.paper",
+      }}
+    >
+      <Chip
+        label={`Submited: ${dataSubmit}`}
+        variant="outlined"
+        sx={{
+          p: 1,
+          borderColor: "primary.main",
+          color: "success.main",
+          fontWeight: "bold",
+          borderWidth: 2,
+        }}
+      />
+      <Typography
+        variant="h6"
+        sx={{ textAlign: "center", color: "success.main", fontWeight: "bold" }}
+      >
+        দিন {currentDayNotice}, {banglaFormattedDate}
+      </Typography>
+      <Chip
+        label={`UnSubmited: ${dataUnSubmit}`}
+        variant="outlined"
+        sx={{
+          p: 1,
+          borderColor: "primary.main",
+          color: "success.main",
+          fontWeight: "bold",
+          borderWidth: 2,
+        }}
+      />
+    </Box>
   );
 }
 

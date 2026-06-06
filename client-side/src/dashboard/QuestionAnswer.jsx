@@ -3,20 +3,32 @@ import moment from "moment";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router";
-import { Button, Typography } from "@mui/material";
+import {
+  Button,
+  Typography,
+  FormControlLabel,
+  Paper,
+  Grid,
+  Box,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  IconButton,
+} from "@mui/material";
 import SortTextIcon from "@mui/icons-material/ShortText";
 import SortNumericIcon from "@mui/icons-material/NumbersSharp";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import Close from "@mui/icons-material/Close";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import DateDifferenceComponent from "./time/DateDifferenceComponent";
-import Close from "@mui/icons-material/Close";
 import BASE_URL from "../auth/dbUrl";
 import SweetAlert from "./time/SweetAlert";
+
 const QuestionAnswer = () => {
   const { id } = useParams();
   const { userInfo } = useContext(AuthContext);
-  
 
   const navigate = useNavigate();
   const [formDisabled, setFormDisabled] = useState(false);
@@ -27,7 +39,7 @@ const QuestionAnswer = () => {
   const [currentDay, setCurrentDay] = useState(null);
   const [answerFind, setAnswerFind] = useState([]);
 
-  // get notice form database
+  // get notice from database
   useEffect(() => {
     const getQuestionFromDb = async () => {
       try {
@@ -35,7 +47,7 @@ const QuestionAnswer = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         });
         let data = await response.json();
@@ -47,16 +59,15 @@ const QuestionAnswer = () => {
         }
       } catch (error) {
         console.error("Error fetching notice data:", error);
-        // Handle error
       }
     };
     getQuestionFromDb();
   }, [id]);
 
   const selectCheck = (qText, value, qIndex, required, questionType) => {
-    const newAnswer = [...answer]; // Shallow copy of the answer array
+    const newAnswer = [...answer];
     if (!Array.isArray(newAnswer[qIndex])) {
-      newAnswer[qIndex] = []; // Initialize as an array if not already
+      newAnswer[qIndex] = [];
     }
     newAnswer[qIndex].push({
       questionText: qText,
@@ -64,15 +75,13 @@ const QuestionAnswer = () => {
       required: required,
       questionType: questionType,
     });
-
-    setAnswer(newAnswer); // Update the state with the modified newAnswer
+    setAnswer(newAnswer);
   };
 
   const selectInput = (qText, value, qIndex, required, questionType) => {
     setAnswer((prevAnswer) => {
       const newAnswer = [...prevAnswer];
 
-      // Check if the index exists, if not, add a new object
       if (qIndex >= newAnswer.length) {
         newAnswer[qIndex] = {
           questionText: qText,
@@ -81,7 +90,6 @@ const QuestionAnswer = () => {
           required: required,
         };
       } else {
-        // Update the existing object
         newAnswer[qIndex] = {
           ...newAnswer[qIndex],
           questionText: qText,
@@ -102,7 +110,7 @@ const QuestionAnswer = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "myworld " + window.localStorage.getItem("gsmToken"),
+        Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
       },
       body: JSON.stringify({
         document_name: notice.document_name,
@@ -138,25 +146,19 @@ const QuestionAnswer = () => {
       const startTime = moment(todayStartTime);
       const endTime = moment(todayEndTime);
 
-      // If current time is before start time, calculate countdown to start time
       if (now.isBefore(startTime)) {
         setFormDisabled(true);
-      }
-      // If current time is between start and end time, calculate countdown to end time
-      else if (now.isBetween(startTime, endTime)) {
+      } else if (now.isBetween(startTime, endTime)) {
         setFormDisabled(false);
-      }
-      // If current time is after end time, set time remaining to 0
-      else {
+      } else {
         clearInterval(interval);
-
         setFormDisabled(true);
       }
     });
 
-    // Clean up timerInterval on component unmount
     return () => clearInterval(interval);
   }, [notice]);
+
   const descriptionHandler = () => {
     setDescriptionAlert(true);
   };
@@ -175,7 +177,7 @@ const QuestionAnswer = () => {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "myworld " + window.localStorage.getItem("gsmToken"),
+                "Bearer " + window.localStorage.getItem("gsmToken"),
             },
           }
         );
@@ -187,7 +189,6 @@ const QuestionAnswer = () => {
           throw new Error("Failed to fetch");
         }
       } catch (error) {
-        // Handle error
         console.error("Error fetching notice data:", error);
       }
     };
@@ -213,7 +214,6 @@ const QuestionAnswer = () => {
       endDate.setDate(startDate.getDate() + range - 1);
 
       const today = new Date();
-      // today.setHours(0, 0, 0, 0);
 
       if (today < startDate) {
         return 1;
@@ -248,167 +248,224 @@ const QuestionAnswer = () => {
   }, [notice?.startDadeline, notice?.range]);
 
   // send data to answer[]
-
   useEffect(() => {
     if (answerFind.length) {
-      const newAnswer = [...answer]; // Create a shallow copy of the answer array
+      const newAnswer = [...answer];
       answerFind.forEach((ans) =>
         ans.answers.forEach((a, i) => {
           newAnswer[i] = a;
         })
       );
-      setAnswer(newAnswer); // Update state after processing all answers
+      setAnswer(newAnswer);
     }
   }, [answerFind]);
 
   return (
-    <div className="container">
-      {/* <div className="hp my-5">{JSON.stringify(notice)}</div> */}
-      <div className="card border-0">
-        <div className="card-header border-0">
-          <div className="myTopCard col-lg-8 col-md-6 col-sm-12 m-auto">
-            {descriptionAlert && (
-              <div className="docsPopUp">
-                <Button
-                  onClick={descriptionCloserHandler}
-                  className=" float-end"
-                >
-                  <Close />
-                </Button>
-                {notice?.doc_desc}
-              </div>
-            )}
-          </div>
-          <div className="card-header">
-            <div className="row">
-              <div className="answerLeft col-lg-3 col-md-3 col-sm-12 m-auto">
-                <div className="border p-3 rounded">
-                  <DateDifferenceComponent
-                    startDadeline={notice?.startDadeline}
-                    range={notice?.range}
-                    timeStart={notice?.timeStart}
-                    timeEnd={notice?.timeEnd}
-                    endDadeline={notice?.endDadeline}
-                  />
-                </div>
-              </div>
+    <Box sx={{ maxWidth: 1200, mx: "auto", my: 2, px: 2 }}>
+      {/* Description Dialog */}
+      <Dialog
+        open={descriptionAlert}
+        onClose={descriptionCloserHandler}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>
+          Description
+          <IconButton
+            aria-label="close"
+            onClick={descriptionCloserHandler}
+            sx={{ position: "absolute", right: 8, top: 8 }}
+          >
+            <Close />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent dividers>
+          <Typography>{notice?.doc_desc}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={descriptionCloserHandler} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
 
-              <div className="answerMiddle col-lg-6 col-md-6 col-sm-12 m-auto mt-0">
-                <p className="text-center fs-2 fw-semibold text-success">
-                  {notice?.document_name}
-                </p>
-                {notice?.sub_title && (
-                  <p className="text-center fs-6">{notice?.sub_title}</p>
+      {/* Header Section */}
+      <Paper sx={{ p: 2, mb: 2 }}>
+        <Grid container spacing={2} alignItems="center">
+          <Grid size={{ xs: 12, md: 3 }}>
+            <Paper variant="outlined" sx={{ p: 2 }}>
+              <DateDifferenceComponent
+                startDadeline={notice?.startDadeline}
+                range={notice?.range}
+                timeStart={notice?.timeStart}
+                timeEnd={notice?.timeEnd}
+                endDadeline={notice?.endDadeline}
+              />
+            </Paper>
+          </Grid>
+
+          <Grid size={{ xs: 12, md: 6 }}>
+            <Typography
+              variant="h4"
+              align="center"
+              fontWeight="bold"
+              color="primary"
+            >
+              {notice?.document_name}
+            </Typography>
+            {notice?.sub_title && (
+              <Typography variant="body1" align="center">
+                {notice?.sub_title}
+              </Typography>
+            )}
+          </Grid>
+
+          <Grid size={{ xs: 12, md: 3 }}>
+            <Paper variant="outlined" sx={{ p: 2 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 1,
+                }}
+              >
+                {!descriptionAlert && (
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={descriptionHandler}
+                    sx={{ fontWeight: "bold", width: "50%" }}
+                  >
+                    Notice
+                  </Button>
                 )}
-              </div>
-              <div className="answerRight col-lg-3 col-md-3 col-sm-12 m-auto mt-0">
-                <div className="border p-3 rounded">
-                  <div className="d-flex justify-content-center align-items-center flex-column">
-                    {!descriptionAlert && (
-                      <Button
-                        onClick={descriptionHandler}
-                        className="text-center border border-success fw-semibold w-50"
-                      >
-                        Notice
-                      </Button>
-                    )}
-                    <Link
-                      className="button btn btn-success p-2"
-                      to={`/dashboard`}
-                    >
-                      <span>Back</span>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="card-body shadow my-3">
-          <form onSubmit={submitHnadler}>
-            {notice?.questions?.map((question, qIndex) => (
-              <div
-                className="card-body col-lg-6 col-md-8 col-sm-12 m-auto  shadow mt-3"
-                key={qIndex}
-              >
-                <div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  component={Link}
+                  to="/dashboard"
+                  sx={{ px: 2, py: 1 }}
+                >
+                  Back
+                </Button>
+              </Box>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Paper>
+
+      {/* Questions Form */}
+      <Paper elevation={3} sx={{ my: 2, p: 2 }}>
+        <form onSubmit={submitHnadler}>
+          {notice?.questions?.map((question, qIndex) => (
+            <Paper
+              key={qIndex}
+              elevation={1}
+              sx={{
+                maxWidth: 700,
+                mx: "auto",
+                p: 2,
+                mt: 2,
+              }}
+            >
+              <Box>
+                <Typography variant="body1" sx={{ fontWeight: "medium" }}>
                   {qIndex + 1}. {question?.questionText}
-                  <span className="text-danger fs-2">
-                    {question?.required ? "*" : ""}
-                  </span>
-                </div>
-                {question?.options?.map((opText, index) => (
-                  <div key={index}>
-                    <div className="d-flex align-items-center">
-                      <div className="bg-danger">{question?.required}</div>
-                      <FormControlLabel
-                        control={
-                          question.questionType !== "text" &&
-                          question.questionType !== "number" ? (
-                            <input
-                              type={question.questionType}
-                              name={qIndex}
-                              className=" text-primary mx-2"
-                              required={question?.required}
-                              onChange={() =>
-                                selectCheck(
-                                  question?.questionText,
-                                  opText?.optionsText,
-                                  question?.questionType,
-                                  qIndex,
-                                  question?.required
-                                )
-                              }
-                            />
-                          ) : question?.questionType === "number" ? (
-                            <SortNumericIcon className="me-1" />
-                          ) : (
-                            <SortTextIcon className="me-1" />
-                          )
-                        }
-                        label={
-                          question.questionType !== "text" &&
-                          question.questionType !== "number" ? (
-                            <Typography className="text-capitalize text-center">
-                              {opText?.optionsText}
-                            </Typography>
-                          ) : (
-                            <input
-                              type={question.questionType}
-                              name={qIndex}
-                              className="text_input mx-1"
-                              required={question?.required}
-                              value={answer[qIndex]?.data}
-                              onChange={(e) =>
-                                selectInput(
-                                  question?.questionText,
-                                  e.target.value,
-                                  qIndex,
-                                  question?.required,
-                                  question?.questionType
-                                )
-                              }
-                            />
-                          )
-                        }
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-            <div className="col-lg-6 col-md-8 col-sm-10 m-auto">
-              <button
-                className="btn btn-success text-uppercase text-light hover my-3 mx-5"
-                disabled={formDisabled || answerFind.length ? true : false}
-              >
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+                  {question?.required ? (
+                    <Typography
+                      component="span"
+                      color="error"
+                      sx={{ fontSize: 24 }}
+                    >
+                      *
+                    </Typography>
+                  ) : (
+                    ""
+                  )}
+                </Typography>
+              </Box>
+              {question?.options?.map((opText, index) => (
+                <Box key={index} sx={{ display: "flex", alignItems: "center" }}>
+                  <FormControlLabel
+                    control={
+                      question.questionType !== "text" &&
+                      question.questionType !== "number" ? (
+                        <input
+                          type={question.questionType}
+                          name={qIndex}
+                          required={question?.required}
+                          onChange={() =>
+                            selectCheck(
+                              question?.questionText,
+                              opText?.optionsText,
+                              question?.questionType,
+                              qIndex,
+                              question?.required
+                            )
+                          }
+                        />
+                      ) : question?.questionType === "number" ? (
+                        <SortNumericIcon sx={{ mr: 1 }} />
+                      ) : (
+                        <SortTextIcon sx={{ mr: 1 }} />
+                      )
+                    }
+                    label={
+                      question.questionType !== "text" &&
+                      question.questionType !== "number" ? (
+                        <Typography
+                          sx={{
+                            textTransform: "capitalize",
+                            textAlign: "center",
+                          }}
+                        >
+                          {opText?.optionsText}
+                        </Typography>
+                      ) : (
+                        <TextField
+                          variant="standard"
+                          type={question.questionType}
+                          name={qIndex}
+                          required={question?.required}
+                          value={answer[qIndex]?.data || ""}
+                          onChange={(e) =>
+                            selectInput(
+                              question?.questionText,
+                              e.target.value,
+                              qIndex,
+                              question?.required,
+                              question?.questionType
+                            )
+                          }
+                          sx={{ mx: 1 }}
+                        />
+                      )
+                    }
+                  />
+                </Box>
+              ))}
+            </Paper>
+          ))}
+          <Box sx={{ maxWidth: 700, mx: "auto" }}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={formDisabled || answerFind.length ? true : false}
+              sx={{
+                textTransform: "uppercase",
+                my: 2,
+                mx: 2,
+                fontWeight: "bold",
+              }}
+            >
+              Submit
+            </Button>
+          </Box>
+        </form>
+      </Paper>
+    </Box>
   );
 };
 

@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-// import { AuthContext } from "../../../contexts/AuthContext";
 import { Link, useParams } from "react-router-dom";
-import { Button} from "@mui/material";
+import {
+  Box,
+  Button,
+  Paper,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  IconButton,
+} from "@mui/material";
+import { Close, Edit as EditIcon } from "@mui/icons-material";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
-import Close from "@mui/icons-material/Close";
 import TimeDifference from "../../time/TimeDifference";
 import BASE_URL from "../../../auth/dbUrl";
 
@@ -16,6 +30,7 @@ function BranchSubmission() {
   const [thanaReport, setThanaReport] = useState();
   const [notice, setNotice] = useState();
   const [totalData, setTotalData] = useState();
+
   useEffect(() => {
     const getBranchUsers = async () => {
       try {
@@ -26,7 +41,7 @@ function BranchSubmission() {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "myworld " + window.localStorage.getItem("gsmToken"),
+                "Bearer " + window.localStorage.getItem("gsmToken"),
             },
           }
         );
@@ -40,7 +55,6 @@ function BranchSubmission() {
           throw new Error("Failed to fetch");
         }
       } catch (error) {
-        // Handle error
         console.error("Error fetching notice data:", error);
       }
     };
@@ -56,128 +70,188 @@ function BranchSubmission() {
 
   return (
     <>
-      <div className="table-responsive">
-        <div className="card border-0 my-1">
-          <div className="card-header border-0">
-            <div className="myTopCard col-lg-8 col-md-6 col-sm-12 m-auto">
-              {descriptionAlert && (
-                <div className="docsPopUp">
-                  <Button
-                    onClick={descriptionCloserHandler}
-                    className=" float-end"
-                  >
-                    <Close />
-                  </Button>
-                  {notice?.doc_desc}
-                </div>
-              )}
-            </div>
-            <div className="card-header">
-              <div className="row">
-                <div className="answerLeft col-lg-3 col-md-3 col-sm-12 m-auto">
-                  <table className="text-center table table-bordered border border-success">
-                    <thead>
-                      <tr>
-                        <DateDifferenceComponent
-                          startDadeline={notice?.startDadeline}
-                          endDadeline={notice?.endDadeline}
-                          range={notice?.range}
-                        />
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <TimeDifference
-                          timeStart={notice?.timeStart}
-                          timeEnd={notice?.timeEnd}
-                          endDadeline={notice?.endDadeline}
-                          startDadeline={notice?.startDadeline}
-                        />
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+      <Box>
+        <Paper elevation={0} sx={{ my: 0.5 }}>
+          {/* Description Dialog */}
+          <Dialog
+            open={descriptionAlert}
+            onClose={descriptionCloserHandler}
+            maxWidth="sm"
+            fullWidth
+          >
+            <DialogTitle sx={{ display: "flex", justifyContent: "flex-end" }}>
+              <IconButton onClick={descriptionCloserHandler} size="small">
+                <Close />
+              </IconButton>
+            </DialogTitle>
+            <DialogContent>
+              <Typography>{notice?.doc_desc}</Typography>
+            </DialogContent>
+          </Dialog>
 
-                <div className="answerMiddle col-lg-6 col-md-6 col-sm-12 m-auto mt-0">
-                  <p className="text-center fs-2 fw-semibold text-success">
-                    {notice?.document_name}
-                  </p>
-                  {notice?.sub_title && (
-                    <p className="text-center fs-6">{notice?.sub_title}</p>
-                  )}
-                </div>
-                <div className="answerRight col-lg-3 col-md-3 col-sm-12 m-auto mt-0">
-                  {!descriptionAlert && (
-                    <Button
-                      onClick={descriptionHandler}
-                      className="text-center border border-success fw-medium fw-semibold "
-                    >
-                      Notice Description
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="card-body shadow my-3">
-          <table className="table table-striped table-hover table-bordered table-sm table-responsive-sm text-center border border-success">
-            <thead>
-              <tr className="text-capitalize bg-info">
-                <th>Thana Name</th>
-                {notice?.questions?.map((question, index) => (
-                  <th key={index}>{question?.questionText}</th>
-                ))}
-                <th>Action</th>
-              </tr>
-            </thead>
-            <thead>
-              <tr>
-                <th>Total</th>
-                {totalData?.map((sum, index) => (
-                  <th key={index}>{sum[index]}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {thanaReport?.map((thana, index) => (
-                <tr key={index} className="text-capitalize">
-                  <th>{thana?.userName}</th>
-                  {thana?.answer?.answers ? (
-                    <React.Fragment>
-                      {thana.answer.answers.map((ans, ansIndex) => (
-                        <td key={`${index}-${ansIndex}`}>{ans?.data}</td>
-                      ))}
-                      <td key={`edit-${index}`}>
-                        <Link
-                          to={`/dashboard/branch-edit-answer/${id}/${thana?.answer?._id}`}
-                        >
-                          <i
-                            className="fa fa-edit text-danger"
-                            aria-hidden="true"
-                          ></i>
-                        </Link>
-                      </td>
-                    </React.Fragment>
-                  ) : (
-                    <React.Fragment>
-                      {
-                        <td key={index}>
-                          <Link
-                            to={`/dashboard/branch-empty-answer/${thana?.thanaCode}/${notice?._id}`}
+          {/* Header Section */}
+          <Paper elevation={0} sx={{ p: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
+              {/* Left - Deadline */}
+              <Box sx={{ flex: { lg: 3, md: 3, sm: 12 }, width: "100%" }}>
+                <TableContainer
+                  component={Paper}
+                  variant="outlined"
+                  sx={{ borderColor: "success.main" }}
+                >
+                  <Table>
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>
+                          <DateDifferenceComponent
+                            startDadeline={notice?.startDadeline}
+                            endDadeline={notice?.endDadeline}
+                            range={notice?.range}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell>
+                          <TimeDifference
+                            timeStart={notice?.timeStart}
+                            timeEnd={notice?.timeEnd}
+                            endDadeline={notice?.endDadeline}
+                            startDadeline={notice?.startDadeline}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Box>
+
+              {/* Middle - Title */}
+              <Box sx={{ flex: { lg: 6, md: 6, sm: 12 }, width: "100%" }}>
+                <Typography
+                  align="center"
+                  variant="h4"
+                  fontWeight={600}
+                  color="success.main"
+                >
+                  {notice?.document_name}
+                </Typography>
+                {notice?.sub_title && (
+                  <Typography align="center" variant="body1">
+                    {notice?.sub_title}
+                  </Typography>
+                )}
+              </Box>
+
+              {/* Right - Actions */}
+              <Box
+                sx={{
+                  flex: { lg: 3, md: 3, sm: 12 },
+                  width: "100%",
+                }}
+              >
+                {!descriptionAlert && (
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    onClick={descriptionHandler}
+                    sx={{ fontWeight: 600 }}
+                  >
+                    Notice Description
+                  </Button>
+                )}
+              </Box>
+            </Box>
+          </Paper>
+        </Paper>
+
+        {/* Table Section */}
+        <Paper elevation={3} sx={{ my: 1.5 }}>
+          <TableContainer>
+            <Table
+              size="small"
+              sx={{
+                textAlign: "center",
+                border: 1,
+                borderColor: "success.main",
+                "& th, & td": { textAlign: "center", px: 1 },
+              }}
+            >
+              <TableHead>
+                <TableRow
+                  sx={{
+                    textTransform: "capitalize",
+                    bgcolor: "info.main",
+                    "& th": { color: "white", fontWeight: "bold" },
+                  }}
+                >
+                  <TableCell>Thana Name</TableCell>
+                  {notice?.questions?.map((question, index) => (
+                    <TableCell key={index}>{question?.questionText}</TableCell>
+                  ))}
+                  <TableCell>Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableHead>
+                <TableRow sx={{ "& th": { fontWeight: "bold" } }}>
+                  <TableCell>Total</TableCell>
+                  {totalData?.map((sum, index) => (
+                    <TableCell key={index}>{sum[index]}</TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {thanaReport?.map((thana, index) => (
+                  <TableRow key={index} sx={{ textTransform: "capitalize" }}>
+                    <TableCell component="th" scope="row">
+                      {thana?.userName}
+                    </TableCell>
+                    {thana?.answer?.answers ? (
+                      <React.Fragment>
+                        {thana.answer.answers.map((ans, ansIndex) => (
+                          <TableCell key={`${index}-${ansIndex}`}>
+                            {ans?.data}
+                          </TableCell>
+                        ))}
+                        <TableCell key={`edit-${index}`}>
+                          <Button
+                            component={Link}
+                            to={`/dashboard/branch-edit-answer/${id}/${thana?.answer?._id}`}
+                            size="small"
+                            color="error"
                           >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </Link>
-                        </td>
-                      }
-                    </React.Fragment>
-                  )}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+                            <EditIcon />
+                          </Button>
+                        </TableCell>
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        <TableCell key={index}>
+                          <Button
+                            component={Link}
+                            to={`/dashboard/branch-empty-answer/${thana?.thanaCode}/${notice?._id}`}
+                            size="small"
+                          >
+                            <EditIcon />
+                          </Button>
+                        </TableCell>
+                      </React.Fragment>
+                    )}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      </Box>
     </>
   );
 }

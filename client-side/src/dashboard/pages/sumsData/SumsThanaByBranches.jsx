@@ -1,8 +1,24 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import BASE_URL from "../../../auth/dbUrl";
-import { Button } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  Paper,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import convertToBengaliNumber from "../../time/NumberConverter";
 
@@ -26,7 +42,7 @@ const SumsThanaByBranches = () => {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "myworld " + window.localStorage.getItem("gsmToken"),
+                "Bearer " + window.localStorage.getItem("gsmToken"),
             },
           }
         );
@@ -115,146 +131,227 @@ const SumsThanaByBranches = () => {
     return diffInDays;
   };
 
+  const sortIndicator = (key) => {
+    if (sortConfig.key !== key) return null;
+    return sortConfig.direction === "ascending" ? " ▲" : " ▼";
+  };
+
   return (
     <>
-      <div className="card">
-        <div className="card-header">
-          <div className="myTopCard col-lg-8 col-md-6 col-sm-12 m-auto">
-            {descriptionAlert && (
-              <div className="docsPopUp">
-                <Button
-                  onClick={descriptionCloserHandler}
-                  className=" float-end"
-                >
-                  <Close />
-                </Button>
-                {notice?.doc_desc}
-              </div>
-            )}
-          </div>
-          <div className="card-header">
-            <div className="d-flex justify-content-between align-items-center">
-              <div className="answerLeft">
-                <div className="border p-2">
-                  {validCardData(notice?.endDadeline) < 0 ? (
-                    <p className="text-center fs-4 fw-bold text-danger">
-                      নোটিশ শেষ হয়েছে{" "}
-                      {convertToBengaliNumber(
-                        Math.abs(validCardData(notice?.endDadeline))
-                      )}{" "}
-                      দিন আগে
-                    </p>
-                  ) : (
-                    <DateDifferenceComponent
-                      startDadeline={notice?.startDadeline}
-                      range={notice?.range}
-                      timeStart={notice?.timeStart}
-                      timeEnd={notice?.timeEnd}
-                      endDadeline={notice?.endDadeline}
-                    />
-                  )}
-                  <div className="text-center text-success fw-bold">
-                    ব্রাঞ্চের নামঃ{branchName?.userName}
-                  </div>
-                </div>
-              </div>
+      {/* Description Dialog */}
+      <Dialog
+        open={descriptionAlert}
+        onClose={descriptionCloserHandler}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
+          <IconButton onClick={descriptionCloserHandler}>
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Typography>{notice?.doc_desc}</Typography>
+        </DialogContent>
+      </Dialog>
 
-              <div className="answerMiddle ">
-                <p className="text-center fs-2 fw-semibold text-success">
-                  {notice?.document_name}
-                </p>
-                {notice?.sub_title && (
-                  <p className="text-center fs-6">{notice?.sub_title}</p>
-                )}
-
-                <p className="text-center">
-                  <span className="fs-3 fw-bold text-highlight bg-success rounded px-2">
-                    এক নজরে{" "}
-                    <span className="bg-danger text-light px-1">
-                      শাখা ভিত্তিক
-                    </span>{" "}
-                    থানার পূর্ণাঙ্গ রিপোর্ট
-                  </span>
-                </p>
-              </div>
-              <div className="answerRight">
-                <div className="d-flex align-items-end justify-content-end flex-column">
-                  {!descriptionAlert && (
-                    <button
-                      onClick={descriptionHandler}
-                      className="text-center border border-success fw-semibold btn text-primary"
-                    >
-                      Notice
-                    </button>
-                  )}
-                  <Link
-                    className="button fs-5 p-2"
-                    to={`/dashboard/sums-all-branches-data/${qId}`}
-                  >
-                    <span>Back</span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="card-body">
-        <table
-          className="table table-hover table-bordered table-responsive"
-          border={1}
+      <Paper elevation={2} sx={{ p: 2 }}>
+        {/* Header Section */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 2,
+            mb: 2,
+          }}
         >
-          <thead>
-            <tr className="text-center bg-primary">
-              <th onClick={() => handleSort("thanaCode")}>
-                Thana Code{" "}
-                {sortConfig.key === "thanaCode" &&
-                  (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-              </th>
-              <th onClick={() => handleSort("userName")}>
-                Thana Name{" "}
-                {sortConfig.key === "userName" &&
-                  (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-              </th>
-              {questions?.map((question, index) => (
-                <th
-                  key={index}
-                  onClick={() => handleSort(question.questionText)}
+          {/* Left - Date Info */}
+          <Paper variant="outlined" sx={{ p: 1.5, flex: "1 1 auto", minWidth: 200 }}>
+            {validCardData(notice?.endDadeline) < 0 ? (
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  fontSize: "1.25rem",
+                  fontWeight: "bold",
+                  color: "error.main",
+                }}
+              >
+                নোটিশ শেষ হয়েছে{" "}
+                {convertToBengaliNumber(
+                  Math.abs(validCardData(notice?.endDadeline))
+                )}{" "}
+                দিন আগে
+              </Typography>
+            ) : (
+              <DateDifferenceComponent
+                startDadeline={notice?.startDadeline}
+                range={notice?.range}
+                timeStart={notice?.timeStart}
+                timeEnd={notice?.timeEnd}
+                endDadeline={notice?.endDadeline}
+              />
+            )}
+            <Typography
+              sx={{
+                textAlign: "center",
+                color: "primary.main",
+                fontWeight: "bold",
+                mt: 1,
+              }}
+            >
+              ব্রাঞ্চের নামঃ{branchName?.userName}
+            </Typography>
+          </Paper>
+
+          {/* Middle - Title */}
+          <Box sx={{ textAlign: "center", flex: "2 1 auto" }}>
+            <Typography
+              variant="h5"
+              sx={{
+                textAlign: "center",
+                fontWeight: 600,
+                color: "primary.main",
+              }}
+            >
+              {notice?.document_name}
+            </Typography>
+            {notice?.sub_title && (
+              <Typography variant="body2" sx={{ textAlign: "center" }}>
+                {notice?.sub_title}
+              </Typography>
+            )}
+            <Typography sx={{ textAlign: "center", mt: 1 }}>
+              <Typography
+                component="span"
+                sx={{
+                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  bgcolor: "primary.main",
+                  color: "white",
+                  borderRadius: 1,
+                  px: 1.5,
+                }}
+              >
+                এক নজরে{" "}
+                <Typography
+                  component="span"
+                  sx={{
+                    bgcolor: "error.main",
+                    color: "white",
+                    px: 0.5,
+                  }}
                 >
-                  {question?.questionText}{" "}
-                  {sortConfig.key === question.questionText &&
-                    (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="text-center bg-info fs-5">
-              <th className="text-danger" colSpan={2}>
-                Total
-              </th>
-              {totalData?.map((element, index) => (
-                <th className="text-danger fs-6" key={index}>
-                  {element ? element[index] : "0"}
-                </th>
-              ))}
-            </tr>
-          </tbody>
-          <tbody className="bg-white">
-            {sortedData.map((thana, thanaIndex) => (
-              <tr key={thanaIndex} className="text-center">
-                <td>{thana.thanaCode}</td>
-                <td>{thana.userName}</td>
-                {questions?.map((question, qIndex) => (
-                  <td key={`${thanaIndex}-${qIndex}`}>
-                    {thana?.[question.questionText] || 0}
-                  </td>
+                  শাখা ভিত্তিক
+                </Typography>{" "}
+                থানার পূর্ণাঙ্গ রিপোর্ট
+              </Typography>
+            </Typography>
+          </Box>
+
+          {/* Right - Actions */}
+          <Stack
+            direction="column"
+            alignItems="flex-end"
+            justifyContent="flex-end"
+            spacing={1}
+            sx={{ flex: "1 1 auto", minWidth: 120 }}
+          >
+            {!descriptionAlert && (
+              <Button variant="outlined" onClick={descriptionHandler}>
+                Notice
+              </Button>
+            )}
+            <Button
+              component={Link}
+              variant="contained"
+              to={`/dashboard/sums-all-branches-data/${qId}`}
+            >
+              Back
+            </Button>
+          </Stack>
+        </Box>
+
+        {/* Table Section */}
+        <TableContainer component={Paper} variant="outlined">
+          <Table size="small">
+            <TableHead>
+              <TableRow
+                sx={{
+                  bgcolor: "primary.main",
+                  "& th": {
+                    color: "white",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                  },
+                }}
+              >
+                <TableCell onClick={() => handleSort("thanaCode")}>
+                  Thana Code{sortIndicator("thanaCode")}
+                </TableCell>
+                <TableCell onClick={() => handleSort("userName")}>
+                  Thana Name{sortIndicator("userName")}
+                </TableCell>
+                {questions?.map((question, index) => (
+                  <TableCell
+                    key={index}
+                    onClick={() => handleSort(question.questionText)}
+                  >
+                    {question?.questionText}
+                    {sortIndicator(question.questionText)}
+                  </TableCell>
                 ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {/* Total Row */}
+              <TableRow
+                sx={{
+                  bgcolor: "info.main",
+                  "& th, & td": { color: "error.main", fontWeight: "bold" },
+                }}
+              >
+                <TableCell colSpan={2} sx={{ fontWeight: "bold" }}>
+                  Total
+                </TableCell>
+                {totalData?.map((element, index) => (
+                  <TableCell key={index} sx={{ fontWeight: "bold" }}>
+                    {element ? element[index] : "0"}
+                  </TableCell>
+                ))}
+              </TableRow>
+
+              {/* Data Rows */}
+              {sortedData.map((thana, thanaIndex) => (
+                <TableRow
+                  key={thanaIndex}
+                  hover
+                  sx={{
+                    bgcolor: "background.paper",
+                    "&:hover": { bgcolor: "action.hover" },
+                  }}
+                >
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {thana.thanaCode}
+                  </TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {thana.userName}
+                  </TableCell>
+                  {questions?.map((question, qIndex) => (
+                    <TableCell
+                      key={`${thanaIndex}-${qIndex}`}
+                      sx={{ textAlign: "center" }}
+                    >
+                      {thana?.[question.questionText] || 0}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Paper>
     </>
   );
 };

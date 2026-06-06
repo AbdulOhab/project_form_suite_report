@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Box, Typography, Paper } from "@mui/material";
 import BangladayDate from "./BangladayDate";
 import moment from "moment";
 
@@ -76,7 +77,6 @@ function DateDifferenceComponent({
       endDate.setDate(startDate.getDate() + range - 1);
 
       const today = new Date();
-      // today.setHours(0, 0, 0, 0);
 
       if (today < startDate) {
         return 1;
@@ -189,45 +189,70 @@ function DateDifferenceComponent({
           <BangladayDate day={currentDay.day} date={currentDay.date} />
           {difference >= 0 && dayDifference > 0 && seconds !== 0 ? (
             <>
-              <div>
+              <Box>
                 {formDisabled ? (
-                  <h6 className="text-success text-center fw-bold">
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ color: "success.main", textAlign: "center", fontWeight: "bold" }}
+                  >
                     রিপোর্ট প্রদান শুরু হতে বাকী আছে
-                  </h6>
+                  </Typography>
                 ) : (
-                  <h6 className="text-success text-center fw-bold">
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ color: "success.main", textAlign: "center", fontWeight: "bold" }}
+                  >
                     রিপোর্ট সাবমিটের সময় বাকী আছে
-                  </h6>
+                  </Typography>
                 )}
-              </div>
-              <div
-                className={`${
-                  formDisabled
-                    ? "bg-danger text-light fw-bold"
-                    : "bg-success text-light fw-bold"
-                } text-center  p-2 rounded my-2 `}
+              </Box>
+              <Paper
+                elevation={1}
+                sx={{
+                  bgcolor: formDisabled ? "error.main" : "success.main",
+                  color: "common.white",
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  p: 1,
+                  borderRadius: 1,
+                  my: 1,
+                }}
               >
                 <span>{hours}</span> <span>ঘন্টা</span>
                 <span>&nbsp;{minutes}</span> <span>মিনিট</span>
                 <span>&nbsp;{seconds}</span> <span>সেকেন্ড</span>
-              </div>
+              </Paper>
             </>
           ) : (
             ""
           )}
         </>
       ) : checkDate === 1 ? (
-        <div className="text-center">
-          <h5 className="shadow p-1 rounded text-success">
-            রিপোর্ট প্রদান শুরু হতে বাকি আছে
-          </h5>
-          <div className="bg-danger text-light shadow p-2 rounded">
+        <Box sx={{ textAlign: "center" }}>
+          <Paper
+            elevation={3}
+            sx={{ p: 1, borderRadius: 1, color: "success.main" }}
+          >
+            <Typography variant="subtitle1">
+              রিপোর্ট প্রদান শুরু হতে বাকি আছে
+            </Typography>
+          </Paper>
+          <Paper
+            elevation={3}
+            sx={{
+              bgcolor: "error.main",
+              color: "common.white",
+              p: 1,
+              borderRadius: 1,
+              mt: 1,
+            }}
+          >
             <span>{days} দিন</span> &nbsp;
             <span>{hours}</span> <span>ঘন্টা</span> &nbsp;
             <span>{minutes}</span> <span> মিনিট</span> &nbsp;
             <span>{seconds}</span> <span>সেকেন্ড</span>
-          </div>
-        </div>
+          </Paper>
+        </Box>
       ) : (
         ""
       )}

@@ -10,6 +10,12 @@ build/
 
 # Environment variables
 .env
+
+# API testing (may contain tokens)
+request.http
+
+# Seed credentials (contains passwords)
+SEED_CREDENTIALS.txt
 .env.local
 .env.development.local
 .env.test.local
