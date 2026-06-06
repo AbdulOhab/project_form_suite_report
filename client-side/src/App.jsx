@@ -122,7 +122,7 @@ function App() {
             <Route path={"admin-interface/:dayId/:noticeId"} element={<RoleRoute roles={["admin"]}><AdminUserInterface /></RoleRoute>} />
             <Route path={"admin-branch-interface/:dayId/:zonalId/:noticeId"} element={<RoleRoute roles={["admin"]}><AdminBranchUserInterface /></RoleRoute>} />
             <Route path={"admin-data-perDayCount/:dayId/:zonalId/:branchId/:noticeId"} element={<RoleRoute roles={["admin"]}><AdminDataPerDayCount /></RoleRoute>} />
-            <Route path={"admin-submission"} element={<RoleRoute roles={["admin"]}><AdminReview /></RoleRoute>} />
+            <Route path={"notice-overview"} element={<RoleRoute roles={["admin"]}><AdminReview /></RoleRoute>} />
             <Route path={"sums-all-zonal-data/:qId"} element={<RoleRoute roles={["admin"]}><SumsAllZonalData /></RoleRoute>} />
             <Route path={"sums-day-by-day-zonal-data/:qId/:zId"} element={<RoleRoute roles={["admin"]}><SumsDayByDayZonalData /></RoleRoute>} />
             <Route path="sums-zonal-data-by-branch/:qId/:zId" element={<RoleRoute roles={["admin"]}><SumsZonalDataByBranch /></RoleRoute>} />

@@ -1048,5 +1048,39 @@ module.exports = {
     return res.status(200).json({ question, tempThana, sumsArray, branch });
   },
 
+  submissionOverview: async (req, res) => {
+    const [notices, totalThanas] = await Promise.all([
+      formModel.find().sort({ _id: -1 }).exec(),
+      thanaModel.countDocuments({ userRole: "thana" }).exec(),
+    ]);
+
+    const overview = await Promise.all(
+      notices.map(async (notice) => {
+        const totalDays = Number(notice.range) || 1;
+        const totalExpected = totalThanas * totalDays;
+        const submitted = await answerModel.countDocuments({ noticeId: notice._id });
+        const uniqueThanas = await answerModel.distinct("thanaCode", { noticeId: notice._id });
+
+        return {
+          _id: notice._id,
+          document_name: notice.document_name,
+          sub_title: notice.sub_title,
+          startDadeline: notice.startDadeline,
+          endDadeline: notice.endDadeline,
+          range: notice.range,
+          timeStart: notice.timeStart,
+          timeEnd: notice.timeEnd,
+          totalThanas,
+          totalExpected,
+          submitted,
+          uniqueThanaCount: uniqueThanas.length,
+          pending: Math.max(0, totalExpected - submitted),
+        };
+      })
+    );
+
+    return res.status(200).json({ overview, totalThanas });
+  },
+
   // sums all data
 };

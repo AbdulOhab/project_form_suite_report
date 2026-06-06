@@ -39,9 +39,9 @@ const menuConfig = {
       ],
     },
     {
-      label: "Admin Review",
+      label: "Notice Overview",
       icon: <AssessmentIcon />,
-      path: "/dashboard/admin-submission",
+      path: "/dashboard/notice-overview",
     },
   ],
   zonal: [
