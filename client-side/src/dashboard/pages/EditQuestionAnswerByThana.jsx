@@ -11,117 +11,71 @@ import {
   Radio,
   Snackbar,
   Alert,
-  Container,
   Dialog,
   DialogTitle,
+  DialogContent,
+  DialogContentText,
   DialogActions,
+  Chip,
+  Divider,
 } from "@mui/material";
-import SortTextIcon from "@mui/icons-material/ShortText";
-import SortNumericIcon from "@mui/icons-material/NumbersSharp";
+import {
+  ArrowBack,
+  EditOutlined,
+  AssignmentOutlined,
+  NumbersSharp as SortNumericIcon,
+  ShortText as SortTextIcon,
+} from "@mui/icons-material";
 import BASE_URL from "../../auth/dbUrl";
 
 function EditQuestionAnswerByThana() {
   const { id, answerId } = useParams();
-
   const navigate = useNavigate();
 
-  const [notice, setNotice] = useState([]);
-  console.log(notice);
-
+  const [notice, setNotice] = useState(null);
   const [answer, setAnswer] = useState([
-    {
-      questionText: "",
-      data: "",
-      questionType: "",
-      required: false,
-    },
+    { questionText: "", data: "", questionType: "", required: false },
   ]);
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+  const [confirmDialog, setConfirmDialog] = useState({ open: false });
 
-  // Snackbar state
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success",
-  });
-
-  // Confirmation dialog state
-  const [confirmDialog, setConfirmDialog] = useState({
-    open: false,
-  });
-
-  const handleSnackbarClose = () => {
-    setSnackbar((prev) => ({ ...prev, open: false }));
-  };
-
-  // get answer form database
   useEffect(() => {
-    const getQuestionFromDb = async () => {
+    const getAnswerFromDb = async () => {
       try {
-        let response = await fetch(`${BASE_URL}/get-answer/${answerId}`, {
+        const response = await fetch(`${BASE_URL}/get-answer/${answerId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         });
-        let data = await response.json();
-        if (!response.ok) {
-          throw new Error("get notice data failed");
-        }
+        const data = await response.json();
         if (response.ok) {
           setNotice(data);
           setAnswer(data?.answers);
         }
       } catch (error) {
-        console.error("Error fetching notice data:", error);
+        console.error("Error fetching answer data:", error);
       }
     };
-    getQuestionFromDb();
+    getAnswerFromDb();
   }, [answerId]);
 
   const selectInput = (qText, value, qIndex, required, questionType) => {
-    setAnswer((prevAnswer) => {
-      const newAnswer = [...prevAnswer];
-
-      // Check if the index exists, if not, add a new object
-      if (qIndex >= newAnswer.length) {
-        newAnswer[qIndex] = {
-          questionText: qText,
-          data: value,
-          questionType: questionType,
-          required: required,
-        };
-      } else {
-        // Update the existing object
-        newAnswer[qIndex] = {
-          ...newAnswer[qIndex],
-          questionText: qText,
-          data: value,
-          required: required,
-          questionType: questionType,
-        };
-      }
-
-      return newAnswer;
+    setAnswer((prev) => {
+      const updated = [...prev];
+      updated[qIndex] = { questionText: qText, data: value, questionType, required };
+      return updated;
     });
   };
 
   const selectCheck = (qText, value, qIndex, required, questionType) => {
-    const newAnswer = [...answer]; // Shallow copy of the answer array
-    if (!Array.isArray(newAnswer[qIndex])) {
-      newAnswer[qIndex] = []; // Initialize as an array if not already
-    }
-    newAnswer[qIndex].push({
-      questionText: qText,
-      data: value,
-      required: required,
-      questionType: questionType,
-    });
-
-    setAnswer(newAnswer); // Update the state with the modified newAnswer
+    const updated = [...answer];
+    if (!Array.isArray(updated[qIndex])) updated[qIndex] = [];
+    updated[qIndex].push({ questionText: qText, data: value, required, questionType });
+    setAnswer(updated);
   };
 
-  //update data submission
   const updataHandler = async (e) => {
     e.preventDefault();
     const response = await fetch(`${BASE_URL}/update-answer/${answerId}`, {
@@ -135,179 +89,236 @@ function EditQuestionAnswerByThana() {
         doc_desc: notice.doc_desc,
         noticeId: id,
         thanaCode: notice.thanaCode,
+        branchCode: notice.branchCode,
         zonalCode: notice.zonalCode,
         answers: answer,
       }),
     });
     await response.json();
-    if (!response.status === 200) {
-      throw new Error("Network response was not ok");
-    }
-    if (response.status === 200) {
-      setConfirmDialog({ open: true });
-    }
+    if (response.status === 200) setConfirmDialog({ open: true });
   };
 
   const handleConfirmSave = () => {
     setConfirmDialog({ open: false });
-    setSnackbar({
-      open: true,
-      message: "Update your data successfully",
-      severity: "success",
-    });
+    setSnackbar({ open: true, message: "তথ্য সফলভাবে আপডেট হয়েছে", severity: "success" });
     navigate(`/dashboard/thana-submission/${id}`);
   };
 
   const handleDenySave = () => {
     setConfirmDialog({ open: false });
-    setSnackbar({
-      open: true,
-      message: "Changes are not saved",
-      severity: "info",
-    });
+    setSnackbar({ open: true, message: "আপডেট বাতিল করা হয়েছে", severity: "info" });
   };
 
   return (
-    <Container maxWidth="md">
-      <Paper>
-        <Paper
-          elevation={0}
-          sx={{ p: 2, bgcolor: "grey.100", borderRadius: "4px 4px 0 0" }}
-        >
-          <Typography align="center">{notice?.document_name}</Typography>
-          <Typography align="center">{notice?.doc_desc}</Typography>
-        </Paper>
+    <>
+      <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2, maxWidth: 720, mx: "auto" }}>
 
+        {/* Compact top bar */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            mb: 2,
+            flexWrap: "wrap",
+            gap: 1,
+          }}
+        >
+          <Button
+            component={Link}
+            to={`/dashboard/thana-submission/${id}`}
+            size="small"
+            startIcon={<ArrowBack />}
+            variant="text"
+            sx={{ fontWeight: 600 }}
+          >
+            ফিরে যান
+          </Button>
+          <Box sx={{ textAlign: "center", flex: 1, minWidth: 0 }}>
+            <Typography variant="h6" fontWeight="bold" noWrap>
+              {notice?.document_name || "Loading..."}
+            </Typography>
+            {notice?.sub_title && (
+              <Typography variant="caption" color="text.secondary">
+                {notice.sub_title}
+              </Typography>
+            )}
+          </Box>
+          <Box sx={{ minWidth: 90 }} />
+        </Box>
+
+        {/* Notice description card */}
+        {notice?.doc_desc && (
+          <Paper
+            elevation={0}
+            sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden", mb: 3 }}
+          >
+            <Box
+              sx={{
+                px: 2,
+                py: 1.5,
+                bgcolor: "primary.main",
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+              }}
+            >
+              <AssignmentOutlined fontSize="small" sx={{ color: "white" }} />
+              <Typography variant="subtitle2" fontWeight={600} color="white">
+                নোটিশের বিবরণ
+              </Typography>
+            </Box>
+            <Box sx={{ px: 2, py: 1.5 }}>
+              <Typography variant="body2" color="text.secondary">
+                {notice.doc_desc}
+              </Typography>
+            </Box>
+          </Paper>
+        )}
+
+        {/* Form */}
         <Box component="form" onSubmit={updataHandler}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1.5 }}>
+            <Typography variant="subtitle2" fontWeight={600} color="text.secondary">
+              প্রশ্নসমূহ
+            </Typography>
+            {notice?.answers?.length > 0 && (
+              <Chip
+                label={`${notice.answers.length} টি`}
+                size="small"
+                variant="outlined"
+                sx={{ fontSize: "0.72rem" }}
+              />
+            )}
+          </Box>
+
           {notice?.answers?.map((question, qIndex) => (
             <Paper
               key={qIndex}
-              variant="outlined"
-              elevation={2}
+              elevation={0}
               sx={{
-                maxWidth: { lg: "50%", md: "66%", sm: "100%" },
-                mx: "auto",
+                borderRadius: 2,
+                border: "1px solid",
+                borderColor: "divider",
                 p: 2,
-                mt: 1.5,
+                mb: 1.5,
               }}
             >
-              <Typography>
-                {qIndex + 1}. {question?.questionText}
-              </Typography>
+              <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1, mb: 1.5 }}>
+                <Chip
+                  label={qIndex + 1}
+                  size="small"
+                  color="primary"
+                  sx={{ minWidth: 28, height: 22, fontSize: "0.72rem", fontWeight: 700 }}
+                />
+                <Typography variant="body2" fontWeight={500} sx={{ pt: 0.2 }}>
+                  {question.questionText}
+                  {question.required && (
+                    <Typography component="span" color="error.main" sx={{ ml: 0.3 }}>*</Typography>
+                  )}
+                </Typography>
+              </Box>
 
-              <Box>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <FormControlLabel
-                    control={
-                      question.questionType !== "text" &&
-                      question.questionType !== "number" ? (
-                        question.questionType === "checkbox" ? (
-                          <Checkbox
-                            name={String(qIndex)}
-                            required={question?.required}
-                            value={question?.data}
-                            onChange={() =>
-                              selectCheck(
-                                question?.questionText,
-                                question.optionsText,
-                                qIndex,
-                                question?.required,
-                                question?.questionType
-                              )
-                            }
-                          />
-                        ) : (
-                          <Radio
-                            name={String(qIndex)}
-                            required={question?.required}
-                            value={question?.data}
-                            onChange={() =>
-                              selectCheck(
-                                question?.questionText,
-                                question.optionsText,
-                                qIndex,
-                                question?.required,
-                                question?.questionType
-                              )
-                            }
-                          />
-                        )
-                      ) : question?.questionType === "number" ? (
-                        <SortNumericIcon sx={{ mr: 0.5 }} />
-                      ) : (
-                        <SortTextIcon sx={{ mr: 0.5 }} />
+              {question.questionType === "text" || question.questionType === "number" ? (
+                <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
+                  {question.questionType === "number" ? (
+                    <SortNumericIcon fontSize="small" color="action" sx={{ mt: 1 }} />
+                  ) : (
+                    <SortTextIcon fontSize="small" color="action" sx={{ mt: 1 }} />
+                  )}
+                  <TextField
+                    type={question.questionType === "number" ? "number" : "text"}
+                    size="small"
+                    fullWidth
+                    required={question.required}
+                    defaultValue={question.data}
+                    multiline={question.questionType === "text"}
+                    rows={question.questionType === "text" ? 3 : undefined}
+                    onChange={(e) =>
+                      selectInput(
+                        question.questionText,
+                        e.target.value,
+                        qIndex,
+                        question.required,
+                        question.questionType
                       )
                     }
-                    label={
-                      question.questionType !== "text" &&
-                      question.questionType !== "number" ? (
-                        <Typography
-                          sx={{
-                            textTransform: "capitalize",
-                            textAlign: "center",
-                          }}
-                        >
-                          {question?.optionsText}
-                        </Typography>
-                      ) : (
-                        <TextField
-                          type={question.questionType}
-                          name={String(qIndex)}
+                  />
+                </Box>
+              ) : (
+                question.options?.map((opText, oIndex) => (
+                  <FormControlLabel
+                    key={oIndex}
+                    control={
+                      question.questionType === "checkbox" ? (
+                        <Checkbox
                           size="small"
-                          required={question?.required}
-                          defaultValue={question?.data}
-                          onChange={(e) =>
-                            selectInput(
-                              question?.questionText,
-                              e.target.value,
+                          name={String(qIndex)}
+                          required={question.required}
+                          value={question.data}
+                          onChange={() =>
+                            selectCheck(
+                              question.questionText,
+                              opText.optionsText,
                               qIndex,
-                              question?.required,
-                              question?.questionType
+                              question.required,
+                              question.questionType
+                            )
+                          }
+                        />
+                      ) : (
+                        <Radio
+                          size="small"
+                          name={String(qIndex)}
+                          required={question.required}
+                          value={question.data}
+                          onChange={() =>
+                            selectCheck(
+                              question.questionText,
+                              opText.optionsText,
+                              qIndex,
+                              question.required,
+                              question.questionType
                             )
                           }
                         />
                       )
                     }
+                    label={<Typography variant="body2">{opText?.optionsText}</Typography>}
                   />
-                </Box>
-              </Box>
+                ))
+              )}
             </Paper>
           ))}
-          <Box sx={{ maxWidth: { lg: "50%", md: "66%", sm: "83%" }, mx: "auto" }}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-around",
-                alignItems: "center",
-                my: 2,
-              }}
+
+          <Divider sx={{ my: 2 }} />
+
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="warning"
+              startIcon={<EditOutlined />}
+              sx={{ fontWeight: 600, px: 3 }}
             >
-              <Button type="submit" variant="contained" color="error">
-                Update
-              </Button>
-              <Button
-                component={Link}
-                to={`/dashboard/thana-submission/${id}`}
-                variant="contained"
-                color="success"
-                sx={{ mx: 1.5 }}
-              >
-                Back
-              </Button>
-            </Box>
+              আপডেট করুন
+            </Button>
           </Box>
         </Box>
-      </Paper>
+      </Box>
 
       {/* Confirmation Dialog */}
-      <Dialog open={confirmDialog.open} onClose={handleDenySave}>
-        <DialogTitle>Do you want to save the changes?</DialogTitle>
-        <DialogActions>
-          <Button onClick={handleDenySave} color="inherit">
-            Don&apos;t save
-          </Button>
-          <Button onClick={handleConfirmSave} variant="contained" color="success">
-            Save
+      <Dialog open={confirmDialog.open} onClose={handleDenySave} maxWidth="xs" fullWidth>
+        <DialogTitle sx={{ fontWeight: 700 }}>তথ্য আপডেট করবেন?</DialogTitle>
+        <DialogContent>
+          <DialogContentText variant="body2">
+            আপডেট করলে আগের তথ্য পরিবর্তন হয়ে যাবে।
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button onClick={handleDenySave} color="inherit" size="small">বাতিল</Button>
+          <Button onClick={handleConfirmSave} variant="contained" color="warning" size="small">
+            আপডেট করুন
           </Button>
         </DialogActions>
       </Dialog>
@@ -316,19 +327,19 @@ function EditQuestionAnswerByThana() {
       <Snackbar
         open={snackbar.open}
         autoHideDuration={4000}
-        onClose={handleSnackbarClose}
+        onClose={() => setSnackbar((p) => ({ ...p, open: false }))}
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <Alert
-          onClose={handleSnackbarClose}
           severity={snackbar.severity}
           variant="filled"
+          onClose={() => setSnackbar((p) => ({ ...p, open: false }))}
           sx={{ width: "100%" }}
         >
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Container>
+    </>
   );
 }
 

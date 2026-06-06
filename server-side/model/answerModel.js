@@ -19,19 +19,18 @@ module.exports = mongoose.model(
       },
       thanaCode: {
         type: Number,
-        required: true,
       },
       zonalCode: {
         type: Number,
-        required: true,
       },
       branchCode: {
         type: Number,
-        required: true,
       },
       submitId: {
         type: Number,
-        required: true,
+      },
+      reportDate: {
+        type: String,
       },
 
       answers: [],

@@ -45,6 +45,8 @@ function DateByDayCount({
     }
   }, [startDadeline, range]);
 
+  const today = new Date().toISOString().split("T")[0];
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     if (isNaN(date)) return null;
@@ -66,8 +68,10 @@ function DateByDayCount({
       const formattedDate = formatDate(date);
 
       const matchingReports = thanaReport.filter((report) => {
-        const reportDate = formatDate(report.createdAt);
-        return reportDate === formattedDate;
+        const matchDate = report.reportDate
+          ? formatDate(report.reportDate)
+          : formatDate(report.createdAt);
+        return matchDate === formattedDate;
       });
 
       const dataForDate = {};
@@ -78,7 +82,7 @@ function DateByDayCount({
               .filter((answer) => answer.questionText === q.questionText)
               .map((answer) => answer.data)
           )
-          .join(", ");
+          .join("\n");
       });
 
       return {
@@ -174,21 +178,33 @@ function DateByDayCount({
                   <BangladayDate day={data.day + 1} date={data.date} />
                 </TableCell>
                 {questions.map((question, qIndex) => (
-                  <TableCell key={qIndex} sx={{ textAlign: "center" }}>
+                  <TableCell key={qIndex} sx={{ textAlign: "center", whiteSpace: "pre-line" }}>
                     {data[question.questionText]}
                   </TableCell>
                 ))}
                 <TableCell sx={{ textAlign: "center" }}>
-                  <Button
-                    variant="contained"
-                    color="success"
-                    size="small"
-                    disabled={!data.answerId}
-                    component={Link}
-                    to={`/dashboard/thana-edit-answer/${id}/${data.answerId}`}
-                  >
-                    &#9998;
-                  </Button>
+                  {data.answerId ? (
+                    <Button
+                      variant="outlined"
+                      color="success"
+                      size="small"
+                      component={Link}
+                      to={`/dashboard/thana-edit-answer/${id}/${data.answerId}`}
+                    >
+                      &#9998;
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      disabled={data.date !== today}
+                      component={Link}
+                      to={`/dashboard/thana-empty-answer/${id}/${data.date}`}
+                    >
+                      সাবমিট
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             ))}

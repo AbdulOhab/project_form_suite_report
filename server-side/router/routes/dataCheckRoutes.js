@@ -1,8 +1,9 @@
 const express = require("express");
 const dataCheckController = require("../../controller/dataCheckController");
+const authMiddleware = require("../../middleware/authMiddleware");
 const router = express.Router();
 
-router.get(`/thana/data-checkout/:id`, dataCheckController.thanaData),
+router.get(`/thana/data-checkout/:id`, authMiddleware, dataCheckController.thanaData),
   router.get(
     `/thana/find-data-checkout/:id/:currentDay`,
     dataCheckController.findDataCheckout

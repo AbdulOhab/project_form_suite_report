@@ -16,6 +16,7 @@ module.exports = {
         submitId: data.submitId,
         branchCode: data.branchCode,
         zonalCode: data.zonalCode,
+        reportDate: data.reportDate,
         answers: data.answers,
       })
       .then(() => {

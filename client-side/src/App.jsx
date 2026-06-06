@@ -132,7 +132,7 @@ function App() {
               element={<BranchDataInterface />}
             />
             <Route
-              path={"thana-empty-answer/:id"}
+              path={"thana-empty-answer/:id/:date"}
               element={<ThanaEmptyNotice />}
             />
             <Route
