@@ -60,9 +60,6 @@ function AdminBranchUserInterface() {
     getBranchUsers();
   }, [noticeId, dayId, zonalId]);
 
-  const descriptionHandler = () => {
-    setDescriptionAlert(true);
-  };
   const descriptionCloserHandler = () => {
     setDescriptionAlert(false);
   };

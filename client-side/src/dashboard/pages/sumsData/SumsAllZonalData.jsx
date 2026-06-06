@@ -110,9 +110,6 @@ const SumsAllZonalData = () => {
     return sortableData;
   }, [tempData, sortConfig]);
 
-  const descriptionHandler = () => {
-    setDescriptionAlert(true);
-  };
   const descriptionCloserHandler = () => {
     setDescriptionAlert(false);
   };

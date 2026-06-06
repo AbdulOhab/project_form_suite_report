@@ -119,7 +119,6 @@ const SumsAllBranchData = () => {
     return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
   };
 
-  const descriptionHandler = () => setDescriptionAlert(true);
   const descriptionCloserHandler = () => setDescriptionAlert(false);
 
   const exportToExcel = () => {

@@ -11,7 +11,6 @@ import {
   TableRow,
   Paper,
   Typography,
-  Box,
 } from "@mui/material";
 
 function ZonalDataPerDayInterface({
@@ -127,7 +126,7 @@ function ZonalDataPerDayInterface({
                   variant="subtitle1"
                   sx={{ color: "success.main", fontWeight: "bold" }}
                 >
-                  Branch Name: {branchName?.userName}
+                  ব্রাঞ্চ নাম: {branchName?.userName}
                 </Typography>
                 <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
                   <Table size="small" border={1}>
@@ -137,7 +136,7 @@ function ZonalDataPerDayInterface({
                           sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
                           onClick={() => handleSort("thanaCode")}
                         >
-                          Thana Code{" "}
+                          থানা কোড{" "}
                           {sortConfig.key === "thanaCode" &&
                             (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
                         </TableCell>
@@ -145,7 +144,7 @@ function ZonalDataPerDayInterface({
                           sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
                           onClick={() => handleSort("userName")}
                         >
-                          Thana Name{" "}
+                          থানা নাম{" "}
                           {sortConfig.key === "userName" &&
                             (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
                         </TableCell>
@@ -192,7 +191,7 @@ function ZonalDataPerDayInterface({
                             );
                             return (
                               <TableCell key={`${thanaIndex}-${qIndex}`} sx={{ textAlign: "center" }}>
-                                {answer ? answer.data : ""}
+                                {answer ? answer.data : 0}
                               </TableCell>
                             );
                           })}

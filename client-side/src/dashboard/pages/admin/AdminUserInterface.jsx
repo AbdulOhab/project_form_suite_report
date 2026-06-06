@@ -66,9 +66,6 @@ function AdminUserInterface() {
     getZonalUsers();
   }, [noticeId, dayId]);
 
-  const descriptionHandler = () => {
-    setDescriptionAlert(true);
-  };
   const descriptionCloserHandler = () => {
     setDescriptionAlert(false);
   };

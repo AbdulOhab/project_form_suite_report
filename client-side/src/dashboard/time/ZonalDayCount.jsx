@@ -39,7 +39,7 @@ function ZonalDayCount({
       if (branch?.tempThana && Array.isArray(branch?.tempThana)) {
         thanaLength += branch?.tempThana?.length;
         branch?.tempThana.forEach((thana) => {
-          if (thana?.answer?.length === 0) {
+          if (!thana?.answer) {
             count += 1;
           }
         });
@@ -71,17 +71,15 @@ function ZonalDayCount({
     let tempData = branchReport?.map((branch) => {
       let sums = {};
       branch.tempThana.forEach((thana) => {
-        thana?.answer?.forEach((ans) => {
-          ans?.answers?.forEach((data) => {
-            let questionText = data?.questionText;
-            if (data?.questionType === "number") {
-              let value = Number(data?.data);
-              if (!sums[questionText]) {
-                sums[questionText] = 0;
-              }
-              sums[questionText] += value;
+        thana?.answer?.answers?.forEach((data) => {
+          let questionText = data?.questionText;
+          if (data?.questionType === "number") {
+            let value = Number(data?.data);
+            if (!sums[questionText]) {
+              sums[questionText] = 0;
             }
-          });
+            sums[questionText] += value;
+          }
         });
       });
       return { ...branch, sums };
@@ -145,7 +143,7 @@ function ZonalDayCount({
                           sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
                           onClick={() => handleSort("branchCode")}
                         >
-                          Branch Code
+                          ব্রাঞ্চ কোড
                           {sortConfig.key === "branchCode" &&
                             (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
                         </TableCell>
@@ -153,7 +151,7 @@ function ZonalDayCount({
                           sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
                           onClick={() => handleSort("userName")}
                         >
-                          Branch Name
+                          ব্রাঞ্চ নাম
                           {sortConfig.key === "userName" &&
                             (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
                         </TableCell>
@@ -170,7 +168,7 @@ function ZonalDayCount({
                                 : " ▼")}
                           </TableCell>
                         ))}
-                        <TableCell sx={{ color: "common.white", textAlign: "center" }}>Actions</TableCell>
+                        <TableCell sx={{ color: "common.white", textAlign: "center" }}>একশন</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -194,7 +192,7 @@ function ZonalDayCount({
                           <TableCell sx={{ textAlign: "center" }}>{branch.userName}</TableCell>
                           {questions?.map((question, qIndex) => (
                             <TableCell key={`${branchIndex}-${qIndex}`} sx={{ textAlign: "center" }}>
-                              {branch.sums[question.questionText]}
+                              {branch.sums[question.questionText] || 0}
                             </TableCell>
                           ))}
                           <TableCell sx={{ textAlign: "center" }}>

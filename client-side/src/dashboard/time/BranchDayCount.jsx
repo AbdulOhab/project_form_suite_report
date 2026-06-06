@@ -12,7 +12,6 @@ import {
   Paper,
   Button,
   Box,
-  Typography,
 } from "@mui/material";
 
 function BranchDayCount({
@@ -164,7 +163,7 @@ function BranchDayCount({
                           sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
                           onClick={() => handleSort("thanaCode")}
                         >
-                          Thana Code{" "}
+                          থানা কোড{" "}
                           {sortConfig.key === "thanaCode" &&
                             (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
                         </TableCell>
@@ -172,7 +171,7 @@ function BranchDayCount({
                           sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
                           onClick={() => handleSort("userName")}
                         >
-                          Thana Name{" "}
+                          থানা নাম{" "}
                           {sortConfig.key === "userName" &&
                             (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
                         </TableCell>
@@ -189,7 +188,7 @@ function BranchDayCount({
                                 : " ▼")}
                           </TableCell>
                         ))}
-                        <TableCell sx={{ color: "common.white", textAlign: "center" }}>Actions</TableCell>
+                        <TableCell sx={{ color: "common.white", textAlign: "center" }}>একশন</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -228,33 +227,30 @@ function BranchDayCount({
                             );
                           })}
 
-                          {thana?.answer?._id ? (
-                            <TableCell sx={{ textAlign: "center" }}>
+                          <TableCell sx={{ textAlign: "center" }}>
+                            {thana?.answer?._id ? (
                               <Button
-                                variant="contained"
+                                variant="outlined"
                                 color="success"
                                 size="small"
-                                disabled={formDisabled}
                                 component={Link}
                                 to={`/dashboard/branch-edit-answer/${noticeId}/${thana?.answer?._id}`}
                               >
                                 &#9998;
                               </Button>
-                            </TableCell>
-                          ) : (
-                            <TableCell sx={{ textAlign: "center" }}>
+                            ) : (
                               <Button
                                 variant="contained"
-                                color="error"
+                                color="primary"
                                 size="small"
                                 disabled={formDisabled}
                                 component={Link}
                                 to={`/dashboard/branch-empty-answer/${thana.thanaCode}/${noticeId}`}
                               >
-                                &#9998;
+                                সাবমিট
                               </Button>
-                            </TableCell>
-                          )}
+                            )}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

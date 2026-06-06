@@ -57,9 +57,6 @@ function AdminDataPerDayCount() {
     getZonalUsers();
   }, [noticeId, dayId, branchId, zonalId]);
 
-  const descriptionHandler = () => {
-    setDescriptionAlert(true);
-  };
   const descriptionCloserHandler = () => {
     setDescriptionAlert(false);
   };

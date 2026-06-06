@@ -10,6 +10,7 @@ router.get(`/thana/data-checkout/:id`, authMiddleware, dataCheckController.thana
   ),
   router.get(
     `/branch/data-checkout/:dayId/:noticeId`,
+    authMiddleware,
     dataCheckController.branchData
   ),
   router.get(
@@ -18,6 +19,7 @@ router.get(`/thana/data-checkout/:id`, authMiddleware, dataCheckController.thana
   ),
   router.get(
     `/zonal/data-checkout/:dayId/:noticeId`,
+    authMiddleware,
     dataCheckController.zonalData
   ),
   router.get(

@@ -127,9 +127,6 @@ const SumsAllThanaData = () => {
     return sortableData;
   }, [sumsThanaData, sortConfig]);
 
-  const descriptionHandler = () => {
-    setDescriptionAlert(true);
-  };
   const descriptionCloserHandler = () => {
     setDescriptionAlert(false);
   };

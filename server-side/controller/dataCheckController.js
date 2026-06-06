@@ -100,18 +100,9 @@ module.exports = {
     const user = req.userData;
     let question = await formModel.findOne({ _id: noticeId }).exec();
 
-    const startOfToday = new Date(question?.startDadeline);
-    let day = startOfToday.getDate() + Number(dayId - 1);
-    let month = startOfToday.getMonth() + 1;
-    let year = startOfToday.getFullYear();
-
-    const date = `${year}-${month}-${day}`;
-    const toDay = new Date(date);
-
-    toDay.setHours(0, 0, 0, 0);
-
-    const endOfToday = new Date(date);
-    endOfToday.setHours(23, 59, 59, 999);
+    const startDate = new Date(question?.startDadeline);
+    startDate.setDate(startDate.getDate() + Number(dayId) - 1);
+    const reportDate = startDate.toISOString().split("T")[0];
 
     let thana = await thanaModel
       .find({
@@ -126,12 +117,17 @@ module.exports = {
           ...t.toObject(),
         };
 
+        const toDay = new Date(reportDate);
+        toDay.setHours(0, 0, 0, 0);
+        const endOfToday = new Date(reportDate);
+        endOfToday.setHours(23, 59, 59, 999);
+
         let answer = await answerModel
-          .find({
-            updatedAt: {
-              $gte: toDay,
-              $lt: endOfToday,
-            },
+          .findOne({
+            $or: [
+              { reportDate: reportDate },
+              { reportDate: { $exists: false }, createdAt: { $gte: toDay, $lt: endOfToday } },
+            ],
             noticeId: question._id,
             thanaCode: t.thanaCode,
             branchCode: user.branchCode,
@@ -139,32 +135,23 @@ module.exports = {
           .sort({ _id: -1 })
           .exec();
 
-        a.answer = answer;
+        a.answer = answer || null;
         return a;
       })
     );
     let sums = {};
     let allQuestions = new Set();
 
-    // Iterate through each user object
+    // Iterate through each thana user
     tempThana.forEach((item) => {
       if (item.answer && Array.isArray(item.answer.answers)) {
         item.answer.answers.forEach((answer) => {
-          let questionText = answer.questionText;
-          allQuestions.add(questionText); // Add all questions to the set
-
-          let value = 0;
+          const questionText = answer.questionText;
+          allQuestions.add(questionText);
+          if (!sums[questionText]) sums[questionText] = 0;
           if (answer.questionType === "number") {
-            value = Number(answer.data);
+            sums[questionText] += Number(answer.data);
           }
-
-          // Initialize the sum for this question if it doesn't exist
-          if (!sums[questionText]) {
-            sums[questionText] = 0;
-          }
-
-          // Add the value to the corresponding sum
-          sums[questionText] += value;
         });
       }
     });
@@ -252,17 +239,16 @@ module.exports = {
 
     let question = await formModel.findOne({ _id: noticeId }).exec();
 
-    const startOfToday = new Date(question?.startDadeline);
-    let day = startOfToday.getDate() + Number(dayId - 1);
-    let month = startOfToday.getMonth() + 1;
-    let year = startOfToday.getFullYear();
+    if (!question) return res.status(404).json({ message: "Notice not found" });
 
-    const date = `${year}-${month}-${day}`;
-    const toDay = new Date(date);
+    const startDate = new Date(question?.startDadeline);
+    startDate.setDate(startDate.getDate() + Number(dayId) - 1);
+    const reportDate = startDate.toISOString().split("T")[0];
 
+    const toDay = new Date(reportDate);
     toDay.setHours(0, 0, 0, 0);
 
-    const endOfToday = new Date(date);
+    const endOfToday = new Date(reportDate);
     endOfToday.setHours(23, 59, 59, 999);
 
     let branch = await thanaModel
@@ -290,11 +276,11 @@ module.exports = {
           let t = tempThana[i].toObject(); // Ensure t is a plain object
 
           let answer = await answerModel
-            .find({
-              updatedAt: {
-                $gte: toDay,
-                $lt: endOfToday,
-              },
+            .findOne({
+              $or: [
+                { reportDate },
+                { reportDate: { $exists: false }, createdAt: { $gte: toDay, $lt: endOfToday } },
+              ],
               noticeId: question._id,
               thanaCode: t.thanaCode,
               branchCode: t.branchCode,
@@ -303,7 +289,7 @@ module.exports = {
             .sort({ _id: -1 })
             .exec();
 
-          t.answer = answer;
+          t.answer = answer || null;
           tempThana[i] = t; // Update the tempThana array
         }
 
@@ -320,27 +306,21 @@ module.exports = {
     tempBranch?.forEach((branch) => {
       if (branch && Array.isArray(branch?.tempThana)) {
         branch?.tempThana?.forEach((item) => {
-          if (item?.answer && Array.isArray(item?.answer)) {
-            item?.answer?.forEach((ans) => {
-              if (ans.answers && Array.isArray(ans.answers)) {
-                ans.answers.forEach((data) => {
-                  let questionText = data?.questionText;
-                  allQuestions.add(questionText); // Add all questions to the set
+          if (item?.answer && Array.isArray(item.answer.answers)) {
+            item.answer.answers.forEach((data) => {
+              let questionText = data?.questionText;
+              allQuestions.add(questionText);
 
-                  let value = 0;
-                  if (data?.questionType === "number") {
-                    value = Number(data?.data);
-                  }
-
-                  // Initialize the sum for this question if it doesn't exist
-                  if (!sums[questionText]) {
-                    sums[questionText] = 0;
-                  }
-
-                  // Add the value to the corresponding sum
-                  sums[questionText] += value;
-                });
+              let value = 0;
+              if (data?.questionType === "number") {
+                value = Number(data?.data);
               }
+
+              if (!sums[questionText]) {
+                sums[questionText] = 0;
+              }
+
+              sums[questionText] += value;
             });
           }
         });
@@ -540,6 +520,10 @@ module.exports = {
         .select("-password -_id -thanaCode -branchCode")
         .exec(),
     ]);
+
+    if (!question) {
+      return res.status(404).json({ message: "Notice not found" });
+    }
 
     // Fetch all branches and thanas in a single query
     const branches = await thanaModel
