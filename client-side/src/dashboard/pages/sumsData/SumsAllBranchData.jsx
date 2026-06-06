@@ -4,6 +4,7 @@ import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
   Button,
+  Chip,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -23,6 +24,7 @@ import AddIcon from "@mui/icons-material/Add";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import LockIcon from "@mui/icons-material/Lock";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { ArrowBack, InfoOutlined } from "@mui/icons-material";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import convertToBengaliNumber from "../../time/NumberConverter";
 import * as XLSX from "xlsx";
@@ -157,7 +159,7 @@ const SumsAllBranchData = () => {
   };
 
   return (
-    <>
+    <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
       {/* Description Dialog */}
       <Dialog
         open={descriptionAlert}
@@ -175,106 +177,68 @@ const SumsAllBranchData = () => {
         </DialogContent>
       </Dialog>
 
-      <Paper elevation={2} sx={{ p: 2 }}>
-        {/* Header Section */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 2,
-            mb: 2,
-          }}
+      {/* Compact top bar */}
+      <Box sx={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        mb: 1, flexWrap: "wrap", gap: 1
+      }}>
+        <Button
+          component={Link}
+          to={`/dashboard/admin-data-interface/${qId}`}
+          size="small"
+          startIcon={<ArrowBack />}
+          variant="text"
+          sx={{ fontWeight: 600 }}
         >
-          {/* Left - Date Info */}
-          <Paper variant="outlined" sx={{ p: 1.5, flex: "1 1 auto", minWidth: 200 }}>
-            {validCardData(data.notice?.endDadeline) < 0 ? (
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontSize: "1.25rem",
-                  fontWeight: "bold",
-                  color: "error.main",
-                }}
-              >
-                নোটিশ শেষ হয়েছে{" "}
-                {convertToBengaliNumber(
-                  Math.abs(validCardData(data.notice?.endDadeline))
-                )}{" "}
-                দিন আগে
-              </Typography>
-            ) : (
-              <DateDifferenceComponent
-                startDadeline={data.notice?.startDadeline}
-                range={data.notice?.range}
-                timeStart={data.notice?.timeStart}
-                timeEnd={data.notice?.timeEnd}
-                endDadeline={data.notice?.endDadeline}
-              />
-            )}
-          </Paper>
-
-          {/* Middle - Title */}
-          <Box sx={{ textAlign: "center", flex: "2 1 auto" }}>
-            <Typography
-              variant="h5"
-              sx={{
-                textAlign: "center",
-                fontWeight: 600,
-                color: "primary.main",
-              }}
-            >
-              {data.notice?.document_name}
-            </Typography>
-            {data.notice?.sub_title && (
-              <Typography variant="body2" sx={{ textAlign: "center" }}>
-                {data.notice?.sub_title}
-              </Typography>
-            )}
-            <Typography sx={{ textAlign: "center", mt: 1 }}>
-              <Typography
-                component="span"
-                sx={{
-                  fontSize: "1.5rem",
-                  fontWeight: "bold",
-                  bgcolor: "primary.main",
-                  color: "white",
-                  borderRadius: 1,
-                  px: 1.5,
-                }}
-              >
-                এক নজরে শাখা সমূহের পূর্ণাঙ্গ রিপোর্ট
-              </Typography>
-            </Typography>
-          </Box>
-
-          {/* Right - Actions */}
-          <Stack
-            direction="column"
-            alignItems="flex-end"
-            justifyContent="flex-end"
-            spacing={1}
-            sx={{ flex: "1 1 auto", minWidth: 120 }}
-          >
-            {!descriptionAlert && (
-              <Button variant="outlined" onClick={descriptionHandler}>
-                Notice
-              </Button>
-            )}
-            <Button
-              component={Link}
-              variant="contained"
-              to={`/dashboard/admin-data-interface/${qId}`}
-            >
-              Back
-            </Button>
-          </Stack>
+          ফিরে যান
+        </Button>
+        <Box sx={{ textAlign: "center", flex: 1 }}>
+          <Typography variant="h6" fontWeight="bold">{data.notice?.document_name}</Typography>
+          {data.notice?.sub_title && (
+            <Typography variant="caption" color="text.secondary">{data.notice.sub_title}</Typography>
+          )}
         </Box>
+        <Button
+          size="small"
+          startIcon={<InfoOutlined />}
+          variant="outlined"
+          onClick={() => setDescriptionAlert(true)}
+          sx={{ fontWeight: 600 }}
+        >
+          বিবরণ
+        </Button>
+      </Box>
 
-        {/* Table Section */}
-        <Box sx={{ textAlign: "end", mb: 1, mt: 2 }}>
+      {/* Compact timer */}
+      <Box sx={{ mb: 2 }}>
+        {validCardData(data.notice?.endDadeline) < 0 ? (
+          <Chip
+            color="error"
+            variant="outlined"
+            size="small"
+            label={`নোটিশ প্রদানের সময় শেষ হয়েছে ${convertToBengaliNumber(Math.abs(validCardData(data.notice?.endDadeline)))} দিন পূর্বে`}
+            sx={{ fontWeight: "bold" }}
+          />
+        ) : (
+          <DateDifferenceComponent
+            startDadeline={data.notice?.startDadeline}
+            range={data.notice?.range}
+            timeStart={data.notice?.timeStart}
+            timeEnd={data.notice?.timeEnd}
+            endDadeline={data.notice?.endDadeline}
+          />
+        )}
+      </Box>
+
+      {/* Table card */}
+      <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+        <Box sx={{
+          px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider",
+          display: "flex", alignItems: "center", justifyContent: "space-between"
+        }}>
+          <Typography variant="subtitle2" fontWeight={600} color="text.secondary">ব্রাঞ্চ সারসংক্ষেপ</Typography>
           <Button
+            size="small"
             variant="contained"
             startIcon={<FileDownloadIcon />}
             onClick={exportToExcel}
@@ -282,124 +246,125 @@ const SumsAllBranchData = () => {
             Export to Excel
           </Button>
         </Box>
-
-        {sortedData.length ? (
-          <TableContainer component={Paper} variant="outlined">
-            <Table size="small">
-              <TableHead>
-                <TableRow
-                  sx={{
-                    bgcolor: "primary.main",
-                    "& th": {
-                      color: "white",
-                      fontWeight: "bold",
-                      cursor: "pointer",
-                    },
-                  }}
-                >
-                  <TableCell onClick={() => handleSort("branchCode")}>
-                    Branch Code{sortIndicator("branchCode")}
-                  </TableCell>
-                  <TableCell onClick={() => handleSort("userName")}>
-                    Branch Name{sortIndicator("userName")}
-                  </TableCell>
-                  {data.questions?.map((question, index) => (
-                    <TableCell
-                      key={index}
-                      onClick={() => handleSort(question.questionText)}
-                    >
-                      {question?.questionText}
-                      {sortIndicator(question.questionText)}
-                    </TableCell>
-                  ))}
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {/* Total Row */}
-                <TableRow
-                  sx={{
-                    bgcolor: "primary.main",
-                    "& th, & td": { color: "white", fontWeight: "bold" },
-                  }}
-                >
-                  <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                    Total
-                  </TableCell>
-                  <TableCell sx={{ color: "white" }}></TableCell>
-                  {data.totalData.length
-                    ? data.totalData?.map((value, index) => (
-                        <TableCell
-                          sx={{ color: "white", fontWeight: "bold" }}
-                          key={index}
-                        >
-                          {value[index]}
-                        </TableCell>
-                      ))
-                    : data.questions?.map((value, index) => (
-                        <TableCell
-                          sx={{ color: "white", fontWeight: "bold" }}
-                          key={index}
-                        >
-                          0
-                        </TableCell>
-                      ))}
-                  <TableCell>
-                    <LockIcon sx={{ color: "error.main" }} />
-                  </TableCell>
-                </TableRow>
-
-                {/* Data Rows */}
-                {sortedData.map((branch, branchIndex) => (
+        <Box sx={{ p: 1 }}>
+          {sortedData.length ? (
+            <TableContainer component={Paper} variant="outlined">
+              <Table size="small">
+                <TableHead>
                   <TableRow
-                    key={branchIndex}
-                    hover
-                    sx={{ "&:hover": { bgcolor: "action.hover" } }}
+                    sx={{
+                      bgcolor: "primary.main",
+                      "& th": {
+                        color: "white",
+                        fontWeight: "bold",
+                        cursor: "pointer",
+                      },
+                    }}
                   >
-                    <TableCell sx={{ textAlign: "center" }}>
-                      {branch.branchCode}
+                    <TableCell onClick={() => handleSort("branchCode")}>
+                      Branch Code{sortIndicator("branchCode")}
                     </TableCell>
-                    <TableCell sx={{ textAlign: "center" }}>
-                      {branch.userName}
+                    <TableCell onClick={() => handleSort("userName")}>
+                      Branch Name{sortIndicator("userName")}
                     </TableCell>
-                    {data.questions?.map((question, qIndex) => (
+                    {data.questions?.map((question, index) => (
                       <TableCell
-                        key={`${branchIndex}-${qIndex}`}
-                        sx={{ textAlign: "center" }}
+                        key={index}
+                        onClick={() => handleSort(question.questionText)}
                       >
-                        {branch?.[question.questionText] || 0}
+                        {question?.questionText}
+                        {sortIndicator(question.questionText)}
                       </TableCell>
                     ))}
+                    <TableCell>Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {/* Total Row */}
+                  <TableRow
+                    sx={{
+                      bgcolor: "primary.main",
+                      "& th, & td": { color: "white", fontWeight: "bold" },
+                    }}
+                  >
+                    <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                      Total
+                    </TableCell>
+                    <TableCell sx={{ color: "white" }}></TableCell>
+                    {data.totalData.length
+                      ? data.totalData?.map((value, index) => (
+                          <TableCell
+                            sx={{ color: "white", fontWeight: "bold" }}
+                            key={index}
+                          >
+                            {value[index]}
+                          </TableCell>
+                        ))
+                      : data.questions?.map((value, index) => (
+                          <TableCell
+                            sx={{ color: "white", fontWeight: "bold" }}
+                            key={index}
+                          >
+                            0
+                          </TableCell>
+                        ))}
                     <TableCell>
-                      <Stack direction="row" spacing={1} justifyContent="center">
-                        <IconButton
-                          component={Link}
-                          to={`/dashboard/sums-thana-by-branch/${qId}/${branch?.branchCode}`}
-                          color="primary"
-                          size="small"
-                        >
-                          <AddIcon />
-                        </IconButton>
-                        <IconButton
-                          component={Link}
-                          to={`/dashboard/sums-day-by-day-branch-data/${qId}/${branch?.zonalCode}/${branch?.branchCode}`}
-                          color="primary"
-                          size="small"
-                        >
-                          <VisibilityIcon />
-                        </IconButton>
-                      </Stack>
+                      <LockIcon sx={{ color: "error.main" }} />
                     </TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        ) : (
-          <Loader />
-        )}
+
+                  {/* Data Rows */}
+                  {sortedData.map((branch, branchIndex) => (
+                    <TableRow
+                      key={branchIndex}
+                      hover
+                      sx={{ "&:hover": { bgcolor: "action.hover" } }}
+                    >
+                      <TableCell sx={{ textAlign: "center" }}>
+                        {branch.branchCode}
+                      </TableCell>
+                      <TableCell sx={{ textAlign: "center" }}>
+                        {branch.userName}
+                      </TableCell>
+                      {data.questions?.map((question, qIndex) => (
+                        <TableCell
+                          key={`${branchIndex}-${qIndex}`}
+                          sx={{ textAlign: "center" }}
+                        >
+                          {branch?.[question.questionText] || 0}
+                        </TableCell>
+                      ))}
+                      <TableCell>
+                        <Stack direction="row" spacing={1} justifyContent="center">
+                          <IconButton
+                            component={Link}
+                            to={`/dashboard/sums-thana-by-branch/${qId}/${branch?.branchCode}`}
+                            color="primary"
+                            size="small"
+                          >
+                            <AddIcon />
+                          </IconButton>
+                          <IconButton
+                            component={Link}
+                            to={`/dashboard/sums-day-by-day-branch-data/${qId}/${branch?.zonalCode}/${branch?.branchCode}`}
+                            color="primary"
+                            size="small"
+                          >
+                            <VisibilityIcon />
+                          </IconButton>
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          ) : (
+            <Loader />
+          )}
+        </Box>
       </Paper>
-    </>
+    </Box>
   );
 };
 

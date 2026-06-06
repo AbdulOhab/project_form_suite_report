@@ -11,7 +11,7 @@ import {
   DialogContent,
   IconButton,
 } from "@mui/material";
-import { Close, ArrowBack } from "@mui/icons-material";
+import { Close, ArrowBack, InfoOutlined } from "@mui/icons-material";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import ZonalDataPerDayInterface from "../../time/ZonalDataPerDayInterface";
 import BASE_URL from "../../../auth/dbUrl";
@@ -75,132 +75,83 @@ function AdminDataPerDayCount() {
   };
 
   return (
-    <>
-      <Box>
-        <Paper elevation={0} sx={{ my: 0.5 }}>
-          {/* Description Dialog */}
-          <Dialog
-            open={descriptionAlert}
-            onClose={descriptionCloserHandler}
-            maxWidth="sm"
-            fullWidth
-          >
-            <DialogTitle sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <IconButton onClick={descriptionCloserHandler} size="small">
-                <Close />
-              </IconButton>
-            </DialogTitle>
-            <DialogContent>
-              <Typography>{notice?.doc_desc}</Typography>
-            </DialogContent>
-          </Dialog>
+    <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
+      {/* Description Dialog */}
+      <Dialog
+        open={descriptionAlert}
+        onClose={descriptionCloserHandler}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <IconButton onClick={descriptionCloserHandler} size="small">
+            <Close />
+          </IconButton>
+        </DialogTitle>
+        <DialogContent>
+          <Typography>{notice?.doc_desc}</Typography>
+        </DialogContent>
+      </Dialog>
 
-          {/* Header Section */}
-          <Paper elevation={0} sx={{ p: 2 }}>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                gap: 2,
-              }}
-            >
-              {/* Left - Deadline */}
-              <Box sx={{ flex: { lg: 3, md: 3, sm: 12 }, width: "100%" }}>
-                <Paper variant="outlined" sx={{ p: 2 }}>
-                  {validCardData(notice?.endDadeline) < 0 ? (
-                    <Typography
-                      align="center"
-                      fontWeight="bold"
-                      color="error"
-                      fontSize="1rem"
-                    >
-                      নোটিশ প্রদানের সময় শেষ হয়েছে{" "}
-                      {convertToBengaliNumber(
-                        Math.abs(validCardData(notice?.endDadeline))
-                      )}{" "}
-                      দিন পূর্বে
-                    </Typography>
-                  ) : (
-                    <DateDifferenceComponent
-                      startDadeline={notice?.startDadeline}
-                      range={notice?.range}
-                      timeStart={notice?.timeStart}
-                      timeEnd={notice?.timeEnd}
-                      endDadeline={notice?.endDadeline}
-                    />
-                  )}
-                </Paper>
-              </Box>
+      {/* Compact top bar */}
+      <Box sx={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        mb: 1, flexWrap: "wrap", gap: 1
+      }}>
+        <Button
+          component={Link}
+          to={`/dashboard/admin-branch-interface/${dayId}/${zonalId}/${noticeId}`}
+          size="small"
+          startIcon={<ArrowBack />}
+          variant="text"
+          sx={{ fontWeight: 600 }}
+        >
+          ফিরে যান
+        </Button>
+        <Box sx={{ textAlign: "center", flex: 1 }}>
+          <Typography variant="h6" fontWeight="bold">{notice?.document_name}</Typography>
+          {notice?.sub_title && (
+            <Typography variant="caption" color="text.secondary">{notice.sub_title}</Typography>
+          )}
+        </Box>
+        <Button
+          size="small"
+          startIcon={<InfoOutlined />}
+          variant="outlined"
+          onClick={() => setDescriptionAlert(true)}
+          sx={{ fontWeight: 600 }}
+        >
+          বিবরণ
+        </Button>
+      </Box>
 
-              {/* Middle - Title */}
-              <Box sx={{ flex: { lg: 6, md: 6, sm: 12 }, width: "100%" }}>
-                <Typography
-                  align="center"
-                  variant="h4"
-                  fontWeight={600}
-                  color="success.main"
-                >
-                  {notice?.document_name}
-                </Typography>
-                {notice?.sub_title && (
-                  <Typography align="center" variant="body1">
-                    {notice?.sub_title}
-                  </Typography>
-                )}
-                <Box sx={{ textAlign: "center", mt: 1 }}>
-                  <Chip
-                    label="এক নজরে থানা রিপোর্ট"
-                    sx={{
-                      fontWeight: "bold",
-                      fontSize: "1.25rem",
-                      px: 2,
-                      py: 2.5,
-                      bgcolor: "success.main",
-                      color: "white",
-                    }}
-                  />
-                </Box>
-              </Box>
+      {/* Compact timer */}
+      <Box sx={{ mb: 2 }}>
+        {validCardData(notice?.endDadeline) < 0 ? (
+          <Chip
+            color="error"
+            variant="outlined"
+            size="small"
+            label={`নোটিশ প্রদানের সময় শেষ হয়েছে ${convertToBengaliNumber(Math.abs(validCardData(notice?.endDadeline)))} দিন পূর্বে`}
+            sx={{ fontWeight: "bold" }}
+          />
+        ) : (
+          <DateDifferenceComponent
+            startDadeline={notice?.startDadeline}
+            range={notice?.range}
+            timeStart={notice?.timeStart}
+            timeEnd={notice?.timeEnd}
+            endDadeline={notice?.endDadeline}
+          />
+        )}
+      </Box>
 
-              {/* Right - Actions */}
-              <Box
-                sx={{
-                  flex: { lg: 3, md: 3, sm: 12 },
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "flex-end",
-                  justifyContent: "flex-end",
-                  flexDirection: "column",
-                  gap: 1,
-                }}
-              >
-                {!descriptionAlert && (
-                  <Button
-                    variant="outlined"
-                    color="success"
-                    onClick={descriptionHandler}
-                    sx={{ fontWeight: 600, width: "50%" }}
-                  >
-                    Notice
-                  </Button>
-                )}
-                <Button
-                  component={Link}
-                  to={`/dashboard/admin-branch-interface/${dayId}/${zonalId}/${noticeId}`}
-                  variant="text"
-                  startIcon={<ArrowBack />}
-                  sx={{ fontSize: "1.1rem", p: 1 }}
-                >
-                  Back
-                </Button>
-              </Box>
-            </Box>
-          </Paper>
-        </Paper>
-
-        {/* Table Section */}
-        <Paper elevation={3} sx={{ my: 1.5, p: 2, borderRadius: 1 }}>
+      {/* Table Section */}
+      <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+        <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
+          <Typography variant="subtitle2" fontWeight={600} color="text.secondary">থানা দৈনিক বিবরণ</Typography>
+        </Box>
+        <Box sx={{ p: 1 }}>
           <ZonalDataPerDayInterface
             startDadeline={notice?.startDadeline}
             range={notice?.range}
@@ -209,9 +160,9 @@ function AdminDataPerDayCount() {
             totalData={totalData}
             branchName={branchName}
           />
-        </Paper>
-      </Box>
-    </>
+        </Box>
+      </Paper>
+    </Box>
   );
 }
 

@@ -12,7 +12,7 @@ import {
   DialogContent,
   IconButton,
 } from "@mui/material";
-import { Close, ArrowBack } from "@mui/icons-material";
+import { Close, ArrowBack, InfoOutlined } from "@mui/icons-material";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import AdminZonalDayCount from "./AdminZonalDayCount";
 import BASE_URL from "../../../auth/dbUrl";
@@ -93,7 +93,7 @@ function AdminUserInterface() {
   };
 
   return (
-    <Paper elevation={0} sx={{ my: 0.5 }}>
+    <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
       {/* Description Dialog */}
       <Dialog
         open={descriptionAlert}
@@ -111,130 +111,74 @@ function AdminUserInterface() {
         </DialogContent>
       </Dialog>
 
-      {/* Header Section */}
-      <Paper elevation={0} sx={{ p: 2 }}>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 2,
-          }}
+      {/* Compact top bar */}
+      <Box sx={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        mb: 1, flexWrap: "wrap", gap: 1
+      }}>
+        <Button
+          component={Link}
+          to={`/dashboard/admin-data-interface/${noticeId}`}
+          size="small"
+          startIcon={<ArrowBack />}
+          variant="text"
+          sx={{ fontWeight: 600 }}
         >
-          {/* Left - Deadline */}
-          <Box sx={{ flex: { lg: 3, md: 3, sm: 12 }, width: "100%" }}>
-            <Paper variant="outlined" sx={{ p: 2 }}>
-              {validCardData(notice?.endDadeline) < 0 ? (
-                <Typography
-                  align="center"
-                  fontWeight="bold"
-                  color="error"
-                  fontSize="1rem"
-                >
-                  নোটিশ প্রদানের সময় শেষ হয়েছে{" "}
-                  {convertToBengaliNumber(
-                    Math.abs(validCardData(notice?.endDadeline))
-                  )}{" "}
-                  দিন পূর্বে
-                </Typography>
-              ) : (
-                <DateDifferenceComponent
-                  startDadeline={notice?.startDadeline}
-                  range={notice?.range}
-                  timeStart={notice?.timeStart}
-                  timeEnd={notice?.timeEnd}
-                  endDadeline={notice?.endDadeline}
-                />
-              )}
-            </Paper>
-          </Box>
-
-          {/* Middle - Title */}
-          <Box sx={{ flex: { lg: 6, md: 6, sm: 12 }, width: "100%" }}>
-            <Typography
-              align="center"
-              variant="h4"
-              fontWeight={600}
-              color="success.main"
-            >
-              {notice?.document_name}
-            </Typography>
-            {notice?.sub_title && (
-              <Typography align="center" variant="body1">
-                {notice?.sub_title}
-              </Typography>
-            )}
-            <Box sx={{ textAlign: "center", mt: 1 }}>
-              <Chip
-                label="এক নজরে অঞ্চল ও শাখা সমূহের রিপোর্ট"
-                sx={{
-                  fontWeight: "bold",
-                  fontSize: "1.25rem",
-                  px: 2,
-                  py: 2.5,
-                  bgcolor: "success.main",
-                  color: "white",
-                }}
-              />
-            </Box>
-          </Box>
-
-          {/* Right - Actions */}
-          <Box
-            sx={{
-              flex: { lg: 3, md: 3, sm: 12 },
-              width: "100%",
-              display: "flex",
-              alignItems: "flex-end",
-              justifyContent: "flex-end",
-              flexDirection: "column",
-              gap: 1,
-            }}
-          >
-            {!descriptionAlert && (
-              <Button
-                variant="outlined"
-                color="success"
-                onClick={descriptionHandler}
-                sx={{ fontWeight: 600, width: "50%" }}
-              >
-                Notice
-              </Button>
-            )}
-            <Button
-              component={Link}
-              to={`/dashboard/admin-data-interface/${noticeId}`}
-              variant="text"
-              startIcon={<ArrowBack />}
-              sx={{ fontSize: "1.1rem", p: 1 }}
-            >
-              Back
-            </Button>
-          </Box>
+          ফিরে যান
+        </Button>
+        <Box sx={{ textAlign: "center", flex: 1 }}>
+          <Typography variant="h6" fontWeight="bold">{notice?.document_name}</Typography>
+          {notice?.sub_title && (
+            <Typography variant="caption" color="text.secondary">{notice.sub_title}</Typography>
+          )}
         </Box>
-      </Paper>
+        <Button
+          size="small"
+          startIcon={<InfoOutlined />}
+          variant="outlined"
+          onClick={() => setDescriptionAlert(true)}
+          sx={{ fontWeight: 600 }}
+        >
+          বিবরণ
+        </Button>
+      </Box>
+
+      {/* Compact timer */}
+      <Box sx={{ mb: 2 }}>
+        {validCardData(notice?.endDadeline) < 0 ? (
+          <Chip
+            color="error"
+            variant="outlined"
+            size="small"
+            label={`নোটিশ প্রদানের সময় শেষ হয়েছে ${convertToBengaliNumber(Math.abs(validCardData(notice?.endDadeline)))} দিন পূর্বে`}
+            sx={{ fontWeight: "bold" }}
+          />
+        ) : (
+          <DateDifferenceComponent
+            startDadeline={notice?.startDadeline}
+            range={notice?.range}
+            timeStart={notice?.timeStart}
+            timeEnd={notice?.timeEnd}
+            endDadeline={notice?.endDadeline}
+          />
+        )}
+      </Box>
 
       {/* Toggle Buttons */}
-      <Box sx={{ display: "flex", gap: 3, p: 2 }}>
+      <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
         <Button
-          variant="contained"
-          color="success"
+          size="small"
+          variant={zonalShow ? "contained" : "outlined"}
           onClick={handleZonal}
-          sx={{
-            fontWeight: zonalShow ? "bold" : "normal",
-            textDecoration: zonalShow ? "underline" : "none",
-          }}
+          sx={{ fontWeight: 600 }}
         >
           জোন ডাটা
         </Button>
         <Button
-          variant="contained"
-          color="success"
+          size="small"
+          variant={branchShow ? "contained" : "outlined"}
           onClick={handleBranch}
-          sx={{
-            fontWeight: branchShow ? "bold" : "normal",
-            textDecoration: branchShow ? "underline" : "none",
-          }}
+          sx={{ fontWeight: 600 }}
         >
           ব্রাঞ্চ ডাটা
         </Button>
@@ -242,20 +186,11 @@ function AdminUserInterface() {
 
       {/* Zonal Table */}
       {zonalShow && (
-        <Paper elevation={3} sx={{ p: 2, borderRadius: 1 }}>
-          <Box sx={{ textAlign: "center", mb: 2 }}>
-            <Chip
-              label="এক নজরে অঞ্চল সমূহের রিপোর্ট"
-              sx={{
-                bgcolor: "primary.main",
-                color: "white",
-                px: 3,
-                py: 2.5,
-                fontSize: "1rem",
-              }}
-            />
+        <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+          <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
+            <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট বিশ্লেষণ</Typography>
           </Box>
-          <Box>
+          <Box sx={{ p: 1 }}>
             <AdminZonalDayCount
               startDadeline={notice?.startDadeline}
               range={notice?.range}
@@ -272,25 +207,16 @@ function AdminUserInterface() {
 
       {/* Branch Table */}
       {branchShow && (
-        <Paper elevation={3} sx={{ p: 2 }}>
-          <Box sx={{ textAlign: "center", mb: 2 }}>
-            <Chip
-              label="এক নজরে শাখা সমূহের রিপোর্ট"
-              sx={{
-                bgcolor: "primary.main",
-                color: "white",
-                px: 3,
-                py: 2.5,
-                fontSize: "1rem",
-              }}
-            />
+        <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+          <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
+            <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট বিশ্লেষণ</Typography>
           </Box>
-          <Box>
+          <Box sx={{ p: 1 }}>
             <AdminAllBranchDayCount />
           </Box>
         </Paper>
       )}
-    </Paper>
+    </Box>
   );
 }
 

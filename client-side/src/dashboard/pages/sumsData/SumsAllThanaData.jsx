@@ -4,6 +4,7 @@ import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
   Button,
+  Chip,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -27,6 +28,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import LockIcon from "@mui/icons-material/Lock";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { ArrowBack, InfoOutlined } from "@mui/icons-material";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import convertToBengaliNumber from "../../time/NumberConverter";
 import * as XLSX from "xlsx";
@@ -264,7 +266,7 @@ const SumsAllThanaData = () => {
   };
 
   return (
-    <>
+    <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
       {/* Description Dialog */}
       <Dialog
         open={descriptionAlert}
@@ -282,146 +284,91 @@ const SumsAllThanaData = () => {
         </DialogContent>
       </Dialog>
 
-      <Paper elevation={2} sx={{ p: 2 }}>
-        {/* Header Section */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 2,
-            mb: 2,
-          }}
+      {/* Compact top bar */}
+      <Box sx={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        mb: 1, flexWrap: "wrap", gap: 1
+      }}>
+        <Button
+          component={Link}
+          to={`/dashboard/admin-data-interface/${qId}`}
+          size="small"
+          startIcon={<ArrowBack />}
+          variant="text"
+          sx={{ fontWeight: 600 }}
         >
-          {/* Left - Date Info */}
-          <Paper variant="outlined" sx={{ p: 1.5, flex: "1 1 auto", minWidth: 200 }}>
-            {validCardData(notice?.endDadeline) < 0 ? (
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontSize: "1.25rem",
-                  fontWeight: "bold",
-                  color: "error.main",
-                }}
-              >
-                নোটিশ শেষ হয়েছে{" "}
-                {convertToBengaliNumber(
-                  Math.abs(validCardData(notice?.endDadeline))
-                )}{" "}
-                দিন আগে
-              </Typography>
-            ) : (
-              <DateDifferenceComponent
-                startDadeline={notice?.startDadeline}
-                range={notice?.range}
-                timeStart={notice?.timeStart}
-                timeEnd={notice?.timeEnd}
-                endDadeline={notice?.endDadeline}
-              />
-            )}
-          </Paper>
-
-          {/* Middle - Title */}
-          <Box sx={{ textAlign: "center", flex: "2 1 auto" }}>
-            <Typography
-              variant="h5"
-              sx={{
-                textAlign: "center",
-                fontWeight: 600,
-                color: "primary.main",
-              }}
-            >
-              {notice?.document_name}
-            </Typography>
-            {notice?.sub_title && (
-              <Typography variant="body2" sx={{ textAlign: "center" }}>
-                {notice?.sub_title}
-              </Typography>
-            )}
-            <Typography sx={{ textAlign: "center", mt: 1 }}>
-              <Typography
-                component="span"
-                sx={{
-                  fontSize: "1.5rem",
-                  fontWeight: "bold",
-                  bgcolor: "primary.main",
-                  color: "white",
-                  borderRadius: 1,
-                  px: 1.5,
-                }}
-              >
-                এক নজরে সকল থানার পূর্ণাঙ্গ রিপোর্ট
-              </Typography>
-            </Typography>
-          </Box>
-
-          {/* Right - Actions */}
-          <Stack
-            direction="column"
-            alignItems="flex-end"
-            justifyContent="flex-end"
-            spacing={1}
-            sx={{ flex: "1 1 auto", minWidth: 120 }}
-          >
-            {!descriptionAlert && (
-              <Button variant="outlined" onClick={descriptionHandler}>
-                Notice
-              </Button>
-            )}
-            <Button
-              component={Link}
-              variant="contained"
-              to={`/dashboard/admin-data-interface/${qId}`}
-            >
-              Back
-            </Button>
-          </Stack>
+          ফিরে যান
+        </Button>
+        <Box sx={{ textAlign: "center", flex: 1 }}>
+          <Typography variant="h6" fontWeight="bold">{notice?.document_name}</Typography>
+          {notice?.sub_title && (
+            <Typography variant="caption" color="text.secondary">{notice.sub_title}</Typography>
+          )}
         </Box>
-
-        {/* Controls: Per-page, Export, Search */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 2,
-            my: 2,
-          }}
+        <Button
+          size="small"
+          startIcon={<InfoOutlined />}
+          variant="outlined"
+          onClick={() => setDescriptionAlert(true)}
+          sx={{ fontWeight: 600 }}
         >
-          <FormControl size="small" sx={{ minWidth: 100 }}>
-            <InputLabel>Rows</InputLabel>
-            <Select value={usersPerPage} onChange={selectHandler} label="Rows">
-              <MenuItem value={25}>25</MenuItem>
-              <MenuItem
-                value={Math.ceil(sortedData?.length / 16 || 0)}
-              >
-                {Math.ceil(sortedData?.length / 16 || 0)}
-              </MenuItem>
-              <MenuItem
-                value={Math.ceil(sortedData?.length / 8 || 0)}
-              >
-                {Math.ceil(sortedData?.length / 8 || 0)}
-              </MenuItem>
-              <MenuItem
-                value={Math.ceil(sortedData?.length / 4 || 0)}
-              >
-                {Math.ceil(sortedData?.length / 4 || 0)}
-              </MenuItem>
-              <MenuItem
-                value={Math.ceil(sortedData?.length / 2 || 0)}
-              >
-                {Math.ceil(sortedData?.length / 2 || 0)}
-              </MenuItem>
-              <MenuItem value={Math.ceil(sortedData?.length || 0)}>
-                {Math.ceil(sortedData?.length || 0)}
-              </MenuItem>
-            </Select>
-          </FormControl>
+          বিবরণ
+        </Button>
+      </Box>
 
-          <Stack direction="row" spacing={2}>
+      {/* Compact timer */}
+      <Box sx={{ mb: 2 }}>
+        {validCardData(notice?.endDadeline) < 0 ? (
+          <Chip
+            color="error"
+            variant="outlined"
+            size="small"
+            label={`নোটিশ প্রদানের সময় শেষ হয়েছে ${convertToBengaliNumber(Math.abs(validCardData(notice?.endDadeline)))} দিন পূর্বে`}
+            sx={{ fontWeight: "bold" }}
+          />
+        ) : (
+          <DateDifferenceComponent
+            startDadeline={notice?.startDadeline}
+            range={notice?.range}
+            timeStart={notice?.timeStart}
+            timeEnd={notice?.timeEnd}
+            endDadeline={notice?.endDadeline}
+          />
+        )}
+      </Box>
+
+      {/* Table card */}
+      <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+        <Box sx={{
+          px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider",
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          flexWrap: "wrap", gap: 1
+        }}>
+          <Typography variant="subtitle2" fontWeight={600} color="text.secondary">থানা সারসংক্ষেপ</Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+            <FormControl size="small" sx={{ minWidth: 100 }}>
+              <InputLabel>Rows</InputLabel>
+              <Select value={usersPerPage} onChange={selectHandler} label="Rows">
+                <MenuItem value={25}>25</MenuItem>
+                <MenuItem value={Math.ceil(sortedData?.length / 16 || 0)}>
+                  {Math.ceil(sortedData?.length / 16 || 0)}
+                </MenuItem>
+                <MenuItem value={Math.ceil(sortedData?.length / 8 || 0)}>
+                  {Math.ceil(sortedData?.length / 8 || 0)}
+                </MenuItem>
+                <MenuItem value={Math.ceil(sortedData?.length / 4 || 0)}>
+                  {Math.ceil(sortedData?.length / 4 || 0)}
+                </MenuItem>
+                <MenuItem value={Math.ceil(sortedData?.length / 2 || 0)}>
+                  {Math.ceil(sortedData?.length / 2 || 0)}
+                </MenuItem>
+                <MenuItem value={Math.ceil(sortedData?.length || 0)}>
+                  {Math.ceil(sortedData?.length || 0)}
+                </MenuItem>
+              </Select>
+            </FormControl>
             <Button
+              size="small"
               variant="contained"
               startIcon={<FileDownloadIcon />}
               onClick={exportToExcel}
@@ -429,183 +376,185 @@ const SumsAllThanaData = () => {
               Export This Page
             </Button>
             <Button
+              size="small"
               variant="outlined"
               startIcon={<FileDownloadIcon />}
               onClick={exportToExcelByTotal}
             >
               Export Total Thana Data
             </Button>
-          </Stack>
-
-          <TextField
-            size="small"
-            label="Search..."
-            variant="outlined"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+            <TextField
+              size="small"
+              label="Search..."
+              variant="outlined"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              sx={{ minWidth: 160 }}
+            />
+          </Box>
         </Box>
-
-        {/* Table */}
-        {paginatedData.length ? (
-          <>
-            <TableContainer component={Paper} variant="outlined">
-              <Table size="small">
-                <TableHead>
-                  <TableRow
-                    sx={{
-                      bgcolor: "primary.main",
-                      "& th": {
-                        color: "white",
-                        fontWeight: "bold",
-                        cursor: "pointer",
-                      },
-                    }}
-                  >
-                    <TableCell onClick={() => handleSort("thanaCode")}>
-                      Thana Code{sortIndicator("thanaCode")}
-                    </TableCell>
-                    <TableCell onClick={() => handleSort("userName")}>
-                      Thana Name{sortIndicator("userName")}
-                    </TableCell>
-                    {questions?.map((question, index) => (
-                      <TableCell
-                        key={index}
-                        onClick={() => handleSort(question.questionText)}
-                      >
-                        {question?.questionText}
-                        {sortIndicator(question.questionText)}
-                      </TableCell>
-                    ))}
-                    <TableCell>Action</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {/* Total Row */}
-                  <TableRow
-                    sx={{
-                      bgcolor: "primary.main",
-                      "& th, & td": { color: "white", fontWeight: "bold" },
-                    }}
-                  >
-                    <TableCell
-                      colSpan={2}
-                      sx={{ color: "white", fontWeight: "bold" }}
-                    >
-                      Total
-                    </TableCell>
-                    {totalData?.length > 0 ? (
-                      totalData?.map((element, index) => (
-                        <TableCell
-                          sx={{ color: "white", fontWeight: "bold" }}
-                          key={index}
-                        >
-                          {element ? element[index] : 0}
-                        </TableCell>
-                      ))
-                    ) : (
-                      <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                        0
-                      </TableCell>
-                    )}
-                    <TableCell>
-                      <LockIcon sx={{ color: "error.main" }} />
-                    </TableCell>
-                  </TableRow>
-
-                  {/* Data Rows */}
-                  {paginatedData.map((thana, thanaIndex) => (
+        <Box sx={{ p: 1 }}>
+          {/* Table */}
+          {paginatedData.length ? (
+            <>
+              <TableContainer component={Paper} variant="outlined">
+                <Table size="small">
+                  <TableHead>
                     <TableRow
-                      key={thanaIndex}
-                      hover
-                      sx={{ "&:hover": { bgcolor: "action.hover" } }}
+                      sx={{
+                        bgcolor: "primary.main",
+                        "& th": {
+                          color: "white",
+                          fontWeight: "bold",
+                          cursor: "pointer",
+                        },
+                      }}
                     >
-                      <TableCell sx={{ textAlign: "center" }}>
-                        {thana.thanaCode}
+                      <TableCell onClick={() => handleSort("thanaCode")}>
+                        Thana Code{sortIndicator("thanaCode")}
                       </TableCell>
-                      <TableCell sx={{ textAlign: "center" }}>
-                        {thana.userName}
+                      <TableCell onClick={() => handleSort("userName")}>
+                        Thana Name{sortIndicator("userName")}
                       </TableCell>
-                      {questions?.map((question, qIndex) => (
+                      {questions?.map((question, index) => (
                         <TableCell
-                          key={`${thanaIndex}-${qIndex}`}
-                          sx={{ textAlign: "center" }}
+                          key={index}
+                          onClick={() => handleSort(question.questionText)}
                         >
-                          {thana?.[question.questionText] || 0}
+                          {question?.questionText}
+                          {sortIndicator(question.questionText)}
                         </TableCell>
                       ))}
-                      <TableCell sx={{ textAlign: "center" }}>
-                        <IconButton
-                          component={Link}
-                          to={`/dashboard/sums-Totol-day-thana-data/${qId}/${thana?.zonalCode}/${thana?.branchCode}/${thana.thanaCode}`}
-                          color="primary"
-                          size="small"
-                        >
-                          <VisibilityIcon />
-                        </IconButton>
+                      <TableCell>Action</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {/* Total Row */}
+                    <TableRow
+                      sx={{
+                        bgcolor: "primary.main",
+                        "& th, & td": { color: "white", fontWeight: "bold" },
+                      }}
+                    >
+                      <TableCell
+                        colSpan={2}
+                        sx={{ color: "white", fontWeight: "bold" }}
+                      >
+                        Total
+                      </TableCell>
+                      {totalData?.length > 0 ? (
+                        totalData?.map((element, index) => (
+                          <TableCell
+                            sx={{ color: "white", fontWeight: "bold" }}
+                            key={index}
+                          >
+                            {element ? element[index] : 0}
+                          </TableCell>
+                        ))
+                      ) : (
+                        <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                          0
+                        </TableCell>
+                      )}
+                      <TableCell>
+                        <LockIcon sx={{ color: "error.main" }} />
                       </TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
 
-            {/* Pagination Info & Controls */}
-            <Box sx={{ mt: 2 }}>
-              <Paper variant="outlined" sx={{ p: 1, mb: 1 }}>
-                <Typography variant="body2" sx={{ color: "primary.main" }}>
-                  Total: {sortedData?.length}
-                  <Typography component="span" sx={{ mx: 1 }}>|</Typography>
-                  {paginatedData.length} of {sortedData?.length}
-                  <Typography component="span" sx={{ mx: 1 }}>|</Typography>
-                  Page {currentPage} of{" "}
-                  {Math.ceil(sortedData?.length / usersPerPage || 0)}
-                </Typography>
-              </Paper>
+                    {/* Data Rows */}
+                    {paginatedData.map((thana, thanaIndex) => (
+                      <TableRow
+                        key={thanaIndex}
+                        hover
+                        sx={{ "&:hover": { bgcolor: "action.hover" } }}
+                      >
+                        <TableCell sx={{ textAlign: "center" }}>
+                          {thana.thanaCode}
+                        </TableCell>
+                        <TableCell sx={{ textAlign: "center" }}>
+                          {thana.userName}
+                        </TableCell>
+                        {questions?.map((question, qIndex) => (
+                          <TableCell
+                            key={`${thanaIndex}-${qIndex}`}
+                            sx={{ textAlign: "center" }}
+                          >
+                            {thana?.[question.questionText] || 0}
+                          </TableCell>
+                        ))}
+                        <TableCell sx={{ textAlign: "center" }}>
+                          <IconButton
+                            component={Link}
+                            to={`/dashboard/sums-Totol-day-thana-data/${qId}/${thana?.zonalCode}/${thana?.branchCode}/${thana.thanaCode}`}
+                            color="primary"
+                            size="small"
+                          >
+                            <VisibilityIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
 
-              <Stack direction="row" spacing={1} justifyContent="flex-end">
-                <Button
-                  size="small"
-                  variant="outlined"
-                  disabled={currentPage === 1}
-                  onClick={() => setCurrentPage(currentPage - 1)}
-                >
-                  Previous
-                </Button>
+              {/* Pagination Info & Controls */}
+              <Box sx={{ mt: 2 }}>
+                <Paper variant="outlined" sx={{ p: 1, mb: 1 }}>
+                  <Typography variant="body2" sx={{ color: "primary.main" }}>
+                    Total: {sortedData?.length}
+                    <Typography component="span" sx={{ mx: 1 }}>|</Typography>
+                    {paginatedData.length} of {sortedData?.length}
+                    <Typography component="span" sx={{ mx: 1 }}>|</Typography>
+                    Page {currentPage} of{" "}
+                    {Math.ceil(sortedData?.length / usersPerPage || 0)}
+                  </Typography>
+                </Paper>
 
-                {pages.map((page, index, arr) => (
-                  <React.Fragment key={page}>
-                    {index > 0 && page !== arr[index - 1] + 1 && (
-                      <Button size="small" disabled>
-                        ...
+                <Stack direction="row" spacing={1} justifyContent="flex-end">
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    disabled={currentPage === 1}
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                  >
+                    Previous
+                  </Button>
+
+                  {pages.map((page, index, arr) => (
+                    <React.Fragment key={page}>
+                      {index > 0 && page !== arr[index - 1] + 1 && (
+                        <Button size="small" disabled>
+                          ...
+                        </Button>
+                      )}
+                      <Button
+                        size="small"
+                        variant={currentPage === page ? "contained" : "outlined"}
+                        onClick={() => setCurrentPage(page)}
+                      >
+                        {page}
                       </Button>
-                    )}
-                    <Button
-                      size="small"
-                      variant={currentPage === page ? "contained" : "outlined"}
-                      onClick={() => setCurrentPage(page)}
-                    >
-                      {page}
-                    </Button>
-                  </React.Fragment>
-                ))}
+                    </React.Fragment>
+                  ))}
 
-                <Button
-                  size="small"
-                  variant="outlined"
-                  disabled={currentPage === totalPages}
-                  onClick={() => setCurrentPage(currentPage + 1)}
-                >
-                  Next
-                </Button>
-              </Stack>
-            </Box>
-          </>
-        ) : (
-          <Loader />
-        )}
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    disabled={currentPage === totalPages}
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                  >
+                    Next
+                  </Button>
+                </Stack>
+              </Box>
+            </>
+          ) : (
+            <Loader />
+          )}
+        </Box>
       </Paper>
-    </>
+    </Box>
   );
 };
 

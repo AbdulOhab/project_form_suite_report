@@ -4,6 +4,7 @@ import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
   Button,
+  Chip,
   IconButton,
   Paper,
   Table,
@@ -23,6 +24,7 @@ import AddIcon from "@mui/icons-material/Add";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import LockIcon from "@mui/icons-material/Lock";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { ArrowBack, InfoOutlined } from "@mui/icons-material";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import convertToBengaliNumber from "../../time/NumberConverter";
 import * as XLSX from "xlsx";
@@ -164,7 +166,7 @@ const SumsAllZonalData = () => {
   };
 
   return (
-    <Paper elevation={2} sx={{ p: 2 }}>
+    <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
       {/* Description Dialog */}
       <Dialog
         open={descriptionAlert}
@@ -182,220 +184,185 @@ const SumsAllZonalData = () => {
         </DialogContent>
       </Dialog>
 
-      {/* Header Section */}
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexWrap: "wrap",
-          gap: 2,
-          mb: 2,
-        }}
-      >
-        {/* Left - Date Info */}
-        <Paper variant="outlined" sx={{ p: 1.5, flex: "1 1 auto", minWidth: 200 }}>
-          {validCardData(notice?.endDadeline) < 0 ? (
-            <Typography
-              sx={{
-                textAlign: "center",
-                fontSize: "1.25rem",
-                fontWeight: "bold",
-                color: "error.main",
-              }}
-            >
-              নোটিশ শেষ হয়েছে{" "}
-              {convertToBengaliNumber(
-                Math.abs(validCardData(notice?.endDadeline))
-              )}{" "}
-              দিন আগে
-            </Typography>
-          ) : (
-            <DateDifferenceComponent
-              startDadeline={notice?.startDadeline}
-              range={notice?.range}
-              timeStart={notice?.timeStart}
-              timeEnd={notice?.timeEnd}
-              endDadeline={notice?.endDadeline}
-            />
-          )}
-        </Paper>
-
-        {/* Middle - Title */}
-        <Box sx={{ textAlign: "center", flex: "2 1 auto" }}>
-          <Typography
-            variant="h5"
-            sx={{
-              textAlign: "center",
-              fontWeight: 600,
-              color: "primary.main",
-            }}
-          >
-            {notice?.document_name}
-          </Typography>
-          {notice?.sub_title && (
-            <Typography variant="body2" sx={{ textAlign: "center" }}>
-              {notice?.sub_title}
-            </Typography>
-          )}
-          <Typography sx={{ textAlign: "center", mt: 1 }}>
-            <Typography
-              component="span"
-              sx={{
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-                bgcolor: "primary.main",
-                color: "white",
-                borderRadius: 1,
-                px: 1.5,
-              }}
-            >
-              এক নজরে অঞ্চল সমূহের পূর্ণাঙ্গ রিপোর্ট
-            </Typography>
-          </Typography>
-        </Box>
-
-        {/* Right - Actions */}
-        <Stack
-          direction="column"
-          alignItems="flex-end"
-          justifyContent="flex-end"
-          spacing={1}
-          sx={{ flex: "1 1 auto", minWidth: 120 }}
-        >
-          {!descriptionAlert && (
-            <Button variant="outlined" onClick={descriptionHandler}>
-              Notice
-            </Button>
-          )}
-          <Button
-            component={Link}
-            variant="contained"
-            to={`/dashboard/admin-data-interface/${qId}`}
-          >
-            Back
-          </Button>
-        </Stack>
-      </Box>
-
-      {/* Table Section */}
-      <Box sx={{ textAlign: "end", mb: 1 }}>
+      {/* Compact top bar */}
+      <Box sx={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        mb: 1, flexWrap: "wrap", gap: 1
+      }}>
         <Button
-          variant="contained"
-          startIcon={<FileDownloadIcon />}
-          onClick={exportToExcel}
+          component={Link}
+          to={`/dashboard/admin-data-interface/${qId}`}
+          size="small"
+          startIcon={<ArrowBack />}
+          variant="text"
+          sx={{ fontWeight: 600 }}
         >
-          Export to Excel
+          ফিরে যান
+        </Button>
+        <Box sx={{ textAlign: "center", flex: 1 }}>
+          <Typography variant="h6" fontWeight="bold">{notice?.document_name}</Typography>
+          {notice?.sub_title && (
+            <Typography variant="caption" color="text.secondary">{notice.sub_title}</Typography>
+          )}
+        </Box>
+        <Button
+          size="small"
+          startIcon={<InfoOutlined />}
+          variant="outlined"
+          onClick={() => setDescriptionAlert(true)}
+          sx={{ fontWeight: 600 }}
+        >
+          বিবরণ
         </Button>
       </Box>
 
-      <TableContainer component={Paper} variant="outlined">
-        <Table size="small">
-          <TableHead>
-            <TableRow
-              sx={{
-                bgcolor: "primary.main",
-                "& th": { color: "white", fontWeight: "bold", cursor: "pointer" },
-              }}
-            >
-              <TableCell onClick={() => handleSort("zonalCode")}>
-                Zonal Code{sortIndicator("zonalCode")}
-              </TableCell>
-              <TableCell onClick={() => handleSort("userName")}>
-                Zonal Name{sortIndicator("userName")}
-              </TableCell>
-              {notice?.questions?.map((question, index) => (
-                <TableCell
-                  key={index}
-                  onClick={() => handleSort(question.questionText)}
+      {/* Compact timer */}
+      <Box sx={{ mb: 2 }}>
+        {validCardData(notice?.endDadeline) < 0 ? (
+          <Chip
+            color="error"
+            variant="outlined"
+            size="small"
+            label={`নোটিশ প্রদানের সময় শেষ হয়েছে ${convertToBengaliNumber(Math.abs(validCardData(notice?.endDadeline)))} দিন পূর্বে`}
+            sx={{ fontWeight: "bold" }}
+          />
+        ) : (
+          <DateDifferenceComponent
+            startDadeline={notice?.startDadeline}
+            range={notice?.range}
+            timeStart={notice?.timeStart}
+            timeEnd={notice?.timeEnd}
+            endDadeline={notice?.endDadeline}
+          />
+        )}
+      </Box>
+
+      {/* Table card */}
+      <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+        <Box sx={{
+          px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider",
+          display: "flex", alignItems: "center", justifyContent: "space-between"
+        }}>
+          <Typography variant="subtitle2" fontWeight={600} color="text.secondary">অঞ্চল সারসংক্ষেপ</Typography>
+          <Button
+            size="small"
+            variant="contained"
+            startIcon={<FileDownloadIcon />}
+            onClick={exportToExcel}
+          >
+            Export to Excel
+          </Button>
+        </Box>
+        <Box sx={{ p: 1 }}>
+          <TableContainer component={Paper} variant="outlined">
+            <Table size="small">
+              <TableHead>
+                <TableRow
+                  sx={{
+                    bgcolor: "primary.main",
+                    "& th": { color: "white", fontWeight: "bold", cursor: "pointer" },
+                  }}
                 >
-                  {question?.questionText}
-                  {sortIndicator(question.questionText)}
-                </TableCell>
-              ))}
-              <TableCell>Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {/* Total Row */}
-            <TableRow
-              sx={{
-                bgcolor: "primary.main",
-                "& th, & td": { color: "white", fontWeight: "bold" },
-              }}
-            >
-              <TableCell colSpan={2} sx={{ color: "white", fontWeight: "bold" }}>
-                Total
-              </TableCell>
-              {totalData?.length
-                ? totalData?.map((value, index) => (
+                  <TableCell onClick={() => handleSort("zonalCode")}>
+                    Zonal Code{sortIndicator("zonalCode")}
+                  </TableCell>
+                  <TableCell onClick={() => handleSort("userName")}>
+                    Zonal Name{sortIndicator("userName")}
+                  </TableCell>
+                  {notice?.questions?.map((question, index) => (
                     <TableCell
-                      sx={{ color: "white", fontWeight: "bold" }}
                       key={index}
+                      onClick={() => handleSort(question.questionText)}
                     >
-                      {value[index]}
-                    </TableCell>
-                  ))
-                : notice?.questions?.map((value, index) => (
-                    <TableCell
-                      sx={{ color: "white", fontWeight: "bold" }}
-                      key={index}
-                    >
-                      0
+                      {question?.questionText}
+                      {sortIndicator(question.questionText)}
                     </TableCell>
                   ))}
-              <TableCell>
-                <LockIcon sx={{ color: "error.main" }} />
-              </TableCell>
-            </TableRow>
-
-            {/* Data Rows */}
-            {sortedData?.map((zonal, zonalIndex) => (
-              <TableRow
-                key={zonalIndex}
-                hover
-                sx={{ "&:hover": { bgcolor: "action.hover" } }}
-              >
-                <TableCell sx={{ textAlign: "center" }}>
-                  {zonal.zonalCode}
-                </TableCell>
-                <TableCell sx={{ textAlign: "center" }}>
-                  {zonal.userName}
-                </TableCell>
-                {notice?.questions?.map((question, questionIndex) => (
-                  <TableCell
-                    key={`${zonalIndex}-${questionIndex}`}
-                    sx={{ textAlign: "center" }}
-                  >
-                    {zonal[question.questionText] || 0}
+                  <TableCell>Action</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {/* Total Row */}
+                <TableRow
+                  sx={{
+                    bgcolor: "primary.main",
+                    "& th, & td": { color: "white", fontWeight: "bold" },
+                  }}
+                >
+                  <TableCell colSpan={2} sx={{ color: "white", fontWeight: "bold" }}>
+                    Total
                   </TableCell>
+                  {totalData?.length
+                    ? totalData?.map((value, index) => (
+                        <TableCell
+                          sx={{ color: "white", fontWeight: "bold" }}
+                          key={index}
+                        >
+                          {value[index]}
+                        </TableCell>
+                      ))
+                    : notice?.questions?.map((value, index) => (
+                        <TableCell
+                          sx={{ color: "white", fontWeight: "bold" }}
+                          key={index}
+                        >
+                          0
+                        </TableCell>
+                      ))}
+                  <TableCell>
+                    <LockIcon sx={{ color: "error.main" }} />
+                  </TableCell>
+                </TableRow>
+
+                {/* Data Rows */}
+                {sortedData?.map((zonal, zonalIndex) => (
+                  <TableRow
+                    key={zonalIndex}
+                    hover
+                    sx={{ "&:hover": { bgcolor: "action.hover" } }}
+                  >
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {zonal.zonalCode}
+                    </TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>
+                      {zonal.userName}
+                    </TableCell>
+                    {notice?.questions?.map((question, questionIndex) => (
+                      <TableCell
+                        key={`${zonalIndex}-${questionIndex}`}
+                        sx={{ textAlign: "center" }}
+                      >
+                        {zonal[question.questionText] || 0}
+                      </TableCell>
+                    ))}
+                    <TableCell>
+                      <Stack direction="row" spacing={1} justifyContent="center">
+                        <IconButton
+                          component={Link}
+                          to={`/dashboard/sums-zonal-data-by-branch/${qId}/${zonal.zonalCode}`}
+                          color="primary"
+                          size="small"
+                        >
+                          <AddIcon />
+                        </IconButton>
+                        <IconButton
+                          component={Link}
+                          to={`/dashboard/sums-day-by-day-zonal-data/${qId}/${zonal.zonalCode}`}
+                          color="primary"
+                          size="small"
+                        >
+                          <VisibilityIcon />
+                        </IconButton>
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
                 ))}
-                <TableCell>
-                  <Stack direction="row" spacing={1} justifyContent="center">
-                    <IconButton
-                      component={Link}
-                      to={`/dashboard/sums-zonal-data-by-branch/${qId}/${zonal.zonalCode}`}
-                      color="primary"
-                      size="small"
-                    >
-                      <AddIcon />
-                    </IconButton>
-                    <IconButton
-                      component={Link}
-                      to={`/dashboard/sums-day-by-day-zonal-data/${qId}/${zonal.zonalCode}`}
-                      color="primary"
-                      size="small"
-                    >
-                      <VisibilityIcon />
-                    </IconButton>
-                  </Stack>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </Paper>
+    </Box>
   );
 };
 
