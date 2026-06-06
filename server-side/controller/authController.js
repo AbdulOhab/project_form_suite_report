@@ -83,7 +83,6 @@ module.exports = {
       .select("-_id -password")
       .then((user) => {
         if (user) {
-          next();
           return res.status(200).json(user);
         } else {
           return res.status(401).json("unauthorized access");

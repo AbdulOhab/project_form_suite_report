@@ -54,6 +54,7 @@ import SumsTotalDayThanaData from "./dashboard/pages/sumsData/SumsTotalDayThanaD
 import SumsDayByDayBranchData from "./dashboard/pages/sumsData/SumsDayByDayBranchData";
 import SumsDayByDayZonalData from "./dashboard/pages/sumsData/SumsDayByDayZonalData";
 import SumsZonalDataByBranch from "./dashboard/pages/sumsData/SumsZonalDataByBranch";
+import RoleRoute from "./routes/RoleRoute";
 
 function App() {
   return (
@@ -74,142 +75,62 @@ function App() {
               </AuthRoutes>
             }
           >
+            {/* All authenticated users */}
             <Route index element={<NoticeBoard />} />
             <Route path={"notice/:id"} element={<Notice />} />
-            <Route path={"notice-edit/:id"} element={<NoticeEditor />} />
-            <Route path={"notice-answer/:id"} element={<NoticeTable />} />
-            <Route path={"upload-user-file"} element={<UploadUserFile />} />
-            <Route path={"create-user"} element={<UnifiedCreateUser />} />
-            <Route path={"users-list"} element={<UnifiedUsersList />} />
-            <Route path={"update-admin/:id"} element={<AdminUsersUpdate />} />
-            <Route path={"update-admin-password/:id"} element={<UpdateAdminPassword />} />
-            <Route path={"branch-users"} element={<BranchUsers />} />
-            <Route path={"branch-thana/:branchId"} element={<ThanaUsers />} />
-            <Route path={"zonal-users"} element={<ZonalUsers />} />
-            <Route
-              path={"zonal-branch/:zonalId/branch-thana/:branchId"}
-              element={<ZonalBranchThana />}
-            />
-            <Route
-              path={"zonal-branch/:zonalId"}
-              element={<ZonalBranchUsersTable />}
-            />
-            <Route path={"create-branch"} element={<BranchUserCreate />} />
-            <Route path={"update-branch/:id"} element={<BranchUsersUpdate />} />
-            <Route
-              path={"update-branch-password/:id"}
-              element={<UpdateBranchPassword />}
-            />
-            <Route path={"create-zonal"} element={<RegionalUserCreate />} />
-            <Route
-              path={"update-zonal/:id"}
-              element={<RegionalUsersUpdate />}
-            />
-            <Route
-              path={"update-zonal-password/:id"}
-              element={<UpdateRegionalPassword />}
-            />
-            <Route path={"create-thana"} element={<ThanaUsersCreate />} />
-            <Route path={"update-thana/:id"} element={<ThanaUsersUpdate />} />
-            <Route
-              path={"update-thana-password/:id"}
-              element={<UpdateThanaPassword />}
-            />
-            <Route
-              path={"branch-interface/:dayId/:noticeId"}
-              element={<BranchUserInterface />}
-            />
-            <Route
-              path={"branch-edit-answer/:formId/:answerId"}
-              element={<EditQuestionAnswer />}
-            />
-            <Route
-              path={"branch-empty-answer/:firstId/:secondId"}
-              element={<BranchEmptyNotice />}
-            />
-            <Route
-              path={"branch-data-interface/:id"}
-              element={<BranchDataInterface />}
-            />
-            <Route
-              path={"thana-empty-answer/:id/:date"}
-              element={<ThanaEmptyNotice />}
-            />
-            <Route
-              path={"thana-edit-answer/:id/:answerId"}
-              element={<EditQuestionAnswerByThana />}
-            />
-            <Route
-              path={"thana-submission/:id"}
-              element={<ThanaUserInterface />}
-            />
-            <Route
-              path={"zonal-submission/:id"}
-              element={<ZonalSubmission />}
-            />
-            <Route
-              path={"zonal-data-interface/:id"}
-              element={<ZonalDataInterface />}
-            />
-            <Route
-              path={"zonal-data-perDayCount/:dayId/:branchId/:noticeId"}
-              element={<ZonalDataPerDayCount />}
-            />
-            <Route
-              path={"zonal-interface/:dayId/:noticeId"}
-              element={<ZonalUserInterface />}
-            />
-            <Route
-              path={"admin-data-interface/:id"}
-              element={<AdminDataInterface />}
-            />
-            <Route
-              path={"admin-interface/:dayId/:noticeId"}
-              element={<AdminUserInterface />}
-            />
-            <Route
-              path={"admin-branch-interface/:dayId/:zonalId/:noticeId"}
-              element={<AdminBranchUserInterface />}
-            />
-            <Route
-              path={
-                "admin-data-perDayCount/:dayId/:zonalId/:branchId/:noticeId"
-              }
-              element={<AdminDataPerDayCount />}
-            />
-            <Route path={"admin-submission"} element={<AdminReview />} />
-            <Route
-              path={"sums-all-zonal-data/:qId"}
-              element={<SumsAllZonalData />}
-            />
-            <Route
-              path={"sums-day-by-day-zonal-data/:qId/:zId"}
-              element={<SumsDayByDayZonalData />}
-            />
-            <Route
-              path="sums-zonal-data-by-branch/:qId/:zId"
-              element={<SumsZonalDataByBranch />}
-            />
-            <Route
-              path={"sums-all-branches-data/:qId"}
-              element={<SumsAllBranchData />}
-            />
-            <Route
-              path={"sums-all-thana-data/:qId"}
-              element={<SumsAllThanaData />}
-            />
-            <Route
-              path={"sums-Totol-day-thana-data/:qId/:zId/:bId/:tId"}
-              element={<SumsTotalDayThanaData />}
-            />
-            <Route
-              path={"sums-thana-by-branch/:qId/:bId"}
-              element={<SumsThanaByBranches />}
-            />
-            <Route
-              path={"sums-day-by-day-branch-data/:qId/:zId/:bId"}
-              element={<SumsDayByDayBranchData />}
-            />
+
+            {/* Thana-only pages */}
+            <Route path={"thana-empty-answer/:id/:date"} element={<RoleRoute roles={["thana"]}><ThanaEmptyNotice /></RoleRoute>} />
+            <Route path={"thana-edit-answer/:id/:answerId"} element={<RoleRoute roles={["thana"]}><EditQuestionAnswerByThana /></RoleRoute>} />
+            <Route path={"thana-submission/:id"} element={<RoleRoute roles={["thana"]}><ThanaUserInterface /></RoleRoute>} />
+
+            {/* Branch-only pages */}
+            <Route path={"branch-interface/:dayId/:noticeId"} element={<RoleRoute roles={["branch"]}><BranchUserInterface /></RoleRoute>} />
+            <Route path={"branch-edit-answer/:formId/:answerId"} element={<RoleRoute roles={["branch"]}><EditQuestionAnswer /></RoleRoute>} />
+            <Route path={"branch-empty-answer/:firstId/:secondId"} element={<RoleRoute roles={["branch"]}><BranchEmptyNotice /></RoleRoute>} />
+            <Route path={"branch-data-interface/:id"} element={<RoleRoute roles={["branch"]}><BranchDataInterface /></RoleRoute>} />
+
+            {/* Zonal-only pages */}
+            <Route path={"zonal-submission/:id"} element={<RoleRoute roles={["zonal"]}><ZonalSubmission /></RoleRoute>} />
+            <Route path={"zonal-data-interface/:id"} element={<RoleRoute roles={["zonal"]}><ZonalDataInterface /></RoleRoute>} />
+            <Route path={"zonal-data-perDayCount/:dayId/:branchId/:noticeId"} element={<RoleRoute roles={["zonal"]}><ZonalDataPerDayCount /></RoleRoute>} />
+            <Route path={"zonal-interface/:dayId/:noticeId"} element={<RoleRoute roles={["zonal"]}><ZonalUserInterface /></RoleRoute>} />
+
+            {/* Admin-only pages */}
+            <Route path={"notice-edit/:id"} element={<RoleRoute roles={["admin"]}><NoticeEditor /></RoleRoute>} />
+            <Route path={"notice-answer/:id"} element={<RoleRoute roles={["admin"]}><NoticeTable /></RoleRoute>} />
+            <Route path={"upload-user-file"} element={<RoleRoute roles={["admin"]}><UploadUserFile /></RoleRoute>} />
+            <Route path={"create-user"} element={<RoleRoute roles={["admin"]}><UnifiedCreateUser /></RoleRoute>} />
+            <Route path={"users-list"} element={<RoleRoute roles={["admin"]}><UnifiedUsersList /></RoleRoute>} />
+            <Route path={"update-admin/:id"} element={<RoleRoute roles={["admin"]}><AdminUsersUpdate /></RoleRoute>} />
+            <Route path={"update-admin-password/:id"} element={<RoleRoute roles={["admin"]}><UpdateAdminPassword /></RoleRoute>} />
+            <Route path={"branch-users"} element={<RoleRoute roles={["admin"]}><BranchUsers /></RoleRoute>} />
+            <Route path={"branch-thana/:branchId"} element={<RoleRoute roles={["admin"]}><ThanaUsers /></RoleRoute>} />
+            <Route path={"zonal-users"} element={<RoleRoute roles={["admin"]}><ZonalUsers /></RoleRoute>} />
+            <Route path={"zonal-branch/:zonalId/branch-thana/:branchId"} element={<RoleRoute roles={["admin"]}><ZonalBranchThana /></RoleRoute>} />
+            <Route path={"zonal-branch/:zonalId"} element={<RoleRoute roles={["admin"]}><ZonalBranchUsersTable /></RoleRoute>} />
+            <Route path={"create-branch"} element={<RoleRoute roles={["admin"]}><BranchUserCreate /></RoleRoute>} />
+            <Route path={"update-branch/:id"} element={<RoleRoute roles={["admin"]}><BranchUsersUpdate /></RoleRoute>} />
+            <Route path={"update-branch-password/:id"} element={<RoleRoute roles={["admin"]}><UpdateBranchPassword /></RoleRoute>} />
+            <Route path={"create-zonal"} element={<RoleRoute roles={["admin"]}><RegionalUserCreate /></RoleRoute>} />
+            <Route path={"update-zonal/:id"} element={<RoleRoute roles={["admin"]}><RegionalUsersUpdate /></RoleRoute>} />
+            <Route path={"update-zonal-password/:id"} element={<RoleRoute roles={["admin"]}><UpdateRegionalPassword /></RoleRoute>} />
+            <Route path={"create-thana"} element={<RoleRoute roles={["admin"]}><ThanaUsersCreate /></RoleRoute>} />
+            <Route path={"update-thana/:id"} element={<RoleRoute roles={["admin"]}><ThanaUsersUpdate /></RoleRoute>} />
+            <Route path={"update-thana-password/:id"} element={<RoleRoute roles={["admin"]}><UpdateThanaPassword /></RoleRoute>} />
+            <Route path={"admin-data-interface/:id"} element={<RoleRoute roles={["admin"]}><AdminDataInterface /></RoleRoute>} />
+            <Route path={"admin-interface/:dayId/:noticeId"} element={<RoleRoute roles={["admin"]}><AdminUserInterface /></RoleRoute>} />
+            <Route path={"admin-branch-interface/:dayId/:zonalId/:noticeId"} element={<RoleRoute roles={["admin"]}><AdminBranchUserInterface /></RoleRoute>} />
+            <Route path={"admin-data-perDayCount/:dayId/:zonalId/:branchId/:noticeId"} element={<RoleRoute roles={["admin"]}><AdminDataPerDayCount /></RoleRoute>} />
+            <Route path={"admin-submission"} element={<RoleRoute roles={["admin"]}><AdminReview /></RoleRoute>} />
+            <Route path={"sums-all-zonal-data/:qId"} element={<RoleRoute roles={["admin"]}><SumsAllZonalData /></RoleRoute>} />
+            <Route path={"sums-day-by-day-zonal-data/:qId/:zId"} element={<RoleRoute roles={["admin"]}><SumsDayByDayZonalData /></RoleRoute>} />
+            <Route path="sums-zonal-data-by-branch/:qId/:zId" element={<RoleRoute roles={["admin"]}><SumsZonalDataByBranch /></RoleRoute>} />
+            <Route path={"sums-all-branches-data/:qId"} element={<RoleRoute roles={["admin"]}><SumsAllBranchData /></RoleRoute>} />
+            <Route path={"sums-all-thana-data/:qId"} element={<RoleRoute roles={["admin"]}><SumsAllThanaData /></RoleRoute>} />
+            <Route path={"sums-Totol-day-thana-data/:qId/:zId/:bId/:tId"} element={<RoleRoute roles={["admin"]}><SumsTotalDayThanaData /></RoleRoute>} />
+            <Route path={"sums-thana-by-branch/:qId/:bId"} element={<RoleRoute roles={["admin"]}><SumsThanaByBranches /></RoleRoute>} />
+            <Route path={"sums-day-by-day-branch-data/:qId/:zId/:bId"} element={<RoleRoute roles={["admin"]}><SumsDayByDayBranchData /></RoleRoute>} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
