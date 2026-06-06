@@ -16,15 +16,15 @@ import {
   Button,
   Snackbar,
   Alert,
+  Typography,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import VpnKeyIcon from "@mui/icons-material/VpnKey";
 import DeleteIcon from "@mui/icons-material/Delete";
 import BASE_URL from "../../../auth/dbUrl";
-import Loader from "../../time/Loader";
 
 function ThanaTableBody({ users }) {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteTargetId, setDeleteTargetId] = useState(null);
   const [snackbar, setSnackbar] = useState({
@@ -87,7 +87,15 @@ function ThanaTableBody({ users }) {
 
   return (
     <div>
-      {data.length ? (
+      {data === null ? (
+        <Typography sx={{ textAlign: "center", py: 4, color: "text.secondary" }}>
+          Loading...
+        </Typography>
+      ) : data.length === 0 ? (
+        <Typography sx={{ textAlign: "center", py: 4, color: "text.secondary" }}>
+          No thana users found.
+        </Typography>
+      ) : (
         <Table>
           <TableHead>
             <TableRow>
@@ -158,8 +166,6 @@ function ThanaTableBody({ users }) {
                   </Tooltip>
                   <Tooltip title="Delete User">
                     <IconButton
-                      component={Link}
-                      to={`/dashboard/thana-users`}
                       color="error"
                       size="small"
                       onClick={(e) => handleDeleteClick(e, element._id)}
@@ -172,8 +178,6 @@ function ThanaTableBody({ users }) {
             ))}
           </TableBody>
         </Table>
-      ) : (
-        <Loader />
       )}
 
       <Dialog open={deleteDialogOpen} onClose={handleCancelDelete}>

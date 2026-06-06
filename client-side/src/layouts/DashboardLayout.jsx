@@ -32,7 +32,7 @@ const DashboardLayout = () => {
         }}
       >
         <Toolbar variant="dense" />
-        <Container maxWidth="xl" sx={{ py: 3 }}>
+        <Container maxWidth="xl" sx={{ pt: 3, pb: 6 }}>
           <Outlet />
         </Container>
       </Box>

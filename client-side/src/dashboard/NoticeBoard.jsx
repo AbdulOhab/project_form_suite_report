@@ -327,7 +327,7 @@ const NoticeBoard = () => {
   // ===================== RENDER =====================
   return (
     <>
-      <Paper elevation={0} sx={{ borderRadius: 0 }}>
+      <Paper elevation={0} sx={{ borderRadius: 0, minHeight: "75vh" }}>
         {/* Mobile-only header */}
         <Box
           sx={{
@@ -389,127 +389,274 @@ const NoticeBoard = () => {
         </Box>
 
         {/* ---- Main content ---- */}
-        {noticeData?.length ? (
-          <Box sx={{ px: 2, my: 3 }}>
-            {/* ====== Previous Reports section ====== */}
-            {validTableView && (
-              <Box>
-                {/* Top bar: rows-per-page select, title, view toggle */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    mb: 3,
-                    flexWrap: "wrap",
-                    gap: 1,
-                  }}
-                >
-                  {/* Rows per page select */}
-                  <FormControl size="small" sx={{ minWidth: 100 }}>
-                    <InputLabel id="previous-rows-label">Rows</InputLabel>
-                    <Select
-                      labelId="previous-rows-label"
-                      value={noticePerPage}
-                      label="Rows"
-                      onChange={selectHandler}
-                    >
-                      {rowsPerPageOptions.map((opt) => (
-                        <MenuItem key={opt} value={opt}>
-                          {opt}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-
-                  {/* Section title */}
-                  <Chip
-                    label="পূর্বের রিপোর্ট"
-                    color="info"
-                    sx={{ fontWeight: "bold", fontSize: "1rem" }}
-                  />
-
-                  {/* Table / Card view toggle */}
-                  <ToggleButtonGroup
-                    value={noticeTableView ? "table" : "card"}
-                    exclusive
-                    onChange={handleViewToggle}
-                    size="small"
+        <Box sx={{ px: 2, my: 3 }}>
+          {/* ====== Previous Reports section ====== */}
+          {validTableView && (
+            <>
+              {/* Top bar: rows-per-page select, title, view toggle */}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  mb: 3,
+                  flexWrap: "wrap",
+                  gap: 1,
+                }}
+              >
+                {/* Rows per page select */}
+                <FormControl size="small" sx={{ minWidth: 100 }}>
+                  <InputLabel id="previous-rows-label">Rows</InputLabel>
+                  <Select
+                    labelId="previous-rows-label"
+                    value={noticePerPage}
+                    label="Rows"
+                    onChange={selectHandler}
                   >
-                    <ToggleButton value="table">
-                      <ViewListIcon />
-                    </ToggleButton>
-                    <ToggleButton value="card">
-                      <ViewModuleIcon />
-                    </ToggleButton>
-                  </ToggleButtonGroup>
-                </Box>
+                    {rowsPerPageOptions.map((opt) => (
+                      <MenuItem key={opt} value={opt}>
+                        {opt}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
 
-                {/* ---- Table view for previous reports ---- */}
-                {noticeTableView && (
-                  <Paper variant="outlined">
-                    <Table>
-                      <TableHead>
-                        <TableRow>
-                          <TableCell align="center">ক্রম</TableCell>
-                          <TableCell align="center">নোটিশ</TableCell>
-                          <TableCell align="center">নোটিশের সময়সীমা</TableCell>
-                          <TableCell align="center">কার্যকর নয়</TableCell>
-                          <TableCell align="center">একশন</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {noticeData.map((notice, index) => (
-                          <TableRow key={index}>
-                            <TableCell align="center">
-                              {indexOfFirstNotice + index + 1}
-                            </TableCell>
-                            <TableCell align="center">
-                              {notice?.document_name}
-                            </TableCell>
-                            <TableCell align="center">
-                              <DateDifferenceComponent
-                                startDadeline={notice?.startDadeline}
-                                endDadeline={notice?.endDadeline}
-                                range={notice?.range}
-                                timeStart={notice?.timeStart}
-                                timeEnd={notice?.timeEnd}
-                              />
-                              <DateHandler startDadeline={notice?.startDadeline} />{" "}
-                              থেকে{" "}
-                              <DateHandler startDadeline={notice?.endDadeline} />
-                            </TableCell>
-                            <TableCell align="center">
-                              {convertToBengaliNumber(
-                                Math.abs(validCardData(notice?.endDadeline))
-                              )}{" "}
-                              দিন
-                            </TableCell>
-                            <TableCell align="center">
+                {/* Section title */}
+                <Chip
+                  label="পূর্বের রিপোর্ট"
+                  color="info"
+                  sx={{ fontWeight: "bold", fontSize: "1rem" }}
+                />
+
+                {/* Table / Card view toggle */}
+                <ToggleButtonGroup
+                  value={noticeTableView ? "table" : "card"}
+                  exclusive
+                  onChange={handleViewToggle}
+                  size="small"
+                >
+                  <ToggleButton value="table">
+                    <ViewListIcon />
+                  </ToggleButton>
+                  <ToggleButton value="card">
+                    <ViewModuleIcon />
+                  </ToggleButton>
+                </ToggleButtonGroup>
+              </Box>
+
+              {noticeData?.length ? (
+                <>
+                  {/* ---- Table view for previous reports ---- */}
+                  {noticeTableView && (
+                    <Paper variant="outlined">
+                      <Table>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell align="center">ক্রম</TableCell>
+                            <TableCell align="center">নোটিশ</TableCell>
+                            <TableCell align="center">নোটিশের সময়সীমা</TableCell>
+                            <TableCell align="center">কার্যকর নয়</TableCell>
+                            <TableCell align="center">একশন</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {noticeData.map((notice, index) => (
+                            <TableRow key={index}>
+                              <TableCell align="center">
+                                {indexOfFirstNotice + index + 1}
+                              </TableCell>
+                              <TableCell align="center">
+                                {notice?.document_name}
+                              </TableCell>
+                              <TableCell align="center">
+                                <DateDifferenceComponent
+                                  startDadeline={notice?.startDadeline}
+                                  endDadeline={notice?.endDadeline}
+                                  range={notice?.range}
+                                  timeStart={notice?.timeStart}
+                                  timeEnd={notice?.timeEnd}
+                                />
+                                <DateHandler startDadeline={notice?.startDadeline} />{" "}
+                                থেকে{" "}
+                                <DateHandler startDadeline={notice?.endDadeline} />
+                              </TableCell>
+                              <TableCell align="center">
+                                {convertToBengaliNumber(
+                                  Math.abs(validCardData(notice?.endDadeline))
+                                )}{" "}
+                                দিন
+                              </TableCell>
+                              <TableCell align="center">
+                                <RoleActions
+                                  userInfo={userInfo}
+                                  notice={notice}
+                                  onDelete={deleteItem}
+                                  handleReload={handleReload}
+                                />
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </Paper>
+                  )}
+
+                  {/* ---- Card view for previous reports ---- */}
+                  {noticeCardView && (
+                    <Grid container spacing={3}>
+                      {noticeData.map((notice, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={index}>
+                          <Card variant="outlined" sx={{ p: 1 }}>
+                            <CardContent>
+                              <Typography
+                                variant="h6"
+                                align="center"
+                                gutterBottom
+                              >
+                                {notice?.document_name}
+                              </Typography>
+                              <Typography variant="body2" sx={{ my: 1 }}>
+                                রিপোর্ট শুরু:{" "}
+                                <DateHandler startDadeline={notice?.startDadeline} />
+                                &nbsp;&nbsp;
+                                <TimeStartBangla notice={notice} />
+                              </Typography>
+                              <Typography variant="body2" sx={{ my: 1 }}>
+                                রিপোর্ট শেষ:{" "}
+                                <DateHandler startDadeline={notice?.endDadeline} />
+                                &nbsp;&nbsp;
+                                <TimeEndBangla notice={notice} />
+                              </Typography>
+                              <Paper
+                                variant="outlined"
+                                sx={{
+                                  p: 1,
+                                  textAlign: "center",
+                                  color: "error.main",
+                                  fontWeight: "bold",
+                                  mt: 1,
+                                }}
+                              >
+                                কার্যকর নয়{" "}
+                                {convertToBengaliNumber(
+                                  Math.abs(validCardData(notice?.endDadeline))
+                                )}
+                                দিন
+                              </Paper>
+                            </CardContent>
+                            <CardActions sx={{ justifyContent: "center", mt: 1 }}>
                               <RoleActions
                                 userInfo={userInfo}
                                 notice={notice}
                                 onDelete={deleteItem}
                                 handleReload={handleReload}
                               />
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </Paper>
-                )}
+                            </CardActions>
+                          </Card>
+                        </Grid>
+                      ))}
+                    </Grid>
+                  )}
 
-                {/* ---- Card view for previous reports ---- */}
-                {noticeCardView && (
+                  {/* ---- Pagination ---- */}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      mt: 3,
+                      mb: 4,
+                      flexWrap: "wrap",
+                      gap: 2,
+                    }}
+                  >
+                    <Paper variant="outlined" sx={{ p: 1.5, borderRadius: 1 }}>
+                      <Typography variant="body2">
+                        Showing {noticeData.length} of {total} users
+                      </Typography>
+                    </Paper>
+                    <Pagination
+                      usersPerPage={noticePerPage}
+                      totalUsers={total}
+                      paginate={paginate}
+                      currentPage={currentPage}
+                    />
+                  </Box>
+                </>
+              ) : (
+                /* ---- Empty state for previous reports ---- */
+                <Box sx={{ py: 4, px: 3, textAlign: "center" }}>
+                  <Box sx={{ maxWidth: 700, mx: "auto" }}>
+                    <NodataFound
+                      message="কোনো পূর্বের রিপোর্ট পাওয়া যায়নি।"
+                    />
+                  </Box>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      setValidCardView(true);
+                      setValidTableView(false);
+                    }}
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    চলমান রিপোর্ট দেখতে ক্লিক করুন
+                  </Button>
+                </Box>
+              )}
+            </>
+          )}
+
+          {/* ====== Active / Current Reports section (চলমান রিপোর্ট) ====== */}
+          {validCardView && (
+            <>
+              {noticeData?.length ? (
+                <Box>
+                  {/* Top bar: rows-per-page select + title */}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      pb: 5,
+                      pt: 2,
+                      flexWrap: "wrap",
+                      gap: 1,
+                    }}
+                  >
+                    <FormControl size="small" sx={{ minWidth: 100 }}>
+                      <InputLabel id="active-rows-label">Rows</InputLabel>
+                      <Select
+                        labelId="active-rows-label"
+                        value={noticePerPage}
+                        label="Rows"
+                        onChange={selectHandler}
+                      >
+                        {rowsPerPageOptions.map((opt) => (
+                          <MenuItem key={opt} value={opt}>
+                            {opt}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+
+                    <Chip
+                      label="চলমান রিপোর্ট"
+                      color="info"
+                      sx={{ fontWeight: "bold", fontSize: "1rem" }}
+                    />
+                  </Box>
+
+                  {/* Card grid for active reports */}
                   <Grid container spacing={3}>
-                    {noticeData.map((notice, index) => (
-                      <Grid item xs={12} sm={6} md={4} key={index}>
+                    {noticeData?.map((notice, index) => (
+                      <Grid item xs={12} sm={6} md={5} key={index}>
                         <Card variant="outlined" sx={{ p: 1 }}>
                           <CardContent>
                             <Typography
                               variant="h6"
                               align="center"
+                              color="error"
                               gutterBottom
                             >
                               {notice?.document_name}
@@ -526,22 +673,9 @@ const NoticeBoard = () => {
                               &nbsp;&nbsp;
                               <TimeEndBangla notice={notice} />
                             </Typography>
-                            <Paper
-                              variant="outlined"
-                              sx={{
-                                p: 1,
-                                textAlign: "center",
-                                color: "error.main",
-                                fontWeight: "bold",
-                                mt: 1,
-                              }}
-                            >
-                              কার্যকর নয়{" "}
-                              {convertToBengaliNumber(
-                                Math.abs(validCardData(notice?.endDadeline))
-                              )}
-                              দিন
-                            </Paper>
+                            <Box sx={{ my: 1 }}>
+                              <TimeDifference notice={notice} />
+                            </Box>
                           </CardContent>
                           <CardActions sx={{ justifyContent: "center", mt: 1 }}>
                             <RoleActions
@@ -555,139 +689,45 @@ const NoticeBoard = () => {
                       </Grid>
                     ))}
                   </Grid>
-                )}
-              </Box>
-            )}
 
-            {/* ====== Active / Current Reports section (চলমান রিপোর্ট) ====== */}
-            {validCardView && (
-              <Box>
-                {/* Top bar: rows-per-page select + title */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    pb: 5,
-                    pt: 2,
-                    flexWrap: "wrap",
-                    gap: 1,
-                  }}
-                >
-                  <FormControl size="small" sx={{ minWidth: 100 }}>
-                    <InputLabel id="active-rows-label">Rows</InputLabel>
-                    <Select
-                      labelId="active-rows-label"
-                      value={noticePerPage}
-                      label="Rows"
-                      onChange={selectHandler}
-                    >
-                      {rowsPerPageOptions.map((opt) => (
-                        <MenuItem key={opt} value={opt}>
-                          {opt}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-
-                  <Chip
-                    label="চলমান রিপোর্ট"
-                    color="info"
-                    sx={{ fontWeight: "bold", fontSize: "1rem" }}
-                  />
+                  {/* ---- Pagination ---- */}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      mt: 3,
+                      mb: 4,
+                      flexWrap: "wrap",
+                      gap: 2,
+                    }}
+                  >
+                    <Paper variant="outlined" sx={{ p: 1.5, borderRadius: 1 }}>
+                      <Typography variant="body2">
+                        Showing {noticeData.length} of {total} users
+                      </Typography>
+                    </Paper>
+                    <Pagination
+                      usersPerPage={noticePerPage}
+                      totalUsers={total}
+                      paginate={paginate}
+                      currentPage={currentPage}
+                    />
+                  </Box>
                 </Box>
-
-                {/* Card grid for active reports */}
-                <Grid container spacing={3}>
-                  {noticeData?.map((notice, index) => (
-                    <Grid item xs={12} sm={6} md={5} key={index}>
-                      <Card variant="outlined" sx={{ p: 1 }}>
-                        <CardContent>
-                          <Typography
-                            variant="h6"
-                            align="center"
-                            color="error"
-                            gutterBottom
-                          >
-                            {notice?.document_name}
-                          </Typography>
-                          <Typography variant="body2" sx={{ my: 1 }}>
-                            রিপোর্ট শুরু:{" "}
-                            <DateHandler startDadeline={notice?.startDadeline} />
-                            &nbsp;&nbsp;
-                            <TimeStartBangla notice={notice} />
-                          </Typography>
-                          <Typography variant="body2" sx={{ my: 1 }}>
-                            রিপোর্ট শেষ:{" "}
-                            <DateHandler startDadeline={notice?.endDadeline} />
-                            &nbsp;&nbsp;
-                            <TimeEndBangla notice={notice} />
-                          </Typography>
-                          <Box sx={{ my: 1 }}>
-                            <TimeDifference notice={notice} />
-                          </Box>
-                        </CardContent>
-                        <CardActions sx={{ justifyContent: "center", mt: 1 }}>
-                          <RoleActions
-                            userInfo={userInfo}
-                            notice={notice}
-                            onDelete={deleteItem}
-                            handleReload={handleReload}
-                          />
-                        </CardActions>
-                      </Card>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Box>
-            )}
-
-            {/* ---- Pagination info + Pagination component ---- */}
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                mt: 3,
-                flexWrap: "wrap",
-                gap: 2,
-              }}
-            >
-              <Paper variant="outlined" sx={{ p: 1.5, borderRadius: 1 }}>
-                <Typography variant="body2">
-                  Showing {noticeData.length} of {total} users
-                </Typography>
-              </Paper>
-              <Pagination
-                usersPerPage={noticePerPage}
-                totalUsers={total}
-                paginate={paginate}
-              />
-            </Box>
-          </Box>
-        ) : (
-          /* ---- Empty state ---- */
-          <Box sx={{ my: 4, textAlign: "center" }}>
-            <Box sx={{ maxWidth: 700, mx: "auto" }}>
-              <NodataFound
-                message={
-                  "চলমান কোনো রিপোর্ট নেই, আপনি পূর্বের রিপোর্ট হতে খোজ করুন!!!"
-                }
-              />
-            </Box>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => {
-                setValidTableView(true);
-                setValidCardView(false);
-              }}
-              sx={{ mt: 2 }}
-            >
-              পূর্বের রিপোর্ট দেখতে ক্লিক করুন
-            </Button>
-          </Box>
-        )}
+              ) : (
+                /* ---- Empty state for active reports ---- */
+                <Box sx={{ py: 4, px: 3, textAlign: "center" }}>
+                  <Box sx={{ maxWidth: 700, mx: "auto" }}>
+                    <NodataFound
+                      message="চলমান কোনো রিপোর্ট নেই।"
+                    />
+                  </Box>
+                </Box>
+              )}
+            </>
+          )}
+        </Box>
       </Paper>
 
       {/* ---- Delete confirmation dialog (replaces Swal.fire) ---- */}

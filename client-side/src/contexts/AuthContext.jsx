@@ -8,11 +8,17 @@ const AuthContextProvider = ({ children }) => {
   const [userInfo, setuserInfo] = useState(null);
 
   const checkUser = async () => {
+    const token = window.localStorage.getItem("gsmToken");
+    if (!token) {
+      setcheckAuth(false);
+      return;
+    }
+
     await fetch(`${BASE_URL}/check-user`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
+        Authorization: "Bearer " + token,
       },
     })
       .then(async (res) => {
