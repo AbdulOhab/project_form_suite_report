@@ -1,263 +1,249 @@
 import React, { useEffect, useState } from "react";
-import { Box, Typography, Paper } from "@mui/material";
+import { Box, Typography, Chip } from "@mui/material";
 import BangladayDate from "./BangladayDate";
 import moment from "moment";
+import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 
-function DateDifferenceComponent({
-  startDadeline,
-  range,
-  timeStart,
-  timeEnd,
-  endDadeline,
-}) {
+const TimeBlock = ({ value, label }) => (
+  <Box
+    sx={{
+      bgcolor: "rgba(255,255,255,0.18)",
+      borderRadius: 1.5,
+      px: { xs: 1, sm: 1.5 },
+      py: 0.8,
+      minWidth: { xs: 40, sm: 50 },
+      textAlign: "center",
+    }}
+  >
+    <Typography
+      variant="h6"
+      fontWeight="bold"
+      color="white"
+      sx={{ lineHeight: 1.2, fontSize: { xs: "1rem", sm: "1.25rem" } }}
+    >
+      {value}
+    </Typography>
+    <Typography color="rgba(255,255,255,0.85)" sx={{ fontSize: "0.62rem", display: "block" }}>
+      {label}
+    </Typography>
+  </Box>
+);
+
+const Colon = () => (
+  <Typography
+    variant="h6"
+    color="rgba(255,255,255,0.5)"
+    sx={{ alignSelf: "flex-start", pt: 0.6, mx: 0.2 }}
+  >
+    :
+  </Typography>
+);
+
+const CountdownBar = ({ color, units }) => (
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: 0.3,
+      bgcolor: color,
+      borderRadius: 2,
+      px: 1.5,
+      py: 1,
+    }}
+  >
+    {units.map((u, i) => (
+      <React.Fragment key={u.label}>
+        <TimeBlock value={u.value} label={u.label} />
+        {i < units.length - 1 && <Colon />}
+      </React.Fragment>
+    ))}
+  </Box>
+);
+
+const toBn = (number) => {
+  const d = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+  return number.toString().split("").map((ch) => d[ch] ?? ch).join("");
+};
+
+function DateDifferenceComponent({ startDadeline, range, timeStart, timeEnd, endDadeline }) {
   const [currentDay, setCurrentDay] = useState(null);
   const [checkDate, setCheckDate] = useState(null);
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-  const [days, setDays] = useState(0);
-  const [formDisabled, setFormDisabled] = useState(false);
   const [dayDifference, setDayDifference] = useState(null);
   const [difference, setDifference] = useState(null);
 
-  const convertToBengaliDigits = (number) => {
-    const bengaliDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
-    return number
-      .toString()
-      .split("")
-      .map((digit) => bengaliDigits[digit] || digit)
-      .join("");
-  };
+  // State for "countdown to start date" (checkDate === 1)
+  const [startDays, setStartDays] = useState(0);
+  const [startHours, setStartHours] = useState(0);
+  const [startMinutes, setStartMinutes] = useState(0);
+
+  // State for "today's time-window countdown" (checkDate === 0)
+  const [windowHours, setWindowHours] = useState(0);
+  const [windowMinutes, setWindowMinutes] = useState(0);
+  const [formDisabled, setFormDisabled] = useState(false);
+  const [windowSeconds, setWindowSeconds] = useState(0);
+
+  // Countdown to absolute start date+time (used when checkDate === 1)
   useEffect(() => {
     const interval = setInterval(() => {
-      // Combine the date and time into a single Date object
       const deadline = new Date(`${startDadeline} ${timeStart}`);
-
-      const now = new Date(); // Current date and time
-
-      // Calculate the difference in milliseconds
-      const diffMs = deadline - now;
+      const diffMs = deadline - new Date();
       if (diffMs > 0) {
-        const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-
-        const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
-        const daysBn = convertToBengaliDigits(days);
-        const hoursBn = convertToBengaliDigits(hours);
-        const minutesBn = convertToBengaliDigits(minutes);
-        const secondsBn = convertToBengaliDigits(seconds);
-
-        setDays(daysBn);
-        setHours(hoursBn);
-        setMinutes(minutesBn);
-        setSeconds(secondsBn);
+        setStartDays(toBn(Math.floor(diffMs / (1000 * 60 * 60 * 24))));
+        setStartHours(toBn(Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))));
+        setStartMinutes(toBn(Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60))));
       }
-    }, [1000]);
+    }, 1000);
     return () => clearInterval(interval);
   }, [timeStart, startDadeline]);
 
+  // Today's submission window countdown (used when checkDate === 0)
   useEffect(() => {
-    const generateDateList = (start, range) => {
-      const startDate = new Date(start);
-      const dates = [];
-      for (let i = 0; i < range; i++) {
-        const currentDate = new Date(startDate);
-        currentDate.setDate(startDate.getDate() + i);
-        dates.push(currentDate);
-      }
-      return dates;
-    };
+    const interval = setInterval(() => {
+      const todayStart = moment().format("YYYY-MM-DD") + " " + timeStart;
+      const todayEnd = moment().format("YYYY-MM-DD") + " " + timeEnd;
+      const now = moment();
+      const start = moment(todayStart);
+      const end = moment(todayEnd);
 
-    const checkDateStatus = (startDeadline, range) => {
+      if (now.isBefore(start)) {
+        const diff = moment.duration(start.diff(now));
+        setWindowHours(toBn(Math.floor(diff.asHours())));
+        setWindowMinutes(toBn(Math.floor(diff.asMinutes()) % 60));
+        setWindowSeconds(toBn(Math.floor(diff.asSeconds()) % 60));
+        setFormDisabled(true);
+      } else if (now.isBetween(start, end)) {
+        const diff = moment.duration(end.diff(now));
+        setWindowHours(toBn(Math.floor(diff.asHours())));
+        setWindowMinutes(toBn(Math.floor(diff.asMinutes()) % 60));
+        setWindowSeconds(toBn(Math.floor(diff.asSeconds()) % 60));
+        setFormDisabled(false);
+      } else {
+        clearInterval(interval);
+        setWindowHours(0); setWindowMinutes(0); setWindowSeconds(0);
+        setFormDisabled(true);
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [timeStart, timeEnd]);
+
+  // Date range status
+  useEffect(() => {
+    const checkDateStatus = (startDeadline, r) => {
       const startDate = new Date(startDeadline);
       const endDate = new Date(startDate);
-      endDate.setDate(startDate.getDate() + range - 1);
-
+      endDate.setDate(startDate.getDate() + r - 1);
       const today = new Date();
-
-      if (today < startDate) {
-        return 1;
-      } else if (today >= startDate && today <= endDate) {
-        return 0;
-      } else {
-        return -1;
-      }
+      if (today < startDate) return 1;
+      if (today >= startDate && today <= endDate) return 0;
+      return -1;
     };
 
-    const findCurrentDay = (dates) => {
+    const findCurrentDay = (start, r) => {
+      const startDate = new Date(start);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      const todayIndex = dates.findIndex((date) => {
-        const dateWithoutTime = new Date(date);
-        dateWithoutTime.setHours(0, 0, 0, 0);
-        return dateWithoutTime.getTime() === today.getTime();
-      });
-      return todayIndex !== -1
-        ? { day: todayIndex + 1, date: dates[todayIndex].toDateString() }
-        : null;
+      for (let i = 0; i < r; i++) {
+        const d = new Date(startDate);
+        d.setDate(startDate.getDate() + i);
+        d.setHours(0, 0, 0, 0);
+        if (d.getTime() === today.getTime()) {
+          return { day: i + 1, date: d.toDateString() };
+        }
+      }
+      return null;
     };
 
     if (startDadeline && range) {
-      const dates = generateDateList(startDadeline, range);
-      const currentDayInfo = findCurrentDay(dates);
-      setCurrentDay(currentDayInfo);
-    }
-    if (startDadeline) {
+      setCurrentDay(findCurrentDay(startDadeline, range));
       setCheckDate(checkDateStatus(startDadeline, range));
     }
   }, [startDadeline, range]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const todayStartTime = moment().format("YYYY-MM-DD") + " " + timeStart;
-      const todayEndTime = moment().format("YYYY-MM-DD") + " " + timeEnd;
-
-      const now = moment();
-      const startTime = moment(todayStartTime);
-      const endTime = moment(todayEndTime);
-
-      // If current time is before start time, calculate countdown to start time
-      if (now.isBefore(startTime)) {
-        const TimeDifference = moment.duration(startTime.diff(now));
-        const hours = Math.floor(TimeDifference.asHours());
-        const minutes = Math.floor(TimeDifference.asMinutes()) % 60;
-        const seconds = Math.floor(TimeDifference.asSeconds()) % 60;
-
-        const hoursBn = convertToBengaliDigits(hours);
-        const minutesBn = convertToBengaliDigits(minutes);
-        const secondsBn = convertToBengaliDigits(seconds);
-        setHours(hoursBn);
-        setMinutes(minutesBn);
-        setSeconds(secondsBn);
-
-        setFormDisabled(true);
-      }
-      // If current time is between start and end time, calculate countdown to end time
-      else if (now.isBetween(startTime, endTime)) {
-        const TimeDifference = moment.duration(endTime.diff(now));
-        const hours = Math.floor(TimeDifference.asHours());
-        const minutes = Math.floor(TimeDifference.asMinutes()) % 60;
-        const seconds = Math.floor(TimeDifference.asSeconds()) % 60;
-
-        const hoursBn = convertToBengaliDigits(hours);
-        const minutesBn = convertToBengaliDigits(minutes);
-        const secondsBn = convertToBengaliDigits(seconds);
-        setHours(hoursBn);
-        setMinutes(minutesBn);
-        setSeconds(secondsBn);
-        setFormDisabled(false);
-      }
-      // If current time is after end time, set time remaining to 0
-      else {
-        clearInterval(interval);
-        setHours(0);
-        setMinutes(0);
-        setSeconds(0);
-        setDays(0);
-        setFormDisabled(true);
-      }
-    });
-
-    // Clean up timerInterval on component unmount
-    return () => clearInterval(interval);
-  }, [timeStart, timeEnd]);
-
-  useEffect(() => {
     const endDate = new Date(endDadeline);
     const startDate = new Date(startDadeline);
     const today = new Date();
-
-    // Calculate the difference in time (in milliseconds)
-    const timeDiff = endDate - today;
-    const todayDiff = endDate - startDate;
-
-    // Convert the time difference to days
-    const diffInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-    const toDayDiff = Math.ceil(todayDiff / (1000 * 60 * 60 * 24));
-
-    setDifference(diffInDays);
-    setDayDifference(toDayDiff);
+    setDifference(Math.ceil((endDate - today) / (1000 * 60 * 60 * 24)));
+    setDayDifference(Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)));
   }, [endDadeline, startDadeline]);
 
-  return (
-    <>
-      {currentDay && checkDate === 0 ? (
-        <>
-          <BangladayDate day={currentDay.day} date={currentDay.date} />
-          {difference >= 0 && dayDifference > 0 && seconds !== 0 ? (
-            <>
-              <Box>
-                {formDisabled ? (
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ color: "success.main", textAlign: "center", fontWeight: "bold" }}
-                  >
-                    রিপোর্ট প্রদান শুরু হতে বাকী আছে
-                  </Typography>
-                ) : (
-                  <Typography
-                    variant="subtitle1"
-                    sx={{ color: "success.main", textAlign: "center", fontWeight: "bold" }}
-                  >
-                    রিপোর্ট সাবমিটের সময় বাকী আছে
-                  </Typography>
-                )}
-              </Box>
-              <Paper
-                elevation={1}
+  // ─── Active today ───
+  if (currentDay && checkDate === 0) {
+    return (
+      <Box>
+        <BangladayDate day={currentDay.day} date={currentDay.date} />
+        {difference >= 0 && dayDifference > 0 && windowSeconds !== 0 && (
+          <Box sx={{ mt: 1 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
+              <Chip
+                icon={
+                  formDisabled
+                    ? <AccessAlarmIcon sx={{ fontSize: 16 }} />
+                    : <CheckCircleOutlineIcon sx={{ fontSize: 16 }} />
+                }
+                label={
+                  formDisabled
+                    ? "রিপোর্ট প্রদান শুরু হতে বাকী আছে"
+                    : "রিপোর্ট সাবমিটের সময় বাকী আছে"
+                }
+                size="small"
                 sx={{
-                  bgcolor: formDisabled ? "error.main" : "success.main",
-                  color: "common.white",
-                  fontWeight: "bold",
-                  textAlign: "center",
-                  p: 1,
-                  borderRadius: 1,
-                  my: 1,
+                  bgcolor: formDisabled ? "error.50" : "success.50",
+                  color: formDisabled ? "error.dark" : "success.dark",
+                  border: "1px solid",
+                  borderColor: formDisabled ? "error.light" : "success.light",
+                  fontWeight: 600,
+                  fontSize: "0.75rem",
                 }}
-              >
-                <span>{hours}</span> <span>ঘন্টা</span>
-                <span>&nbsp;{minutes}</span> <span>মিনিট</span>
-                <span>&nbsp;{seconds}</span> <span>সেকেন্ড</span>
-              </Paper>
-            </>
-          ) : (
-            ""
-          )}
-        </>
-      ) : checkDate === 1 ? (
-        <Box sx={{ textAlign: "center" }}>
-          <Paper
-            elevation={3}
-            sx={{ p: 1, borderRadius: 1, color: "success.main" }}
-          >
-            <Typography variant="subtitle1">
-              রিপোর্ট প্রদান শুরু হতে বাকি আছে
-            </Typography>
-          </Paper>
-          <Paper
-            elevation={3}
+              />
+            </Box>
+            <CountdownBar
+              color={formDisabled ? "error.main" : "success.main"}
+              units={[
+                { value: windowHours, label: "ঘণ্টা" },
+                { value: windowMinutes, label: "মিনিট" },
+              ]}
+            />
+          </Box>
+        )}
+      </Box>
+    );
+  }
+
+  // ─── Not started yet ───
+  if (checkDate === 1) {
+    return (
+      <Box sx={{ textAlign: "center" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
+          <Chip
+            icon={<AccessAlarmIcon sx={{ fontSize: 16 }} />}
+            label="রিপোর্ট প্রদান শুরু হতে বাকি আছে"
+            size="small"
             sx={{
-              bgcolor: "error.main",
-              color: "common.white",
-              p: 1,
-              borderRadius: 1,
-              mt: 1,
+              bgcolor: "success.50",
+              color: "success.dark",
+              border: "1px solid",
+              borderColor: "success.light",
+              fontWeight: 600,
+              fontSize: "0.75rem",
             }}
-          >
-            <span>{days} দিন</span> &nbsp;
-            <span>{hours}</span> <span>ঘন্টা</span> &nbsp;
-            <span>{minutes}</span> <span> মিনিট</span> &nbsp;
-            <span>{seconds}</span> <span>সেকেন্ড</span>
-          </Paper>
+          />
         </Box>
-      ) : (
-        ""
-      )}
-    </>
-  );
+        <CountdownBar
+          color="error.main"
+          units={[
+            { value: startDays, label: "দিন" },
+            { value: startHours, label: "ঘণ্টা" },
+            { value: startMinutes, label: "মিনিট" },
+          ]}
+        />
+      </Box>
+    );
+  }
+
+  return null;
 }
 
 export default DateDifferenceComponent;

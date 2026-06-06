@@ -2,6 +2,7 @@ const adminSeeder = require("./model/seeders/adminSeeder");
 const zonalSeeder = require("./model/seeders/zonalSeeder");
 const branchSeeder = require("./model/seeders/branchSeeder");
 const masterSeeder = require("./model/seeders/masterSeeder");
+const noticeSeeder = require("./model/seeders/noticeSeeder");
 const seederChecker = require("./model/seeders/seederChecker");
 const wipeAllSeeder = require("./model/seeders/wipeAllSeeder");
 
@@ -21,6 +22,9 @@ const run = async () => {
     case "seed":
       await masterSeeder();
       break;
+    case "notice":
+      await noticeSeeder();
+      break;
     case "check":
       await seederChecker();
       break;
@@ -39,6 +43,7 @@ const run = async () => {
       console.log("    admin    - Seed admin users only");
       console.log("    zonal    - Seed zonal users only");
       console.log("    branch   - Seed branch users only");
+      console.log("    notice   - Seed sample notices (clears existing notices)");
       console.log("    check    - Verify seeded data");
       console.log("    wipe     - Delete ALL data from database");
       console.log("");

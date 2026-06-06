@@ -53,6 +53,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import Divider from "@mui/material/Divider";
 
 // ---------------------------------------------------------------------------
 // Role-based action buttons (extracted from 3 repeated blocks in original)
@@ -352,7 +354,7 @@ const NoticeBoard = () => {
             gap: 2,
             flexWrap: "wrap",
             px: 2,
-            py: 1,
+            py: 2,
             mt: 1,
           }}
         >
@@ -389,7 +391,7 @@ const NoticeBoard = () => {
         </Box>
 
         {/* ---- Main content ---- */}
-        <Box sx={{ px: 2, my: 3 }}>
+        <Box sx={{ px: { xs: 2, sm: 3, md: 5 }, mt: 3, pb: 6 }}>
           {/* ====== Previous Reports section ====== */}
           {validTableView && (
             <>
@@ -503,10 +505,10 @@ const NoticeBoard = () => {
 
                   {/* ---- Card view for previous reports ---- */}
                   {noticeCardView && (
-                    <Grid container spacing={3}>
+                    <Grid container spacing={4}>
                       {noticeData.map((notice, index) => (
                         <Grid item xs={12} sm={6} md={4} key={index}>
-                          <Card variant="outlined" sx={{ p: 1 }}>
+                          <Card variant="outlined" sx={{ p: 2 }}>
                             <CardContent>
                               <Typography
                                 variant="h6"
@@ -648,36 +650,89 @@ const NoticeBoard = () => {
                   </Box>
 
                   {/* Card grid for active reports */}
-                  <Grid container spacing={3}>
+                  <Grid container spacing={4}>
                     {noticeData?.map((notice, index) => (
-                      <Grid item xs={12} sm={6} md={5} key={index}>
-                        <Card variant="outlined" sx={{ p: 1 }}>
-                          <CardContent>
+                      <Grid item xs={12} sm={6} md={6} key={index}>
+                        <Card
+                          sx={{
+                            borderRadius: 3,
+                            overflow: "hidden",
+                            border: "1px solid",
+                            borderColor: "divider",
+                            boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
+                            transition: "box-shadow 0.2s, transform 0.2s",
+                            "&:hover": {
+                              boxShadow: "0 6px 24px rgba(0,0,0,0.13)",
+                              transform: "translateY(-2px)",
+                            },
+                          }}
+                        >
+                          {/* Accent top bar */}
+                          <Box sx={{ height: 6, bgcolor: "#0097a7" }} />
+
+                          <CardContent sx={{ px: 3, pt: 2.5, pb: 1 }}>
+                            {/* Title */}
                             <Typography
-                              variant="h6"
+                              variant="h5"
                               align="center"
-                              color="error"
+                              fontWeight="bold"
+                              color="text.primary"
                               gutterBottom
+                              sx={{ lineHeight: 1.4 }}
                             >
                               {notice?.document_name}
                             </Typography>
-                            <Typography variant="body2" sx={{ my: 1 }}>
-                              রিপোর্ট শুরু:{" "}
-                              <DateHandler startDadeline={notice?.startDadeline} />
-                              &nbsp;&nbsp;
-                              <TimeStartBangla notice={notice} />
-                            </Typography>
-                            <Typography variant="body2" sx={{ my: 1 }}>
-                              রিপোর্ট শেষ:{" "}
-                              <DateHandler startDadeline={notice?.endDadeline} />
-                              &nbsp;&nbsp;
-                              <TimeEndBangla notice={notice} />
-                            </Typography>
-                            <Box sx={{ my: 1 }}>
+
+                            {/* Sub title */}
+                            {notice?.sub_title && (
+                              <Typography
+                                variant="caption"
+                                align="center"
+                                display="block"
+                                color="text.secondary"
+                                sx={{ mb: 1 }}
+                              >
+                                {notice.sub_title}
+                              </Typography>
+                            )}
+
+                            <Divider sx={{ my: 1.5 }} />
+
+                            {/* Date range rows */}
+                            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.8 }}>
+                              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                                <CalendarMonthIcon fontSize="small" sx={{ color: "text.secondary", flexShrink: 0 }} />
+                                <Typography variant="body2" color="text.secondary" sx={{ minWidth: 80 }}>
+                                  রিপোর্ট শুরু:
+                                </Typography>
+                                <Typography variant="body2" fontWeight="medium">
+                                  <DateHandler startDadeline={notice?.startDadeline} />
+                                  &nbsp;
+                                  <TimeStartBangla notice={notice} />
+                                </Typography>
+                              </Box>
+                              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                                <CalendarMonthIcon fontSize="small" sx={{ color: "error.main", flexShrink: 0 }} />
+                                <Typography variant="body2" color="text.secondary" sx={{ minWidth: 80 }}>
+                                  রিপোর্ট শেষ:
+                                </Typography>
+                                <Typography variant="body2" fontWeight="medium">
+                                  <DateHandler startDadeline={notice?.endDadeline} />
+                                  &nbsp;
+                                  <TimeEndBangla notice={notice} />
+                                </Typography>
+                              </Box>
+                            </Box>
+
+                            {/* Countdown timer */}
+                            <Box sx={{ mt: 2 }}>
                               <TimeDifference notice={notice} />
                             </Box>
                           </CardContent>
-                          <CardActions sx={{ justifyContent: "center", mt: 1 }}>
+
+                          <Divider />
+
+                          <CardActions sx={{ justifyContent: "center", py: 1.5 }}>
                             <RoleActions
                               userInfo={userInfo}
                               notice={notice}
