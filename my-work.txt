@@ -18,3 +18,7 @@ Phase 6️⃣ — Docker & Production Build
 Server + Client Dockerfile তৈরি
 docker-compose.yml আপডেট
 Nginx config
+
+আগের পরের রিপোর্ট আগে ইডিট করতে পারবে না ...
+সর্টিং এড হবে
+প্যারগ্রাফ থাকবে না 
