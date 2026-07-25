@@ -1,0 +1,23 @@
+# Dependencies and build outputs are produced inside the image.
+**/node_modules
+client-side/build
+server-side/build
+
+# Secrets / local env — provided at runtime, never baked into the image.
+**/.env
+**/.env.local
+server-side/request.http
+server-side/SEED_CREDENTIALS.txt
+
+# VCS / editor / OS noise
+.git
+.gitignore
+.vscode
+.idea
+**/*.log
+**/.DS_Store
+
+# Docs & plans not needed at runtime
+*.md
+.agents
+assets

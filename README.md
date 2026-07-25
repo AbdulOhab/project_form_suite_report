@@ -39,11 +39,42 @@ project-form-suite/
 │   ├── middleware/         # Auth / validation middleware
 │   ├── model/              # Mongoose models (admin, branch, zonal, check, answer ...)
 │   └── router/             # API routes
-├── docker-compose.yml  # MongoDB container
+├── Dockerfile          # Single image: builds the SPA + runs it from Express
+├── docker-compose.yml  # app (SPA + API) + MongoDB
 └── README.md
 ```
 
-### Setup & Run
+### Run with Docker (single image — SPA + API together)
+
+The whole application runs from **one image**: the React client is built and
+served by the Express server on the **same origin**, so there is only one port
+to expose. `docker compose up` starts that app container plus MongoDB.
+
+```bash
+# from the project root
+docker compose up -d --build          # or: podman-compose up -d --build
+```
+
+Then open **http://localhost:5053** — that single URL serves both the SPA and
+the API. First run only, seed the users:
+
+```bash
+docker compose exec app node seeder.js seed
+docker compose exec app node seeder.js check
+```
+
+**Notes**
+- The app image bundles the code (no bind-mount); rebuild after code changes
+  with `docker compose up -d --build`.
+- MongoDB data and uploaded files persist in named volumes (`mongo_data`,
+  `app_uploads`) across restarts.
+- Config is passed as environment variables in `docker-compose.yml`
+  (`MONGODB_URI`, `JWT_SECRET`, `CORS_ORIGIN`, `PORT`). Set a real `JWT_SECRET`
+  before hosting — e.g. export it and reference `${JWT_SECRET}`.
+- To host behind a domain, point it at the app's port 5053; the SPA calls the
+  API relatively, so no separate frontend URL is needed.
+
+### Setup & Run (local, without Docker)
 1. **Start MongoDB** (Docker):
    ```bash
    docker-compose up -d

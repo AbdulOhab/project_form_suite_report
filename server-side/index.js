@@ -1,5 +1,6 @@
 require("dotenv").config();
 
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -42,10 +43,18 @@ server.use(
   })
 );
 
-// 5. Routes
+// 5. Serve the React production build (same origin as the API).
+//    Set CLIENT_BUILD_PATH to the built SPA; when present, "/" serves the
+//    SPA's index.html instead of the API home route.
+const clientBuildPath = process.env.CLIENT_BUILD_PATH
+  ? path.resolve(process.env.CLIENT_BUILD_PATH)
+  : path.join(__dirname, "public");
+server.use(express.static(clientBuildPath));
+
+// 6. Routes
 server.use(allRouter());
 
-// 6. Connect to MongoDB and Start the Server
+// 7. Connect to MongoDB and Start the Server
 mongoose.connect(dbConnector).then((a) => {
   console.log(`Connected to MongoDB ${a.connections[0].name}`);
   server.listen(port, () => {
