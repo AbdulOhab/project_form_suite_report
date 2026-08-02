@@ -46,7 +46,7 @@ const questionValidator = async (req) => {
 };
 const noticeboardController = {
   all: async (req, res) => {
-    const { systemViews, limit, page , query } = req.body;
+    const { systemViews, limit, page, query = "" } = req.body;
 
     // Function to calculate the difference in days
     const validCardData = (endDadeline) => {
@@ -63,14 +63,18 @@ const noticeboardController = {
     const allDocuments = await formModel.find().sort({ _id: -1 });
     const ddate = allDocuments.map((doc) => validCardData(doc?.endDadeline));
 
-    // Filter indexes based on systemViews
-    const filteredIndexes = systemViews
-      ? ddate
-          .map((days, index) => (days >= 0 ? index : null))
-          .filter((index) => index !== null) // Positive values
-      : ddate
-          .map((days, index) => (days < 0 ? index : null))
-          .filter((index) => index !== null); // Negative values
+    // Filter indexes based on systemViews. When systemViews is omitted,
+    // return everything (active + previous combined), newest first.
+    const filteredIndexes =
+      systemViews === undefined
+        ? ddate.map((_, index) => index)
+        : systemViews
+        ? ddate
+            .map((days, index) => (days >= 0 ? index : null))
+            .filter((index) => index !== null) // Positive values
+        : ddate
+            .map((days, index) => (days < 0 ? index : null))
+            .filter((index) => index !== null); // Negative values
 
     // Filter the data based on indexes
     const filteredDocuments = filteredIndexes.map(
