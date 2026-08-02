@@ -14,20 +14,23 @@ const DashboardLayout = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const role = userInfo?.userRole || "thana";
+  const hasSidebar = role === "admin";
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "background.default" }}>
       <AppHeader onMenuToggle={() => setSidebarOpen(!sidebarOpen)} />
-      <AppSidebar
-        role={role}
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
+      {hasSidebar && (
+        <AppSidebar
+          role={role}
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+        />
+      )}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          width: isMobile ? "100%" : `calc(100% - ${DRAWER_WIDTH}px)`,
+          width: isMobile || !hasSidebar ? "100%" : `calc(100% - ${DRAWER_WIDTH}px)`,
           minHeight: "100vh",
         }}
       >
