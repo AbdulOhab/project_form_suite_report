@@ -10,19 +10,16 @@ import {
   MenuItem,
   Switch,
   Select,
-  Paper,
   TextField,
   Button,
   Box,
-  Checkbox,
   FormControl,
   InputLabel,
   Snackbar,
   Alert,
+  Tooltip,
+  Divider,
 } from "@mui/material";
-import SubjectIcon from "@mui/icons-material/Subject";
-import NumericIcon from "@mui/icons-material/Numbers";
-import SortTextIcon from "@mui/icons-material/ShortText";
 import SortNumericIcon from "@mui/icons-material/NumbersSharp";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import FilterNoneIcon from "@mui/icons-material/FilterNone";
@@ -30,6 +27,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 import BASE_URL from "../auth/dbUrl";
 
 const Notice = () => {
@@ -45,33 +44,20 @@ const Notice = () => {
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
   const [timeEnd, setTimeEnd] = useState("00:00:00");
   const [timeStart, setTimeStart] = useState("00:00:00");
-  const [thana, setThana] = useState(false);
-  const [branch, setBranch] = useState(false);
-  const [zonal, setZonal] = useState(false);
-  const [selectedType, setSelectedType] = useState("text");
-  const [showSubtitleField, setShowSubtitleField] = useState(false);
   const [subtitle, setSubtitle] = useState("");
 
   const [question, setQuestion] = useState([
     {
       questionText: "",
-      questionType: "text",
-      options: [{ optionsText: "Sort answer text" }],
+      questionType: "number",
+      options: [{ optionsText: "Value must be number" }],
       open: true,
       required: false,
     },
   ]);
 
-  const handleAddSubtitleClick = () => {
-    setShowSubtitleField(true);
-  };
-
   const handleSubtitleChange = (event) => {
     setSubtitle(event.target.value);
-  };
-
-  const handleSubtitleFieldBlur = () => {
-    setShowSubtitleField(true);
   };
 
   useEffect(() => {
@@ -102,23 +88,6 @@ const Notice = () => {
     newQuestion[i].questionText = text;
     setQuestion(newQuestion);
   }
-
-  function addQuestionType(i, type) {
-    let newType = [...question];
-    newType[i].questionType = type;
-    if (newType[i].questionType === "text") {
-      newType[i].options = [{ optionsText: "Sort answer text" }];
-      setQuestion(newType);
-    }
-    if (newType[i].questionType === "number") {
-      newType[i].options = [{ optionsText: "Value must be number" }];
-      setQuestion(newType);
-    }
-  }
-
-  const handleChange = (event) => {
-    setSelectedType(event.target.value);
-  };
 
   function changeValueHandler(text, i, j) {
     const newOption = JSON.parse(JSON.stringify(question));
@@ -163,15 +132,8 @@ const Notice = () => {
       ...question,
       {
         questionText: "",
-        questionType: selectedType,
-        options: [
-          {
-            optionsText:
-              selectedType === "text"
-                ? "Sort answer text"
-                : "Value must be number",
-          },
-        ],
+        questionType: "number",
+        options: [{ optionsText: "Value must be number" }],
         open: true,
         required: false,
       },
@@ -206,8 +168,10 @@ const Notice = () => {
         expanded={question[i].open}
         onChange={() => handleExpandHandler(i)}
         sx={{
-          border: question[i].open ? 2 : 0,
-          borderColor: "primary.main",
+          border: 1,
+          borderColor: question[i].open ? "primary.main" : "divider",
+          bgcolor: question[i].open ? "action.hover" : "transparent",
+          boxShadow: "none",
           my: 1,
           borderRadius: 1,
           "&:before": { display: "none" },
@@ -222,12 +186,20 @@ const Notice = () => {
           {!question[i].open ? (
             <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <IconButton size="small" disabled={i === 0} onClick={(e) => { e.stopPropagation(); moveQuestion(i, -1); }}>
-                  <ArrowUpwardIcon fontSize="inherit" />
-                </IconButton>
-                <IconButton size="small" disabled={i === question.length - 1} onClick={(e) => { e.stopPropagation(); moveQuestion(i, 1); }}>
-                  <ArrowDownwardIcon fontSize="inherit" />
-                </IconButton>
+                <span>
+                  <Tooltip title="উপরে সরান">
+                    <IconButton size="small" disabled={i === 0} onClick={(e) => { e.stopPropagation(); moveQuestion(i, -1); }}>
+                      <ArrowUpwardIcon fontSize="inherit" />
+                    </IconButton>
+                  </Tooltip>
+                </span>
+                <span>
+                  <Tooltip title="নিচে সরান">
+                    <IconButton size="small" disabled={i === question.length - 1} onClick={(e) => { e.stopPropagation(); moveQuestion(i, 1); }}>
+                      <ArrowDownwardIcon fontSize="inherit" />
+                    </IconButton>
+                  </Tooltip>
+                </span>
               </Box>
               <Box sx={{ flex: 1 }}>
                 <Typography variant="body1" fontWeight={500} sx={{ pb: 0.5 }}>
@@ -238,16 +210,7 @@ const Notice = () => {
                 <Box key={j} sx={{ display: "flex" }}>
                   <FormControlLabel
                     disabled
-                    control={
-                      que.questionType !== "text" &&
-                      que.questionType !== "number" ? (
-                        <input type={que.questionType} required={que.required} disabled />
-                      ) : question[i].questionType === "number" ? (
-                        <SortNumericIcon sx={{ mr: 1 }} fontSize="small" />
-                      ) : (
-                        <SortTextIcon sx={{ mr: 1 }} fontSize="small" />
-                      )
-                    }
+                    control={<SortNumericIcon sx={{ mr: 1 }} fontSize="small" />}
                     label={
                       <Typography variant="body2" color="text.secondary">
                         {opText.optionsText}
@@ -261,7 +224,7 @@ const Notice = () => {
           ) : null}
         </AccordionSummary>
         {question[i].open ? (
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
+          <Box sx={{ display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
             <AccordionDetails
               sx={{ display: "flex", flexDirection: "column", width: "100%", pt: 0 }}
             >
@@ -274,26 +237,10 @@ const Notice = () => {
                   value={que.questionText}
                   onChange={(e) => inputChangeHandler(e.target.value, i)}
                 />
-                <FormControl size="small">
-                  <Select value={selectedType} onChange={handleChange}>
-                    <MenuItem value="text" onClick={() => addQuestionType(i, "text")}>
-                      <SubjectIcon sx={{ mr: 1 }} fontSize="small" />
-                      Paragraph
-                    </MenuItem>
-                    <MenuItem value="number" onClick={() => addQuestionType(i, "number")}>
-                      <NumericIcon sx={{ mr: 1 }} fontSize="small" />
-                      Number
-                    </MenuItem>
-                  </Select>
-                </FormControl>
               </Box>
               {que.options.map((op, j) => (
                 <Box key={j} sx={{ display: "flex", alignItems: "center", my: 0.5 }}>
-                  {question[i].questionType === "number" ? (
-                    <SortNumericIcon sx={{ mr: 1 }} fontSize="small" />
-                  ) : question[i].questionType === "text" ? (
-                    <SortTextIcon sx={{ mr: 1 }} fontSize="small" />
-                  ) : null}
+                  <SortNumericIcon sx={{ mr: 1 }} fontSize="small" />
                   <TextField
                     variant="standard"
                     disabled
@@ -304,25 +251,28 @@ const Notice = () => {
                 </Box>
               ))}
               <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center", mt: 1, gap: 0.5 }}>
-                <IconButton size="small" title="Copy" onClick={() => copyQuestion(i)}>
-                  <FilterNoneIcon fontSize="small" />
-                </IconButton>
-                <IconButton size="small" title="Delete" onClick={() => deleteQuestion(i)}>
-                  <DeleteIcon fontSize="small" />
-                </IconButton>
+                <Tooltip title="প্রশ্ন কপি করুন">
+                  <IconButton size="small" onClick={() => copyQuestion(i)}>
+                    <FilterNoneIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="প্রশ্ন মুছুন">
+                  <IconButton size="small" onClick={() => deleteQuestion(i)}>
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
                 <Box sx={{ display: "flex", alignItems: "center", ml: 1 }}>
                   <Typography variant="caption" color="text.secondary">Required</Typography>
                   <Switch size="small" color="primary" onClick={() => requiredQuestion(i)} />
                 </Box>
               </Box>
             </AccordionDetails>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, py: 1.5, px: 0.5 }}>
-              <AddCircleOutlineIcon
-                sx={{ cursor: "pointer" }}
-                titleAccess="New Question"
-                onClick={() => addMoreQuestion(i)}
-                fontSize="small"
-              />
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, px: 0.5 }}>
+              <Tooltip title="নতুন প্রশ্ন যোগ করুন">
+                <IconButton size="small" onClick={() => addMoreQuestion(i)}>
+                  <AddCircleOutlineIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
             </Box>
           </Box>
         ) : null}
@@ -349,9 +299,6 @@ const Notice = () => {
           timeEnd: timeEnd,
           startDadeline: startDadeline,
           endDadeline: endDadeline,
-          thana: thana,
-          branch: branch,
-          zonal: zonal,
         }),
       });
       let data = await response.json();
@@ -386,14 +333,12 @@ const Notice = () => {
 
   return (
     <>
-      <Paper elevation={2} sx={{ maxWidth: 1000, mx: "auto", my: 3, borderRadius: 2, overflow: "hidden" }}>
-        <Box sx={{ bgcolor: "primary.main", px: 3, py: 2 }}>
-          <Typography variant="h5" sx={{ color: "#fff", fontWeight: "bold", textAlign: "center" }}>
-            Create Notice
-          </Typography>
-        </Box>
+      <Box sx={{ maxWidth: 900, mx: "auto" }}>
+        <Typography variant="h5" fontWeight={700} sx={{ mb: 3 }}>
+          Create Notice
+        </Typography>
 
-        <Box sx={{ p: 3 }}>
+        <Box>
           {/* Notice Name */}
           <TextField
             fullWidth
@@ -410,42 +355,32 @@ const Notice = () => {
           </Box>
 
           {/* Subtitle */}
-          {showSubtitleField ? (
-            <TextField
-              fullWidth
-              size="small"
-              variant="outlined"
-              label="Subtitle"
-              value={subtitle}
-              onChange={handleSubtitleChange}
-              onBlur={handleSubtitleFieldBlur}
-              placeholder="Enter subtitle"
-              sx={{ mb: 2 }}
-            />
-          ) : (
-            <Button
-              size="small"
-              startIcon={<AddCircleOutlineIcon />}
-              onClick={handleAddSubtitleClick}
-              sx={{ mb: 2 }}
-            >
-              Add Subtitle
-            </Button>
-          )}
-
-          {/* Description */}
           <TextField
             fullWidth
             size="small"
             variant="outlined"
             multiline
-            minRows={2}
-            label="Description"
-            placeholder="Add short description"
-            value={documentDescription}
-            onChange={(e) => setdocumentDescription(e.target.value)}
+            minRows={3}
+            label="Subtitle"
+            value={subtitle}
+            onChange={handleSubtitleChange}
+            placeholder="Enter subtitle"
             sx={{ mb: 2 }}
           />
+
+          {/* Description */}
+          <Typography variant="caption" fontWeight={600} color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
+            Description
+          </Typography>
+          <Box sx={{ mb: 8 }}>
+            <ReactQuill
+              theme="snow"
+              value={documentDescription || ""}
+              onChange={setdocumentDescription}
+              placeholder="Add short description"
+              style={{ height: "150px" }}
+            />
+          </Box>
           <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>
             {error?.doc_desc}
           </Box>
@@ -495,51 +430,40 @@ const Notice = () => {
             />
           </Box>
 
-          {/* Permission + End Info */}
-          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr 1fr" }, gap: 2, mb: 2, alignItems: "start" }}>
+          <Divider sx={{ my: 3 }} />
+
+          {/* End Info */}
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 4, mb: 1 }}>
             <Box>
-              <Typography variant="body2" fontWeight={600} sx={{ mb: 1 }}>
-                Data Permission
+              <Typography variant="caption" fontWeight={600} color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
+                Notice Range
               </Typography>
-              <Box sx={{ display: "flex", gap: 1 }}>
-                <FormControlLabel
-                  control={<Checkbox size="small" checked={thana} onChange={(e) => setThana(e.target.checked)} />}
-                  label={<Typography variant="body2">Thana</Typography>}
-                />
-                <FormControlLabel
-                  control={<Checkbox size="small" checked={branch} onChange={(e) => setBranch(e.target.checked)} />}
-                  label={<Typography variant="body2">Branch</Typography>}
-                />
-                <FormControlLabel
-                  control={<Checkbox size="small" checked={zonal} onChange={(e) => setZonal(e.target.checked)} />}
-                  label={<Typography variant="body2">Zonal</Typography>}
-                />
-              </Box>
+              <Typography variant="body2" fontWeight={500} sx={{ py: 1 }}>
+                {range ? `${range} day${range > 1 ? "s" : ""}` : "—"}
+              </Typography>
             </Box>
-            <TextField
-              fullWidth
-              size="small"
-              label="Notice Range"
-              value={range ? `${range} day${range > 1 ? "s" : ""}` : "—"}
-              disabled
-            />
-            <TextField
-              fullWidth
-              size="small"
-              label="End Deadline"
-              value={endDadeline || "—"}
-              disabled
-            />
+            <Box>
+              <Typography variant="caption" fontWeight={600} color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
+                End Deadline
+              </Typography>
+              <Typography variant="body2" fontWeight={500} sx={{ py: 1 }}>
+                {endDadeline || "—"}
+              </Typography>
+            </Box>
           </Box>
 
+          <Divider sx={{ my: 3 }} />
+
           {/* Question Builder */}
-          <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 1 }}>
+          <Typography variant="subtitle2" fontWeight={600} color="text.secondary" sx={{ mb: 1.5 }}>
             Questions
           </Typography>
           <Box sx={{ mb: 2 }}>{questionUI()}</Box>
 
+          <Divider sx={{ my: 3 }} />
+
           {/* Submit */}
-          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mb: 3 }}>
             <Button variant="outlined" onClick={() => navigate("/dashboard")}>
               Cancel
             </Button>
@@ -548,7 +472,7 @@ const Notice = () => {
             </Button>
           </Box>
         </Box>
-      </Paper>
+      </Box>
 
       <Snackbar
         open={snackbar.open}

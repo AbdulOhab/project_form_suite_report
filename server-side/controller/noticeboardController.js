@@ -118,9 +118,6 @@ const noticeboardController = {
         range: data.range,
         timeStart: data.timeStart,
         timeEnd: data.timeEnd,
-        thana: data.thana,
-        branch: data.branch,
-        zonal: data.zonal,
         startDadeline: data.startDadeline,
         endDadeline: data.endDadeline,
       });
@@ -151,9 +148,6 @@ const noticeboardController = {
           range: data.range,
           timeStart: data.timeStart,
           timeEnd: data.timeEnd,
-          thana: data.thana,
-          branch: data.branch,
-          zonal: data.zonal,
           startDadeline: data.startDadeline,
           endDadeline: data.endDadeline,
         }

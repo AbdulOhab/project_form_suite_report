@@ -25,18 +25,6 @@ module.exports = mongoose.model(
         type: String,
         required: true,
       },
-      thana: {
-        type: Boolean,
-        required: false,
-      },
-      branch: {
-        type: Boolean,
-        required: false,
-      },
-      zonal: {
-        type: Boolean,
-        required: false,
-      },
       timeStart: {
         type: String,
         required: true,

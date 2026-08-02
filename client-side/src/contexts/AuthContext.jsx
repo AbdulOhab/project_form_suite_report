@@ -6,11 +6,16 @@ export const AuthContext = createContext(null);
 const AuthContextProvider = ({ children }) => {
   const [checkAuth, setcheckAuth] = useState(false);
   const [userInfo, setuserInfo] = useState(null);
+  // Distinguishes "still verifying the token" from "confirmed logged out" —
+  // without this, a reload briefly looks logged-out (checkAuth === false)
+  // before the async check resolves, flashing the login page.
+  const [authChecked, setAuthChecked] = useState(false);
 
   const checkUser = async () => {
     const token = window.localStorage.getItem("gsmToken");
     if (!token) {
       setcheckAuth(false);
+      setAuthChecked(true);
       return;
     }
 
@@ -40,7 +45,10 @@ const AuthContextProvider = ({ children }) => {
         }
       })
       .catch((err) => {
-        return console.log(err);
+        console.log(err);
+      })
+      .finally(() => {
+        setAuthChecked(true);
       });
   };
   useEffect(() => {
@@ -53,7 +61,7 @@ const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ checkAuth, setcheckAuth, logout, userInfo }}>
+    <AuthContext.Provider value={{ checkAuth, setcheckAuth, logout, userInfo, authChecked }}>
       {children}
     </AuthContext.Provider>
   );

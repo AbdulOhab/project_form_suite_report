@@ -14,15 +14,11 @@ import {
   TextField,
   Button,
   Box,
-  Checkbox,
   FormControl,
   InputLabel,
   Snackbar,
   Alert,
 } from "@mui/material";
-import SubjectIcon from "@mui/icons-material/Subject";
-import NumericIcon from "@mui/icons-material/Numbers";
-import SortTextIcon from "@mui/icons-material/ShortText";
 import SortNumericIcon from "@mui/icons-material/NumbersSharp";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import FilterNoneIcon from "@mui/icons-material/FilterNone";
@@ -45,10 +41,6 @@ const NoticeEditor = () => {
   const [error, setError] = useState();
   const [timeEnd, setTimeEnd] = useState("00:00:00");
   const [timeStart, setTimeStart] = useState("00:00:00");
-  const [thana, setThana] = useState(false);
-  const [branch, setBranch] = useState(false);
-  const [zonal, setZonal] = useState(false);
-  const [selectedType, setSelectedType] = useState("text");
   const [showSubtitleField, setShowSubtitleField] = useState(false);
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
   const [question, setQuestion] = useState([]);
@@ -76,9 +68,6 @@ const NoticeEditor = () => {
         setEndDadeline(data?.endDadeline);
         setTimeStart(data?.timeStart);
         setTimeEnd(data?.timeEnd);
-        setThana(data?.thana);
-        setBranch(data?.branch);
-        setZonal(data?.zonal);
       } catch (error) {
         console.error("Error fetching notice data:", error);
       }
@@ -116,9 +105,6 @@ const NoticeEditor = () => {
           timeEnd,
           startDadeline,
           endDadeline,
-          thana,
-          branch,
-          zonal,
         }),
       });
       const data = await response.json();
@@ -145,13 +131,6 @@ const NoticeEditor = () => {
   function inputChangeHandler(text, i) {
     const updated = [...question];
     updated[i].questionText = text;
-    setQuestion(updated);
-  }
-
-  function addQuestionType(i, type) {
-    const updated = [...question];
-    updated[i].questionType = type;
-    updated[i].options = [{ optionsText: type === "text" ? "Sort answer text" : "Value must be number" }];
     setQuestion(updated);
   }
 
@@ -196,8 +175,8 @@ const NoticeEditor = () => {
       ...question,
       {
         questionText: "",
-        questionType: selectedType,
-        options: [{ optionsText: selectedType === "text" ? "Sort answer text" : "Value must be number" }],
+        questionType: "number",
+        options: [{ optionsText: "Value must be number" }],
         open: true,
         required: false,
       },
@@ -247,15 +226,7 @@ const NoticeEditor = () => {
                   <Box key={j} sx={{ display: "flex" }}>
                     <FormControlLabel
                       disabled
-                      control={
-                        que.questionType !== "text" && que.questionType !== "number" ? (
-                          <input type={que.questionType} required={que.required} disabled />
-                        ) : question[i].questionType === "number" ? (
-                          <SortNumericIcon sx={{ mr: 1 }} fontSize="small" />
-                        ) : (
-                          <SortTextIcon sx={{ mr: 1 }} fontSize="small" />
-                        )
-                      }
+                      control={<SortNumericIcon sx={{ mr: 1 }} fontSize="small" />}
                       label={<Typography variant="body2" color="text.secondary">{opText.optionsText}</Typography>}
                     />
                   </Box>
@@ -266,7 +237,7 @@ const NoticeEditor = () => {
         </AccordionSummary>
 
         {question[i].open ? (
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
+          <Box sx={{ display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
             <AccordionDetails sx={{ display: "flex", flexDirection: "column", width: "100%", pt: 0 }}>
               <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 1 }}>
                 <TextField
@@ -277,24 +248,10 @@ const NoticeEditor = () => {
                   value={que.questionText}
                   onChange={(e) => inputChangeHandler(e.target.value, i)}
                 />
-                <FormControl size="small">
-                  <Select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
-                    <MenuItem value="text" onClick={() => addQuestionType(i, "text")}>
-                      <SubjectIcon sx={{ mr: 1 }} fontSize="small" /> Paragraph
-                    </MenuItem>
-                    <MenuItem value="number" onClick={() => addQuestionType(i, "number")}>
-                      <NumericIcon sx={{ mr: 1 }} fontSize="small" /> Number
-                    </MenuItem>
-                  </Select>
-                </FormControl>
               </Box>
               {que.options.map((op, j) => (
                 <Box key={j} sx={{ display: "flex", alignItems: "center", my: 0.5 }}>
-                  {question[i].questionType === "number" ? (
-                    <SortNumericIcon sx={{ mr: 1 }} fontSize="small" />
-                  ) : question[i].questionType === "text" ? (
-                    <SortTextIcon sx={{ mr: 1 }} fontSize="small" />
-                  ) : null}
+                  <SortNumericIcon sx={{ mr: 1 }} fontSize="small" />
                   <TextField
                     variant="standard"
                     disabled
@@ -317,7 +274,7 @@ const NoticeEditor = () => {
                 </Box>
               </Box>
             </AccordionDetails>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, py: 1.5, px: 0.5 }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, px: 0.5 }}>
               <AddCircleOutlineIcon
                 sx={{ cursor: "pointer" }}
                 titleAccess="New Question"
@@ -434,26 +391,8 @@ const NoticeEditor = () => {
             />
           </Box>
 
-          {/* Permission + Range + End Deadline */}
-          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr 1fr" }, gap: 2, mb: 2, alignItems: "start" }}>
-            <Box>
-              <Typography variant="body2" fontWeight={600} sx={{ mb: 1 }}>Data Permission</Typography>
-              <Box sx={{ display: "flex", gap: 1 }}>
-                <FormControlLabel
-                  control={<Checkbox size="small" checked={thana} onChange={(e) => setThana(e.target.checked)} />}
-                  label={<Typography variant="body2">Thana</Typography>}
-                />
-                <FormControlLabel
-                  control={<Checkbox size="small" checked={branch} onChange={(e) => setBranch(e.target.checked)} />}
-                  label={<Typography variant="body2">Branch</Typography>}
-                />
-                <FormControlLabel
-                  control={<Checkbox size="small" checked={zonal} onChange={(e) => setZonal(e.target.checked)} />}
-                  label={<Typography variant="body2">Zonal</Typography>}
-                />
-              </Box>
-              <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>{error?.zonal}</Box>
-            </Box>
+          {/* Range + End Deadline */}
+          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 2, mb: 2, alignItems: "start" }}>
             <TextField
               fullWidth
               size="small"
