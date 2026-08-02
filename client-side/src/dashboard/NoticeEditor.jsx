@@ -10,7 +10,6 @@ import {
   MenuItem,
   Switch,
   Select,
-  Paper,
   TextField,
   Button,
   Box,
@@ -18,6 +17,8 @@ import {
   InputLabel,
   Snackbar,
   Alert,
+  Tooltip,
+  Divider,
 } from "@mui/material";
 import SortNumericIcon from "@mui/icons-material/NumbersSharp";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -26,6 +27,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 import BASE_URL from "../auth/dbUrl";
 
 const NoticeEditor = () => {
@@ -41,7 +44,6 @@ const NoticeEditor = () => {
   const [error, setError] = useState();
   const [timeEnd, setTimeEnd] = useState("00:00:00");
   const [timeStart, setTimeStart] = useState("00:00:00");
-  const [showSubtitleField, setShowSubtitleField] = useState(false);
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
   const [question, setQuestion] = useState([]);
 
@@ -62,7 +64,6 @@ const NoticeEditor = () => {
         setdocumentName(data?.document_name || "");
         setdocumentDescription(data?.doc_desc || "");
         setSubtitle(data?.sub_title || "");
-        if (data?.sub_title) setShowSubtitleField(true);
         setRange(data?.range);
         setStartDadeline(data?.startDadeline);
         setEndDadeline(data?.endDadeline);
@@ -198,8 +199,10 @@ const NoticeEditor = () => {
         expanded={question[i].open}
         onChange={() => handleExpandHandler(i)}
         sx={{
-          border: question[i].open ? 2 : 0,
-          borderColor: "primary.main",
+          border: 1,
+          borderColor: question[i].open ? "primary.main" : "divider",
+          bgcolor: question[i].open ? "action.hover" : "transparent",
+          boxShadow: "none",
           my: 1,
           borderRadius: 1,
           "&:before": { display: "none" },
@@ -210,12 +213,20 @@ const NoticeEditor = () => {
           {!question[i].open ? (
             <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <IconButton size="small" disabled={i === 0} onClick={(e) => { e.stopPropagation(); moveQuestion(i, -1); }}>
-                  <ArrowUpwardIcon fontSize="inherit" />
-                </IconButton>
-                <IconButton size="small" disabled={i === question.length - 1} onClick={(e) => { e.stopPropagation(); moveQuestion(i, 1); }}>
-                  <ArrowDownwardIcon fontSize="inherit" />
-                </IconButton>
+                <span>
+                  <Tooltip title="উপরে সরান">
+                    <IconButton size="small" disabled={i === 0} onClick={(e) => { e.stopPropagation(); moveQuestion(i, -1); }}>
+                      <ArrowUpwardIcon fontSize="inherit" />
+                    </IconButton>
+                  </Tooltip>
+                </span>
+                <span>
+                  <Tooltip title="নিচে সরান">
+                    <IconButton size="small" disabled={i === question.length - 1} onClick={(e) => { e.stopPropagation(); moveQuestion(i, 1); }}>
+                      <ArrowDownwardIcon fontSize="inherit" />
+                    </IconButton>
+                  </Tooltip>
+                </span>
               </Box>
               <Box sx={{ flex: 1 }}>
                 <Typography variant="body1" fontWeight={500} sx={{ pb: 0.5 }}>
@@ -262,12 +273,16 @@ const NoticeEditor = () => {
                 </Box>
               ))}
               <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center", mt: 1, gap: 0.5 }}>
-                <IconButton size="small" title="Copy" onClick={() => copyQuestion(i)}>
-                  <FilterNoneIcon fontSize="small" />
-                </IconButton>
-                <IconButton size="small" title="Delete" onClick={() => deleteQuestion(i)}>
-                  <DeleteIcon fontSize="small" />
-                </IconButton>
+                <Tooltip title="প্রশ্ন কপি করুন">
+                  <IconButton size="small" onClick={() => copyQuestion(i)}>
+                    <FilterNoneIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="প্রশ্ন মুছুন">
+                  <IconButton size="small" onClick={() => deleteQuestion(i)}>
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                </Tooltip>
                 <Box sx={{ display: "flex", alignItems: "center", ml: 1 }}>
                   <Typography variant="caption" color="text.secondary">Required</Typography>
                   <Switch size="small" color="primary" checked={!!que.required} onClick={() => requiredQuestion(i)} />
@@ -275,12 +290,11 @@ const NoticeEditor = () => {
               </Box>
             </AccordionDetails>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5, px: 0.5 }}>
-              <AddCircleOutlineIcon
-                sx={{ cursor: "pointer" }}
-                titleAccess="New Question"
-                onClick={addMoreQuestion}
-                fontSize="small"
-              />
+              <Tooltip title="নতুন প্রশ্ন যোগ করুন">
+                <IconButton size="small" onClick={addMoreQuestion}>
+                  <AddCircleOutlineIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
             </Box>
           </Box>
         ) : null}
@@ -290,15 +304,12 @@ const NoticeEditor = () => {
 
   return (
     <>
-      <Paper elevation={2} sx={{ maxWidth: 1000, mx: "auto", my: 3, borderRadius: 2, overflow: "hidden" }}>
-        {/* Colored header — same as Notice.jsx */}
-        <Box sx={{ bgcolor: "primary.main", px: 3, py: 2 }}>
-          <Typography variant="h5" sx={{ color: "#fff", fontWeight: "bold", textAlign: "center" }}>
-            Edit Notice
-          </Typography>
-        </Box>
+      <Box sx={{ maxWidth: 900, mx: "auto" }}>
+        <Typography variant="h5" fontWeight={700} sx={{ mb: 3 }}>
+          Edit Notice
+        </Typography>
 
-        <Box sx={{ p: 3 }}>
+        <Box>
           {/* Notice Title */}
           <TextField
             fullWidth
@@ -313,40 +324,36 @@ const NoticeEditor = () => {
           <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>{error?.document_name}</Box>
 
           {/* Subtitle */}
-          {showSubtitleField ? (
-            <TextField
-              fullWidth
-              size="small"
-              variant="outlined"
-              label="Subtitle"
-              value={subtitle}
-              onChange={(e) => setSubtitle(e.target.value)}
-              placeholder="Enter subtitle"
-              sx={{ mb: 2 }}
-            />
-          ) : (
-            <Button size="small" startIcon={<AddCircleOutlineIcon />} onClick={() => setShowSubtitleField(true)} sx={{ mb: 2 }}>
-              Add Subtitle
-            </Button>
-          )}
-
-          {/* Description */}
           <TextField
             fullWidth
             size="small"
             variant="outlined"
             multiline
-            minRows={2}
-            label="Description"
-            placeholder="Add short description"
-            value={documentDescription}
-            onChange={(e) => setdocumentDescription(e.target.value)}
+            minRows={3}
+            label="Subtitle"
+            value={subtitle}
+            onChange={(e) => setSubtitle(e.target.value)}
+            placeholder="Enter subtitle"
             sx={{ mb: 2 }}
           />
+
+          {/* Description */}
+          <Typography variant="caption" fontWeight={600} color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
+            Description
+          </Typography>
+          <Box sx={{ mb: 8 }}>
+            <ReactQuill
+              theme="snow"
+              value={documentDescription || ""}
+              onChange={setdocumentDescription}
+              placeholder="Add short description"
+              style={{ height: "150px" }}
+            />
+          </Box>
           <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>{error?.doc_desc}</Box>
 
           {/* Notice Type / Date / Time */}
-          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr 1fr" }, gap: 2, mb: 2 }}>
+          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 2, mb: 2 }}>
             <FormControl fullWidth size="small">
               <InputLabel>Notice Type</InputLabel>
               <Select value={range || ""} onChange={rangeHandler} label="Notice Type">
@@ -368,7 +375,6 @@ const NoticeEditor = () => {
               value={startDadeline || ""}
               onChange={(e) => setStartDadeline(e.target.value)}
             />
-            <Box component="ul" sx={{ listStyle: "none", p: 0, m: 0 }}>{error?.startDadeline}</Box>
             <TextField
               fullWidth
               type="time"
@@ -391,30 +397,40 @@ const NoticeEditor = () => {
             />
           </Box>
 
-          {/* Range + End Deadline */}
-          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 2, mb: 2, alignItems: "start" }}>
-            <TextField
-              fullWidth
-              size="small"
-              label="Notice Range"
-              value={range ? `${range} day${range > 1 ? "s" : ""}` : "—"}
-              disabled
-            />
-            <TextField
-              fullWidth
-              size="small"
-              label="End Deadline"
-              value={endDadeline || "—"}
-              disabled
-            />
+          <Divider sx={{ my: 3 }} />
+
+          {/* End Info */}
+          <Box sx={{ display: "flex", flexWrap: "wrap", gap: 4, mb: 1 }}>
+            <Box>
+              <Typography variant="caption" fontWeight={600} color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
+                Notice Range
+              </Typography>
+              <Typography variant="body2" fontWeight={500} sx={{ py: 1 }}>
+                {range ? `${range} day${range > 1 ? "s" : ""}` : "—"}
+              </Typography>
+            </Box>
+            <Box>
+              <Typography variant="caption" fontWeight={600} color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
+                End Deadline
+              </Typography>
+              <Typography variant="body2" fontWeight={500} sx={{ py: 1 }}>
+                {endDadeline || "—"}
+              </Typography>
+            </Box>
           </Box>
 
+          <Divider sx={{ my: 3 }} />
+
           {/* Question Builder */}
-          <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 1 }}>Questions</Typography>
+          <Typography variant="subtitle2" fontWeight={600} color="text.secondary" sx={{ mb: 1.5 }}>
+            Questions
+          </Typography>
           <Box sx={{ mb: 2 }}>{questionUI()}</Box>
 
+          <Divider sx={{ my: 3 }} />
+
           {/* Actions */}
-          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mb: 3 }}>
             <Button variant="outlined" onClick={() => navigate("/dashboard")}>
               Cancel
             </Button>
@@ -423,7 +439,7 @@ const NoticeEditor = () => {
             </Button>
           </Box>
         </Box>
-      </Paper>
+      </Box>
 
       <Snackbar
         open={snackbar.open}

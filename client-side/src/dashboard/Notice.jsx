@@ -386,7 +386,7 @@ const Notice = () => {
           </Box>
 
           {/* Notice Type / Date / Time */}
-          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "1fr 1fr 1fr 1fr" }, gap: 2, mb: 2 }}>
+          <Box sx={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 2, mb: 2 }}>
             <FormControl fullWidth size="small">
               <InputLabel>Notice Type</InputLabel>
               <Select value={range || ""} onChange={rangeHandler} label="Notice Type" name="noticeType">
