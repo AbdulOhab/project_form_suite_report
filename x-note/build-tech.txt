@@ -1,0 +1,19 @@
+Frontend (client-side):
+1. React 18 (Create React App / react-scripts 5) + react-router-dom v6 (HashRouter)
+2. MUI (@mui/material, @mui/icons-material) + Emotion — UI কম্পোনেন্ট লাইব্রেরি
+3. moment — date/time হ্যান্ডলিং
+4. xlsx, file-saver — Excel export ফিচারের জন্য
+5. react-loader-spinner, react-icons
+
+Backend (server-side):
+1. Node.js + Express 4
+2. MongoDB + Mongoose (ODM)
+3. jsonwebtoken — auth (JWT)
+4. bcrypt/bcryptjs — পাসওয়ার্ড হ্যাশিং
+5. multer — ফাইল আপলোড
+6. cors, dotenv, express-validator
+7. Dev-এ nodemon (hot-reload)
+8
+Infra: MongoDB 7.0, Docker/Podman (single-image deploy — SPA+API একই container-এ)।
+
+মাথায় রাখার মতো: @mui/material server-side/package.json-এও আছে — এটা ভুলবশত (ব্যাকএন্ডে UI লাইব্রেরির দরকার নেই), আগের pending-list-এ এটা cleanup আইটেম হিসেবে আছে।

@@ -1,0 +1,63 @@
+১. JWT_SECRET rotate করা — request.http-এ থাকা real token commit 1981fcc-এ GitHub-এ পুশ হয়ে গেছে, secret বদলালে ওই token invalid হয়ে যাবে
+২. request.http-এর git history clean করা (repo public হলে) — git filter-repo বা BFG দিয়ে
+৩. Helmet + express-rate-limit যোগ করা server-side/index.js-এ (এখনো package.json-এ নেই)
+৪. Global error handler যোগ করা index.js-এর শেষে
+৫. "Dadeline" → "Deadline" টাইপো ফিক্স (৩২৩ জায়গায়, server-side + client-side)
+৬. অব্যবহৃত model ফাইল মুছে ফেলা — adminModel.js, branchModel.js, zonalModel.js, checkModel.js (কোনো controller এগুলো ব্যবহার করে না, শুধু thanaModel ব্যবহার হয়)
+৭. server-side/package.json থেকে @mui/material বাদ দেওয়া (ব্যাকএন্ডে UI লাইব্রেরি থাকার দরকার নেই)
+৮. Dependency আপডেট — bcrypt, bcryptjs, body-parser, multer (নিরাপদ); mongoose 8→9 আর express 4→5 আলাদাভাবে টেস্ট করে (breaking changes আছে)
+৯. docker-compose-devlopment.yml ফাইলটা এখন redundant (মূল docker-compose.yml-এই mongo পোর্ট এক্সপোজ করা আছে) — মুছে ফেলা যায় অথবা রেখে দেওয়া যায়
+১০. CLAUDE.md ও PRODUCTION_PLAN.md আপডেট করা — এখন অনেক জায়গায় বাস্তব কোডের সাথে মিলছে না (auth middleware, JWT secret, Bearer scheme, logout fix, AdminReview — এসব ইতিমধ্যে হয়ে গেছে কিন্তু ডকে এখনো "pending/broken" লেখা)
+
+
+docs or pdf work: (source: x-note/ইন্সট্যান্ট রিপোর্ট সাইট রিভিউ.pdf)
+
+ADMIN — Dashboard
+১. নোটিশের ভিউ BoxView করা
+২. নোটিশগুলো বাদ দিয়ে রিপোর্ট হবে — এটাকে "রিপোর্ট সেন্টার" বলা হবে
+৩. Running ও আগামীর রিপোর্টের নোটিশ শুধু ড্যাশবোর্ডে শো করবে
+৪. পূর্ববর্তী রিপোর্ট একটা মেন্যুর মধ্যে থাকবে
+
+ADMIN — Create Notice
+৫. "Create Notice" ট্যাবটি ডান পাশে দেয়া
+৬. Notice Type-এ নতুন অপশন "Custom" রাখা (২০/২৫/১২ দিন নিজের ইচ্ছেমতো দেয়া যাবে)
+৭. "Header" পিকচার/থাম্বনেইল যুক্ত করার অপশন
+৮. Question-এ Dropdown দেয়ার সিস্টেম যুক্ত করা
+
+ADMIN — User List / Create User
+৯. User List-এ Filter & sorting অপশন যুক্ত করা
+১০. Create Thana-তে Zone Code > Branch Code > Thana Code এভাবে সাজানো — Zone Code ও Branch Code Dropdown হবে, Branch Code হবে Zone Code অনুযায়ী ডিপেন্ডেন্ট, আর Thana Code ভ্যালিডেশন চেক থাকবে
+
+ADMIN — Others
+১১. Zone/Branch/Thana রিপোর্ট এক নজরে দেখার সিস্টেম (Excel Export option সহ) — দিনভিত্তিক, অঞ্চলভিত্তিক, শাখাভিত্তিক তিনটি আলাদা ভিউ বাটন থাকবে, যেমনটা বর্ণনা করা আছে PDF-এ
+১২. Submit/unsubmit-এর সমস্যা ঠিক করা
+
+THANA
+১৩. Dashboard: নোটিশের ভিউ BoxView করা, Running নোটিশ শুধু ড্যাশবোর্ডে, পূর্ববর্তী নোটিশ মেন্যুতে
+১৪. তথ্য ইনপুট পেজ: প্রশ্ন বোল্ড করা
+১৫. ইনপুটের জায়গায় আউটলাইন দেয়া
+১৬. "#" চিহ্ন বাদ দেয়া
+১৭. পেজটা ওভারঅল কালারফুল করা
+
+BRANCH
+১৮. Dashboard: নোটিশের ভিউ BoxView করা, Running নোটিশ শুধু ড্যাশবোর্ডে, পূর্ববর্তী নোটিশ মেন্যুতে
+১৯. Report Input Page: শুধু চলমান দিনের রিপোর্ট ইনপুট দেয়া যাবে — আগের/পরের দিনে ঢোকা যাবে না
+২০. ব্যাক বাটন যুক্ত করা
+২১. টাইটেল সুন্দর করা
+২২. Thana-র রিপোর্ট এক নজরে দেখার সিস্টেম (Excel Export সহ)
+
+ZONE
+২৩. Dashboard: নোটিশের ভিউ BoxView করা, Running নোটিশ শুধু ড্যাশবোর্ডে, পূর্ববর্তী নোটিশ মেন্যুতে
+২৪. Thana ও Branch-এর রিপোর্ট এক নজরে দেখার সিস্টেম (Excel Export সহ)
+২৫. পরামর্শ দেয়ার ব্যবস্থা করা (শাখা এটা দেখতে পাবে)
+
+মেইন ভিউ (সব রোলের জন্য)
+২৬. "নোটিশ বোর্ড" নামটি পরিবর্তন করা — যেমন "রিপোর্ট সেন্টারে আপনাকে স্বাগতম"
+২৭. নোটিশ দেখানোর সিস্টেম বক্স ভিউ বা বর্তমান সিস্টেম — দুটোই অপশন হতে পারে
+২৮. একটা রিপোর্ট দুই/কয়েকদিন ধরে চলতে পারে এমন কেসের জন্য নতুন সিস্টেম দরকার
+২৯. চলমান ও ভবিষ্যত নোটিশ ড্যাশবোর্ডের সামনে শো করবে
+৩০. ভবিষ্যত রিপোর্টে দিন শুরু না হলে সময় কাউন্টডাউন দেখানোর দরকার নেই — বরং "রিপোর্ট প্রদান শুরু হতে বাকি আছে" লেখা + কাউন্টডাউন (দিন/ঘণ্টা/মিনিট/সেকেন্ড ফরম্যাটে) দেখাবে
+৩১. ড্যাশবোর্ডে রিপোর্ট শুরু ও শেষের তারিখ-সময় দেখাবে; রিপোর্ট চলাকালে কাউন্টডাউন দেখাবে মেয়াদ শেষ হতে আর কতক্ষণ বাকি
+৩২. নোটিশের ভেতরের নীল কালার সাদা/কালো করা যেতে পারে, হোভারে কালার চেঞ্জ হবে
+৩৩. কোন পেইজে আছে তা বোঝার জন্য হেডার প্রয়োজন
+৩৪. এক পেইজ থেকে আরেক পেইজে নেভিগেশন স্লো — পারফরম্যান্স ঠিক করা দরকার
