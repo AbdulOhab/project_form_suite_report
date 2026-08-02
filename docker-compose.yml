@@ -4,6 +4,8 @@ services:
   mongodb:
     image: docker.io/library/mongo:7.0
     container_name: project_form_suite_database
+    ports:
+      - "27017:27017"
     volumes:
       - mongo_data:/data/db
     networks:
