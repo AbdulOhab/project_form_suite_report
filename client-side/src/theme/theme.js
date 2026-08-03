@@ -15,7 +15,7 @@ const theme = createTheme({
       contrastText: "#333333",
     },
     background: {
-      default: "#f5f5f5",
+      default: "#f1f5f9",
       paper: "#ffffff",
     },
     error: {
@@ -60,6 +60,13 @@ const theme = createTheme({
       defaultProps: {
         variant: "outlined",
         size: "small",
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "#ffffff",
+        },
       },
     },
     MuiCard: {

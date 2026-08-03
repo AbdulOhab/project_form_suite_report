@@ -134,12 +134,12 @@ const Login = () => {
                 fullWidth
                 id="userId"
                 name="userId"
-                label="ইউজার আইডি"
+                label="User ID"
                 type="text"
                 inputMode="numeric"
                 margin="normal"
                 variant="outlined"
-                placeholder="ইউজার আইডি"
+                placeholder="User ID"
                 error={!!formErrors?.userId?.length}
                 helperText={
                   formErrors?.userId?.length
@@ -154,11 +154,11 @@ const Login = () => {
                 fullWidth
                 id="password"
                 name="password"
-                label="পাসওয়ার্ড"
+                label="Password"
                 type={showPassword ? "text" : "password"}
                 margin="normal"
                 variant="outlined"
-                placeholder="পাসওয়ার্ড"
+                placeholder="Password"
                 error={!!formErrors?.password?.length}
                 helperText={
                   formErrors?.password?.length

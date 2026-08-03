@@ -372,7 +372,14 @@ const Notice = () => {
           <Typography variant="caption" fontWeight={600} color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
             Description
           </Typography>
-          <Box sx={{ mb: 8 }}>
+          <Box
+            sx={{
+              mb: 8,
+              bgcolor: "#ffffff",
+              "& .ql-toolbar": { bgcolor: "#ffffff" },
+              "& .ql-container": { bgcolor: "#ffffff" },
+            }}
+          >
             <ReactQuill
               theme="snow"
               value={documentDescription || ""}
