@@ -1,0 +1,51 @@
+pending-list.txt রিভিউ — কোডের বর্তমান অবস্থার সাথে মিলিয়ে (২০২৬-০৮-০৪)
+
+✅ হয়ে গেছে
+----------
+৯. docker-compose-devlopment.yml — আগেই মুছে ফেলা হয়েছে
+১৯. Branch-এর "শুধু চলমান দিনে এডিট" — এই সেশনে করা হয়েছে (BranchDayCount.jsx + backend
+    update-answer কন্ট্রোলার দুই জায়গাতেই lock করা হয়েছে, thana-র মতোই একই দিন +
+    timeStart-timeEnd উইন্ডোর বাইরে এডিট আটকানো)
+
+🔴 না করলেই নয় (জরুরি)
+----------------------
+১. JWT_SECRET rotate করা — request.http-এ থাকা real token commit 1981fcc-এ GitHub-এ
+   পুশ হয়ে গেছে, secret বদলালে ওই token invalid হবে (production action)
+২. request.http-এর git history clean করা — git filter-repo/BFG দিয়ে (repo public হলে)
+৩. Helmet + express-rate-limit যোগ করা — server-side/index.js-এ এখনো নেই
+১০. CLAUDE.md ও PRODUCTION_PLAN.md আপডেট — এখনো লেখা আছে "HashRouter" (আসলে
+    BrowserRouter), "50 of 52 routes unprotected" (আসলে requireRole প্রায় সব রুটে
+    বসানো) — কম effort, কিন্তু ডকুমেন্ট এখন ভুল তথ্য দিচ্ছে
+
+🟡 করলে ভালো, জরুরি না
+----------------------
+৪. Global error handler — এখন শুধু unhandledRejection/uncaughtException crash-guard
+   আছে, প্রপার ৪-আর্গুমেন্ট Express middleware নেই
+৫. "Dadeline" → "Deadline" টাইপো ফিক্স — ৪০ ফাইলে, কসমেটিক, ভাঙবে না
+৬. অব্যবহৃত model file মুছে ফেলা — adminModel.js, branchModel.js, zonalModel.js,
+   checkModel.js (কোনো controller ব্যবহার করে না)
+৭. server-side/package.json থেকে @mui/material বাদ দেওয়া — ব্যাকএন্ডে দরকার নেই
+৮. Dependency আপডেট — bcrypt/bcryptjs/body-parser/multer নিরাপদ; mongoose 8→9,
+   express 4→5 আলাদাভাবে টেস্ট করে (breaking changes আছে)
+
+⚪ দরকার নাই / পরে ভাবলেই চলবে (feature/product decision)
+--------------------------------------------------------
+১১. Notice Type-এ "Custom" অপশন — নতুন ফিচার
+১২. Question-এ Dropdown টাইপ — নতুন ফিচার
+১৩. User List-এ Filter/sort — nice-to-have
+১৪/১৮/২৩. Dashboard BoxView redesign (thana/branch/zone, একই আইটেম ৩ জায়গায়) —
+    বড় redesign
+১৫. প্রশ্ন বোল্ড করা — ThanaEmptyNotice.jsx-এ fontWeight 500→700, এক লাইনের ফিক্স
+১৬. পেজ ওভারঅল কালারফুল করা — subjective/design পছন্দ
+২২/২৪. Branch/Zone-কে Sums/Excel export route access দেওয়া — এখনো admin-only
+২৫. পরামর্শ (suggestion) ফিচার — একদমই শুরু হয়নি, স্কোপ ঠিক করতে হবে আগে
+২৬. "নোটিশ বোর্ড" নাম বদল ("Instance Report" থেকে) — এক লাইনের টেক্সট চেঞ্জ
+২৮. Multi-day single-report গ্রুপিং সিস্টেম — বড় architectural change
+২৯. চলমান/ভবিষ্যত নোটিশ front-load — ব্যাকএন্ড শুধু _id দিয়ে সর্ট করে, ফ্রন্টএন্ড আলাদা
+    tab-এ ভাগ করে দেখায় (আংশিক সমাধান আছে)
+৩০. Countdown-এ সেকেন্ড দেখানো — এখন দিন/ঘণ্টা/মিনিট পর্যন্ত, ১ মিনিট পরপর আপডেট হয়
+৩২. থিম কালার সাদা/কালো + হোভার রিকালার — এখন primary green (#2e7d32), টগল নেই
+৩৩. হেডারে page-name breadcrumb — AppHeader.jsx-এ role badge + user menu আছে,
+    breadcrumb নেই
+৩৪. React.lazy code-splitting — App.jsx সব রুট eagerly import করে, এখনো ছোট অ্যাপ
+    বলে বড় সমস্যা না হলে জরুরি না

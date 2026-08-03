@@ -4,9 +4,7 @@
 ৪. [🟡 আংশিক — index.js-এ শুধু process.on("unhandledRejection"/"uncaughtException") স্টপগ্যাপ হিসেবে আছে, প্রপার Express ৪-আর্গুমেন্ট error middleware নেই] Global error handler যোগ করা index.js-এর শেষে
 ৫. [⬜ বাকি — এখনো ৪৫টা ফাইলে "Dadeline" আছে] "Dadeline" → "Deadline" টাইপো ফিক্স (৩২৩ জায়গায়, server-side + client-side)
 ৬. [⬜ বাকি — adminModel.js/branchModel.js/zonalModel.js/checkModel.js এখনো আছে] অব্যবহৃত model ফাইল মুছে ফেলা — adminModel.js, branchModel.js, zonalModel.js, checkModel.js (কোনো controller এগুলো ব্যবহার করে না, শুধু thanaModel ব্যবহার হয়)
-৭. [⬜ বাকি — server-side/package.json-এ এখনো আছে] server-side/package.json থেকে @mui/material বাদ দেওয়া (ব্যাকএন্ডে UI লাইব্রেরি থাকার দরকার নেই)
 ৮. [⬜ বাকি — mongoose এখনো ^8.4.1, express এখনো ^4.19.2] Dependency আপডেট — bcrypt, bcryptjs, body-parser, multer (নিরাপদ); mongoose 8→9 আর express 4→5 আলাদাভাবে টেস্ট করে (breaking changes আছে)
-৯. [✅ হয়ে গেছে — ফাইলটা রিপোতে আর নেই, শুধু docker-compose.yml ও docker-compose-live.yml আছে] docker-compose-devlopment.yml ফাইলটা এখন redundant (মূল docker-compose.yml-এই mongo পোর্ট এক্সপোজ করা আছে) — মুছে ফেলা যায় অথবা রেখে দেওয়া যায়
 ১০. [⬜ বাকি — এবং স্টেলনেস যা ভাবা হয়েছিল তার চেয়ে বড়: auth middleware + role-based access (requireRole) এখন প্রায় সব রুটে বসানো আছে, HashRouter থেকে BrowserRouter-এ চেঞ্জ হয়েছে — কিন্তু CLAUDE.md এখনো লিখে রেখেছে "50 of 52 routes have no auth middleware" এবং HashRouter ব্যবহারের কথা] CLAUDE.md ও PRODUCTION_PLAN.md আপডেট করা — এখন অনেক জায়গায় বাস্তব কোডের সাথে মিলছে না (auth middleware, JWT secret, Bearer scheme, logout fix, AdminReview — এসব ইতিমধ্যে হয়ে গেছে কিন্তু ডকে এখনো "pending/broken" লেখা)
 
 
@@ -25,7 +23,7 @@ THANA
 
 BRANCH
 ১৮. [🟡 আংশিক — শেয়ার্ড NoticeBoard.jsx/ব্যাকএন্ড লজিক, দেখুন আইটেম ৩/৪/১৩] Dashboard: নোটিশের ভিউ BoxView করা, Running নোটিশ শুধু ড্যাশবোর্ডে, পূর্ববর্তী নোটিশ মেন্যুতে
-১৯. [🟡 আংশিক — Thana-তে disabled={data.date !== today} দিয়ে এনফোর্স করা আছে (DateByDayCount.jsx), কিন্তু Branch-এর formDisabled (BranchDayCount.jsx) শুধু পুরো date range active কিনা চেক করে, নির্দিষ্ট দিন না] Report Input Page: শুধু চলমান দিনের রিপোর্ট ইনপুট দেয়া যাবে — আগের/পরের দিনে ঢোকা যাবে না
+১৯. [✅ হয়ে গেছে — BranchDayCount.jsx-এ isToday + isWithinTimeWindow(timeStart, timeEnd) দিয়ে এনফোর্স করা হয়েছে (Thana-র disabled={data.date !== today} লজিকের মতোই), এবং backend-এর answerController.js-এর update ফাংশনেও একই দিন/সময় চেক বসানো হয়েছে যাতে সরাসরি API কল করেও bypass করা না যায়] Report Input Page: শুধু চলমান দিনের রিপোর্ট ইনপুট দেয়া যাবে — আগের/পরের দিনে ঢোকা যাবে না
 ২২. [⬜ বাকি — BranchDataInterface.jsx-এ কোনো Sums/Excel ভিউ-এর নেভ লিংক নেই, App.jsx-এ সব sums-* রুট RoleRoute roles={["admin"]} শুধু] Thana-র রিপোর্ট এক নজরে দেখার সিস্টেম (Excel Export সহ)
 
 ZONE

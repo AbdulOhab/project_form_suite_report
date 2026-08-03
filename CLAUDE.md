@@ -61,10 +61,10 @@ Admin  (userId: 110011-110013, no codes)
 - **answer_models_2024** — Submitted answers (answerModel)
 
 ### Route Structure
-`server-side/router/allRouter.js` aggregates 8 route files from `router/routes/`. Auth middleware is only applied to `/check-user` and `/logout` in `authRouter.js` — other routes lack protection (see PRODUCTION_PLAN.md Phase 2).
+`server-side/router/allRouter.js` aggregates 8 route files from `router/routes/`. `authMiddleware` + role-based `requireRole(...)` (from `middleware/roleMiddleware.js`) are applied across all of them — only `homeRouter.js` (`/`, `/about`) and the `/submit` login endpoint are intentionally public.
 
 ### Frontend Routing
-Uses `HashRouter` (URLs like `/#/dashboard`). 57 routes defined in `client-side/src/App.jsx`. Protected routes wrapped with `AuthRoutes.jsx`.
+Uses `BrowserRouter` (plain paths like `/dashboard`, no `#`). 52 routes defined in `client-side/src/App.jsx`. The whole dashboard section is wrapped in `AuthRoutes.jsx` (login required); individual routes are further gated by `RoleRoute` (role-specific access, e.g. `roles={["thana"]}`).
 
 ## Environment
 
@@ -82,9 +82,7 @@ REACT_APP_API_BASE_URL=http://localhost:5053
 ```
 
 ## Known Issues (see PRODUCTION_PLAN.md for full details)
-- 50 of 52 API routes have no auth middleware
-- No RBAC — any authenticated user can access any endpoint
 - No helmet, rate-limiting, or input sanitization
-- Unused dependencies: Redux, Axios, weather module, unused model files
-- Typos throughout: "Dadeline" → "Deadline" (~317 occurrences)
-- `request.http` and `SEED_CREDENTIALS.txt` are gitignored (contain test tokens/passwords)
+- Unused model files still present: `adminModel.js`, `branchModel.js`, `zonalModel.js`, `checkModel.js` (nothing imports them — only `thanaModel` is used, see above)
+- Typos throughout: "Dadeline" → "Deadline" (265 occurrences across 40 files)
+- `request.http` is gitignored now, but a real JWT was committed in it before the ignore was added (commit `1981fcc`) — rotating `JWT_SECRET` and scrubbing that commit from history are still outstanding
