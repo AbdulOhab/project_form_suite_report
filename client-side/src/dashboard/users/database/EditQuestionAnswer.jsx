@@ -19,6 +19,7 @@ import {
 import SortTextIcon from "@mui/icons-material/ShortText";
 import SortNumericIcon from "@mui/icons-material/NumbersSharp";
 import BASE_URL from "../../../auth/dbUrl";
+import { toEnglishDigits } from "../../../utils/convertDigits";
 
 function EditQuestionAnswer() {
   const { formId, answerId } = useParams();
@@ -78,6 +79,7 @@ function EditQuestionAnswer() {
   }, [answerId]);
 
   const selectInput = (qText, value, qIndex, required, questionType) => {
+    const data = questionType === "number" ? toEnglishDigits(value) : value;
     setAnswer((prevAnswer) => {
       const newAnswer = [...prevAnswer];
 
@@ -85,7 +87,7 @@ function EditQuestionAnswer() {
       if (qIndex >= newAnswer.length) {
         newAnswer[qIndex] = {
           questionText: qText,
-          data: value,
+          data,
           questionType: questionType,
           required: required,
         };
@@ -94,7 +96,7 @@ function EditQuestionAnswer() {
         newAnswer[qIndex] = {
           ...newAnswer[qIndex],
           questionText: qText,
-          data: value,
+          data,
           required: required,
           questionType: questionType,
         };
@@ -252,7 +254,12 @@ function EditQuestionAnswer() {
                           name={String(qIndex)}
                           size="small"
                           required={question?.required}
-                          defaultValue={question?.data}
+                          value={
+                            typeof answer[qIndex]?.data === "string" ||
+                            typeof answer[qIndex]?.data === "number"
+                              ? answer[qIndex].data
+                              : ""
+                          }
                           onChange={(e) =>
                             selectInput(
                               question?.questionText,

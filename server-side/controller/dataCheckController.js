@@ -36,16 +36,16 @@ module.exports = {
     const sums = {};
 
     answers?.forEach((answ) => {
-      answ?.answers?.forEach((ans) => {
-        const { questionText, questionType, data } = ans;
+      answ?.answers?.forEach((ans, index) => {
+        const { questionType, data } = ans;
         if (questionType === "number") {
-          sums[questionText] = (sums[questionText] || 0) + Number(data);
+          sums[index] = (sums[index] || 0) + Number(data);
         }
       });
     });
 
     const sumsArray = (question.questions || []).map((q, index) => ({
-      [index]: sums[q.questionText] || 0,
+      [index]: sums[index] || 0,
     }));
 
     return res.status(200).json({ answers, question, sumsArray });
@@ -149,11 +149,10 @@ module.exports = {
     // Iterate through each thana user
     tempThana.forEach((item) => {
       if (item.answer && Array.isArray(item.answer.answers)) {
-        item.answer.answers.forEach((answer) => {
-          const questionText = answer.questionText;
-          if (!sums[questionText]) sums[questionText] = 0;
+        item.answer.answers.forEach((answer, index) => {
+          if (!sums[index]) sums[index] = 0;
           if (answer.questionType === "number") {
-            sums[questionText] += Number(answer.data);
+            sums[index] += Number(answer.data);
           }
         });
       }
@@ -161,7 +160,7 @@ module.exports = {
 
     // Ensure all of the notice's questions have an entry in the sums array
     const sumsArray = (question?.questions || []).map((q, index) => ({
-      [index]: sums[q.questionText] || 0,
+      [index]: sums[index] || 0,
     }));
 
     return res.status(200).json({ tempThana, question, sumsArray });
@@ -211,19 +210,18 @@ module.exports = {
       if (item.answer && Array.isArray(item.answer)) {
         item.answer.forEach((ans) => {
           if (ans.answers && Array.isArray(ans.answers)) {
-            ans.answers.forEach((data) => {
-              let questionText = data?.questionText;
+            ans.answers.forEach((data, index) => {
               let value = 0;
               if (data?.questionType === "number") {
                 value = Number(data.data);
               }
               // Initialize the sum for this question if it doesn't exist
-              if (!sums[questionText]) {
-                sums[questionText] = 0;
+              if (!sums[index]) {
+                sums[index] = 0;
               }
 
               // Add the value to the corresponding sum
-              sums[questionText] += value;
+              sums[index] += value;
             });
           }
         });
@@ -231,7 +229,7 @@ module.exports = {
     });
     // Ensure all of the notice's questions have an entry in the sums array
     const sumsArray = (question?.questions || []).map((q, index) => ({
-      [index]: sums[q.questionText] || 0,
+      [index]: sums[index] || 0,
     }));
 
     return res.status(200).json({ tempThana, question, sumsArray });
@@ -311,19 +309,17 @@ module.exports = {
       if (branch && Array.isArray(branch?.tempThana)) {
         branch?.tempThana?.forEach((item) => {
           if (item?.answer && Array.isArray(item.answer.answers)) {
-            item.answer.answers.forEach((data) => {
-              let questionText = data?.questionText;
-
+            item.answer.answers.forEach((data, index) => {
               let value = 0;
               if (data?.questionType === "number") {
                 value = Number(data?.data);
               }
 
-              if (!sums[questionText]) {
-                sums[questionText] = 0;
+              if (!sums[index]) {
+                sums[index] = 0;
               }
 
-              sums[questionText] += value;
+              sums[index] += value;
             });
           }
         });
@@ -332,7 +328,7 @@ module.exports = {
 
     // Ensure all of the notice's questions have an entry in the sums array
     const sumsArray = (question?.questions || []).map((q, index) => ({
-      [index]: sums[q.questionText] || 0,
+      [index]: sums[index] || 0,
     }));
 
     return res.status(200).json({ tempBranch, question, sumsArray });
@@ -397,19 +393,18 @@ module.exports = {
           if (item.answer && Array.isArray(item.answer)) {
             item.answer.forEach((ans) => {
               if (ans.answers && Array.isArray(ans.answers)) {
-                ans.answers.forEach((data) => {
-                  let questionText = data.questionText;
+                ans.answers.forEach((data, index) => {
                   let value = 0;
                   if (data.questionType === "number") {
                     value = Number(data.data);
                   }
                   // Initialize the sum for this question if it doesn't exist
-                  if (!sums[questionText]) {
-                    sums[questionText] = 0;
+                  if (!sums[index]) {
+                    sums[index] = 0;
                   }
 
                   // Add the value to the corresponding sum
-                  sums[questionText] += value;
+                  sums[index] += value;
                 });
               }
             });
@@ -420,7 +415,7 @@ module.exports = {
 
     // Ensure all of the notice's questions have an entry in the sums array
     const sumsArray = (question?.questions || []).map((q, index) => ({
-      [index]: sums[q.questionText] || 0,
+      [index]: sums[index] || 0,
     }));
 
     return res.status(200).json({ question, tempBranch, sumsArray });
@@ -485,28 +480,26 @@ module.exports = {
     // Iterate through each user object
     tempThana.forEach((item) => {
       if (item.answer && Array.isArray(item.answer.answers)) {
-        item.answer.answers.forEach((answer) => {
-          let questionText = answer.questionText;
-
+        item.answer.answers.forEach((answer, index) => {
           let value = 0;
           if (answer.questionType === "number") {
             value = Number(answer.data);
           }
 
           // Initialize the sum for this question if it doesn't exist
-          if (!sums[questionText]) {
-            sums[questionText] = 0;
+          if (!sums[index]) {
+            sums[index] = 0;
           }
 
           // Add the value to the corresponding sum
-          sums[questionText] += value;
+          sums[index] += value;
         });
       }
     });
 
     // Ensure all of the notice's questions have an entry in the sums array
     const sumsArray = (question?.questions || []).map((q, index) => ({
-      [index]: sums[q.questionText] || 0,
+      [index]: sums[index] || 0,
     }));
 
     return res.status(200).json({ question, tempThana, sumsArray, branch });
@@ -592,11 +585,10 @@ module.exports = {
       zonal.tempBranch.forEach((branch) => {
         branch.tempThana.forEach((thana) => {
           thana.answer.forEach((ans) => {
-            ans.answers.forEach((data) => {
-              const questionText = data?.questionText;
+            ans.answers.forEach((data, index) => {
               if (data.questionType === "number") {
                 const value = Number(data.data) || 0;
-                sums[questionText] = (sums[questionText] || 0) + value;
+                sums[index] = (sums[index] || 0) + value;
               }
             });
           });
@@ -606,7 +598,7 @@ module.exports = {
 
     // Ensure all of the notice's questions have an entry in the sums array
     const sumsArray = (question.questions || []).map((q, index) => ({
-      [index]: sums[q.questionText] || 0,
+      [index]: sums[index] || 0,
     }));
 
     return res.status(200).json({ question, tempZonal, sumsArray });
@@ -671,9 +663,9 @@ module.exports = {
             hasAnswers ? zSubmitted++ : zUnsubmitted++;
 
             answer.forEach(({ answers }) => {
-              answers.forEach(({ questionText, questionType, data }) => {
+              answers.forEach(({ questionType, data }, index) => {
                 if (questionType === "number") {
-                  sums[questionText] = (sums[questionText] || 0) + Number(data);
+                  sums[index] = (sums[index] || 0) + Number(data);
                 }
               });
             });
@@ -698,7 +690,7 @@ module.exports = {
 
     // Ensure all of the notice's questions have an entry in the sums array
     const sumsArray = (question.questions || []).map((q, i) => ({
-      [i]: sums[q.questionText] || 0,
+      [i]: sums[i] || 0,
     }));
     const tempData = zonal.map((z) => ({
       zonalCode: z.zonalCode,
@@ -709,9 +701,9 @@ module.exports = {
       ...z.tempBranch.reduce((acc, b) => {
         b.tempThana.forEach((t) => {
           t.answer.forEach(({ answers }) => {
-            answers.forEach(({ questionText, questionType, data }) => {
+            answers.forEach(({ questionType, data }, index) => {
               if (questionType === "number") {
-                acc[questionText] = (acc[questionText] || 0) + Number(data);
+                acc[index] = (acc[index] || 0) + Number(data);
               }
             });
           });
@@ -819,16 +811,15 @@ module.exports = {
     // Calculate sums efficiently
     const [sums, branchSums] = answers.reduce(
       ([sums, branchSums], ans) => {
-        ans.answers.forEach((data) => {
+        ans.answers.forEach((data, index) => {
           if (data.questionType !== "number") return;
 
           const val = Number(data.data) || 0;
-          const questionText = data.questionText;
 
-          sums[questionText] = (sums[questionText] || 0) + val;
+          sums[index] = (sums[index] || 0) + val;
           branchSums[ans.branchCode] = branchSums[ans.branchCode] || {};
-          branchSums[ans.branchCode][questionText] =
-            (branchSums[ans.branchCode][questionText] || 0) + val;
+          branchSums[ans.branchCode][index] =
+            (branchSums[ans.branchCode][index] || 0) + val;
         });
         return [sums, branchSums];
       },
@@ -837,7 +828,7 @@ module.exports = {
 
     // Format final output — always one entry per notice question, in order
     const sumsArray = (question.questions || []).map((q, i) => ({
-      [i]: sums[q.questionText] || 0,
+      [i]: sums[i] || 0,
     }));
     const tempData = tempBranch.map((b) => ({
       branchCode: b.branchCode,
@@ -922,12 +913,9 @@ module.exports = {
         }
 
         thana.answers.forEach((ans) => {
-          ans.answers.forEach((data) => {
-            const questionText = data.questionText;
-
+          ans.answers.forEach((data, index) => {
             if (data.questionType === "number") {
-              sums[questionText] =
-                (sums[questionText] || 0) + Number(data.data);
+              sums[index] = (sums[index] || 0) + Number(data.data);
             }
           });
         });
@@ -940,7 +928,7 @@ module.exports = {
 
     // Ensure all of the notice's questions have an entry in the sums array
     const sumsArray = (question?.questions || []).map((q, index) => ({
-      [index]: sums[q.questionText] || 0,
+      [index]: sums[index] || 0,
     }));
 
     const tempData = tempBranch.map((branch) => {
@@ -955,11 +943,9 @@ module.exports = {
 
       branch.tempThana.forEach((thana) => {
         thana.answers.forEach((ans) => {
-          ans.answers.forEach((data) => {
+          ans.answers.forEach((data, index) => {
             if (data.questionType === "number") {
-              const questionText = data.questionText;
-              dsums[questionText] =
-                (dsums[questionText] || 0) + Number(data.data);
+              dsums[index] = (dsums[index] || 0) + Number(data.data);
             }
           });
         });
@@ -1024,28 +1010,26 @@ module.exports = {
     // Iterate through each user object
     tempThana.forEach((item) => {
       if (item.answer && Array.isArray(item.answer.answers)) {
-        item.answer.answers.forEach((answer) => {
-          let questionText = answer?.questionText;
-
+        item.answer.answers.forEach((answer, index) => {
           let value = 0;
           if (answer?.questionType === "number") {
             value = Number(answer.data);
           }
 
           // Initialize the sum for this question if it doesn't exist
-          if (!sums[questionText]) {
-            sums[questionText] = 0;
+          if (!sums[index]) {
+            sums[index] = 0;
           }
 
           // Add the value to the corresponding sum
-          sums[questionText] += value;
+          sums[index] += value;
         });
       }
     });
 
     // Ensure all of the notice's questions have an entry in the sums array
     const sumsArray = (question?.questions || []).map((q, index) => ({
-      [index]: sums[q.questionText] || 0,
+      [index]: sums[index] || 0,
     }));
 
     return res.status(200).json({ question, tempThana, sumsArray, branch });

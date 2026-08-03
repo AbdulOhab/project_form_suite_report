@@ -54,7 +54,6 @@ function AdminTableDataInterfce({
 
   useEffect(() => {
     const dayData = {};
-    const allQuestions = new Set();
 
     zonalReport?.forEach((zonal) => {
       if (zonal?.tempBranch && Array.isArray(zonal?.tempBranch)) {
@@ -71,19 +70,16 @@ function AdminTableDataInterfce({
                       }
 
                       let sums = dayData[formattedDate];
-                      ans.answers.forEach((data) => {
-                        const questionText = data?.questionText;
-                        allQuestions.add(questionText);
-
+                      ans.answers.forEach((data, index) => {
                         let value = 0;
                         if (data?.questionType === "number") {
                           value = Number(data.data);
                         }
 
-                        if (!sums[questionText]) {
-                          sums[questionText] = 0;
+                        if (!sums[index]) {
+                          sums[index] = 0;
                         }
-                        sums[questionText] += value;
+                        sums[index] += value;
                       });
                     }
                   });
@@ -100,8 +96,8 @@ function AdminTableDataInterfce({
       const dateData = dayData[formattedDate] || {};
       const result = { date: formattedDate, day };
 
-      allQuestions.forEach((questionText) => {
-        result[questionText] = dateData[questionText] || 0;
+      questions?.forEach((_, index) => {
+        result[index] = dateData[index] || 0;
       });
 
       return result;
@@ -171,10 +167,10 @@ function AdminTableDataInterfce({
                       wordBreak: "break-word",
                     }}
                     key={index}
-                    onClick={() => handleSort(question.questionText)}
+                    onClick={() => handleSort(index)}
                   >
                     {question?.questionText}
-                    {sortConfig.key === question.questionText &&
+                    {sortConfig.key === index &&
                       (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
                   </TableCell>
                 ))}
@@ -204,7 +200,7 @@ function AdminTableDataInterfce({
                   <BangladayForOnce day={data.day + 1} date={data.date} />
                   {questions.map((question, questionIndex) => (
                     <TableCell key={questionIndex} sx={{ textAlign: "center" }}>
-                      {data[question.questionText] || "0"}
+                      {data[questionIndex] || "0"}
                     </TableCell>
                   ))}
                   <TableCell sx={{ textAlign: "center" }}>

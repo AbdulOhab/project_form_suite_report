@@ -11,7 +11,7 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import EditOutlined from "@mui/icons-material/EditOutlined";
+import LockOutlined from "@mui/icons-material/LockOutlined";
 
 function DateByDayCount({
   startDadeline,
@@ -95,13 +95,12 @@ function DateByDayCount({
       });
 
       const dataForDate = {};
-      questions.forEach((q) => {
-        dataForDate[q.questionText] = matchingReports
-          .flatMap((report) =>
-            report.answers
-              .filter((answer) => answer.questionText === q.questionText)
-              .map((answer) => answer.data)
-          )
+      questions.forEach((q, qIndex) => {
+        dataForDate[qIndex] = matchingReports
+          .flatMap((report) => {
+            const answer = report.answers?.[qIndex];
+            return answer ? [answer.data] : [];
+          })
           .join("\n");
       });
 
@@ -171,10 +170,10 @@ function DateByDayCount({
                     wordBreak: "break-word",
                   }}
                   key={index}
-                  onClick={() => handleSort(question.questionText)}
+                  onClick={() => handleSort(index)}
                 >
                   {question.questionText}{" "}
-                  {sortConfig.key === question.questionText &&
+                  {sortConfig.key === index &&
                     (sortConfig.direction === "ascending" ? "▲" : "▼")}
                 </TableCell>
               ))}
@@ -209,21 +208,19 @@ function DateByDayCount({
                 </TableCell>
                 {questions.map((question, qIndex) => (
                   <TableCell key={qIndex} sx={{ textAlign: "center", whiteSpace: "pre-line" }}>
-                    {data[question.questionText] || "0"}
+                    {data[qIndex] || "0"}
                   </TableCell>
                 ))}
                 <TableCell sx={{ textAlign: "center" }}>
                   {data.answerId ? (
                     <Button
                       variant="outlined"
-                      color="success"
+                      color="inherit"
                       size="small"
-                      component={Link}
-                      to={`/dashboard/thana-edit-answer/${slug}/${data.date}`}
-                      state={{ id, answerId: data.answerId }}
+                      disabled
                       sx={{ minWidth: 0, px: 1 }}
                     >
-                      <EditOutlined fontSize="small" />
+                      <LockOutlined fontSize="small" />
                     </Button>
                   ) : (
                     <Button

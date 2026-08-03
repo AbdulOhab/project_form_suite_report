@@ -74,7 +74,6 @@ const SumsDayByDayZonalData = () => {
 
   useEffect(() => {
     const dayData = {};
-    const allQuestions = new Set();
 
     tempBranch?.forEach((branch) => {
       branch?.tempThana?.forEach((thana) => {
@@ -88,19 +87,16 @@ const SumsDayByDayZonalData = () => {
                 }
 
                 let sums = dayData[formattedDate];
-                ans.answers.forEach((data) => {
-                  const questionText = data?.questionText;
-                  allQuestions.add(questionText);
-
+                ans.answers.forEach((data, index) => {
                   let value = 0;
                   if (data?.questionType === "number") {
                     value = Number(data.data);
                   }
 
-                  if (!sums[questionText]) {
-                    sums[questionText] = 0;
+                  if (!sums[index]) {
+                    sums[index] = 0;
                   }
-                  sums[questionText] += value;
+                  sums[index] += value;
                 });
               }
             });
@@ -114,8 +110,8 @@ const SumsDayByDayZonalData = () => {
       const dateData = dayData[formattedDate] || {};
       const result = { date: formattedDate, day };
 
-      allQuestions.forEach((questionText) => {
-        result[questionText] = dateData[questionText] || 0;
+      questions?.questions?.forEach((_, index) => {
+        result[index] = dateData[index] || 0;
       });
 
       return result;
@@ -303,10 +299,10 @@ const SumsDayByDayZonalData = () => {
                 {questions?.questions?.map((question, index) => (
                   <TableCell
                     key={index}
-                    onClick={() => handleSort(question.questionText)}
+                    onClick={() => handleSort(index)}
                   >
                     {question.questionText}
-                    {sortIndicator(question.questionText)}
+                    {sortIndicator(index)}
                   </TableCell>
                 ))}
               </TableRow>
@@ -350,9 +346,7 @@ const SumsDayByDayZonalData = () => {
                   </TableCell>
                   {questions?.questions?.map((question, qIndex) => (
                     <TableCell key={qIndex} sx={{ textAlign: "center" }}>
-                      {data[question.questionText]
-                        ? data[question.questionText]
-                        : 0}
+                      {data[qIndex] ? data[qIndex] : 0}
                     </TableCell>
                   ))}
                 </TableRow>

@@ -16,10 +16,13 @@ import {
   DialogContentText,
   DialogActions,
   Divider,
+  Stack,
 } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { AuthContext } from "../../contexts/AuthContext";
 import BASE_URL from "../../auth/dbUrl";
 import { buildNoticeSlug } from "../../utils/noticeSlug";
+import { toEnglishDigits } from "../../utils/convertDigits";
 
 function ThanaEmptyNotice() {
   const { date } = useParams();
@@ -57,9 +60,10 @@ function ThanaEmptyNotice() {
   }, [id]);
 
   const selectInput = (qText, value, qIndex, required, questionType) => {
+    const data = questionType === "number" ? toEnglishDigits(value) : value;
     setAnswer((prev) => {
       const updated = [...prev];
-      updated[qIndex] = { questionText: qText, data: value, questionType, required };
+      updated[qIndex] = { questionText: qText, data, questionType, required };
       return updated;
     });
   };
@@ -108,6 +112,23 @@ function ThanaEmptyNotice() {
   return (
     <>
       <Box sx={{ maxWidth: 720, mx: "auto" }}>
+        <Stack direction="row" alignItems="center" sx={{ mb: 2 }}>
+          <Button
+            startIcon={<ArrowBackIcon fontSize="small" />}
+            onClick={() => navigate(-1)}
+            size="small"
+            variant="outlined"
+            sx={{
+              color: "text.secondary",
+              borderColor: "divider",
+              bgcolor: "#ffffff",
+              fontWeight: 600,
+              "&:hover": { bgcolor: "action.hover", borderColor: "divider" },
+            }}
+          >
+            Back
+          </Button>
+        </Stack>
         <Typography variant="h5" fontWeight={700} sx={{ mb: 0.5 }}>
           {notice?.document_name || (id ? "Loading..." : "")}
         </Typography>
@@ -166,9 +187,15 @@ function ThanaEmptyNotice() {
                       fullWidth
                       variant="outlined"
                       required={question.required}
-                      placeholder={question.questionType === "number" ? "সংখ্যা লিখুন" : "উত্তর লিখুন"}
+                      placeholder={question.questionType === "number" ? "Enter a number" : "Enter your answer"}
                       multiline={question.questionType === "text"}
                       rows={question.questionType === "text" ? 3 : undefined}
+                      value={
+                        typeof answer[qIndex]?.data === "string" ||
+                        typeof answer[qIndex]?.data === "number"
+                          ? answer[qIndex].data
+                          : ""
+                      }
                       onChange={(e) =>
                         selectInput(
                           question.questionText,

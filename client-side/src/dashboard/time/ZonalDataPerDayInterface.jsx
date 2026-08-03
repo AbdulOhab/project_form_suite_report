@@ -83,12 +83,8 @@ function ZonalDataPerDayInterface({
           aValue = a.userName;
           bValue = b.userName;
         } else {
-          const aAnswer = a?.answer?.answers?.find(
-            (ans) => ans.questionText === sortConfig.key
-          );
-          const bAnswer = b?.answer?.answers?.find(
-            (ans) => ans.questionText === sortConfig.key
-          );
+          const aAnswer = a?.answer?.answers?.[sortConfig.key];
+          const bAnswer = b?.answer?.answers?.[sortConfig.key];
           aValue = aAnswer ? aAnswer.data : "";
           bValue = bAnswer ? bAnswer.data : "";
         }
@@ -152,10 +148,10 @@ function ZonalDataPerDayInterface({
                           <TableCell
                             sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
                             key={index}
-                            onClick={() => handleSort(question.questionText)}
+                            onClick={() => handleSort(index)}
                           >
                             {question?.questionText}{" "}
-                            {sortConfig.key === question.questionText &&
+                            {sortConfig.key === index &&
                               (sortConfig.direction === "ascending"
                                 ? " ▲"
                                 : " ▼")}
@@ -186,9 +182,7 @@ function ZonalDataPerDayInterface({
                           <TableCell sx={{ textAlign: "center" }}>{thana.thanaCode}</TableCell>
                           <TableCell sx={{ textAlign: "center" }}>{thana.userName}</TableCell>
                           {questions?.map((question, qIndex) => {
-                            const answer = thana?.answer?.answers?.find(
-                              (ans) => ans.questionText === question.questionText
-                            );
+                            const answer = thana?.answer?.answers?.[qIndex];
                             return (
                               <TableCell key={`${thanaIndex}-${qIndex}`} sx={{ textAlign: "center" }}>
                                 {answer ? answer.data : 0}

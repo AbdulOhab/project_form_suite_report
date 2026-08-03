@@ -185,7 +185,7 @@ const SumsAllThanaData = () => {
     const data = paginatedData.map((thana) => [
       thana.thanaCode,
       thana.userName,
-      ...questions.map((q) => thana[q.questionText] || 0),
+      ...questions.map((q, index) => thana[index] || 0),
     ]);
 
     // Add total row (excluding "Action")
@@ -219,7 +219,7 @@ const SumsAllThanaData = () => {
     const data = sortedData.map((thana) => [
       thana.thanaCode,
       thana.userName,
-      ...questions.map((q) => thana[q.questionText] || 0),
+      ...questions.map((q, index) => thana[index] || 0),
     ]);
 
     // Add total row (excluding "Action")
@@ -426,10 +426,10 @@ const SumsAllThanaData = () => {
                       {questions?.map((question, index) => (
                         <TableCell
                           key={index}
-                          onClick={() => handleSort(question.questionText)}
+                          onClick={() => handleSort(index)}
                         >
                           {question?.questionText}
-                          {sortIndicator(question.questionText)}
+                          {sortIndicator(index)}
                         </TableCell>
                       ))}
                       <TableCell>Action</TableCell>
@@ -484,7 +484,7 @@ const SumsAllThanaData = () => {
                             key={`${thanaIndex}-${qIndex}`}
                             sx={{ textAlign: "center" }}
                           >
-                            {thana?.[question.questionText] || 0}
+                            {thana?.[qIndex] || 0}
                           </TableCell>
                         ))}
                         <TableCell sx={{ textAlign: "center" }}>

@@ -195,8 +195,8 @@ const RoleActions = ({ userInfo, notice, onDelete, handleReload }) => {
 // are always "ended"; active-report cards compute this live.
 // ---------------------------------------------------------------------------
 const STATUS_META = {
-  upcoming: { chipLabel: "আপকামিং", chipColor: "warning", text: "রিপোর্ট প্রদান শুরু হতে বাকি আছে" },
-  ongoing: { chipLabel: "চলমান", chipColor: "success", text: "রিপোর্ট চলছে" },
+  upcoming: { chipLabel: "আপকামিং", chipColor: "warning", text: "রিপোর্ট গ্রহণ শুরু হয়নি" },
+  ongoing: { chipLabel: "চলমান", chipColor: "success", text: "রিপোর্ট গ্রহণ চলছে" },
   ended: { chipLabel: "শেষ", chipColor: "error", text: "রিপোর্ট গ্রহণ শেষ" },
 };
 
@@ -210,7 +210,10 @@ const getNoticeStatus = (notice) => {
 };
 
 // Small, inline "X দিন Y ঘণ্টা Z মিনিট বাকি" — no big colored box, sits right
-// next to the status text and updates once a minute.
+// next to the status text and updates once a minute. Only shown once the
+// target is within a day out; further out, the countdown is just noise.
+const ONE_DAY_MS = 86400000;
+
 const InlineCountdown = ({ target }) => {
   const [remaining, setRemaining] = useState(null);
 
@@ -218,7 +221,7 @@ const InlineCountdown = ({ target }) => {
     if (!target) return undefined;
     const tick = () => {
       const diffMs = target.getTime() - Date.now();
-      if (diffMs <= 0) {
+      if (diffMs <= 0 || diffMs > ONE_DAY_MS) {
         setRemaining(null);
         return;
       }
@@ -237,6 +240,7 @@ const InlineCountdown = ({ target }) => {
 
   return (
     <Typography component="span" variant="caption" fontWeight={700}>
+      {" · "}
       {convertToBengaliNumber(remaining.days)} দিন {convertToBengaliNumber(remaining.hours)}{" "}
       ঘন্টা {convertToBengaliNumber(remaining.minutes)} মিনিট
     </Typography>
@@ -316,12 +320,7 @@ const NoticeCard = ({ notice, userInfo, status, onDelete, handleReload }) => {
             sx={{ color: status === "upcoming" ? "warning.dark" : "success.dark" }}
           >
             {meta.text}
-            {countdownTarget && (
-              <>
-                {" · "}
-                <InlineCountdown target={countdownTarget} />
-              </>
-            )}
+            {countdownTarget && <InlineCountdown target={countdownTarget} />}
           </Typography>
         )}
       </CardContent>

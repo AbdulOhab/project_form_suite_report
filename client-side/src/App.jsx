@@ -50,7 +50,6 @@ import SumsAllZonalData from "./dashboard/pages/sumsData/SumsAllZonalData";
 import SumsAllBranchData from "./dashboard/pages/sumsData/SumsAllBranchData";
 import SumsAllThanaData from "./dashboard/pages/sumsData/SumsAllThanaData";
 import SumsThanaByBranches from "./dashboard/pages/sumsData/SumsThanaByBranches";
-import EditQuestionAnswerByThana from "./dashboard/pages/EditQuestionAnswerByThana";
 import SumsTotalDayThanaData from "./dashboard/pages/sumsData/SumsTotalDayThanaData";
 import SumsDayByDayBranchData from "./dashboard/pages/sumsData/SumsDayByDayBranchData";
 import SumsDayByDayZonalData from "./dashboard/pages/sumsData/SumsDayByDayZonalData";
@@ -83,7 +82,6 @@ function App() {
 
             {/* Thana-only pages */}
             <Route path={"thana-empty-answer/:slug/:date"} element={<RoleRoute roles={["thana"]}><ThanaEmptyNotice /></RoleRoute>} />
-            <Route path={"thana-edit-answer/:slug/:date"} element={<RoleRoute roles={["thana"]}><EditQuestionAnswerByThana /></RoleRoute>} />
             <Route path={"thana-submission/:slug"} element={<RoleRoute roles={["thana"]}><ThanaUserInterface /></RoleRoute>} />
 
             {/* Branch-only pages */}

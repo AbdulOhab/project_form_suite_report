@@ -9,38 +9,23 @@
 ৯. [✅ হয়ে গেছে — ফাইলটা রিপোতে আর নেই, শুধু docker-compose.yml ও docker-compose-live.yml আছে] docker-compose-devlopment.yml ফাইলটা এখন redundant (মূল docker-compose.yml-এই mongo পোর্ট এক্সপোজ করা আছে) — মুছে ফেলা যায় অথবা রেখে দেওয়া যায়
 ১০. [⬜ বাকি — এবং স্টেলনেস যা ভাবা হয়েছিল তার চেয়ে বড়: auth middleware + role-based access (requireRole) এখন প্রায় সব রুটে বসানো আছে, HashRouter থেকে BrowserRouter-এ চেঞ্জ হয়েছে — কিন্তু CLAUDE.md এখনো লিখে রেখেছে "50 of 52 routes have no auth middleware" এবং HashRouter ব্যবহারের কথা] CLAUDE.md ও PRODUCTION_PLAN.md আপডেট করা — এখন অনেক জায়গায় বাস্তব কোডের সাথে মিলছে না (auth middleware, JWT secret, Bearer scheme, logout fix, AdminReview — এসব ইতিমধ্যে হয়ে গেছে কিন্তু ডকে এখনো "pending/broken" লেখা)
 
-ADMIN — Dashboard
-১. [✅ হয়ে গেছে — NoticeBoard.jsx এখন Grid of Card (MUI) দিয়ে বক্স-স্টাইল রেন্ডার করে] নোটিশের ভিউ BoxView করা
-২. [⬜ বাকি — ইনডেক্স রুট এখনো NoticeBoard.jsx সরাসরি দেখায়, "Report Center" landing নেই, টাইটেল এখনো "Instance Report"] নোটিশগুলো বাদ দিয়ে রিপোর্ট হবে — এটাকে "রিপোর্ট সেন্টার" বলা হবে
-৩. [⬜ বাকি — noticeboardController.js-এর all() ডিফল্ট ভিউতে active+previous একসাথে রিটার্ন করে, শুধু running/upcoming না] Running ও আগামীর রিপোর্টের নোটিশ শুধু ড্যাশবোর্ডে শো করবে
-৪. [🟡 আংশিক — "পূর্বের রিপোর্ট" ট্যাব আছে, কিন্তু মূল বক্স ট্যাবেও ended নোটিশ মিশে থাকে] পূর্ববর্তী রিপোর্ট একটা মেন্যুর মধ্যে থাকবে
 
 ADMIN — Create Notice
-৫. [⬜ বাকি — sidebarMenu-তে "Create Notice" সাধারণ বাম পাশের Drawer আইটেম, ডান পাশে পজিশনিং নেই] "Create Notice" ট্যাবটি ডান পাশে দেয়া
-৬. [⬜ বাকি — Notice.jsx/NoticeEditor.jsx-এ Notice Type Select-এ শুধু ফিক্সড প্রিসেট (1/2/3/7/15/10 দিন), "Custom" ইনপুট নেই] Notice Type-এ নতুন অপশন "Custom" রাখা (২০/২৫/১২ দিন নিজের ইচ্ছেমতো দেয়া যাবে)
-৭. [⬜ বাকি — formModel.js স্কিমায় header-image ফিল্ড নেই, UI-তেও আপলোড অপশন নেই] "Header" পিকচার/থাম্বনেইল যুক্ত করার অপশন
-৮. [⬜ বাকি — addMoreQuestion() হার্ডকোড করা questionType: "number", বিল্ডার UI-তে টাইপ-সিলেক্টর ড্রপডাউন নেই] Question-এ Dropdown দেয়ার সিস্টেম যুক্ত করা
+৬. [⬜ বাকি — Notice.jsx/NoticeEditor.jsx-এ Notice Type Select-এ শুধু ফিক্সড প্রিসেট (1/2/3/7/15/10 দিন), 
+"Custom" ইনপুট নেই] Notice Type-এ নতুন অপশন "Custom" রাখা (২০/২৫/১২ দিন নিজের ইচ্ছেমতো দেয়া যাবে)
+৮. ⬜ বাকি — Question-এ Dropdown দেয়ার সিস্টেম যুক্ত করা
 
 ADMIN — User List / Create User
 ৯. [⬜ বাকি — UnifiedUsersList.jsx-এ শুধু role tabs + rows-per-page, সার্চ/ফিল্টার/কলাম-সর্ট নেই] User List-এ Filter & sorting অপশন যুক্ত করা
-১০. [✅ হয়ে গেছে — UnifiedCreateUser.jsx-এ cascading Zonal→Branch dropdown (handleDropdownChange, ব্রাঞ্চ ডিসেবলড যতক্ষণ না জোনাল সিলেক্ট হয়) + Thana Code ফিল্ড আছে] Create Thana-তে Zone Code > Branch Code > Thana Code এভাবে সাজানো — Zone Code ও Branch Code Dropdown হবে, Branch Code হবে Zone Code অনুযায়ী ডিপেন্ডেন্ট, আর Thana Code ভ্যালিডেশন চেক থাকবে
-
-ADMIN — Others
-১১. [✅ হয়ে গেছে — AdminDataInterface.jsx-এ ৩টা নেভ বাটন ("এক নজরে অঞ্চল/ব্রাঞ্চ/থানা") Sums*.jsx পেজে নিয়ে যায়, প্রতিটাতে XLSX/saveAs দিয়ে Excel export আছে] Zone/Branch/Thana রিপোর্ট এক নজরে দেখার সিস্টেম (Excel Export option সহ) — দিনভিত্তিক, অঞ্চলভিত্তিক, শাখাভিত্তিক তিনটি আলাদা ভিউ বাটন থাকবে, যেমনটা বর্ণনা করা আছে PDF-এ
-১২. [🟡 আংশিক — কোথাও ডেডিকেটেড unsubmit/undo action নেই, শুধু submit/pending কাউন্টার আছে] Submit/unsubmit-এর সমস্যা ঠিক করা
 
 THANA
 ১৩. [🟡 আংশিক — সব রোলের ড্যাশবোর্ড একই NoticeBoard.jsx/ব্যাকএন্ড লজিক শেয়ার করে, দেখুন আইটেম ৩/৪] Dashboard: নোটিশের ভিউ BoxView করা, Running নোটিশ শুধু ড্যাশবোর্ডে, পূর্ববর্তী নোটিশ মেন্যুতে
 ১৪. [🟡 আংশিক — ThanaEmptyNotice.jsx-এ fontWeight={500} (মিডিয়াম) ব্যবহার হয়েছে, প্রকৃত বোল্ড (700) না] তথ্য ইনপুট পেজ: প্রশ্ন বোল্ড করা
-১৫. [✅ হয়ে গেছে — theme.js-এ MuiTextField defaultProps variant: "outlined" গ্লোবালি সেট, সব ইনপুটে বর্ডার আছে] ইনপুটের জায়গায় আউটলাইন দেয়া
-১৬. [✅ হয়ে গেছে — ThanaEmptyNotice.jsx ইনপুট পেজে কোনো "#" চিহ্ন নেই] "#" চিহ্ন বাদ দেয়া
 ১৭. [⬜ বাকি — পেজ মূলত সাদা/গ্রে, শুধু একটা primary-color হেডার স্ট্রিপ আছে, "ওভারঅল কালারফুল" না] পেজটা ওভারঅল কালারফুল করা
 
 BRANCH
 ১৮. [🟡 আংশিক — শেয়ার্ড NoticeBoard.jsx/ব্যাকএন্ড লজিক, দেখুন আইটেম ৩/৪/১৩] Dashboard: নোটিশের ভিউ BoxView করা, Running নোটিশ শুধু ড্যাশবোর্ডে, পূর্ববর্তী নোটিশ মেন্যুতে
 ১৯. [🟡 আংশিক — Thana-তে disabled={data.date !== today} দিয়ে এনফোর্স করা আছে (DateByDayCount.jsx), কিন্তু Branch-এর formDisabled (BranchDayCount.jsx) শুধু পুরো date range active কিনা চেক করে, নির্দিষ্ট দিন না] Report Input Page: শুধু চলমান দিনের রিপোর্ট ইনপুট দেয়া যাবে — আগের/পরের দিনে ঢোকা যাবে না
-২০. [✅ হয়ে গেছে — BranchEmptyNotice.jsx/BranchDataInterface.jsx-এ ArrowBack "ফিরে যান/Back" বাটন আছে] ব্যাক বাটন যুক্ত করা
-২১. [✅ হয়ে গেছে — BranchEmptyNotice.jsx/BranchDataInterface.jsx-এ বোল্ড h6 + সাবটাইটেল ক্যাপশন আছে] টাইটেল সুন্দর করা
 ২২. [⬜ বাকি — BranchDataInterface.jsx-এ কোনো Sums/Excel ভিউ-এর নেভ লিংক নেই, App.jsx-এ সব sums-* রুট RoleRoute roles={["admin"]} শুধু] Thana-র রিপোর্ট এক নজরে দেখার সিস্টেম (Excel Export সহ)
 
 ZONE
@@ -50,11 +35,9 @@ ZONE
 
 মেইন ভিউ (সব রোলের জন্য)
 ২৬. [⬜ বাকি — কোথাও "Report Center" বা ওয়েলকাম টেক্সট নেই, NoticeBoard.jsx টাইটেল এখনো "Instance Report"] "নোটিশ বোর্ড" নামটি পরিবর্তন করা — যেমন "রিপোর্ট সেন্টারে আপনাকে স্বাগতম"
-২৭. [✅ হয়ে গেছে — NoticeBoard.jsx-এ Tabs দিয়ে card/box view ও table/list view টগল করা যায়] নোটিশ দেখানোর সিস্টেম বক্স ভিউ বা বর্তমান সিস্টেম — দুটোই অপশন হতে পারে
 ২৮. [⬜ বাকি — মাল্টি-ডে সিঙ্গেল-রিপোর্ট গ্রুপিং মেকানিজম নেই, প্রতি দিন এখনো আলাদা answer document (ThanaEmptyNotice.jsx reportDate)] একটা রিপোর্ট দুই/কয়েকদিন ধরে চলতে পারে এমন কেসের জন্য নতুন সিস্টেম দরকার
 ২৯. [🟡 আংশিক — একই আইটেম ৩-এর ইস্যু, ব্যাকএন্ড শুধু _id দিয়ে সর্ট করে, running/future আলাদাভাবে front-load করে না] চলমান ও ভবিষ্যত নোটিশ ড্যাশবোর্ডের সামনে শো করবে
 ৩০. [🟡 আংশিক — NoticeBoard.jsx-এ STATUS_META.upcoming.text-এ স্ট্যাটিক "শুরু হতে বাকি আছে" টেক্সট + InlineCountdown আছে, কিন্তু countdown-এ সেকেন্ড দেখায় না, শুধু দিন/ঘণ্টা/মিনিট] ভবিষ্যত রিপোর্টে দিন শুরু না হলে সময় কাউন্টডাউন দেখানোর দরকার নেই — বরং "রিপোর্ট প্রদান শুরু হতে বাকি আছে" লেখা + কাউন্টডাউন (দিন/ঘণ্টা/মিনিট/সেকেন্ড ফরম্যাটে) দেখাবে
-৩১. [✅ হয়ে গেছে — NoticeCard-এ শুরু/শেষের তারিখ-সময় (DateHandler, TimeStartBangla/TimeEndBangla) এবং চলাকালীন InlineCountdown দেখায়] ড্যাশবোর্ডে রিপোর্ট শুরু ও শেষের তারিখ-সময় দেখাবে; রিপোর্ট চলাকালে কাউন্টডাউন দেখাবে মেয়াদ শেষ হতে আর কতক্ষণ বাকি
 ৩২. [🟡 আংশিক — theme.js-এ primary color এখন সবুজ (#2e7d32), নীল না, কার্ড ডিফল্টে সাদা — কিন্তু ইউজার-facing সাদা/কালো টগল বা এক্সপ্লিসিট হোভার-রিকালার ফিচার নেই] নোটিশের ভেতরের নীল কালার সাদা/কালো করা যেতে পারে, হোভারে কালার চেঞ্জ হবে
 ৩৩. [🟡 আংশিক — AppHeader.jsx-এ role badge + user menu (persistent) আছে, প্রতিটা পেজেরও নিজস্ব টাইটেল আছে, কিন্তু গ্লোবাল হেডারে পেজ-নেম breadcrumb নেই] কোন পেইজে আছে তা বোঝার জন্য হেডার প্রয়োজন
 ৩৪. [⬜ বাকি — App.jsx সব ~৫০টা রুট কম্পোনেন্ট eagerly import করে, কোথাও React.lazy/code-splitting নেই] এক পেইজ থেকে আরেক পেইজে নেভিগেশন স্লো — পারফরম্যান্স ঠিক করা দরকার

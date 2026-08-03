@@ -160,10 +160,10 @@ function AdminZonalDayCount({
                           <TableCell
                             sx={{ textAlign: "center", cursor: "pointer" }}
                             key={index}
-                            onClick={() => handleSort(question.questionText)}
+                            onClick={() => handleSort(index)}
                           >
                             {question?.questionText}
-                            {sortConfig.key === question.questionText &&
+                            {sortConfig.key === index &&
                               (sortConfig.direction === "ascending"
                                 ? " ▲"
                                 : " ▼")}
@@ -207,7 +207,7 @@ function AdminZonalDayCount({
                           <TableCell sx={{ textAlign: "center" }}>{zonal.thanaAnsUnsubmit}</TableCell>
                           {questions?.map((question, questionIndex) => (
                             <TableCell key={`${zonalIndex}-${questionIndex}`} sx={{ textAlign: "center" }}>
-                              {zonal[question.questionText] || 0}
+                              {zonal[questionIndex] || 0}
                             </TableCell>
                           ))}
                           <TableCell sx={{ textAlign: "center" }}>

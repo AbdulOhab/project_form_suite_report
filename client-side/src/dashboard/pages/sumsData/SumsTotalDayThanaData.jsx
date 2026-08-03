@@ -125,13 +125,12 @@ function SumsTotalDayThanaData() {
 
       // Aggregate data for this date
       const dataForDate = {};
-      questions.forEach((q) => {
-        dataForDate[q.questionText] = matchingReports
-          .flatMap((report) =>
-            report.answers
-              .filter((answer) => answer.questionText === q.questionText)
-              .map((answer) => answer.data)
-          )
+      questions.forEach((q, qIndex) => {
+        dataForDate[qIndex] = matchingReports
+          .flatMap((report) => {
+            const answer = report.answers?.[qIndex];
+            return answer ? [answer.data] : [];
+          })
           .join(", ");
       });
 
@@ -312,10 +311,10 @@ function SumsTotalDayThanaData() {
                 {questions?.map((question, index) => (
                   <TableCell
                     key={index}
-                    onClick={() => handleSort(question.questionText)}
+                    onClick={() => handleSort(index)}
                   >
                     {question.questionText}
-                    {sortIndicator(question.questionText)}
+                    {sortIndicator(index)}
                   </TableCell>
                 ))}
               </TableRow>
@@ -359,9 +358,7 @@ function SumsTotalDayThanaData() {
                   </TableCell>
                   {questions?.map((question, qIndex) => (
                     <TableCell key={qIndex} sx={{ textAlign: "center" }}>
-                      {data[question.questionText]
-                        ? data[question.questionText]
-                        : 0}
+                      {data[qIndex] ? data[qIndex] : 0}
                     </TableCell>
                   ))}
                 </TableRow>

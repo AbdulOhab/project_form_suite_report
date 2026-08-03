@@ -29,6 +29,7 @@ import {
 import BASE_URL from "../../../auth/dbUrl";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { buildNoticeSlug } from "../../../utils/noticeSlug";
+import { toEnglishDigits } from "../../../utils/convertDigits";
 
 function BranchEmptyNotice() {
   const { firstId, secondId } = useParams();
@@ -62,9 +63,10 @@ function BranchEmptyNotice() {
   }, [secondId]);
 
   const selectInput = (qText, value, qIndex, required, questionType) => {
+    const data = questionType === "number" ? toEnglishDigits(value) : value;
     setAnswer((prev) => {
       const updated = [...prev];
-      updated[qIndex] = { questionText: qText, data: value, questionType, required };
+      updated[qIndex] = { questionText: qText, data, questionType, required };
       return updated;
     });
   };
@@ -234,6 +236,12 @@ function BranchEmptyNotice() {
                     placeholder={question.questionType === "number" ? "সংখ্যা লিখুন" : "উত্তর লিখুন"}
                     multiline={question.questionType === "text"}
                     rows={question.questionType === "text" ? 3 : undefined}
+                    value={
+                      typeof answer[qIndex]?.data === "string" ||
+                      typeof answer[qIndex]?.data === "number"
+                        ? answer[qIndex].data
+                        : ""
+                    }
                     onChange={(e) =>
                       selectInput(
                         question.questionText,

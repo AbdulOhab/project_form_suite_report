@@ -255,10 +255,10 @@ const SumsZonalDataByBranch = () => {
                 {questions?.questions?.map((question, index) => (
                   <TableCell
                     key={index}
-                    onClick={() => handleSort(question.questionText)}
+                    onClick={() => handleSort(index)}
                   >
                     {question.questionText}
-                    {sortIndicator(question.questionText)}
+                    {sortIndicator(index)}
                   </TableCell>
                 ))}
               </TableRow>
@@ -314,7 +314,7 @@ const SumsZonalDataByBranch = () => {
                       key={`${zonalIndex}-${questionIndex}`}
                       sx={{ textAlign: "center" }}
                     >
-                      {branch[question.questionText] || 0}
+                      {branch[questionIndex] || 0}
                     </TableCell>
                   ))}
                 </TableRow>

@@ -159,10 +159,10 @@ function AdminBranchDayCount({
                           <TableCell
                             sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
                             key={index}
-                            onClick={() => handleSort(question.questionText)}
+                            onClick={() => handleSort(index)}
                           >
                             {question?.questionText}
-                            {sortConfig.key === question.questionText &&
+                            {sortConfig.key === index &&
                               (sortConfig.direction === "ascending"
                                 ? " ▲"
                                 : " ▼")}
@@ -205,7 +205,7 @@ function AdminBranchDayCount({
                           <TableCell sx={{ textAlign: "center" }}>{branch.unsubmit}</TableCell>
                           {questions?.map((question, qIndex) => (
                             <TableCell key={`${branchIndex}-${qIndex}`} sx={{ textAlign: "center" }}>
-                              {branch?.[question.questionText] || 0}
+                              {branch?.[qIndex] || 0}
                             </TableCell>
                           ))}
                           <TableCell sx={{ textAlign: "center" }}>

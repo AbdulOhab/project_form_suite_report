@@ -7,7 +7,7 @@ import BASE_URL from "../../auth/dbUrl";
 
 // Same status convention as the Notice Board card (upcoming / ongoing / ended).
 const STATUS_META = {
-  upcoming: { label: "রিপোর্ট প্রদান শুরু হতে বাকি আছে", color: "warning" },
+  upcoming: { label: "রিপোর্ট প্রদান শুরু হয়নি", color: "warning" },
   ongoing: { label: "রিপোর্ট চলছে", color: "success" },
   ended: { label: "রিপোর্ট গ্রহণ শেষ", color: "error" },
 };

@@ -71,14 +71,13 @@ function ZonalDayCount({
     let tempData = branchReport?.map((branch) => {
       let sums = {};
       branch.tempThana.forEach((thana) => {
-        thana?.answer?.answers?.forEach((data) => {
-          let questionText = data?.questionText;
+        thana?.answer?.answers?.forEach((data, index) => {
           if (data?.questionType === "number") {
             let value = Number(data?.data);
-            if (!sums[questionText]) {
-              sums[questionText] = 0;
+            if (!sums[index]) {
+              sums[index] = 0;
             }
-            sums[questionText] += value;
+            sums[index] += value;
           }
         });
       });
@@ -159,10 +158,10 @@ function ZonalDayCount({
                           <TableCell
                             sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
                             key={index}
-                            onClick={() => handleSort(question.questionText)}
+                            onClick={() => handleSort(index)}
                           >
                             {question?.questionText}
-                            {sortConfig.key === question.questionText &&
+                            {sortConfig.key === index &&
                               (sortConfig.direction === "ascending"
                                 ? " ▲"
                                 : " ▼")}
@@ -192,7 +191,7 @@ function ZonalDayCount({
                           <TableCell sx={{ textAlign: "center" }}>{branch.userName}</TableCell>
                           {questions?.map((question, qIndex) => (
                             <TableCell key={`${branchIndex}-${qIndex}`} sx={{ textAlign: "center" }}>
-                              {branch.sums[question.questionText] || 0}
+                              {branch.sums[qIndex] || 0}
                             </TableCell>
                           ))}
                           <TableCell sx={{ textAlign: "center" }}>

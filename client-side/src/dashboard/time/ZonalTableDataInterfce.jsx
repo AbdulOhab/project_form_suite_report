@@ -54,7 +54,6 @@ function ZonalTableDataInterfce({
 
   useEffect(() => {
     const dayData = {};
-    const allQuestions = new Set();
     branchReport?.forEach((branch) => {
       if (branch.tempThana && Array.isArray(branch.tempThana)) {
         branch?.tempThana?.forEach((thana) => {
@@ -68,10 +67,7 @@ function ZonalTableDataInterfce({
                   }
 
                   let sums = dayData[formattedDate];
-                  ans.answers.forEach((data) => {
-                    const questionText = data.questionText;
-                    allQuestions.add(questionText);
-
+                  ans.answers.forEach((data, index) => {
                     let value = 0;
                     if (data.questionType === "number") {
                       value = Number(data.data);
@@ -79,10 +75,10 @@ function ZonalTableDataInterfce({
                       value = 0;
                     }
 
-                    if (!sums[questionText]) {
-                      sums[questionText] = 0;
+                    if (!sums[index]) {
+                      sums[index] = 0;
                     }
-                    sums[questionText] += value;
+                    sums[index] += value;
                   });
                 }
               });
@@ -97,15 +93,15 @@ function ZonalTableDataInterfce({
       const dateData = dayData[formattedDate] || {};
       const result = { date: formattedDate, day };
 
-      allQuestions.forEach((questionText) => {
-        result[questionText] = dateData[questionText] || 0;
+      questions?.forEach((_, index) => {
+        result[index] = dateData[index] || 0;
       });
 
       return result;
     });
 
     setDataListByDate(sumsArray);
-  }, [dateList, branchReport]);
+  }, [dateList, branchReport, questions]);
 
   const handleSort = (key) => {
     let direction = "ascending";
@@ -169,10 +165,10 @@ function ZonalTableDataInterfce({
                       wordBreak: "break-word",
                     }}
                     key={index}
-                    onClick={() => handleSort(question?.questionText)}
+                    onClick={() => handleSort(index)}
                   >
                     {question?.questionText}
-                    {sortConfig.key === question?.questionText &&
+                    {sortConfig.key === index &&
                       (sortConfig.direction === "ascending" ? " ▲" : " ▼")}
                   </TableCell>
                 ))}
@@ -208,7 +204,7 @@ function ZonalTableDataInterfce({
                     </TableCell>
                     {questions.map((question, questionIndex) => (
                       <TableCell key={questionIndex} sx={{ textAlign: "center" }}>
-                        {currentDateData[question.questionText] || "0"}
+                        {currentDateData[questionIndex] || "0"}
                       </TableCell>
                     ))}
                     <TableCell sx={{ textAlign: "center" }}>

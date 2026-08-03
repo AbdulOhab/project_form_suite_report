@@ -134,7 +134,7 @@ const SumsAllBranchData = () => {
     const tableData = sortedData.map((branch) => [
       branch.branchCode,
       branch.userName,
-      ...data.questions.map((q) => branch[q.questionText] || 0),
+      ...data.questions.map((q, index) => branch[index] || 0),
     ]);
 
     const totalRow = [
@@ -279,10 +279,10 @@ const SumsAllBranchData = () => {
                     {data.questions?.map((question, index) => (
                       <TableCell
                         key={index}
-                        onClick={() => handleSort(question.questionText)}
+                        onClick={() => handleSort(index)}
                       >
                         {question?.questionText}
-                        {sortIndicator(question.questionText)}
+                        {sortIndicator(index)}
                       </TableCell>
                     ))}
                     <TableCell>Actions</TableCell>
@@ -338,7 +338,7 @@ const SumsAllBranchData = () => {
                           key={`${branchIndex}-${qIndex}`}
                           sx={{ textAlign: "center" }}
                         >
-                          {branch?.[question.questionText] || 0}
+                          {branch?.[qIndex] || 0}
                         </TableCell>
                       ))}
                       <TableCell>

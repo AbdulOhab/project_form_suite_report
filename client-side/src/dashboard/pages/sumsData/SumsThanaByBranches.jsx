@@ -298,10 +298,10 @@ const SumsThanaByBranches = () => {
                 {questions?.map((question, index) => (
                   <TableCell
                     key={index}
-                    onClick={() => handleSort(question.questionText)}
+                    onClick={() => handleSort(index)}
                   >
                     {question?.questionText}
-                    {sortIndicator(question.questionText)}
+                    {sortIndicator(index)}
                   </TableCell>
                 ))}
               </TableRow>
@@ -345,7 +345,7 @@ const SumsThanaByBranches = () => {
                       key={`${thanaIndex}-${qIndex}`}
                       sx={{ textAlign: "center" }}
                     >
-                      {thana?.[question.questionText] || 0}
+                      {thana?.[qIndex] || 0}
                     </TableCell>
                   ))}
                 </TableRow>

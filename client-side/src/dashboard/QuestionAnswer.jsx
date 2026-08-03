@@ -26,6 +26,7 @@ import DateDifferenceComponent from "./time/DateDifferenceComponent";
 import BASE_URL from "../auth/dbUrl";
 import SweetAlert from "./time/SweetAlert";
 import { buildNoticeSlug } from "../utils/noticeSlug";
+import { toEnglishDigits } from "../utils/convertDigits";
 
 const QuestionAnswer = () => {
   const { id } = useParams();
@@ -80,13 +81,14 @@ const QuestionAnswer = () => {
   };
 
   const selectInput = (qText, value, qIndex, required, questionType) => {
+    const data = questionType === "number" ? toEnglishDigits(value) : value;
     setAnswer((prevAnswer) => {
       const newAnswer = [...prevAnswer];
 
       if (qIndex >= newAnswer.length) {
         newAnswer[qIndex] = {
           questionText: qText,
-          data: value,
+          data,
           questionType: questionType,
           required: required,
         };
@@ -94,7 +96,7 @@ const QuestionAnswer = () => {
         newAnswer[qIndex] = {
           ...newAnswer[qIndex],
           questionText: qText,
-          data: value,
+          data,
           required: required,
           questionType: questionType,
         };

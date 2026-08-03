@@ -219,7 +219,7 @@ function DateDifferenceComponent({ startDadeline, range, timeStart, timeEnd, end
         <Box sx={{ display: "flex", justifyContent: "center", mb: 1 }}>
           <Chip
             icon={<AccessAlarmIcon sx={{ fontSize: 16 }} />}
-            label="রিপোর্ট প্রদান শুরু হতে বাকি আছে"
+            label="রিপোর্ট প্রদান শুরু হয়নি"
             size="small"
             sx={{
               bgcolor: "success.50",

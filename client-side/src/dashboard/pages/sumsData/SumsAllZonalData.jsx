@@ -138,7 +138,7 @@ const SumsAllZonalData = () => {
     const data = sortedData.map((zonal) => [
       zonal.zonalCode,
       zonal.userName,
-      ...notice.questions.map((q) => zonal[q.questionText] || 0),
+      ...notice.questions.map((q, index) => zonal[index] || 0),
     ]);
 
     // Add total row
@@ -279,10 +279,10 @@ const SumsAllZonalData = () => {
                   {notice?.questions?.map((question, index) => (
                     <TableCell
                       key={index}
-                      onClick={() => handleSort(question.questionText)}
+                      onClick={() => handleSort(index)}
                     >
                       {question?.questionText}
-                      {sortIndicator(question.questionText)}
+                      {sortIndicator(index)}
                     </TableCell>
                   ))}
                   <TableCell>Action</TableCell>
@@ -337,7 +337,7 @@ const SumsAllZonalData = () => {
                         key={`${zonalIndex}-${questionIndex}`}
                         sx={{ textAlign: "center" }}
                       >
-                        {zonal[question.questionText] || 0}
+                        {zonal[questionIndex] || 0}
                       </TableCell>
                     ))}
                     <TableCell>
