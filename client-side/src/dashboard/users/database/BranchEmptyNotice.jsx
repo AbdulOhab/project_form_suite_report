@@ -169,7 +169,7 @@ function BranchEmptyNotice() {
               </Typography>
             </Box>
             <Box sx={{ px: 2, py: 1.5 }}>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.primary">
                 {notice.doc_desc}
               </Typography>
             </Box>

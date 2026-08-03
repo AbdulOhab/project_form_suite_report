@@ -136,6 +136,8 @@ function ThanaUserInterface() {
               <DateByDayCount
                 startDadeline={notice?.startDadeline}
                 range={notice?.range}
+                timeStart={notice?.timeStart}
+                timeEnd={notice?.timeEnd}
                 thanaReport={answer}
                 questions={notice?.questions}
                 totalData={totalData}

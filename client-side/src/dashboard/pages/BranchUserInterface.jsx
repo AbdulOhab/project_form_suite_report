@@ -80,7 +80,7 @@ function BranchUserInterface() {
         </DialogTitle>
         <DialogContent dividers>
           {notice?.doc_desc && (
-            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>{notice.doc_desc}</Typography>
+            <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>{notice.doc_desc}</Typography>
           )}
           <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap", mb: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>

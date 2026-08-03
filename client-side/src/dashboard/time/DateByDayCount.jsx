@@ -16,6 +16,8 @@ import EditOutlined from "@mui/icons-material/EditOutlined";
 function DateByDayCount({
   startDadeline,
   range,
+  timeStart,
+  timeEnd,
   thanaReport = [],
   questions = [],
   totalData = [],
@@ -47,6 +49,23 @@ function DateByDayCount({
   }, [startDadeline, range]);
 
   const today = new Date().toISOString().split("T")[0];
+
+  // Notices restrict submission to a daily [timeStart, timeEnd] window (which
+  // can cross midnight, e.g. 16:56–02:47) — matching the calendar day alone
+  // isn't enough, the clock also has to be inside that window right now.
+  const isWithinTimeWindow = (start, end) => {
+    if (!start || !end) return true;
+    const [startH, startM] = start.split(":").map(Number);
+    const [endH, endM] = end.split(":").map(Number);
+    const now = new Date();
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    const startMinutes = startH * 60 + startM;
+    const endMinutes = endH * 60 + endM;
+    if (startMinutes <= endMinutes) {
+      return nowMinutes >= startMinutes && nowMinutes <= endMinutes;
+    }
+    return nowMinutes >= startMinutes || nowMinutes <= endMinutes;
+  };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -211,7 +230,7 @@ function DateByDayCount({
                       variant="contained"
                       color="primary"
                       size="small"
-                      disabled={data.date !== today}
+                      disabled={data.date !== today || !isWithinTimeWindow(timeStart, timeEnd)}
                       component={Link}
                       to={`/dashboard/thana-empty-answer/${slug}/${data.date}`}
                       state={{ id }}
