@@ -12,7 +12,6 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import LockOutlined from "@mui/icons-material/LockOutlined";
 
 function TableDataInterfce({
   startDadeline,
@@ -144,7 +143,7 @@ function TableDataInterfce({
             <TableHead>
               <TableRow sx={{ bgcolor: "primary.main", textAlign: "center" }}>
                 <TableCell
-                  sx={{ color: "common.white", textAlign: "center", cursor: "pointer", fontWeight: "bold" }}
+                  sx={{ color: "common.white", textAlign: "left", cursor: "pointer", fontWeight: "bold" }}
                   onClick={() => handleSort("date")}
                 >
                   দিন ও তারিখ
@@ -177,18 +176,14 @@ function TableDataInterfce({
                   : questions?.map((_, index) => (
                       <TableCell sx={{ color: "error.main", textAlign: "center" }} key={index}>0</TableCell>
                     ))}
-                <TableCell sx={{ textAlign: "center" }}>
-                  <Button variant="outlined" color="inherit" size="small" disabled sx={{ minWidth: 0, px: 1 }}>
-                    <LockOutlined fontSize="small" />
-                  </Button>
-                </TableCell>
+                <TableCell sx={{ textAlign: "center" }} />
               </TableRow>
             </TableBody>
             <TableBody>
               {sortedDataListByDate?.map((data, dateIndex) => {
                 return (
                   <TableRow key={dateIndex} sx={{ textAlign: "center", "&:hover": { bgcolor: "action.hover" } }}>
-                    <TableCell>
+                    <TableCell sx={{ textAlign: "left" }}>
                       <BangladayDate day={data.day + 1} date={data.date} />
                     </TableCell>
                     {questions.map((question, questionIndex) => (

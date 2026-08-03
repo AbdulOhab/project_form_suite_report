@@ -22,7 +22,6 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import LockIcon from "@mui/icons-material/Lock";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { ArrowBack, InfoOutlined } from "@mui/icons-material";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
@@ -317,11 +316,7 @@ const SumsAllZonalData = () => {
                           0
                         </TableCell>
                       ))}
-                  <TableCell>
-                    <Button variant="outlined" color="error" size="small" disabled startIcon={<LockIcon fontSize="small" />}>
-                      প্রযোজ্য নয়
-                    </Button>
-                  </TableCell>
+                  <TableCell />
                 </TableRow>
 
                 {/* Data Rows */}

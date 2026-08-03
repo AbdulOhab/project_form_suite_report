@@ -12,7 +12,6 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import LockOutlined from "@mui/icons-material/LockOutlined";
 
 function ZonalTableDataInterfce({
   startDadeline,
@@ -151,7 +150,7 @@ function ZonalTableDataInterfce({
             <TableHead>
               <TableRow sx={{ bgcolor: "primary.main", textAlign: "center" }}>
                 <TableCell
-                  sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                  sx={{ color: "common.white", textAlign: "left", cursor: "pointer" }}
                   onClick={() => handleSort("date")}
                 >
                   দিন ও তারিখ
@@ -175,23 +174,25 @@ function ZonalTableDataInterfce({
             <TableBody>
               <TableRow sx={{ bgcolor: "info.main", textAlign: "center" }}>
                 <TableCell sx={{ color: "error.main", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
-                {totalData?.map((value, index) => (
-                  <TableCell sx={{ color: "error.main", textAlign: "center" }} key={index}>
-                    {value[index]}
-                  </TableCell>
-                ))}
-                <TableCell sx={{ textAlign: "center" }}>
-                  <Button variant="outlined" color="inherit" size="small" disabled sx={{ minWidth: 0, px: 1 }}>
-                    <LockOutlined fontSize="small" />
-                  </Button>
-                </TableCell>
+                {totalData?.length
+                  ? totalData.map((value, index) => (
+                      <TableCell sx={{ color: "error.main", textAlign: "center" }} key={index}>
+                        {value[index]}
+                      </TableCell>
+                    ))
+                  : questions?.map((_, index) => (
+                      <TableCell sx={{ color: "error.main", textAlign: "center" }} key={index}>
+                        0
+                      </TableCell>
+                    ))}
+                <TableCell sx={{ textAlign: "center" }} />
               </TableRow>
             </TableBody>
             <TableBody>
               {sortedDataListByDate.map((currentDateData, dateIndex) => {
                 return (
                   <TableRow key={dateIndex} sx={{ textAlign: "center", "&:hover": { bgcolor: "action.hover" } }}>
-                    <TableCell>
+                    <TableCell sx={{ textAlign: "left" }}>
                       <BangladayDate
                         day={currentDateData.day + 1}
                         date={currentDateData.date}

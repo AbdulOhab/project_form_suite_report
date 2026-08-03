@@ -25,7 +25,6 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import LockIcon from "@mui/icons-material/Lock";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { ArrowBack, InfoOutlined } from "@mui/icons-material";
@@ -464,11 +463,7 @@ const SumsAllThanaData = () => {
                           0
                         </TableCell>
                       )}
-                      <TableCell>
-                        <Button variant="outlined" color="error" size="small" disabled startIcon={<LockIcon fontSize="small" />}>
-                          প্রযোজ্য নয়
-                        </Button>
-                      </TableCell>
+                      <TableCell />
                     </TableRow>
 
                     {/* Data Rows */}

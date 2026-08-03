@@ -65,7 +65,7 @@ function BangladayDate({ day, date }) {
   const banglaFormattedDate = getBanglaFormattedDate(data);
   const currentDayNotice = convertToBengaliNumber(day);
   return (
-    <Box sx={{ textAlign: "center", color: "success.main", fontWeight: "bold" }}>
+    <Box sx={{ textAlign: "left", color: "success.main", fontWeight: "bold" }}>
        দিন {currentDayNotice}{", "}
       {banglaFormattedDate}
     </Box>

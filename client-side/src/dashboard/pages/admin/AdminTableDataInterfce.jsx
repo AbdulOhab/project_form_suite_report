@@ -12,7 +12,6 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import LockOutlined from "@mui/icons-material/LockOutlined";
 
 function AdminTableDataInterfce({
   startDadeline,
@@ -153,7 +152,7 @@ function AdminTableDataInterfce({
             <TableHead>
               <TableRow sx={{ bgcolor: "primary.main", textAlign: "center" }}>
                 <TableCell
-                  sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                  sx={{ color: "common.white", textAlign: "left", cursor: "pointer" }}
                   onClick={() => handleSort("date")}
                 >
                   দিন ও তারিখ
@@ -188,11 +187,7 @@ function AdminTableDataInterfce({
                         0
                       </TableCell>
                     ))}
-                <TableCell sx={{ textAlign: "center" }}>
-                  <Button variant="outlined" color="inherit" size="small" disabled sx={{ minWidth: 0, px: 1 }}>
-                    <LockOutlined fontSize="small" />
-                  </Button>
-                </TableCell>
+                <TableCell sx={{ textAlign: "center" }} />
               </TableRow>
             </TableBody>
             <TableBody>

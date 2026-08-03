@@ -11,7 +11,6 @@ import {
   Paper,
   Button,
 } from "@mui/material";
-import LockOutlined from "@mui/icons-material/LockOutlined";
 import EditOutlined from "@mui/icons-material/EditOutlined";
 
 function DateByDayCount({
@@ -133,7 +132,7 @@ function DateByDayCount({
           <TableHead>
             <TableRow sx={{ bgcolor: "primary.main", textTransform: "capitalize" }}>
               <TableCell
-                sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                sx={{ color: "common.white", textAlign: "left", cursor: "pointer" }}
                 onClick={() => handleSort("date")}
               >
                 দিন ও তারিখ{" "}
@@ -164,20 +163,20 @@ function DateByDayCount({
                   </TableCell>
                 ))
               ) : (
-                <TableCell sx={{ color: "common.white", textAlign: "center" }}>0</TableCell>
+                questions.map((_, qIndex) => (
+                  <TableCell sx={{ color: "common.white", textAlign: "center" }} key={qIndex}>
+                    0
+                  </TableCell>
+                ))
               )}
-              <TableCell sx={{ textAlign: "center" }}>
-                <Button variant="outlined" color="inherit" size="small" disabled sx={{ minWidth: 0, px: 1 }}>
-                  <LockOutlined fontSize="small" />
-                </Button>
-              </TableCell>
+              <TableCell sx={{ textAlign: "center" }} />
             </TableRow>
             {sortedDataList.map((data, index) => (
               <TableRow
                 key={index}
                 sx={{ "&:hover": { bgcolor: "action.hover" } }}
               >
-                <TableCell sx={{ textAlign: "center" }}>
+                <TableCell sx={{ textAlign: "left" }}>
                   <BangladayDate day={data.day + 1} date={data.date} />
                 </TableCell>
                 {questions.map((question, qIndex) => (

@@ -15,7 +15,7 @@ const pastNotices = [
     questions: [
       { questionText: "Total collection (BDT) in Q1", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
       { questionText: "New members enrolled in Q1", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
-      { questionText: "Target achieved? Remarks", questionType: "text", options: [{ optionsText: "Sort answer text" }], required: false, open: false },
+      { questionText: "Target achievement percentage (%)", questionType: "number", options: [{ optionsText: "Value must be number" }], required: false, open: false },
     ],
   },
   {
@@ -29,7 +29,7 @@ const pastNotices = [
     questions: [
       { questionText: "Field visits completed in April", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
       { questionText: "New registrations in April", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
-      { questionText: "Notable issues or events", questionType: "text", options: [{ optionsText: "Sort answer text" }], required: false, open: false },
+      { questionText: "Number of notable issues or events", questionType: "number", options: [{ optionsText: "Value must be number" }], required: false, open: false },
     ],
   },
   {
@@ -43,7 +43,7 @@ const pastNotices = [
     questions: [
       { questionText: "Total Q1 collection across branches (BDT)", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
       { questionText: "Number of branches meeting targets", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
-      { questionText: "Zone-level observations", questionType: "text", options: [{ optionsText: "Sort answer text" }], required: false, open: false },
+      { questionText: "Number of zone-level issues observed", questionType: "number", options: [{ optionsText: "Value must be number" }], required: false, open: false },
     ],
   },
   {
@@ -56,7 +56,7 @@ const pastNotices = [
     timeStart: "08:00", timeEnd: "18:00",
     questions: [
       { questionText: "Number of disrupted operations", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
-      { questionText: "Mitigation actions summary", questionType: "text", options: [{ optionsText: "Sort answer text" }], required: true, open: false },
+      { questionText: "Number of mitigation actions taken", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
     ],
   },
   {
@@ -70,7 +70,7 @@ const pastNotices = [
     questions: [
       { questionText: "Total working days in May", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
       { questionText: "Staff present on average per day", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
-      { questionText: "Compliance issues to report?", questionType: "text", options: [{ optionsText: "Sort answer text" }], required: false, open: false },
+      { questionText: "Number of compliance issues to report", questionType: "number", options: [{ optionsText: "Value must be number" }], required: false, open: false },
     ],
   },
 ];
@@ -105,9 +105,9 @@ const activeNotices = [
         open: false,
       },
       {
-        questionText: "Any operational issues faced this month?",
-        questionType: "text",
-        options: [{ optionsText: "Sort answer text" }],
+        questionText: "Number of operational issues faced this month",
+        questionType: "number",
+        options: [{ optionsText: "Value must be number" }],
         required: false,
         open: false,
       },
@@ -141,9 +141,9 @@ const activeNotices = [
         open: false,
       },
       {
-        questionText: "Field visit remarks / observations",
-        questionType: "text",
-        options: [{ optionsText: "Sort answer text" }],
+        questionText: "Number of field visit issues / observations",
+        questionType: "number",
+        options: [{ optionsText: "Value must be number" }],
         required: false,
         open: false,
       },
@@ -158,7 +158,7 @@ const activeNotices = [
     startDadeline: "2026-06-01", endDadeline: "2026-06-15",
     timeStart: "08:00", timeEnd: "18:00",
     questions: [
-      { questionText: "Any resource shortages this week?", questionType: "text", options: [{ optionsText: "Sort answer text" }], required: true, open: false },
+      { questionText: "Number of resource shortages this week", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
       { questionText: "Number of unresolved field complaints", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
     ],
   },
@@ -173,7 +173,7 @@ const activeNotices = [
     questions: [
       { questionText: "Total active staff in your unit", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
       { questionText: "Staff on leave this month", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
-      { questionText: "General staff feedback or concerns", questionType: "text", options: [{ optionsText: "Sort answer text" }], required: false, open: false },
+      { questionText: "Number of staff concerns raised", questionType: "number", options: [{ optionsText: "Value must be number" }], required: false, open: false },
     ],
   },
 ];
@@ -215,9 +215,9 @@ const upcomingNotices = [
         open: false,
       },
       {
-        questionText: "Summary comments for the quarter",
-        questionType: "text",
-        options: [{ optionsText: "Sort answer text" }],
+        questionText: "Number of summary notes filed for the quarter",
+        questionType: "number",
+        options: [{ optionsText: "Value must be number" }],
         required: false,
         open: false,
       },
@@ -234,7 +234,7 @@ const upcomingNotices = [
     questions: [
       { questionText: "Total staff count in your unit", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
       { questionText: "Number of staff who completed mandatory training", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
-      { questionText: "Any compliance issues or incidents to report?", questionType: "text", options: [{ optionsText: "Sort answer text" }], required: false, open: false },
+      { questionText: "Number of compliance issues or incidents to report", questionType: "number", options: [{ optionsText: "Value must be number" }], required: false, open: false },
     ],
   },
   {
@@ -248,7 +248,7 @@ const upcomingNotices = [
     questions: [
       { questionText: "July collection target (BDT)", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
       { questionText: "Actual collection achieved (BDT)", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
-      { questionText: "Remarks on shortfall or surplus", questionType: "text", options: [{ optionsText: "Sort answer text" }], required: false, open: false },
+      { questionText: "Shortfall or surplus amount (BDT)", questionType: "number", options: [{ optionsText: "Value must be number" }], required: false, open: false },
     ],
   },
   {
@@ -261,8 +261,8 @@ const upcomingNotices = [
     timeStart: "09:00", timeEnd: "17:00",
     questions: [
       { questionText: "Number of staff who attended Q3 training", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
-      { questionText: "Training topics covered", questionType: "text", options: [{ optionsText: "Sort answer text" }], required: true, open: false },
-      { questionText: "Suggested training improvements", questionType: "text", options: [{ optionsText: "Sort answer text" }], required: false, open: false },
+      { questionText: "Number of training topics covered", questionType: "number", options: [{ optionsText: "Value must be number" }], required: true, open: false },
+      { questionText: "Number of suggested training improvements", questionType: "number", options: [{ optionsText: "Value must be number" }], required: false, open: false },
     ],
   },
 ];

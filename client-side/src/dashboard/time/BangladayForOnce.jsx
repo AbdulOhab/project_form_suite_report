@@ -67,7 +67,7 @@ const BangladayForOnce = ({day,date}) => {
   return (
     <Box
       component="td"
-      sx={{ textAlign: "center", color: "success.main", fontWeight: "bold" }}
+      sx={{ textAlign: "left", color: "success.main", fontWeight: "bold" }}
     >
        দিন {currentDayNotice}{", "}
       {banglaFormattedDate}
