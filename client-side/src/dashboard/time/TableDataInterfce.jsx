@@ -20,6 +20,7 @@ function TableDataInterfce({
   questions,
   thanaReport,
   id,
+  slug,
 }) {
   const [dateList, setDateList] = useState([]);
   const [dataListByDate, setDataListByDate] = useState([]);
@@ -169,16 +170,16 @@ function TableDataInterfce({
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow sx={{ bgcolor: "info.main", textAlign: "center" }}>
-                <TableCell sx={{ color: "error.main", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
+              <TableRow sx={{ bgcolor: "primary.main", textAlign: "center" }}>
+                <TableCell sx={{ color: "common.white", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
                 {totalData.length
                   ? totalData?.map((total, totalIndex) => (
-                      <TableCell sx={{ color: "error.main", textAlign: "center" }} key={totalIndex}>
+                      <TableCell sx={{ color: "common.white", textAlign: "center" }} key={totalIndex}>
                         {total[totalIndex]}
                       </TableCell>
                     ))
                   : questions?.map((_, index) => (
-                      <TableCell sx={{ color: "error.main", textAlign: "center" }} key={index}>0</TableCell>
+                      <TableCell sx={{ color: "common.white", textAlign: "center" }} key={index}>0</TableCell>
                     ))}
                 <TableCell sx={{ textAlign: "center" }} />
               </TableRow>
@@ -198,12 +199,13 @@ function TableDataInterfce({
                     <TableCell sx={{ textAlign: "center" }}>
                       <Button
                         variant="contained"
-                        color="success"
+                        color="primary"
                         size="small"
                         component={Link}
-                        to={`/dashboard/branch-interface/${dateIndex + 1}/${id}`}
+                        to={`/dashboard/branch-interface/${dateIndex + 1}/${slug}`}
+                        state={{ id }}
                       >
-                        +
+                        বিস্তারিত
                       </Button>
                     </TableCell>
                   </TableRow>

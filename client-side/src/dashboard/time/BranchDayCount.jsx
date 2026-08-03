@@ -11,7 +11,6 @@ import {
   TableRow,
   Paper,
   Button,
-  Box,
 } from "@mui/material";
 
 function BranchDayCount({
@@ -20,11 +19,25 @@ function BranchDayCount({
   questions,
   thanaReport,
   totalData,
-  endDadeline,
+  noticeId,
+  timeStart,
+  timeEnd,
 }) {
-  const [formDisabled, setFormDisabled] = useState();
+  const { dayId } = useParams();
 
-  const { dayId, noticeId } = useParams();
+  const isWithinTimeWindow = (start, end) => {
+    if (!start || !end) return true;
+    const [startH, startM] = start.split(":").map(Number);
+    const [endH, endM] = end.split(":").map(Number);
+    const now = new Date();
+    const nowMinutes = now.getHours() * 60 + now.getMinutes();
+    const startMinutes = startH * 60 + startM;
+    const endMinutes = endH * 60 + endM;
+    if (startMinutes <= endMinutes) {
+      return nowMinutes >= startMinutes && nowMinutes <= endMinutes;
+    }
+    return nowMinutes >= startMinutes || nowMinutes <= endMinutes;
+  };
 
   const [dateList, setDateList] = useState([]);
 
@@ -34,35 +47,6 @@ function BranchDayCount({
     key: null,
     direction: "ascending",
   });
-
-  useEffect(() => {
-    const calculateDisabledState = ({ endDadeline, startDadeline }) => {
-      const endDate = new Date(endDadeline);
-      const startDate = new Date(startDadeline);
-      const today = new Date();
-
-      const timeDiff = endDate - today;
-      const totalDays = endDate - startDate;
-
-      const difference = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-      const dayDifference = Math.ceil(totalDays / (1000 * 60 * 60 * 24));
-
-      if (
-        (dayDifference === 0 && difference > 0) ||
-        (difference >= 0 && dayDifference > 0)
-      ) {
-        return false;
-      } else {
-        return true;
-      }
-    };
-
-    let isDisabled = calculateDisabledState({
-      endDadeline,
-      startDadeline,
-    });
-    setFormDisabled(isDisabled);
-  }, [endDadeline, startDadeline]);
 
   useEffect(() => {
     let count = 0;
@@ -143,6 +127,11 @@ function BranchDayCount({
       ) : (
         dateList?.map((date, index) => {
           if (index + 1 === Number(dayId)) {
+            const isToday =
+              date.toISOString().split("T")[0] ===
+              new Date().toISOString().split("T")[0];
+            const canEdit = isToday && isWithinTimeWindow(timeStart, timeEnd);
+
             return (
               <React.Fragment key={index}>
                 <BranchBangladayDate
@@ -188,23 +177,21 @@ function BranchDayCount({
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      <TableRow sx={{ bgcolor: "info.main", textAlign: "center" }}>
-                        <TableCell sx={{ color: "error.main", textAlign: "center" }}></TableCell>
-                        <TableCell sx={{ color: "error.main", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
+                      <TableRow sx={{ bgcolor: "primary.main", textAlign: "center" }}>
+                        <TableCell sx={{ color: "common.white", textAlign: "center" }}></TableCell>
+                        <TableCell sx={{ color: "common.white", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
                         {totalData.length
                           ? totalData?.map((total, totalIndex) => (
-                              <TableCell sx={{ color: "error.main", textAlign: "center" }} key={totalIndex}>
+                              <TableCell sx={{ color: "common.white", textAlign: "center" }} key={totalIndex}>
                                 {total[totalIndex]}
                               </TableCell>
                             ))
                           : questions?.map((_, index) => (
-                              <TableCell sx={{ color: "error.main", textAlign: "center" }} key={index}>
+                              <TableCell sx={{ color: "common.white", textAlign: "center" }} key={index}>
                                 0
                               </TableCell>
                             ))}
-                        <TableCell sx={{ color: "error.main", textAlign: "center" }}>
-                          <Box component="span" sx={{ opacity: 0.5 }}>&#128274;</Box>
-                        </TableCell>
+                        <TableCell sx={{ color: "common.white", textAlign: "center" }} />
                       </TableRow>
                     </TableBody>
                     <TableBody>
@@ -224,24 +211,25 @@ function BranchDayCount({
                           <TableCell sx={{ textAlign: "center" }}>
                             {thana?.answer?._id ? (
                               <Button
-                                variant="outlined"
-                                color="success"
+                                variant="contained"
+                                color="primary"
                                 size="small"
+                                disabled={!canEdit}
                                 component={Link}
                                 to={`/dashboard/branch-edit-answer/${noticeId}/${thana?.answer?._id}`}
                               >
-                                &#9998;
+                                এডিট
                               </Button>
                             ) : (
                               <Button
                                 variant="contained"
                                 color="primary"
                                 size="small"
-                                disabled={formDisabled}
+                                disabled={!canEdit}
                                 component={Link}
                                 to={`/dashboard/branch-empty-answer/${thana.thanaCode}/${noticeId}`}
                               >
-                                সাবমিট
+                                এডিট
                               </Button>
                             )}
                           </TableCell>

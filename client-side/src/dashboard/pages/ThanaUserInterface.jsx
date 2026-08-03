@@ -61,7 +61,7 @@ function ThanaUserInterface() {
   const statusMeta = status && STATUS_META[status];
 
   return (
-    <Box sx={{ maxWidth: 1100, mx: "auto", px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
+    <Box sx={{ maxWidth: 1500, mx: "auto", px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
 
       {/* ── Top bar ── */}
       <Box sx={{ display: "flex", alignItems: "center", mb: 2, gap: 1 }}>

@@ -4,6 +4,7 @@ import { Box, Button, Paper, Typography, Chip } from "@mui/material";
 import { ArrowBack, TableChartOutlined } from "@mui/icons-material";
 import TableDataInterfce from "../time/TableDataInterfce";
 import BASE_URL from "../../auth/dbUrl";
+import { buildNoticeSlug } from "../../utils/noticeSlug";
 
 // Same status convention as the Notice Board card (upcoming / ongoing / ended).
 const STATUS_META = {
@@ -60,7 +61,7 @@ function BranchDataInterface() {
   const statusMeta = status && STATUS_META[status];
 
   return (
-    <Box sx={{ maxWidth: 1100, mx: "auto", px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
+    <Box sx={{ maxWidth: 1500, mx: "auto", px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
 
       {/* ── Top bar ── */}
       <Box sx={{ display: "flex", alignItems: "center", mb: 2, gap: 1 }}>
@@ -139,6 +140,7 @@ function BranchDataInterface() {
                 questions={notice?.questions}
                 thanaReport={thanaReport}
                 id={id}
+                slug={buildNoticeSlug(notice)}
               />
             </Box>
           </Paper>

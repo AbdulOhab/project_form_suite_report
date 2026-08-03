@@ -20,6 +20,7 @@ function AdminTableDataInterfce({
   questions,
   zonalReport,
   id,
+  slug,
 }) {
   const [dateList, setDateList] = useState([]);
   const [dataListByDate, setDataListByDate] = useState([]);
@@ -206,12 +207,13 @@ function AdminTableDataInterfce({
                   <TableCell sx={{ textAlign: "center" }}>
                     <Button
                       variant="contained"
-                      color="success"
+                      color="primary"
                       size="small"
                       component={Link}
-                      to={`/dashboard/admin-interface/${dateIndex + 1}/${id}`}
+                      to={`/dashboard/admin-interface/${dateIndex + 1}/${slug}`}
+                      state={{ id }}
                     >
-                      +
+                      বিস্তারিত
                     </Button>
                   </TableCell>
                 </TableRow>

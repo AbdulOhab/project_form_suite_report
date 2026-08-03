@@ -4,6 +4,7 @@ import { Box, Button, Paper, Typography, Chip } from "@mui/material";
 import { ArrowBack, TableChartOutlined } from "@mui/icons-material";
 import ZonalTableDataInterfce from "../../time/ZonalTableDataInterfce";
 import BASE_URL from "../../../auth/dbUrl";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 
 // Same status convention as the Notice Board card (upcoming / ongoing / ended).
 const STATUS_META = {
@@ -57,7 +58,7 @@ function ZonalDataInterface() {
   const statusMeta = status && STATUS_META[status];
 
   return (
-    <Box sx={{ maxWidth: 1100, mx: "auto", px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
+    <Box sx={{ maxWidth: 1500, mx: "auto", px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
 
       {/* ── Top bar ── */}
       <Box sx={{ display: "flex", alignItems: "center", mb: 2, gap: 1 }}>
@@ -102,7 +103,7 @@ function ZonalDataInterface() {
               <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট</Typography>
             </Box>
             <Box sx={{ p: 1 }}>
-              <ZonalTableDataInterfce startDadeline={notice?.startDadeline} range={notice?.range} totalData={totalData} questions={notice?.questions} branchReport={branchReport} id={id} />
+              <ZonalTableDataInterfce startDadeline={notice?.startDadeline} range={notice?.range} totalData={totalData} questions={notice?.questions} branchReport={branchReport} id={id} slug={buildNoticeSlug(notice)} />
             </Box>
           </Paper>
         </>

@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   Box,
   Button,
-  Paper,
   Typography,
   TextField,
   FormControlLabel,
@@ -11,13 +10,15 @@ import {
   Radio,
   Snackbar,
   Alert,
-  Container,
   Dialog,
   DialogTitle,
+  DialogContent,
+  DialogContentText,
   DialogActions,
+  Divider,
+  Stack,
 } from "@mui/material";
-import SortTextIcon from "@mui/icons-material/ShortText";
-import SortNumericIcon from "@mui/icons-material/NumbersSharp";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import BASE_URL from "../../../auth/dbUrl";
 import { toEnglishDigits } from "../../../utils/convertDigits";
 
@@ -25,103 +26,53 @@ function EditQuestionAnswer() {
   const { formId, answerId } = useParams();
   const navigate = useNavigate();
 
-  const [notice, setNotice] = useState([]);
+  const [notice, setNotice] = useState(null);
   const [answer, setAnswer] = useState([
-    {
-      questionText: "",
-      data: "",
-      questionType: "",
-      required: false,
-    },
+    { questionText: "", data: "", questionType: "", required: false },
   ]);
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+  const [confirmDialog, setConfirmDialog] = useState({ open: false });
 
-  // Snackbar state
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success",
-  });
-
-  // Confirmation dialog state
-  const [confirmDialog, setConfirmDialog] = useState({
-    open: false,
-  });
-
-  const handleSnackbarClose = () => {
-    setSnackbar((prev) => ({ ...prev, open: false }));
-  };
-
-  // get answer form database
   useEffect(() => {
-    const getQuestionFromDb = async () => {
+    if (!answerId) return;
+
+    const getAnswerFromDb = async () => {
       try {
-        let response = await fetch(`${BASE_URL}/get-answer/${answerId}`, {
+        const response = await fetch(`${BASE_URL}/get-answer/${answerId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization:
-              "Bearer " + window.localStorage.getItem("gsmToken"),
+            Authorization: "Bearer " + window.localStorage.getItem("gsmToken"),
           },
         });
-        let data = await response.json();
-        if (!response.ok) {
-          throw new Error("get notice data failed");
-        }
+        const data = await response.json();
         if (response.ok) {
           setNotice(data);
           setAnswer(data?.answers);
         }
       } catch (error) {
-        console.error("Error fetching notice data:", error);
+        console.error("Error fetching answer data:", error);
       }
     };
-    getQuestionFromDb();
+    getAnswerFromDb();
   }, [answerId]);
 
   const selectInput = (qText, value, qIndex, required, questionType) => {
     const data = questionType === "number" ? toEnglishDigits(value) : value;
-    setAnswer((prevAnswer) => {
-      const newAnswer = [...prevAnswer];
-
-      // Check if the index exists, if not, add a new object
-      if (qIndex >= newAnswer.length) {
-        newAnswer[qIndex] = {
-          questionText: qText,
-          data,
-          questionType: questionType,
-          required: required,
-        };
-      } else {
-        // Update the existing object
-        newAnswer[qIndex] = {
-          ...newAnswer[qIndex],
-          questionText: qText,
-          data,
-          required: required,
-          questionType: questionType,
-        };
-      }
-
-      return newAnswer;
+    setAnswer((prev) => {
+      const updated = [...prev];
+      updated[qIndex] = { questionText: qText, data, questionType, required };
+      return updated;
     });
   };
 
   const selectCheck = (qText, value, qIndex, required, questionType) => {
-    const newAnswer = [...answer]; // Shallow copy of the answer array
-    if (!Array.isArray(newAnswer[qIndex])) {
-      newAnswer[qIndex] = []; // Initialize as an array if not already
-    }
-    newAnswer[qIndex].push({
-      questionText: qText,
-      data: value,
-      required: required,
-      questionType: questionType,
-    });
-
-    setAnswer(newAnswer); // Update the state with the modified newAnswer
+    const updated = [...answer];
+    if (!Array.isArray(updated[qIndex])) updated[qIndex] = [];
+    updated[qIndex].push({ questionText: qText, data: value, required, questionType });
+    setAnswer(updated);
   };
 
-  //update data submission
   const updataHandler = async (e) => {
     e.preventDefault();
     const response = await fetch(`${BASE_URL}/update-answer/${answerId}`, {
@@ -139,171 +90,183 @@ function EditQuestionAnswer() {
       }),
     });
     await response.json();
-    if (!response.status === 200) {
-      throw new Error("Network response was not ok");
-    }
-    if (response.status === 200) {
-      setConfirmDialog({ open: true });
-    }
+    if (response.status === 200) setConfirmDialog({ open: true });
   };
 
   const handleConfirmSave = () => {
     setConfirmDialog({ open: false });
-    setSnackbar({
-      open: true,
-      message: "Update your data successfully",
-      severity: "success",
-    });
+    setSnackbar({ open: true, message: "তথ্য সফলভাবে আপডেট হয়েছে", severity: "success" });
     navigate(`/dashboard/branch-interface/${formId}`);
   };
 
   const handleDenySave = () => {
     setConfirmDialog({ open: false });
-    setSnackbar({
-      open: true,
-      message: "Changes are not saved",
-      severity: "info",
-    });
+    setSnackbar({ open: true, message: "আপডেট বাতিল করা হয়েছে", severity: "info" });
   };
 
   return (
-    <Container maxWidth="md">
-      <Paper>
-        <Paper
-          elevation={0}
-          sx={{ p: 2, bgcolor: "grey.100", borderRadius: "4px 4px 0 0" }}
-        >
-          <Typography align="center">{notice?.document_name}</Typography>
-          <Typography align="center">{notice?.doc_desc}</Typography>
-        </Paper>
+    <>
+      <Box sx={{ maxWidth: 720, mx: "auto" }}>
+        <Stack direction="row" alignItems="center" sx={{ mb: 2 }}>
+          <Button
+            startIcon={<ArrowBackIcon fontSize="small" />}
+            onClick={() => navigate(-1)}
+            size="small"
+            variant="outlined"
+            sx={{
+              color: "text.secondary",
+              borderColor: "divider",
+              bgcolor: "#ffffff",
+              fontWeight: 600,
+              "&:hover": { bgcolor: "action.hover", borderColor: "divider" },
+            }}
+          >
+            Back
+          </Button>
+        </Stack>
 
-        <Box component="form" onSubmit={updataHandler}>
-          {notice?.answers?.map((question, qIndex) => (
-            <Paper
-              key={qIndex}
-              variant="outlined"
-              elevation={2}
-              sx={{
-                maxWidth: { lg: "50%", md: "66%", sm: "100%" },
-                mx: "auto",
-                p: 2,
-                mt: 1.5,
-              }}
-            >
-              <Typography>
-                {qIndex + 1}. {question?.questionText}
-              </Typography>
+        <Typography variant="h5" fontWeight={700} sx={{ mb: 0.5 }}>
+          {notice?.document_name || (answerId ? "Loading..." : "")}
+        </Typography>
 
-              <Box>
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <FormControlLabel
-                    control={
-                      question.questionType !== "text" &&
-                      question.questionType !== "number" ? (
-                        question.questionType === "checkbox" ? (
-                          <Checkbox
-                            name={String(qIndex)}
-                            required={question?.required}
-                            value={question?.data}
-                            onChange={() =>
-                              selectCheck(
-                                question?.questionText,
-                                question.optionsText,
-                                qIndex,
-                                question?.required,
-                                question?.questionType
-                              )
-                            }
-                          />
-                        ) : (
-                          <Radio
-                            name={String(qIndex)}
-                            required={question?.required}
-                            value={question?.data}
-                            onChange={() =>
-                              selectCheck(
-                                question?.questionText,
-                                question.optionsText,
-                                qIndex,
-                                question?.required,
-                                question?.questionType
-                              )
-                            }
-                          />
+        {!answerId ? (
+          <Typography color="text.secondary" sx={{ mt: 2 }}>
+            রিপোর্ট থেকে Edit বাটনে ক্লিক করে আসুন।
+          </Typography>
+        ) : (
+          <>
+            <Box sx={{ mb: 2 }} />
+
+            {notice?.doc_desc && (
+              <>
+                <Typography variant="caption" fontWeight={600} color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
+                  Description
+                </Typography>
+                <Box
+                  sx={{
+                    color: "text.primary",
+                    mb: 3,
+                    overflowWrap: "break-word",
+                    wordBreak: "break-word",
+                    "& p": { m: 0 },
+                  }}
+                  dangerouslySetInnerHTML={{ __html: notice.doc_desc }}
+                />
+              </>
+            )}
+
+            <Divider sx={{ my: 3 }} />
+
+            <Typography variant="subtitle2" fontWeight={600} color="text.secondary" sx={{ mb: 1.5 }}>
+              Questions
+            </Typography>
+
+            <Box component="form" onSubmit={updataHandler}>
+              {notice?.answers?.map((question, qIndex) => (
+                <Box key={qIndex} sx={{ mb: 2.5 }}>
+                  <Typography variant="body2" fontWeight={500} sx={{ mb: 1 }}>
+                    {qIndex + 1}. {question.questionText}
+                    {question.required && (
+                      <Typography component="span" color="error.main" sx={{ ml: 0.3 }}>*</Typography>
+                    )}
+                  </Typography>
+
+                  {question.questionType === "text" || question.questionType === "number" ? (
+                    <TextField
+                      type={question.questionType === "number" ? "number" : "text"}
+                      size="small"
+                      fullWidth
+                      variant="outlined"
+                      required={question.required}
+                      value={
+                        typeof answer[qIndex]?.data === "string" ||
+                        typeof answer[qIndex]?.data === "number"
+                          ? answer[qIndex].data
+                          : ""
+                      }
+                      multiline={question.questionType === "text"}
+                      rows={question.questionType === "text" ? 3 : undefined}
+                      onChange={(e) =>
+                        selectInput(
+                          question.questionText,
+                          e.target.value,
+                          qIndex,
+                          question.required,
+                          question.questionType
                         )
-                      ) : question?.questionType === "number" ? (
-                        <SortNumericIcon sx={{ mr: 0.5 }} />
-                      ) : (
-                        <SortTextIcon sx={{ mr: 0.5 }} />
-                      )
-                    }
-                    label={
-                      question.questionType !== "text" &&
-                      question.questionType !== "number" ? (
-                        <Typography
-                          sx={{
-                            textTransform: "capitalize",
-                            textAlign: "center",
-                          }}
-                        >
-                          {question?.optionsText}
-                        </Typography>
-                      ) : (
-                        <TextField
-                          type={question.questionType}
-                          name={String(qIndex)}
-                          size="small"
-                          required={question?.required}
-                          value={
-                            typeof answer[qIndex]?.data === "string" ||
-                            typeof answer[qIndex]?.data === "number"
-                              ? answer[qIndex].data
-                              : ""
-                          }
-                          onChange={(e) =>
-                            selectInput(
-                              question?.questionText,
-                              e.target.value,
-                              qIndex,
-                              question?.required,
-                              question?.questionType
-                            )
-                          }
-                        />
-                      )
-                    }
-                  />
+                      }
+                    />
+                  ) : (
+                    question.options?.map((opText, oIndex) => (
+                      <FormControlLabel
+                        key={oIndex}
+                        control={
+                          question.questionType === "checkbox" ? (
+                            <Checkbox
+                              size="small"
+                              name={String(qIndex)}
+                              required={question.required}
+                              onChange={() =>
+                                selectCheck(
+                                  question.questionText,
+                                  opText.optionsText,
+                                  qIndex,
+                                  question.required,
+                                  question.questionType
+                                )
+                              }
+                            />
+                          ) : (
+                            <Radio
+                              size="small"
+                              name={String(qIndex)}
+                              required={question.required}
+                              onChange={() =>
+                                selectCheck(
+                                  question.questionText,
+                                  opText.optionsText,
+                                  qIndex,
+                                  question.required,
+                                  question.questionType
+                                )
+                              }
+                            />
+                          )
+                        }
+                        label={<Typography variant="body2">{opText?.optionsText}</Typography>}
+                      />
+                    ))
+                  )}
                 </Box>
+              ))}
+
+              <Divider sx={{ my: 3 }} />
+
+              <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mb: 3 }}>
+                <Button onClick={() => navigate(-1)} variant="outlined">
+                  বাতিল
+                </Button>
+                <Button type="submit" variant="contained" size="large">
+                  আপডেট করুন
+                </Button>
               </Box>
-            </Paper>
-          ))}
-          <Box sx={{ maxWidth: { lg: "50%", md: "66%", sm: "83%" }, mx: "auto" }}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="success"
-              size="small"
-              sx={{
-                textTransform: "uppercase",
-                my: 1.5,
-                mx: 2,
-              }}
-            >
-              Update
-            </Button>
-          </Box>
-        </Box>
-      </Paper>
+            </Box>
+          </>
+        )}
+      </Box>
 
       {/* Confirmation Dialog */}
-      <Dialog open={confirmDialog.open} onClose={handleDenySave}>
-        <DialogTitle>Do you want to save the changes?</DialogTitle>
-        <DialogActions>
-          <Button onClick={handleDenySave} color="inherit">
-            Don&apos;t save
-          </Button>
-          <Button onClick={handleConfirmSave} variant="contained" color="success">
-            Save
+      <Dialog open={confirmDialog.open} onClose={handleDenySave} maxWidth="xs" fullWidth>
+        <DialogTitle sx={{ fontWeight: 700 }}>তথ্য আপডেট করবেন?</DialogTitle>
+        <DialogContent>
+          <DialogContentText variant="body2">
+            আপডেট করলে আগের তথ্য পরিবর্তন হয়ে যাবে।
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button onClick={handleDenySave} color="inherit" size="small">বাতিল</Button>
+          <Button onClick={handleConfirmSave} variant="contained" size="small">
+            আপডেট করুন
           </Button>
         </DialogActions>
       </Dialog>
@@ -311,20 +274,18 @@ function EditQuestionAnswer() {
       {/* Snackbar */}
       <Snackbar
         open={snackbar.open}
-        autoHideDuration={4000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar((p) => ({ ...p, open: false }))}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert
-          onClose={handleSnackbarClose}
           severity={snackbar.severity}
-          variant="filled"
-          sx={{ width: "100%" }}
+          onClose={() => setSnackbar((p) => ({ ...p, open: false }))}
         >
           {snackbar.message}
         </Alert>
       </Snackbar>
-    </Container>
+    </>
   );
 }
 

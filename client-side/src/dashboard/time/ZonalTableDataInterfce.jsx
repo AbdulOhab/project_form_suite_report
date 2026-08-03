@@ -20,6 +20,7 @@ function ZonalTableDataInterfce({
   questions,
   branchReport,
   id,
+  slug,
 }) {
   const [dateList, setDateList] = useState([]);
   const [dataListByDate, setDataListByDate] = useState([]);
@@ -176,16 +177,16 @@ function ZonalTableDataInterfce({
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow sx={{ bgcolor: "info.main", textAlign: "center" }}>
-                <TableCell sx={{ color: "error.main", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
+              <TableRow sx={{ bgcolor: "primary.main", textAlign: "center" }}>
+                <TableCell sx={{ color: "common.white", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
                 {totalData?.length
                   ? totalData.map((value, index) => (
-                      <TableCell sx={{ color: "error.main", textAlign: "center" }} key={index}>
+                      <TableCell sx={{ color: "common.white", textAlign: "center" }} key={index}>
                         {value[index]}
                       </TableCell>
                     ))
                   : questions?.map((_, index) => (
-                      <TableCell sx={{ color: "error.main", textAlign: "center" }} key={index}>
+                      <TableCell sx={{ color: "common.white", textAlign: "center" }} key={index}>
                         0
                       </TableCell>
                     ))}
@@ -210,12 +211,13 @@ function ZonalTableDataInterfce({
                     <TableCell sx={{ textAlign: "center" }}>
                       <Button
                         variant="contained"
-                        color="success"
+                        color="primary"
                         size="small"
                         component={Link}
-                        to={`/dashboard/zonal-interface/${dateIndex + 1}/${id}`}
+                        to={`/dashboard/zonal-interface/${dateIndex + 1}/${slug}`}
+                        state={{ id }}
                       >
-                        +
+                        বিস্তারিত
                       </Button>
                     </TableCell>
                   </TableRow>

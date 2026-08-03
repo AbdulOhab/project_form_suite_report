@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import ZonalBangladayDate from "../../time/ZonalBangladayDate";
 import Loader from "../../time/Loader";
 import BASE_URL from "../../../auth/dbUrl";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 import {
   Table,
   TableBody,
@@ -16,7 +17,9 @@ import {
 } from "@mui/material";
 
 function AdminAllBranchDayCount() {
-  const { dayId, noticeId } = useParams();
+  const { dayId } = useParams();
+  const location = useLocation();
+  const noticeId = location.state?.id;
 
   const [notice, setNotice] = useState();
   const [branchReport, setBranchReport] = useState([]);
@@ -36,6 +39,8 @@ function AdminAllBranchDayCount() {
   const { startDadeline, range } = notice || {};
 
   useEffect(() => {
+    if (!noticeId) return;
+
     const getAllBranches = async () => {
       try {
         const response = await fetch(
@@ -245,7 +250,7 @@ function AdminAllBranchDayCount() {
                                 0
                               </TableCell>
                             ))}
-                        <TableCell sx={{ color: "error.main" }}>
+                        <TableCell sx={{ color: "common.white" }}>
                           <Box component="span" sx={{ opacity: 0.5 }}>&#128274;</Box>
                         </TableCell>
                       </TableRow>
@@ -266,12 +271,13 @@ function AdminAllBranchDayCount() {
                           <TableCell sx={{ textAlign: "center" }}>
                             <Button
                               variant="contained"
-                              color="success"
+                              color="primary"
                               size="small"
                               component={Link}
-                              to={`/dashboard/admin-data-perDayCount/${dayId}/${branch?.zonalCode}/${branch?.branchCode}/${noticeId}`}
+                              to={`/dashboard/admin-data-perDayCount/${dayId}/${branch?.zonalCode}/${branch?.branchCode}/${buildNoticeSlug(notice)}`}
+                              state={{ id: noticeId }}
                             >
-                              +
+                              বিস্তারিত
                             </Button>
                           </TableCell>
                         </TableRow>

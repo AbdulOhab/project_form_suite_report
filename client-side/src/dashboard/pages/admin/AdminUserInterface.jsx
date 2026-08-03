@@ -1,27 +1,26 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
   Paper,
   Typography,
-  Chip,
   Dialog,
   DialogTitle,
   DialogContent,
   IconButton,
 } from "@mui/material";
 import { Close, ArrowBack, InfoOutlined } from "@mui/icons-material";
-import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import AdminZonalDayCount from "./AdminZonalDayCount";
 import BASE_URL from "../../../auth/dbUrl";
 import AdminAllBranchDayCount from "./AdminAllBranchDayCount";
-import convertToBengaliNumber from "../../time/NumberConverter";
 import { buildNoticeSlug } from "../../../utils/noticeSlug";
 
 function AdminUserInterface() {
-  const { dayId, noticeId } = useParams();
+  const { dayId } = useParams();
+  const location = useLocation();
+  const noticeId = location.state?.id;
 
   const [descriptionAlert, setDescriptionAlert] = useState(false);
 
@@ -36,6 +35,8 @@ function AdminUserInterface() {
 
   // zonal data fetch
   useEffect(() => {
+    if (!noticeId) return;
+
     const getZonalUsers = async () => {
       try {
         const response = await fetch(
@@ -80,18 +81,8 @@ function AdminUserInterface() {
     setZonalShow(true);
   };
 
-  const validCardData = (endDadeline) => {
-    const currentDate = new Date();
-    const endDadelineDate = new Date(endDadeline);
-
-    const timeDiff = endDadelineDate - currentDate;
-    const diffInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-    return diffInDays;
-  };
-
   return (
-    <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
+    <Box sx={{ maxWidth: 1500, mx: "auto", px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
       {/* Description Dialog */}
       <Dialog
         open={descriptionAlert}
@@ -126,7 +117,7 @@ function AdminUserInterface() {
           ফিরে যান
         </Button>
         <Box sx={{ textAlign: "center", flex: 1 }}>
-          <Typography variant="h6" fontWeight="bold">{notice?.document_name}</Typography>
+          <Typography variant="h6" fontWeight="bold">{notice?.document_name || (noticeId ? "Loading..." : "")}</Typography>
           {notice?.sub_title && (
             <Typography variant="caption" color="text.secondary">{notice.sub_title}</Typography>
           )}
@@ -142,78 +133,67 @@ function AdminUserInterface() {
         </Button>
       </Box>
 
-      {/* Compact timer */}
-      <Box sx={{ mb: 2 }}>
-        {validCardData(notice?.endDadeline) < 0 ? (
-          <Chip
-            color="error"
-            variant="outlined"
-            size="small"
-            label={`নোটিশ প্রদানের সময় শেষ হয়েছে ${convertToBengaliNumber(Math.abs(validCardData(notice?.endDadeline)))} দিন পূর্বে`}
-            sx={{ fontWeight: "bold" }}
-          />
-        ) : (
-          <DateDifferenceComponent
-            startDadeline={notice?.startDadeline}
-            range={notice?.range}
-            timeStart={notice?.timeStart}
-            timeEnd={notice?.timeEnd}
-            endDadeline={notice?.endDadeline}
-          />
-        )}
-      </Box>
+      {!noticeId ? (
+        <Typography color="text.secondary" sx={{ mt: 2 }}>
+          রিপোর্ট থেকে বিস্তারিত বাটনে ক্লিক করে আসুন।
+        </Typography>
+      ) : (
+        <>
+          {/* Toggle Buttons */}
+          <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
+            <Button
+              size="small"
+              variant={zonalShow ? "contained" : "outlined"}
+              onClick={handleZonal}
+              sx={{ fontWeight: 600 }}
+            >
+              জোন ডাটা
+            </Button>
+            <Button
+              size="small"
+              variant={branchShow ? "contained" : "outlined"}
+              onClick={handleBranch}
+              sx={{ fontWeight: 600 }}
+            >
+              ব্রাঞ্চ ডাটা
+            </Button>
+          </Box>
 
-      {/* Toggle Buttons */}
-      <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
-        <Button
-          size="small"
-          variant={zonalShow ? "contained" : "outlined"}
-          onClick={handleZonal}
-          sx={{ fontWeight: 600 }}
-        >
-          জোন ডাটা
-        </Button>
-        <Button
-          size="small"
-          variant={branchShow ? "contained" : "outlined"}
-          onClick={handleBranch}
-          sx={{ fontWeight: 600 }}
-        >
-          ব্রাঞ্চ ডাটা
-        </Button>
-      </Box>
+          {/* Zonal Table */}
+          {zonalShow && (
+            <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+              <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
+                <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট</Typography>
+              </Box>
+              <Box sx={{ p: 1 }}>
+                <AdminZonalDayCount
+                  startDadeline={notice?.startDadeline}
+                  range={notice?.range}
+                  questions={notice?.questions}
+                  zonalReport={zonalReport}
+                  totalData={totalData}
+                  branchData={tempData}
+                  countUnSubmit={totalUnsubmitted}
+                  countSubmit={totalSubmitted}
+                  noticeId={noticeId}
+                  slug={buildNoticeSlug(notice)}
+                />
+              </Box>
+            </Paper>
+          )}
 
-      {/* Zonal Table */}
-      {zonalShow && (
-        <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
-          <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
-            <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট</Typography>
-          </Box>
-          <Box sx={{ p: 1 }}>
-            <AdminZonalDayCount
-              startDadeline={notice?.startDadeline}
-              range={notice?.range}
-              questions={notice?.questions}
-              zonalReport={zonalReport}
-              totalData={totalData}
-              branchData={tempData}
-              countUnSubmit={totalUnsubmitted}
-              countSubmit={totalSubmitted}
-            />
-          </Box>
-        </Paper>
-      )}
-
-      {/* Branch Table */}
-      {branchShow && (
-        <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
-          <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
-            <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট</Typography>
-          </Box>
-          <Box sx={{ p: 1 }}>
-            <AdminAllBranchDayCount />
-          </Box>
-        </Paper>
+          {/* Branch Table */}
+          {branchShow && (
+            <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+              <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
+                <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট</Typography>
+              </Box>
+              <Box sx={{ p: 1 }}>
+                <AdminAllBranchDayCount />
+              </Box>
+            </Paper>
+          )}
+        </>
       )}
     </Box>
   );

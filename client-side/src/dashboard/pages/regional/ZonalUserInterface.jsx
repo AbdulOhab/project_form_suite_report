@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import {
   Box, Button, Paper, Typography, Dialog, DialogTitle,
-  DialogContent, IconButton, Divider, Chip, List, ListItem, ListItemText,
+  DialogContent, IconButton, Divider, List, ListItem, ListItemText,
 } from "@mui/material";
 import {
   Close, ArrowBack, InfoOutlined, TableChartOutlined,
   CalendarMonthOutlined, AccessTimeOutlined,
 } from "@mui/icons-material";
-import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import ZonalDayCount from "../../time/ZonalDayCount";
 import BASE_URL from "../../../auth/dbUrl";
-import convertToBengaliNumber from "../../time/NumberConverter";
 import { buildNoticeSlug } from "../../../utils/noticeSlug";
 
 function ZonalUserInterface() {
-  const { dayId, noticeId } = useParams();
+  const { dayId } = useParams();
+  const location = useLocation();
+  const noticeId = location.state?.id;
   const [descriptionAlert, setDescriptionAlert] = useState(false);
   const [branchReport, setBranchReport] = useState();
   const [notice, setNotice] = useState();
   const [totalData, setTotalData] = useState();
 
   useEffect(() => {
+    if (!noticeId) return;
+
     const getBranchUsers = async () => {
       try {
         const response = await fetch(`${BASE_URL}/zonal/data-checkout/${dayId}/${noticeId}`, {
@@ -43,8 +45,6 @@ function ZonalUserInterface() {
     };
     getBranchUsers();
   }, [noticeId, dayId]);
-
-  const daysLeft = (end) => Math.ceil((new Date(end) - new Date()) / (1000 * 60 * 60 * 24));
 
   return (
     <>
@@ -88,35 +88,33 @@ function ZonalUserInterface() {
         </DialogContent>
       </Dialog>
 
-      <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
+      <Box sx={{ maxWidth: 1500, mx: "auto", px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1, flexWrap: "wrap", gap: 1 }}>
           <Button component={Link} to={`/dashboard/zonal-data-interface/${buildNoticeSlug(notice)}`} state={{ id: noticeId }} size="small" startIcon={<ArrowBack />} variant="text" sx={{ fontWeight: 600 }}>ফিরে যান</Button>
           <Box sx={{ textAlign: "center", flex: 1, minWidth: 0 }}>
-            <Typography variant="h6" fontWeight="bold" noWrap>{notice?.document_name || "Loading..."}</Typography>
+            <Typography variant="h6" fontWeight="bold" noWrap>{notice?.document_name || (noticeId ? "Loading..." : "")}</Typography>
             {notice?.sub_title && <Typography variant="caption" color="text.secondary">{notice.sub_title}</Typography>}
           </Box>
           <Button size="small" startIcon={<InfoOutlined />} variant="outlined" onClick={() => setDescriptionAlert(true)} sx={{ fontWeight: 600 }}>বিবরণ</Button>
         </Box>
 
-        <Box sx={{ mb: 2 }}>
-          {daysLeft(notice?.endDadeline) < 0 ? (
-            <Chip color="error" variant="outlined" size="small" label={`নোটিশ প্রদানের সময় শেষ হয়েছে ${convertToBengaliNumber(Math.abs(daysLeft(notice?.endDadeline)))} দিন পূর্বে`} sx={{ fontWeight: "bold" }} />
-          ) : (
-            <DateDifferenceComponent startDadeline={notice?.startDadeline} range={notice?.range} timeStart={notice?.timeStart} timeEnd={notice?.timeEnd} endDadeline={notice?.endDadeline} />
-          )}
-        </Box>
-
-        <Divider sx={{ mb: 2 }} />
-
-        <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
-          <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider", display: "flex", alignItems: "center", gap: 1 }}>
-            <TableChartOutlined fontSize="small" color="action" />
-            <Typography variant="subtitle2" fontWeight={600} color="text.secondary">ব্রাঞ্চ রিপোর্ট</Typography>
-          </Box>
-          <Box sx={{ p: 1 }}>
-            <ZonalDayCount startDadeline={notice?.startDadeline} range={notice?.range} questions={notice?.questions} branchReport={branchReport} totalData={totalData} />
-          </Box>
-        </Paper>
+        {!noticeId ? (
+          <Typography color="text.secondary" sx={{ mt: 2 }}>
+            রিপোর্ট থেকে বিস্তারিত বাটনে ক্লিক করে আসুন।
+          </Typography>
+        ) : (
+          <>
+            <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+              <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider", display: "flex", alignItems: "center", gap: 1 }}>
+                <TableChartOutlined fontSize="small" color="action" />
+                <Typography variant="subtitle2" fontWeight={600} color="text.secondary">ব্রাঞ্চ রিপোর্ট</Typography>
+              </Box>
+              <Box sx={{ p: 1 }}>
+                <ZonalDayCount startDadeline={notice?.startDadeline} range={notice?.range} questions={notice?.questions} branchReport={branchReport} totalData={totalData} noticeId={noticeId} slug={buildNoticeSlug(notice)} />
+              </Box>
+            </Paper>
+          </>
+        )}
       </Box>
     </>
   );

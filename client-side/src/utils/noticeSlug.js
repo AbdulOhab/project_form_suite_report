@@ -21,8 +21,14 @@ const STATE_ONLY_ROUTE_PREFIXES = [
   "/dashboard/notice-view/",
   "/dashboard/thana-submission/",
   "/dashboard/branch-data-interface/",
+  "/dashboard/branch-interface/",
   "/dashboard/zonal-data-interface/",
+  "/dashboard/zonal-interface/",
+  "/dashboard/zonal-data-perDayCount/",
   "/dashboard/admin-data-interface/",
+  "/dashboard/admin-interface/",
+  "/dashboard/admin-branch-interface/",
+  "/dashboard/admin-data-perDayCount/",
 ];
 
 export const isStateOnlyNoticeRoute = (pathname) =>

@@ -160,11 +160,11 @@ function AdminZonalDataPerDayInterface({
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      <TableRow sx={{ bgcolor: "info.main", textAlign: "center" }}>
-                        <TableCell sx={{ color: "error.main", textAlign: "center" }}></TableCell>
-                        <TableCell sx={{ color: "error.main", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
+                      <TableRow sx={{ bgcolor: "primary.main", textAlign: "center" }}>
+                        <TableCell sx={{ color: "common.white", textAlign: "center" }}></TableCell>
+                        <TableCell sx={{ color: "common.white", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
                         {totalData?.map((total, totalIndex) => (
-                          <TableCell sx={{ color: "error.main", textAlign: "center" }} key={totalIndex}>
+                          <TableCell sx={{ color: "common.white", textAlign: "center" }} key={totalIndex}>
                             {total[totalIndex]}
                           </TableCell>
                         ))}

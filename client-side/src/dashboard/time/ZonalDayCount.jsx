@@ -20,8 +20,10 @@ function ZonalDayCount({
   questions,
   branchReport,
   totalData,
+  noticeId,
+  slug,
 }) {
-  const { dayId, noticeId } = useParams();
+  const { dayId } = useParams();
 
   const [dateList, setDateList] = useState([]);
   const [countUnSubmit, setCountUnSubmit] = useState();
@@ -171,15 +173,15 @@ function ZonalDayCount({
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      <TableRow sx={{ bgcolor: "info.main", textAlign: "center" }}>
-                        <TableCell sx={{ color: "error.main", textAlign: "center" }}></TableCell>
-                        <TableCell sx={{ color: "error.main", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
+                      <TableRow sx={{ bgcolor: "primary.main", textAlign: "center" }}>
+                        <TableCell sx={{ color: "common.white", textAlign: "center" }}></TableCell>
+                        <TableCell sx={{ color: "common.white", textAlign: "center", fontWeight: "bold" }}>Total</TableCell>
                         {totalData?.map((total, totalIndex) => (
-                          <TableCell sx={{ color: "error.main", textAlign: "center" }} key={totalIndex}>
+                          <TableCell sx={{ color: "common.white", textAlign: "center" }} key={totalIndex}>
                             {total[totalIndex]}
                           </TableCell>
                         ))}
-                        <TableCell sx={{ color: "error.main", textAlign: "center" }}>
+                        <TableCell sx={{ color: "common.white", textAlign: "center" }}>
                           <Box component="span" sx={{ opacity: 0.5 }}>&#128274;</Box>
                         </TableCell>
                       </TableRow>
@@ -197,12 +199,13 @@ function ZonalDayCount({
                           <TableCell sx={{ textAlign: "center" }}>
                             <Button
                               variant="contained"
-                              color="success"
+                              color="primary"
                               size="small"
                               component={Link}
-                              to={`/dashboard/zonal-data-perDayCount/${dayId}/${branch?.branchCode}/${noticeId}`}
+                              to={`/dashboard/zonal-data-perDayCount/${dayId}/${branch?.branchCode}/${slug}`}
+                              state={{ id: noticeId }}
                             >
-                              +
+                              বিস্তারিত
                             </Button>
                           </TableCell>
                         </TableRow>

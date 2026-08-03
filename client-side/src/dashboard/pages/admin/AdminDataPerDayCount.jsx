@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
   Paper,
   Typography,
-  Chip,
   Dialog,
   DialogTitle,
   DialogContent,
   IconButton,
 } from "@mui/material";
 import { Close, ArrowBack, InfoOutlined } from "@mui/icons-material";
-import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import ZonalDataPerDayInterface from "../../time/ZonalDataPerDayInterface";
 import BASE_URL from "../../../auth/dbUrl";
-import convertToBengaliNumber from "../../time/NumberConverter";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 
 function AdminDataPerDayCount() {
-  const { dayId, zonalId, branchId, noticeId } = useParams();
+  const { dayId, zonalId, branchId } = useParams();
+  const location = useLocation();
+  const noticeId = location.state?.id;
   const [descriptionAlert, setDescriptionAlert] = useState(false);
 
   const [notice, setNotice] = useState();
@@ -27,6 +27,8 @@ function AdminDataPerDayCount() {
   const [branchName, setBranchName] = useState();
 
   useEffect(() => {
+    if (!noticeId) return;
+
     const getZonalUsers = async () => {
       try {
         const response = await fetch(
@@ -61,18 +63,8 @@ function AdminDataPerDayCount() {
     setDescriptionAlert(false);
   };
 
-  const validCardData = (endDadeline) => {
-    const currentDate = new Date();
-    const endDadelineDate = new Date(endDadeline);
-
-    const timeDiff = endDadelineDate - currentDate;
-    const diffInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-    return diffInDays;
-  };
-
   return (
-    <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
+    <Box sx={{ maxWidth: 1500, mx: "auto", px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
       {/* Description Dialog */}
       <Dialog
         open={descriptionAlert}
@@ -97,7 +89,8 @@ function AdminDataPerDayCount() {
       }}>
         <Button
           component={Link}
-          to={`/dashboard/admin-branch-interface/${dayId}/${zonalId}/${noticeId}`}
+          to={`/dashboard/admin-branch-interface/${dayId}/${zonalId}/${buildNoticeSlug(notice)}`}
+          state={{ id: noticeId }}
           size="small"
           startIcon={<ArrowBack />}
           variant="text"
@@ -106,7 +99,7 @@ function AdminDataPerDayCount() {
           ফিরে যান
         </Button>
         <Box sx={{ textAlign: "center", flex: 1 }}>
-          <Typography variant="h6" fontWeight="bold">{notice?.document_name}</Typography>
+          <Typography variant="h6" fontWeight="bold">{notice?.document_name || (noticeId ? "Loading..." : "")}</Typography>
           {notice?.sub_title && (
             <Typography variant="caption" color="text.secondary">{notice.sub_title}</Typography>
           )}
@@ -122,43 +115,30 @@ function AdminDataPerDayCount() {
         </Button>
       </Box>
 
-      {/* Compact timer */}
-      <Box sx={{ mb: 2 }}>
-        {validCardData(notice?.endDadeline) < 0 ? (
-          <Chip
-            color="error"
-            variant="outlined"
-            size="small"
-            label={`নোটিশ প্রদানের সময় শেষ হয়েছে ${convertToBengaliNumber(Math.abs(validCardData(notice?.endDadeline)))} দিন পূর্বে`}
-            sx={{ fontWeight: "bold" }}
-          />
-        ) : (
-          <DateDifferenceComponent
-            startDadeline={notice?.startDadeline}
-            range={notice?.range}
-            timeStart={notice?.timeStart}
-            timeEnd={notice?.timeEnd}
-            endDadeline={notice?.endDadeline}
-          />
-        )}
-      </Box>
-
-      {/* Table Section */}
-      <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
-        <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
-          <Typography variant="subtitle2" fontWeight={600} color="text.secondary">থানা দৈনিক বিবরণ</Typography>
-        </Box>
-        <Box sx={{ p: 1 }}>
-          <ZonalDataPerDayInterface
-            startDadeline={notice?.startDadeline}
-            range={notice?.range}
-            questions={notice?.questions}
-            thanaReport={thanaReport}
-            totalData={totalData}
-            branchName={branchName}
-          />
-        </Box>
-      </Paper>
+      {!noticeId ? (
+        <Typography color="text.secondary" sx={{ mt: 2 }}>
+          রিপোর্ট থেকে বিস্তারিত বাটনে ক্লিক করে আসুন।
+        </Typography>
+      ) : (
+        <>
+          {/* Table Section */}
+          <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+            <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
+              <Typography variant="subtitle2" fontWeight={600} color="text.secondary">থানা দৈনিক বিবরণ</Typography>
+            </Box>
+            <Box sx={{ p: 1 }}>
+              <ZonalDataPerDayInterface
+                startDadeline={notice?.startDadeline}
+                range={notice?.range}
+                questions={notice?.questions}
+                thanaReport={thanaReport}
+                totalData={totalData}
+                branchName={branchName}
+              />
+            </Box>
+          </Paper>
+        </>
+      )}
     </Box>
   );
 }

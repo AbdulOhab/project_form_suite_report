@@ -22,8 +22,10 @@ function AdminZonalDayCount({
   branchData,
   countUnSubmit,
   countSubmit,
+  noticeId,
+  slug,
 }) {
-  const { dayId, noticeId } = useParams();
+  const { dayId } = useParams();
 
   const [dateList, setDateList] = useState([]);
   const [sortConfig, setSortConfig] = useState({
@@ -213,12 +215,13 @@ function AdminZonalDayCount({
                           <TableCell sx={{ textAlign: "center" }}>
                             <Button
                               variant="contained"
-                              color="success"
+                              color="primary"
                               size="small"
                               component={Link}
-                              to={`/dashboard/admin-branch-interface/${dayId}/${zonal?.zonalCode}/${noticeId}`}
+                              to={`/dashboard/admin-branch-interface/${dayId}/${zonal?.zonalCode}/${slug}`}
+                              state={{ id: noticeId }}
                             >
-                              +
+                              বিস্তারিত
                             </Button>
                           </TableCell>
                         </TableRow>

@@ -310,8 +310,8 @@ const SumsThanaByBranches = () => {
               {/* Total Row */}
               <TableRow
                 sx={{
-                  bgcolor: "info.main",
-                  "& th, & td": { color: "error.main", fontWeight: "bold" },
+                  bgcolor: "primary.main",
+                  "& th, & td": { color: "common.white", fontWeight: "bold" },
                 }}
               >
                 <TableCell colSpan={2} sx={{ fontWeight: "bold" }}>

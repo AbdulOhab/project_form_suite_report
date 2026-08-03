@@ -22,8 +22,10 @@ function AdminBranchDayCount({
   tempData,
   totalSubmit,
   totalUnsubmit,
+  noticeId,
+  slug,
 }) {
-  const { dayId, noticeId } = useParams();
+  const { dayId } = useParams();
   const [dateList, setDateList] = useState([]);
   const [sortConfig, setSortConfig] = useState({
     key: null,
@@ -211,12 +213,13 @@ function AdminBranchDayCount({
                           <TableCell sx={{ textAlign: "center" }}>
                             <Button
                               variant="contained"
-                              color="success"
+                              color="primary"
                               size="small"
                               component={Link}
-                              to={`/dashboard/admin-data-perDayCount/${dayId}/${branch?.zonalCode}/${branch?.branchCode}/${noticeId}`}
+                              to={`/dashboard/admin-data-perDayCount/${dayId}/${branch?.zonalCode}/${branch?.branchCode}/${slug}`}
+                              state={{ id: noticeId }}
                             >
-                              +
+                              বিস্তারিত
                             </Button>
                           </TableCell>
                         </TableRow>

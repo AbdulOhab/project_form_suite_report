@@ -49,21 +49,52 @@ module.exports = {
   update: async (req, res, next) => {
     const { id } = req.params;
     const data = req.body;
-    const response = await answerModel.findOneAndUpdate(
-      { _id: id },
-      {
-        document_name: data.document_name,
-        doc_desc: data.doc_desc,
-        noticeId: data.noticeId,
-        thanaCode: data.thanaCode,
-        branchCode: data.branchCode,
-        zonalCode: data.zonalCode,
-        answers: data.answers,
-      }
-    );
 
-    response
-      .save()
+    const existing = await answerModel.findById(id).exec();
+    if (!existing) {
+      return res.status(404).json({ message: "Answer not found" });
+    }
+
+    const notice = await formModel.findById(existing.noticeId).exec();
+
+    const createdAt = new Date(existing.createdAt);
+    const today = new Date();
+    const isSameDay =
+      createdAt.getFullYear() === today.getFullYear() &&
+      createdAt.getMonth() === today.getMonth() &&
+      createdAt.getDate() === today.getDate();
+
+    const isWithinTimeWindow = (start, end) => {
+      if (!start || !end) return true;
+      const [startH, startM] = start.split(":").map(Number);
+      const [endH, endM] = end.split(":").map(Number);
+      const now = new Date();
+      const nowMinutes = now.getHours() * 60 + now.getMinutes();
+      const startMinutes = startH * 60 + startM;
+      const endMinutes = endH * 60 + endM;
+      if (startMinutes <= endMinutes) {
+        return nowMinutes >= startMinutes && nowMinutes <= endMinutes;
+      }
+      return nowMinutes >= startMinutes || nowMinutes <= endMinutes;
+    };
+
+    if (!isSameDay || !isWithinTimeWindow(notice?.timeStart, notice?.timeEnd)) {
+      return res.status(403).json({ message: "নির্ধারিত দিনের বাইরে এডিট করা যাবে না" });
+    }
+
+    await answerModel
+      .findOneAndUpdate(
+        { _id: id },
+        {
+          document_name: data.document_name,
+          doc_desc: data.doc_desc,
+          noticeId: data.noticeId,
+          thanaCode: data.thanaCode,
+          branchCode: data.branchCode,
+          zonalCode: data.zonalCode,
+          answers: data.answers,
+        }
+      )
       .then(() => {
         return res.status(200).json("answer updated successfully");
       })

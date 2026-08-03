@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
   Paper,
   Typography,
-  Chip,
   Dialog,
   DialogTitle,
   DialogContent,
   IconButton,
 } from "@mui/material";
 import { Close, ArrowBack, InfoOutlined } from "@mui/icons-material";
-import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import AdminBranchDayCount from "./AdminBranchDayCount";
 import BASE_URL from "../../../auth/dbUrl";
-import convertToBengaliNumber from "../../time/NumberConverter";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 
 function AdminBranchUserInterface() {
-  const { dayId, noticeId, zonalId } = useParams();
+  const { dayId, zonalId } = useParams();
+  const location = useLocation();
+  const noticeId = location.state?.id;
 
   const [descriptionAlert, setDescriptionAlert] = useState(false);
   const [notice, setNotice] = useState();
@@ -29,6 +29,8 @@ function AdminBranchUserInterface() {
   const [totalUnsubmit, setTotalUnsubmit] = useState();
 
   useEffect(() => {
+    if (!noticeId) return;
+
     const getBranchUsers = async () => {
       try {
         const response = await fetch(
@@ -64,18 +66,8 @@ function AdminBranchUserInterface() {
     setDescriptionAlert(false);
   };
 
-  const validCardData = (endDadeline) => {
-    const currentDate = new Date();
-    const endDadelineDate = new Date(endDadeline);
-
-    const timeDiff = endDadelineDate - currentDate;
-    const diffInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-    return diffInDays;
-  };
-
   return (
-    <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
+    <Box sx={{ maxWidth: 1500, mx: "auto", px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
       {/* Description Dialog */}
       <Dialog
         open={descriptionAlert}
@@ -100,7 +92,8 @@ function AdminBranchUserInterface() {
       }}>
         <Button
           component={Link}
-          to={`/dashboard/admin-interface/${dayId}/${noticeId}`}
+          to={`/dashboard/admin-interface/${dayId}/${buildNoticeSlug(notice)}`}
+          state={{ id: noticeId }}
           size="small"
           startIcon={<ArrowBack />}
           variant="text"
@@ -109,7 +102,7 @@ function AdminBranchUserInterface() {
           ফিরে যান
         </Button>
         <Box sx={{ textAlign: "center", flex: 1 }}>
-          <Typography variant="h6" fontWeight="bold">{notice?.document_name}</Typography>
+          <Typography variant="h6" fontWeight="bold">{notice?.document_name || (noticeId ? "Loading..." : "")}</Typography>
           {notice?.sub_title && (
             <Typography variant="caption" color="text.secondary">{notice.sub_title}</Typography>
           )}
@@ -125,44 +118,33 @@ function AdminBranchUserInterface() {
         </Button>
       </Box>
 
-      {/* Compact timer */}
-      <Box sx={{ mb: 2 }}>
-        {validCardData(notice?.endDadeline) < 0 ? (
-          <Chip
-            color="error"
-            variant="outlined"
-            size="small"
-            label={`নোটিশ প্রদানের সময় শেষ হয়েছে ${convertToBengaliNumber(Math.abs(validCardData(notice?.endDadeline)))} দিন পূর্বে`}
-            sx={{ fontWeight: "bold" }}
-          />
-        ) : (
-          <DateDifferenceComponent
-            startDadeline={notice?.startDadeline}
-            range={notice?.range}
-            timeStart={notice?.timeStart}
-            timeEnd={notice?.timeEnd}
-            endDadeline={notice?.endDadeline}
-          />
-        )}
-      </Box>
-
-      {/* Table Section */}
-      <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
-        <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
-          <Typography variant="subtitle2" fontWeight={600} color="text.secondary">ব্রাঞ্চ দৈনিক রিপোর্ট</Typography>
-        </Box>
-        <Box sx={{ p: 1 }}>
-          <AdminBranchDayCount
-            startDadeline={notice?.startDadeline}
-            range={notice?.range}
-            questions={notice?.questions}
-            totalData={totalData}
-            tempData={tempData}
-            totalSubmit={totalSubmit}
-            totalUnsubmit={totalUnsubmit}
-          />
-        </Box>
-      </Paper>
+      {!noticeId ? (
+        <Typography color="text.secondary" sx={{ mt: 2 }}>
+          রিপোর্ট থেকে বিস্তারিত বাটনে ক্লিক করে আসুন।
+        </Typography>
+      ) : (
+        <>
+          {/* Table Section */}
+          <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+            <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
+              <Typography variant="subtitle2" fontWeight={600} color="text.secondary">ব্রাঞ্চ দৈনিক রিপোর্ট</Typography>
+            </Box>
+            <Box sx={{ p: 1 }}>
+              <AdminBranchDayCount
+                startDadeline={notice?.startDadeline}
+                range={notice?.range}
+                questions={notice?.questions}
+                totalData={totalData}
+                tempData={tempData}
+                totalSubmit={totalSubmit}
+                totalUnsubmit={totalUnsubmit}
+                noticeId={noticeId}
+                slug={buildNoticeSlug(notice)}
+              />
+            </Box>
+          </Paper>
+        </>
+      )}
     </Box>
   );
 }
