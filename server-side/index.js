@@ -14,6 +14,19 @@ const dbConnector = require("./config/dbConnector");
 const server = express();
 const port = process.env.PORT || 5053;
 
+// Stopgap safety net: most route handlers in this codebase are unguarded
+// `async` functions with no try/catch, so a thrown error (e.g. an invalid
+// Mongo ObjectId) becomes an unhandled rejection that crashes the whole
+// process by default — taking the API down for every user over one bad
+// request. Logging and staying up is strictly better than that until each
+// route gets proper validation/error handling.
+process.on("unhandledRejection", (reason) => {
+  console.error("Unhandled rejection (request failed, server staying up):", reason);
+});
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception (request failed, server staying up):", err);
+});
+
 // 1. Configure CORS options
 const corsOptions = {
   origin: process.env.CORS_ORIGIN || "http://localhost:3000",

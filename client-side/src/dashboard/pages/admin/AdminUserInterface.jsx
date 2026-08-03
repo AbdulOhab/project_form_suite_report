@@ -18,6 +18,7 @@ import AdminZonalDayCount from "./AdminZonalDayCount";
 import BASE_URL from "../../../auth/dbUrl";
 import AdminAllBranchDayCount from "./AdminAllBranchDayCount";
 import convertToBengaliNumber from "../../time/NumberConverter";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 
 function AdminUserInterface() {
   const { dayId, noticeId } = useParams();
@@ -115,7 +116,8 @@ function AdminUserInterface() {
       }}>
         <Button
           component={Link}
-          to={`/dashboard/admin-data-interface/${noticeId}`}
+          to={`/dashboard/admin-data-interface/${buildNoticeSlug(notice)}`}
+          state={{ id: noticeId }}
           size="small"
           startIcon={<ArrowBack />}
           variant="text"

@@ -28,6 +28,7 @@ import {
 } from "@mui/icons-material";
 import { AuthContext } from "../../contexts/AuthContext";
 import BASE_URL from "../../auth/dbUrl";
+import { buildNoticeSlug } from "../../utils/noticeSlug";
 
 function ThanaEmptyNotice() {
   const { id, date } = useParams();
@@ -101,7 +102,7 @@ function ThanaEmptyNotice() {
   const handleConfirmSave = () => {
     setConfirmDialog({ open: false });
     setSnackbar({ open: true, message: "তথ্য সফলভাবে সাবমিট হয়েছে", severity: "success" });
-    navigate(`/dashboard/thana-submission/${id}`);
+    navigate(`/dashboard/thana-submission/${buildNoticeSlug(notice)}`, { state: { id } });
   };
 
   const handleDenySave = () => {
@@ -126,7 +127,8 @@ function ThanaEmptyNotice() {
         >
           <Button
             component={Link}
-            to={`/dashboard/thana-submission/${id}`}
+            to={`/dashboard/thana-submission/${buildNoticeSlug(notice)}`}
+            state={{ id }}
             size="small"
             startIcon={<ArrowBack />}
             variant="text"

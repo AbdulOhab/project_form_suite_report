@@ -28,6 +28,7 @@ import {
 } from "@mui/icons-material";
 import BASE_URL from "../../../auth/dbUrl";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 
 function BranchEmptyNotice() {
   const { firstId, secondId } = useParams();
@@ -100,7 +101,7 @@ function BranchEmptyNotice() {
   const handleConfirmSave = () => {
     setConfirmDialog({ open: false });
     setSnackbar({ open: true, message: "তথ্য সফলভাবে সাবমিট হয়েছে", severity: "success" });
-    navigate(`/dashboard/branch-data-interface/${secondId}`);
+    navigate(`/dashboard/branch-data-interface/${buildNoticeSlug(notice)}`, { state: { id: secondId } });
   };
 
   const handleDenySave = () => {
@@ -125,7 +126,8 @@ function BranchEmptyNotice() {
         >
           <Button
             component={Link}
-            to={`/dashboard/branch-data-interface/${secondId}`}
+            to={`/dashboard/branch-data-interface/${buildNoticeSlug(notice)}`}
+            state={{ id: secondId }}
             size="small"
             startIcon={<ArrowBack />}
             variant="text"

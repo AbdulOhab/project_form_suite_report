@@ -27,6 +27,7 @@ import DateDifferenceComponent from "../time/DateDifferenceComponent";
 import BranchDayCount from "../time/BranchDayCount";
 import BASE_URL from "../../auth/dbUrl";
 import convertToBengaliNumber from "../time/NumberConverter";
+import { buildNoticeSlug } from "../../utils/noticeSlug";
 
 function BranchUserInterface() {
   const { dayId, noticeId } = useParams();
@@ -124,7 +125,8 @@ function BranchUserInterface() {
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1, flexWrap: "wrap", gap: 1 }}>
           <Button
             component={Link}
-            to={`/dashboard/branch-data-interface/${noticeId}`}
+            to={`/dashboard/branch-data-interface/${buildNoticeSlug(notice)}`}
+            state={{ id: noticeId }}
             size="small"
             startIcon={<ArrowBack />}
             variant="text"

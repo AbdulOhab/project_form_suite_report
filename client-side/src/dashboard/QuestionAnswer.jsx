@@ -25,6 +25,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import DateDifferenceComponent from "./time/DateDifferenceComponent";
 import BASE_URL from "../auth/dbUrl";
 import SweetAlert from "./time/SweetAlert";
+import { buildNoticeSlug } from "../utils/noticeSlug";
 
 const QuestionAnswer = () => {
   const { id } = useParams();
@@ -132,7 +133,7 @@ const QuestionAnswer = () => {
         icon: "success",
         message: "Form Submitted Successfully",
       });
-      navigate(`/dashboard/thana-submission/${notice?._id}`);
+      navigate(`/dashboard/thana-submission/${buildNoticeSlug(notice)}`, { state: { id: notice?._id } });
     }
   };
 

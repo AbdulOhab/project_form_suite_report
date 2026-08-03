@@ -27,6 +27,7 @@ import {
   ShortText as SortTextIcon,
 } from "@mui/icons-material";
 import BASE_URL from "../../auth/dbUrl";
+import { buildNoticeSlug } from "../../utils/noticeSlug";
 
 function EditQuestionAnswerByThana() {
   const { id, answerId } = useParams();
@@ -101,7 +102,7 @@ function EditQuestionAnswerByThana() {
   const handleConfirmSave = () => {
     setConfirmDialog({ open: false });
     setSnackbar({ open: true, message: "তথ্য সফলভাবে আপডেট হয়েছে", severity: "success" });
-    navigate(`/dashboard/thana-submission/${id}`);
+    navigate(`/dashboard/thana-submission/${buildNoticeSlug(notice)}`, { state: { id } });
   };
 
   const handleDenySave = () => {
@@ -126,7 +127,8 @@ function EditQuestionAnswerByThana() {
         >
           <Button
             component={Link}
-            to={`/dashboard/thana-submission/${id}`}
+            to={`/dashboard/thana-submission/${buildNoticeSlug(notice)}`}
+            state={{ id }}
             size="small"
             startIcon={<ArrowBack />}
             variant="text"

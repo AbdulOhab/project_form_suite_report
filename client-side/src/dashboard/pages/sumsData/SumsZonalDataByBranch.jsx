@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
@@ -223,7 +224,8 @@ const SumsZonalDataByBranch = () => {
             <Button
               component={Link}
               variant="contained"
-              to={`/dashboard/sums-all-zonal-data/${qId}`}
+              to={`/dashboard/sums-all-zonal-data/${buildNoticeSlug(notice)}`}
+              state={{ id: qId }}
             >
               Back
             </Button>

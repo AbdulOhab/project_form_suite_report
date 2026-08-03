@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
@@ -281,7 +282,8 @@ function SumsTotalDayThanaData() {
             <Button
               component={Link}
               variant="contained"
-              to={`/dashboard/sums-all-thana-data/${qId}`}
+              to={`/dashboard/sums-all-thana-data/${buildNoticeSlug(notice)}`}
+              state={{ id: qId }}
             >
               Back
             </Button>

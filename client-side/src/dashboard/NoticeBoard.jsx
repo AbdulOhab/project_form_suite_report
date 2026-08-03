@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import NodataFound from "./time/NodataFound";
 import { buildNoticeSlug } from "../utils/noticeSlug";
+import Loader from "./time/Loader";
 
 // MUI components
 import Box from "@mui/material/Box";
@@ -63,7 +64,8 @@ const RoleActions = ({ userInfo, notice, onDelete, handleReload }) => {
         </Button>
         <Button
           component={Link}
-          to={`thana-submission/${notice?._id}`}
+          to={`thana-submission/${buildNoticeSlug(notice)}`}
+          state={{ id: notice?._id }}
           variant="outlined"
           size="small"
           sx={{ px: 1, minWidth: 0 }}
@@ -72,7 +74,8 @@ const RoleActions = ({ userInfo, notice, onDelete, handleReload }) => {
         </Button>
         <Button
           component={Link}
-          to={`thana-submission/${notice?._id}`}
+          to={`thana-submission/${buildNoticeSlug(notice)}`}
+          state={{ id: notice?._id }}
           variant="outlined"
           size="small"
           sx={{ px: 1, minWidth: 0 }}
@@ -98,7 +101,8 @@ const RoleActions = ({ userInfo, notice, onDelete, handleReload }) => {
         </Button>
         <Button
           component={Link}
-          to={`branch-data-interface/${notice?._id}`}
+          to={`branch-data-interface/${buildNoticeSlug(notice)}`}
+          state={{ id: notice?._id }}
           variant="outlined"
           size="small"
           sx={{ px: 1, minWidth: 0 }}
@@ -124,7 +128,8 @@ const RoleActions = ({ userInfo, notice, onDelete, handleReload }) => {
         </Button>
         <Button
           component={Link}
-          to={`zonal-data-interface/${notice?._id}`}
+          to={`zonal-data-interface/${buildNoticeSlug(notice)}`}
+          state={{ id: notice?._id }}
           variant="outlined"
           size="small"
           sx={{ px: 1, minWidth: 0 }}
@@ -150,7 +155,8 @@ const RoleActions = ({ userInfo, notice, onDelete, handleReload }) => {
         </Button>
         <Button
           component={Link}
-          to={`admin-data-interface/${notice?._id}`}
+          to={`admin-data-interface/${buildNoticeSlug(notice)}`}
+          state={{ id: notice?._id }}
           variant="outlined"
           size="small"
           sx={{ px: 1, minWidth: 0 }}
@@ -354,6 +360,7 @@ const NoticeBoard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [noticePerPage, setNoticePerPage] = useState(20);
   const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   // view-mode toggle (previous vs active report)
   const [validCardView, setValidCardView] = useState(true);
@@ -369,6 +376,7 @@ const NoticeBoard = () => {
   // ---- Data fetching (identical API call) ----
   useEffect(() => {
     const getNoticeData = async () => {
+      setLoading(true);
       try {
         const response = await fetch(`${BASE_URL}/all-notice`, {
           method: "POST",
@@ -397,6 +405,8 @@ const NoticeBoard = () => {
         }
       } catch (error) {
         console.error("Error fetching notice data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -507,7 +517,9 @@ const NoticeBoard = () => {
         {/* ====== Previous Reports section ====== */}
         {validTableView && (
           <>
-            {noticeData?.length ? (
+            {loading ? (
+              <Loader />
+            ) : noticeData?.length ? (
               <>
                 <TableContainer component={Paper} variant="outlined">
                   <Table>
@@ -585,7 +597,9 @@ const NoticeBoard = () => {
         {/* ====== Active / Current Reports section ====== */}
         {validCardView && (
           <>
-            {noticeData?.length ? (
+            {loading ? (
+              <Loader />
+            ) : noticeData?.length ? (
               <>
                 <Grid container spacing={3}>
                   {noticeData.map((notice, index) => (

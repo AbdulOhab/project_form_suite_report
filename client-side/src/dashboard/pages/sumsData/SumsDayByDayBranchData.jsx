@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
@@ -270,7 +271,8 @@ const SumsDayByDayBranchData = () => {
             <Button
               component={Link}
               variant="contained"
-              to={`/dashboard/sums-all-branches-data/${qId}`}
+              to={`/dashboard/sums-all-branches-data/${buildNoticeSlug(notice)}`}
+              state={{ id: qId }}
             >
               Back
             </Button>

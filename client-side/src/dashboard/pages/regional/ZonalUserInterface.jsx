@@ -12,6 +12,7 @@ import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import ZonalDayCount from "../../time/ZonalDayCount";
 import BASE_URL from "../../../auth/dbUrl";
 import convertToBengaliNumber from "../../time/NumberConverter";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 
 function ZonalUserInterface() {
   const { dayId, noticeId } = useParams();
@@ -89,7 +90,7 @@ function ZonalUserInterface() {
 
       <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1, flexWrap: "wrap", gap: 1 }}>
-          <Button component={Link} to={`/dashboard/zonal-data-interface/${noticeId}`} size="small" startIcon={<ArrowBack />} variant="text" sx={{ fontWeight: 600 }}>ফিরে যান</Button>
+          <Button component={Link} to={`/dashboard/zonal-data-interface/${buildNoticeSlug(notice)}`} state={{ id: noticeId }} size="small" startIcon={<ArrowBack />} variant="text" sx={{ fontWeight: 600 }}>ফিরে যান</Button>
           <Box sx={{ textAlign: "center", flex: 1, minWidth: 0 }}>
             <Typography variant="h6" fontWeight="bold" noWrap>{notice?.document_name || "Loading..."}</Typography>
             {notice?.sub_title && <Typography variant="caption" color="text.secondary">{notice.sub_title}</Typography>}

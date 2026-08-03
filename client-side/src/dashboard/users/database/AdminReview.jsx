@@ -9,6 +9,7 @@ import {
   AssignmentOutlined, VisibilityOutlined,
 } from "@mui/icons-material";
 import BASE_URL from "../../../auth/dbUrl";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 
 const token = () => window.localStorage.getItem("gsmToken");
 
@@ -213,7 +214,8 @@ function AdminReview() {
                           color="primary"
                           startIcon={<VisibilityOutlined />}
                           component={Link}
-                          to={`/dashboard/admin-data-interface/${notice._id}`}
+                          to={`/dashboard/admin-data-interface/${buildNoticeSlug(notice)}`}
+                          state={{ id: notice._id }}
                         >
                           দেখুন
                         </Button>

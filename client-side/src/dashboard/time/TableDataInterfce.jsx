@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import BangladayDate from "./BangladayDate";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loader from "./Loader";
 import {
   Table,
@@ -11,8 +11,8 @@ import {
   TableRow,
   Paper,
   Button,
-  Box,
 } from "@mui/material";
+import LockOutlined from "@mui/icons-material/LockOutlined";
 
 function TableDataInterfce({
   startDadeline,
@@ -20,8 +20,8 @@ function TableDataInterfce({
   totalData,
   questions,
   thanaReport,
+  id,
 }) {
-  const { id } = useParams();
   const [dateList, setDateList] = useState([]);
   const [dataListByDate, setDataListByDate] = useState([]);
   const [sortConfig, setSortConfig] = useState({
@@ -177,8 +177,10 @@ function TableDataInterfce({
                   : questions?.map((_, index) => (
                       <TableCell sx={{ color: "error.main", textAlign: "center" }} key={index}>0</TableCell>
                     ))}
-                <TableCell sx={{ color: "error.main", textAlign: "center" }}>
-                  <Box component="span" sx={{ opacity: 0.5 }}>&#128274;</Box>
+                <TableCell sx={{ textAlign: "center" }}>
+                  <Button variant="outlined" color="inherit" size="small" disabled sx={{ minWidth: 0, px: 1 }}>
+                    <LockOutlined fontSize="small" />
+                  </Button>
                 </TableCell>
               </TableRow>
             </TableBody>

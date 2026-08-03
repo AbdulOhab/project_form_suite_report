@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
@@ -27,11 +27,13 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { ArrowBack, InfoOutlined } from "@mui/icons-material";
 import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import convertToBengaliNumber from "../../time/NumberConverter";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
 const SumsAllZonalData = () => {
-  const { qId } = useParams();
+  const location = useLocation();
+  const id = location.state?.id;
 
   const [descriptionAlert, setDescriptionAlert] = useState(false);
   const [notice, setNotice] = useState();
@@ -43,8 +45,10 @@ const SumsAllZonalData = () => {
   });
 
   useEffect(() => {
+    if (!id) return;
+
     const fetchData = async () => {
-      await fetch(`${BASE_URL}/sums-zonal-data/${qId}`, {
+      await fetch(`${BASE_URL}/sums-zonal-data/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +66,7 @@ const SumsAllZonalData = () => {
         });
     };
     fetchData();
-  }, [qId]);
+  }, [id]);
 
   const handleSort = (key) => {
     let direction = "ascending";
@@ -188,7 +192,8 @@ const SumsAllZonalData = () => {
       }}>
         <Button
           component={Link}
-          to={`/dashboard/admin-data-interface/${qId}`}
+          to={`/dashboard/admin-data-interface/${buildNoticeSlug(notice)}`}
+          state={{ id }}
           size="small"
           startIcon={<ArrowBack />}
           variant="text"
@@ -213,6 +218,12 @@ const SumsAllZonalData = () => {
         </Button>
       </Box>
 
+      {!id ? (
+        <Typography color="text.secondary">
+          অ্যাডমিন ড্যাশবোর্ড থেকে এক নজরে অঞ্চল বাটনে ক্লিক করে আসুন।
+        </Typography>
+      ) : (
+      <>
       {/* Compact timer */}
       <Box sx={{ mb: 2 }}>
         {validCardData(notice?.endDadeline) < 0 ? (
@@ -307,7 +318,9 @@ const SumsAllZonalData = () => {
                         </TableCell>
                       ))}
                   <TableCell>
-                    <LockIcon sx={{ color: "error.main" }} />
+                    <Button variant="outlined" color="error" size="small" disabled startIcon={<LockIcon fontSize="small" />}>
+                      প্রযোজ্য নয়
+                    </Button>
                   </TableCell>
                 </TableRow>
 
@@ -334,22 +347,24 @@ const SumsAllZonalData = () => {
                     ))}
                     <TableCell>
                       <Stack direction="row" spacing={1} justifyContent="center">
-                        <IconButton
+                        <Button
                           component={Link}
-                          to={`/dashboard/sums-zonal-data-by-branch/${qId}/${zonal.zonalCode}`}
-                          color="primary"
+                          to={`/dashboard/sums-zonal-data-by-branch/${id}/${zonal.zonalCode}`}
+                          variant="outlined"
                           size="small"
+                          startIcon={<AddIcon fontSize="small" />}
                         >
-                          <AddIcon />
-                        </IconButton>
-                        <IconButton
+                          শাখাভিত্তিক
+                        </Button>
+                        <Button
                           component={Link}
-                          to={`/dashboard/sums-day-by-day-zonal-data/${qId}/${zonal.zonalCode}`}
-                          color="primary"
+                          to={`/dashboard/sums-day-by-day-zonal-data/${id}/${zonal.zonalCode}`}
+                          variant="outlined"
                           size="small"
+                          startIcon={<VisibilityIcon fontSize="small" />}
                         >
-                          <VisibilityIcon />
-                        </IconButton>
+                          দিনভিত্তিক
+                        </Button>
                       </Stack>
                     </TableCell>
                   </TableRow>
@@ -359,6 +374,8 @@ const SumsAllZonalData = () => {
           </TableContainer>
         </Box>
       </Paper>
+      </>
+      )}
     </Box>
   );
 };

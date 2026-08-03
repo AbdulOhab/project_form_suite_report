@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
@@ -30,9 +30,11 @@ import convertToBengaliNumber from "../../time/NumberConverter";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import Loader from "../../time/Loader";
+import { buildNoticeSlug } from "../../../utils/noticeSlug";
 
 const SumsAllBranchData = () => {
-  const { qId } = useParams();
+  const location = useLocation();
+  const id = location.state?.id;
 
   const [data, setData] = useState({
     tempBranchData: [],
@@ -48,9 +50,11 @@ const SumsAllBranchData = () => {
 
   // Fetch all branches sum data
   useEffect(() => {
+    if (!id) return;
+
     const getAllBranches = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/sums-branch-data/${qId}`, {
+        const response = await fetch(`${BASE_URL}/sums-branch-data/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -75,7 +79,7 @@ const SumsAllBranchData = () => {
     };
 
     getAllBranches();
-  }, [qId]);
+  }, [id]);
 
   // Handle sorting
   const handleSort = (key) => {
@@ -183,7 +187,8 @@ const SumsAllBranchData = () => {
       }}>
         <Button
           component={Link}
-          to={`/dashboard/admin-data-interface/${qId}`}
+          to={`/dashboard/admin-data-interface/${buildNoticeSlug(data.notice)}`}
+          state={{ id }}
           size="small"
           startIcon={<ArrowBack />}
           variant="text"
@@ -208,6 +213,12 @@ const SumsAllBranchData = () => {
         </Button>
       </Box>
 
+      {!id ? (
+        <Typography color="text.secondary">
+          অ্যাডমিন ড্যাশবোর্ড থেকে এক নজরে ব্রাঞ্চ বাটনে ক্লিক করে আসুন।
+        </Typography>
+      ) : (
+      <>
       {/* Compact timer */}
       <Box sx={{ mb: 2 }}>
         {validCardData(data.notice?.endDadeline) < 0 ? (
@@ -308,7 +319,9 @@ const SumsAllBranchData = () => {
                           </TableCell>
                         ))}
                     <TableCell>
-                      <LockIcon sx={{ color: "error.main" }} />
+                      <Button variant="outlined" color="error" size="small" disabled startIcon={<LockIcon fontSize="small" />}>
+                        প্রযোজ্য নয়
+                      </Button>
                     </TableCell>
                   </TableRow>
 
@@ -335,22 +348,24 @@ const SumsAllBranchData = () => {
                       ))}
                       <TableCell>
                         <Stack direction="row" spacing={1} justifyContent="center">
-                          <IconButton
+                          <Button
                             component={Link}
-                            to={`/dashboard/sums-thana-by-branch/${qId}/${branch?.branchCode}`}
-                            color="primary"
+                            to={`/dashboard/sums-thana-by-branch/${id}/${branch?.branchCode}`}
+                            variant="outlined"
                             size="small"
+                            startIcon={<AddIcon fontSize="small" />}
                           >
-                            <AddIcon />
-                          </IconButton>
-                          <IconButton
+                            থানাভিত্তিক
+                          </Button>
+                          <Button
                             component={Link}
-                            to={`/dashboard/sums-day-by-day-branch-data/${qId}/${branch?.zonalCode}/${branch?.branchCode}`}
-                            color="primary"
+                            to={`/dashboard/sums-day-by-day-branch-data/${id}/${branch?.zonalCode}/${branch?.branchCode}`}
+                            variant="outlined"
                             size="small"
+                            startIcon={<VisibilityIcon fontSize="small" />}
                           >
-                            <VisibilityIcon />
-                          </IconButton>
+                            দিনভিত্তিক
+                          </Button>
                         </Stack>
                       </TableCell>
                     </TableRow>
@@ -363,6 +378,8 @@ const SumsAllBranchData = () => {
           )}
         </Box>
       </Paper>
+      </>
+      )}
     </Box>
   );
 };

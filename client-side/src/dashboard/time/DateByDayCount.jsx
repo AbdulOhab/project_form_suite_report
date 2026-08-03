@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import BangladayDate from "./BangladayDate";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -10,8 +10,9 @@ import {
   TableRow,
   Paper,
   Button,
-  Box,
 } from "@mui/material";
+import LockOutlined from "@mui/icons-material/LockOutlined";
+import EditOutlined from "@mui/icons-material/EditOutlined";
 
 function DateByDayCount({
   startDadeline,
@@ -19,8 +20,8 @@ function DateByDayCount({
   thanaReport = [],
   questions = [],
   totalData = [],
+  id,
 }) {
-  const { id } = useParams();
   const [dateList, setDateList] = useState([]);
   const [sortConfig, setSortConfig] = useState({
     key: null,
@@ -165,8 +166,10 @@ function DateByDayCount({
               ) : (
                 <TableCell sx={{ color: "common.white", textAlign: "center" }}>0</TableCell>
               )}
-              <TableCell sx={{ color: "error.main", textAlign: "center" }}>
-                <Box component="span" sx={{ opacity: 0.5 }}>&#128274;</Box>
+              <TableCell sx={{ textAlign: "center" }}>
+                <Button variant="outlined" color="inherit" size="small" disabled sx={{ minWidth: 0, px: 1 }}>
+                  <LockOutlined fontSize="small" />
+                </Button>
               </TableCell>
             </TableRow>
             {sortedDataList.map((data, index) => (
@@ -190,8 +193,9 @@ function DateByDayCount({
                       size="small"
                       component={Link}
                       to={`/dashboard/thana-edit-answer/${id}/${data.answerId}`}
+                      sx={{ minWidth: 0, px: 1 }}
                     >
-                      &#9998;
+                      <EditOutlined fontSize="small" />
                     </Button>
                   ) : (
                     <Button

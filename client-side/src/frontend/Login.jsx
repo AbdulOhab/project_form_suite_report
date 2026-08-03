@@ -4,6 +4,7 @@ import { Box, Container, Paper, Typography, TextField, Button, Alert, Snackbar, 
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { AuthContext } from "../contexts/AuthContext";
 import BASE_URL from "../auth/dbUrl";
+import { isStateOnlyNoticeRoute } from "../utils/noticeSlug";
 
 const Login = () => {
   const [formErrors, setFormErrors] = useState({});
@@ -16,7 +17,14 @@ const Login = () => {
 
   useEffect(() => {
     const storedPath = sessionStorage.getItem("authPrevlink") || "/dashboard";
-    const pathName = window?.authPrevlink?.pathname || storedPath;
+    let pathName = window?.authPrevlink?.pathname || storedPath;
+
+    // These routes read their real ID from router navigation state, not the
+    // URL. That state doesn't survive a "come back here after login" restore,
+    // so landing on one bare would show an empty page instead of the notice.
+    if (isStateOnlyNoticeRoute(pathName)) {
+      pathName = "/dashboard";
+    }
 
     if (checkAuth?.isAuth && pathName) {
       navigate(pathName);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Loader from "../../time/Loader";
 import BangladayForOnce from "../../time/BangladayForOnce";
 import {
@@ -11,8 +11,8 @@ import {
   TableRow,
   Paper,
   Button,
-  Box,
 } from "@mui/material";
+import LockOutlined from "@mui/icons-material/LockOutlined";
 
 function AdminTableDataInterfce({
   startDadeline,
@@ -20,8 +20,8 @@ function AdminTableDataInterfce({
   totalData,
   questions,
   zonalReport,
+  id,
 }) {
-  const { id } = useParams();
   const [dateList, setDateList] = useState([]);
   const [dataListByDate, setDataListByDate] = useState([]);
   const [sortConfig, setSortConfig] = useState({
@@ -188,8 +188,10 @@ function AdminTableDataInterfce({
                         0
                       </TableCell>
                     ))}
-                <TableCell sx={{ color: "error.main", textAlign: "center" }}>
-                  <Box component="span" sx={{ opacity: 0.5 }}>&#128274;</Box>
+                <TableCell sx={{ textAlign: "center" }}>
+                  <Button variant="outlined" color="inherit" size="small" disabled sx={{ minWidth: 0, px: 1 }}>
+                    <LockOutlined fontSize="small" />
+                  </Button>
                 </TableCell>
               </TableRow>
             </TableBody>

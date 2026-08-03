@@ -1,13 +1,20 @@
+const mongoose = require("mongoose");
 const answerModel = require("../model/answerModel");
 const formModel = require("../model/formModel");
 const thanaModel = require("../model/thanaModel");
+
+// A malformed or missing id (including the literal string "undefined", which
+// a stale frontend link can send) must never reach a Mongoose query — Mongo's
+// ObjectId cast throws synchronously and, uncaught, takes down the whole
+// process instead of just failing the one request.
+const isValidObjectId = (id) => !!id && mongoose.Types.ObjectId.isValid(id);
 
 module.exports = {
   thanaData: async (req, res, next) => {
     const { id } = req.params;
     const user = req.userData;
 
-    if (!id || !user) {
+    if (!isValidObjectId(id) || !user) {
       return res.status(404).json({ answer: [], question: [], sumsArray: [] });
     }
 
@@ -168,6 +175,10 @@ module.exports = {
     const { id } = req.params;
 
     const user = req.userData;
+
+    if (!isValidObjectId(id)) {
+      return res.status(400).json({ message: "Invalid notice id" });
+    }
 
     let question = await formModel.findOne({ _id: id }).exec();
 
@@ -338,6 +349,10 @@ module.exports = {
   zonalDataInterface: async (req, res, next) => {
     const { id } = req.params;
     const user = req.userData;
+
+    if (!isValidObjectId(id)) {
+      return res.status(400).json({ message: "Invalid notice id" });
+    }
 
     let question = await formModel.findOne({ _id: id }).exec();
     let branch = await thanaModel
@@ -511,6 +526,10 @@ module.exports = {
 
   adminDataInterface: async (req, res, next) => {
     const { id } = req.params;
+
+    if (!isValidObjectId(id)) {
+      return res.status(400).json({ message: "Invalid notice id" });
+    }
 
     // Fetch the question and zonal data in parallel
     const [question, zonal] = await Promise.all([

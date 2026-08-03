@@ -8,6 +8,7 @@ import Stack from "@mui/material/Stack";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import BASE_URL from "../../auth/dbUrl";
+import { buildNoticeSlug } from "../../utils/noticeSlug";
 import DateHandler from "../time/DateHandler";
 import TimeStartBangla from "../time/TimeStartBangla";
 import TimeEndBangla from "../time/TimeEndBangla";
@@ -16,11 +17,11 @@ import { AuthContext } from "../../contexts/AuthContext";
 // Report destination is role-specific: each role has its own submitted-data
 // page, except thana, which has no separate report view — their submission
 // page doubles as the report.
-const REPORT_ROUTE_BY_ROLE = {
-  admin: (id) => `/dashboard/admin-data-interface/${id}`,
-  zonal: (id) => `/dashboard/zonal-data-interface/${id}`,
-  branch: (id) => `/dashboard/branch-data-interface/${id}`,
-  thana: (id) => `/dashboard/thana-submission/${id}`,
+const REPORT_ROUTE_PREFIX_BY_ROLE = {
+  admin: "admin-data-interface",
+  zonal: "zonal-data-interface",
+  branch: "branch-data-interface",
+  thana: "thana-submission",
 };
 
 const NoticeDetail = () => {
@@ -55,7 +56,8 @@ const NoticeDetail = () => {
     getNotice();
   }, [id]);
 
-  const reportTo = REPORT_ROUTE_BY_ROLE[userInfo?.userRole]?.(id);
+  const reportPrefix = REPORT_ROUTE_PREFIX_BY_ROLE[userInfo?.userRole];
+  const reportTo = reportPrefix && notice ? `/dashboard/${reportPrefix}/${buildNoticeSlug(notice)}` : null;
 
   return (
     <Box sx={{ maxWidth: 900, mx: "auto" }}>
@@ -76,7 +78,7 @@ const NoticeDetail = () => {
           Back
         </Button>
         {reportTo && (
-          <Button component={Link} to={reportTo} variant="contained">
+          <Button component={Link} to={reportTo} state={{ id }} variant="contained">
             Report
           </Button>
         )}
