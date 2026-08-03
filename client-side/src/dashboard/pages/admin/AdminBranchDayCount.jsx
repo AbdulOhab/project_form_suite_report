@@ -11,7 +11,6 @@ import {
   TableRow,
   Paper,
   Button,
-  Box,
 } from "@mui/material";
 
 function AdminBranchDayCount({
@@ -192,9 +191,7 @@ function AdminBranchDayCount({
                                 0
                               </TableCell>
                             ))}
-                        <TableCell sx={{ color: "error.main" }}>
-                          <Box component="span" sx={{ opacity: 0.5 }}>&#128274;</Box>
-                        </TableCell>
+                        <TableCell />
                       </TableRow>
                     </TableBody>
                     <TableBody>

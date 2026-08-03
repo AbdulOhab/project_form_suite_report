@@ -5,10 +5,6 @@ import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
   Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
   Paper,
   Stack,
   Table,
@@ -19,9 +15,6 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import DateDifferenceComponent from "../../time/DateDifferenceComponent";
-import convertToBengaliNumber from "../../time/NumberConverter";
 
 const SumsThanaByBranches = () => {
   const { qId, bId } = useParams();
@@ -30,8 +23,6 @@ const SumsThanaByBranches = () => {
   const [branchName, setBranchName] = useState("");
   const [questions, setQuestions] = useState();
   const [sumsThanaData, setSumsThanaData] = useState();
-
-  const [descriptionAlert, setDescriptionAlert] = useState(false);
 
   useEffect(() => {
     const sumsthanadata = async () => {
@@ -115,23 +106,6 @@ const SumsThanaByBranches = () => {
     return sortableData;
   }, [sumsThanaData, sortConfig]);
 
-  const descriptionHandler = () => {
-    setDescriptionAlert(true);
-  };
-  const descriptionCloserHandler = () => {
-    setDescriptionAlert(false);
-  };
-
-  const validCardData = (endDadeline) => {
-    const currentDate = new Date();
-    const endDadelineDate = new Date(endDadeline);
-
-    const timeDiff = endDadelineDate - currentDate;
-    const diffInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-    return diffInDays;
-  };
-
   const sortIndicator = (key) => {
     if (sortConfig.key !== key) return null;
     return sortConfig.direction === "ascending" ? " ▲" : " ▼";
@@ -139,23 +113,6 @@ const SumsThanaByBranches = () => {
 
   return (
     <>
-      {/* Description Dialog */}
-      <Dialog
-        open={descriptionAlert}
-        onClose={descriptionCloserHandler}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
-          <IconButton onClick={descriptionCloserHandler}>
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <Typography>{notice?.doc_desc}</Typography>
-        </DialogContent>
-      </Dialog>
-
       <Paper elevation={2} sx={{ p: 2 }}>
         {/* Header Section */}
         <Box
@@ -168,32 +125,8 @@ const SumsThanaByBranches = () => {
             mb: 2,
           }}
         >
-          {/* Left - Date Info */}
+          {/* Left - Branch Info */}
           <Paper variant="outlined" sx={{ p: 1.5, flex: "1 1 auto", minWidth: 200 }}>
-            {validCardData(notice?.endDadeline) < 0 ? (
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontSize: "1.25rem",
-                  fontWeight: "bold",
-                  color: "error.main",
-                }}
-              >
-                নোটিশ শেষ হয়েছে{" "}
-                {convertToBengaliNumber(
-                  Math.abs(validCardData(notice?.endDadeline))
-                )}{" "}
-                দিন আগে
-              </Typography>
-            ) : (
-              <DateDifferenceComponent
-                startDadeline={notice?.startDadeline}
-                range={notice?.range}
-                timeStart={notice?.timeStart}
-                timeEnd={notice?.timeEnd}
-                endDadeline={notice?.endDadeline}
-              />
-            )}
             <Typography
               sx={{
                 textAlign: "center",
@@ -259,11 +192,6 @@ const SumsThanaByBranches = () => {
             spacing={1}
             sx={{ flex: "1 1 auto", minWidth: 120 }}
           >
-            {!descriptionAlert && (
-              <Button variant="outlined" onClick={descriptionHandler}>
-                Notice
-              </Button>
-            )}
             <Button
               component={Link}
               variant="contained"

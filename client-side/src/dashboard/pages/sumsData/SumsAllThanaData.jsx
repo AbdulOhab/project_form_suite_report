@@ -4,12 +4,7 @@ import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
   Button,
-  Chip,
-  Dialog,
-  DialogContent,
-  DialogTitle,
   FormControl,
-  IconButton,
   InputLabel,
   MenuItem,
   Paper,
@@ -24,12 +19,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { ArrowBack, InfoOutlined } from "@mui/icons-material";
-import DateDifferenceComponent from "../../time/DateDifferenceComponent";
-import convertToBengaliNumber from "../../time/NumberConverter";
+import { ArrowBack } from "@mui/icons-material";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import Loader from "../../time/Loader";
@@ -43,7 +35,6 @@ const SumsAllThanaData = () => {
   const [questions, setQuestions] = useState();
   const [sumsThanaData, setSumsThanaData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [descriptionAlert, setDescriptionAlert] = useState(false);
   const [usersPerPage, setUsersPerPage] = useState(25);
   const [search, setSearch] = useState("");
   const [originalData, setOriginalData] = useState([]);
@@ -130,9 +121,6 @@ const SumsAllThanaData = () => {
     return sortableData;
   }, [sumsThanaData, sortConfig]);
 
-  const descriptionCloserHandler = () => {
-    setDescriptionAlert(false);
-  };
   const selectHandler = (event) => {
     setUsersPerPage(Number(event.target.value));
     setCurrentPage(1); // Reset to the first page
@@ -162,16 +150,6 @@ const SumsAllThanaData = () => {
     };
     searchHandler();
   }, [search, originalData]);
-
-  const validCardData = (endDadeline) => {
-    const currentDate = new Date();
-    const endDadelineDate = new Date(endDadeline);
-
-    const timeDiff = endDadelineDate - currentDate;
-    const diffInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-    return diffInDays;
-  };
 
   const exportToExcel = () => {
     // Define headers excluding "Action"
@@ -267,23 +245,6 @@ const SumsAllThanaData = () => {
 
   return (
     <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
-      {/* Description Dialog */}
-      <Dialog
-        open={descriptionAlert}
-        onClose={descriptionCloserHandler}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
-          <IconButton onClick={descriptionCloserHandler}>
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <Typography>{notice?.doc_desc}</Typography>
-        </DialogContent>
-      </Dialog>
-
       {/* Compact top bar */}
       <Box sx={{
         display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -306,15 +267,6 @@ const SumsAllThanaData = () => {
             <Typography variant="caption" color="text.secondary">{notice.sub_title}</Typography>
           )}
         </Box>
-        <Button
-          size="small"
-          startIcon={<InfoOutlined />}
-          variant="outlined"
-          onClick={() => setDescriptionAlert(true)}
-          sx={{ fontWeight: 600 }}
-        >
-          বিবরণ
-        </Button>
       </Box>
 
       {!id ? (
@@ -323,27 +275,6 @@ const SumsAllThanaData = () => {
         </Typography>
       ) : (
       <>
-      {/* Compact timer */}
-      <Box sx={{ mb: 2 }}>
-        {validCardData(notice?.endDadeline) < 0 ? (
-          <Chip
-            color="error"
-            variant="outlined"
-            size="small"
-            label={`নোটিশ প্রদানের সময় শেষ হয়েছে ${convertToBengaliNumber(Math.abs(validCardData(notice?.endDadeline)))} দিন পূর্বে`}
-            sx={{ fontWeight: "bold" }}
-          />
-        ) : (
-          <DateDifferenceComponent
-            startDadeline={notice?.startDadeline}
-            range={notice?.range}
-            timeStart={notice?.timeStart}
-            timeEnd={notice?.timeEnd}
-            endDadeline={notice?.endDadeline}
-          />
-        )}
-      </Box>
-
       {/* Table card */}
       <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
         <Box sx={{

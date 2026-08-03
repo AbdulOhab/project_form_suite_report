@@ -5,10 +5,6 @@ import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
   Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
   Paper,
   Stack,
   Table,
@@ -19,15 +15,10 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import convertToBengaliNumber from "../../time/NumberConverter";
-import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import BangladayDate from "../../time/BangladayDate";
 
 const SumsDayByDayBranchData = () => {
   const { qId, zId, bId } = useParams();
-
-  const [descriptionAlert, setDescriptionAlert] = useState(false);
 
   const [tempThana, setTempThana] = useState();
   const [notice, setNotice] = useState();
@@ -143,29 +134,12 @@ const SumsDayByDayBranchData = () => {
     return date.toISOString().split("T")[0];
   };
 
-  const descriptionHandler = () => {
-    setDescriptionAlert(true);
-  };
-  const descriptionCloserHandler = () => {
-    setDescriptionAlert(false);
-  };
-
   const handleSort = (key) => {
     let direction = "ascending";
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending";
     }
     setSortConfig({ key, direction });
-  };
-
-  const validCardData = (endDadeline) => {
-    const currentDate = new Date();
-    const endDadelineDate = new Date(endDadeline);
-
-    const timeDiff = endDadelineDate - currentDate;
-    const diffInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-    return diffInDays;
   };
 
   const sortIndicator = (key) => {
@@ -175,23 +149,6 @@ const SumsDayByDayBranchData = () => {
 
   return (
     <>
-      {/* Description Dialog */}
-      <Dialog
-        open={descriptionAlert}
-        onClose={descriptionCloserHandler}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
-          <IconButton onClick={descriptionCloserHandler}>
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <Typography>{notice?.doc_desc}</Typography>
-        </DialogContent>
-      </Dialog>
-
       <Paper elevation={2} sx={{ p: 2, my: 1 }}>
         {/* Header Section */}
         <Box
@@ -204,35 +161,7 @@ const SumsDayByDayBranchData = () => {
             mb: 2,
           }}
         >
-          {/* Left - Date Info */}
-          <Paper variant="outlined" sx={{ p: 1.5, flex: "1 1 auto", minWidth: 200 }}>
-            {validCardData(notice?.endDadeline) < 0 ? (
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontSize: "1.25rem",
-                  fontWeight: "bold",
-                  color: "error.main",
-                }}
-              >
-                নোটিশ শেষ হয়েছে{" "}
-                {convertToBengaliNumber(
-                  Math.abs(validCardData(notice?.endDadeline))
-                )}{" "}
-                দিন আগে test
-              </Typography>
-            ) : (
-              <DateDifferenceComponent
-                startDadeline={notice?.startDadeline}
-                range={notice?.range}
-                timeStart={notice?.timeStart}
-                timeEnd={notice?.timeEnd}
-                endDadeline={notice?.endDadeline}
-              />
-            )}
-          </Paper>
-
-          {/* Middle - Title */}
+          {/* Title */}
           <Box sx={{ textAlign: "center", flex: "2 1 auto" }}>
             <Typography
               variant="h5"
@@ -259,11 +188,6 @@ const SumsDayByDayBranchData = () => {
             spacing={1}
             sx={{ flex: "1 1 auto", minWidth: 120 }}
           >
-            {!descriptionAlert && (
-              <Button variant="outlined" onClick={descriptionHandler}>
-                Notice
-              </Button>
-            )}
             <Button
               component={Link}
               variant="contained"

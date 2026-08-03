@@ -6,10 +6,6 @@ import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
   Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
   Paper,
   Stack,
   Table,
@@ -20,15 +16,10 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import DateDifferenceComponent from "../../time/DateDifferenceComponent";
 import BangladayDate from "../../time/BangladayDate";
-import convertToBengaliNumber from "../../time/NumberConverter";
 
 function SumsTotalDayThanaData() {
   const { qId, zId, bId, tId } = useParams();
-
-  const [descriptionAlert, setDescriptionAlert] = useState(false);
 
   const [answer, setAnswer] = useState();
   const [notice, setNotice] = useState();
@@ -38,8 +29,7 @@ function SumsTotalDayThanaData() {
     key: null,
     direction: "ascending",
   });
-  const { questions, startDadeline, range, timeStart, timeEnd, endDadeline } =
-    notice || [];
+  const { questions, startDadeline, range } = notice || [];
 
   useEffect(() => {
     const getThanaUsers = async () => {
@@ -94,13 +84,6 @@ function SumsTotalDayThanaData() {
     const date = new Date(dateString);
     if (isNaN(date)) return null;
     return date.toISOString().split("T")[0];
-  };
-
-  const descriptionHandler = () => {
-    setDescriptionAlert(true);
-  };
-  const descriptionCloserHandler = () => {
-    setDescriptionAlert(false);
   };
 
   const handleSort = (key) => {
@@ -174,16 +157,6 @@ function SumsTotalDayThanaData() {
     return sortableData;
   }, [sortedData, sortConfig]);
 
-  const validCardData = (endDadeline) => {
-    const currentDate = new Date();
-    const endDadelineDate = new Date(endDadeline);
-
-    const timeDiff = endDadelineDate - currentDate;
-    const diffInDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-    return diffInDays;
-  };
-
   const sortIndicator = (key) => {
     if (sortConfig.key !== key) return null;
     return sortConfig.direction === "ascending" ? " ▲" : " ▼";
@@ -191,23 +164,6 @@ function SumsTotalDayThanaData() {
 
   return (
     <>
-      {/* Description Dialog */}
-      <Dialog
-        open={descriptionAlert}
-        onClose={descriptionCloserHandler}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
-          <IconButton onClick={descriptionCloserHandler}>
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <Typography>{notice?.doc_desc}</Typography>
-        </DialogContent>
-      </Dialog>
-
       <Paper elevation={2} sx={{ p: 2, my: 1 }}>
         {/* Header Section */}
         <Box
@@ -220,33 +176,7 @@ function SumsTotalDayThanaData() {
             mb: 2,
           }}
         >
-          {/* Left - Date Info */}
-          <Paper variant="outlined" sx={{ p: 1.5, flex: "1 1 auto", minWidth: 200 }}>
-            {validCardData(endDadeline) < 0 ? (
-              <Typography
-                sx={{
-                  textAlign: "center",
-                  fontSize: "1.25rem",
-                  fontWeight: "bold",
-                  color: "error.main",
-                }}
-              >
-                নোটিশ শেষ হয়েছে{" "}
-                {convertToBengaliNumber(Math.abs(validCardData(endDadeline)))}{" "}
-                দিন আগে
-              </Typography>
-            ) : (
-              <DateDifferenceComponent
-                startDadeline={startDadeline}
-                range={range}
-                timeStart={timeStart}
-                timeEnd={timeEnd}
-                endDadeline={endDadeline}
-              />
-            )}
-          </Paper>
-
-          {/* Middle - Title */}
+          {/* Title */}
           <Box sx={{ textAlign: "center", flex: "2 1 auto" }}>
             <Typography
               variant="h5"
@@ -273,11 +203,6 @@ function SumsTotalDayThanaData() {
             spacing={1}
             sx={{ flex: "1 1 auto", minWidth: 120 }}
           >
-            {!descriptionAlert && (
-              <Button variant="outlined" onClick={descriptionHandler}>
-                Notice
-              </Button>
-            )}
             <Button
               component={Link}
               variant="contained"

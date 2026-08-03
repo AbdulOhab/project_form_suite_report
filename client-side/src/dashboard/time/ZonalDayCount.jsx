@@ -11,7 +11,6 @@ import {
   TableRow,
   Paper,
   Button,
-  Box,
 } from "@mui/material";
 
 function ZonalDayCount({
@@ -181,9 +180,7 @@ function ZonalDayCount({
                             {total[totalIndex]}
                           </TableCell>
                         ))}
-                        <TableCell sx={{ color: "common.white", textAlign: "center" }}>
-                          <Box component="span" sx={{ opacity: 0.5 }}>&#128274;</Box>
-                        </TableCell>
+                        <TableCell sx={{ color: "common.white", textAlign: "center" }} />
                       </TableRow>
                     </TableBody>
                     <TableBody>

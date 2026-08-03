@@ -4,11 +4,6 @@ import BASE_URL from "../../../auth/dbUrl";
 import {
   Box,
   Button,
-  Chip,
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  IconButton,
   Paper,
   Stack,
   Table,
@@ -19,13 +14,10 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import { ArrowBack, InfoOutlined } from "@mui/icons-material";
-import DateDifferenceComponent from "../../time/DateDifferenceComponent";
-import convertToBengaliNumber from "../../time/NumberConverter";
+import { ArrowBack } from "@mui/icons-material";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import Loader from "../../time/Loader";
@@ -41,7 +33,6 @@ const SumsAllBranchData = () => {
     questions: [],
     notice: [],
   });
-  const [descriptionAlert, setDescriptionAlert] = useState(false);
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "ascending",
@@ -114,16 +105,6 @@ const SumsAllBranchData = () => {
     });
   }, [data.tempBranchData, sortConfig]);
 
-  // Calculate days difference
-  const validCardData = (endDadeline) => {
-    const currentDate = new Date();
-    const endDadelineDate = new Date(endDadeline);
-    const timeDiff = endDadelineDate - currentDate;
-    return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-  };
-
-  const descriptionCloserHandler = () => setDescriptionAlert(false);
-
   const exportToExcel = () => {
     const headers = [
       "Branch Code",
@@ -162,23 +143,6 @@ const SumsAllBranchData = () => {
 
   return (
     <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
-      {/* Description Dialog */}
-      <Dialog
-        open={descriptionAlert}
-        onClose={descriptionCloserHandler}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end", p: 1 }}>
-          <IconButton onClick={descriptionCloserHandler}>
-            <CloseIcon />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <Typography>{data.notice?.doc_desc}</Typography>
-        </DialogContent>
-      </Dialog>
-
       {/* Compact top bar */}
       <Box sx={{
         display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -201,15 +165,6 @@ const SumsAllBranchData = () => {
             <Typography variant="caption" color="text.secondary">{data.notice.sub_title}</Typography>
           )}
         </Box>
-        <Button
-          size="small"
-          startIcon={<InfoOutlined />}
-          variant="outlined"
-          onClick={() => setDescriptionAlert(true)}
-          sx={{ fontWeight: 600 }}
-        >
-          বিবরণ
-        </Button>
       </Box>
 
       {!id ? (
@@ -218,27 +173,6 @@ const SumsAllBranchData = () => {
         </Typography>
       ) : (
       <>
-      {/* Compact timer */}
-      <Box sx={{ mb: 2 }}>
-        {validCardData(data.notice?.endDadeline) < 0 ? (
-          <Chip
-            color="error"
-            variant="outlined"
-            size="small"
-            label={`নোটিশ প্রদানের সময় শেষ হয়েছে ${convertToBengaliNumber(Math.abs(validCardData(data.notice?.endDadeline)))} দিন পূর্বে`}
-            sx={{ fontWeight: "bold" }}
-          />
-        ) : (
-          <DateDifferenceComponent
-            startDadeline={data.notice?.startDadeline}
-            range={data.notice?.range}
-            timeStart={data.notice?.timeStart}
-            timeEnd={data.notice?.timeEnd}
-            endDadeline={data.notice?.endDadeline}
-          />
-        )}
-      </Box>
-
       {/* Table card */}
       <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
         <Box sx={{

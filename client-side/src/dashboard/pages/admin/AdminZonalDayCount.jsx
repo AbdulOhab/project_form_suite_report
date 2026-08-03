@@ -11,7 +11,6 @@ import {
   TableRow,
   Paper,
   Button,
-  Box,
 } from "@mui/material";
 
 function AdminZonalDayCount({
@@ -194,9 +193,7 @@ function AdminZonalDayCount({
                                 0
                               </TableCell>
                             ))}
-                        <TableCell sx={{ color: "common.white" }}>
-                          <Box component="span" sx={{ opacity: 0.5 }}>&#128274;</Box>
-                        </TableCell>
+                        <TableCell sx={{ color: "common.white" }} />
                       </TableRow>
                     </TableBody>
                     <TableBody>

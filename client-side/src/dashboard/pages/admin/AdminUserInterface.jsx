@@ -6,12 +6,8 @@ import {
   Button,
   Paper,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  IconButton,
 } from "@mui/material";
-import { Close, ArrowBack, InfoOutlined } from "@mui/icons-material";
+import { ArrowBack } from "@mui/icons-material";
 import AdminZonalDayCount from "./AdminZonalDayCount";
 import BASE_URL from "../../../auth/dbUrl";
 import AdminAllBranchDayCount from "./AdminAllBranchDayCount";
@@ -21,8 +17,6 @@ function AdminUserInterface() {
   const { dayId } = useParams();
   const location = useLocation();
   const noticeId = location.state?.id;
-
-  const [descriptionAlert, setDescriptionAlert] = useState(false);
 
   const [zonalReport, setZonalReport] = useState();
   const [notice, setNotice] = useState();
@@ -68,10 +62,6 @@ function AdminUserInterface() {
     getZonalUsers();
   }, [noticeId, dayId]);
 
-  const descriptionCloserHandler = () => {
-    setDescriptionAlert(false);
-  };
-
   const handleBranch = () => {
     setBranchShow(true);
     setZonalShow(false);
@@ -83,23 +73,6 @@ function AdminUserInterface() {
 
   return (
     <Box sx={{ maxWidth: 1500, mx: "auto", px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
-      {/* Description Dialog */}
-      <Dialog
-        open={descriptionAlert}
-        onClose={descriptionCloserHandler}
-        maxWidth="sm"
-        fullWidth
-      >
-        <DialogTitle sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <IconButton onClick={descriptionCloserHandler} size="small">
-            <Close />
-          </IconButton>
-        </DialogTitle>
-        <DialogContent>
-          <Typography>{notice?.doc_desc}</Typography>
-        </DialogContent>
-      </Dialog>
-
       {/* Compact top bar */}
       <Box sx={{
         display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -122,15 +95,6 @@ function AdminUserInterface() {
             <Typography variant="caption" color="text.secondary">{notice.sub_title}</Typography>
           )}
         </Box>
-        <Button
-          size="small"
-          startIcon={<InfoOutlined />}
-          variant="outlined"
-          onClick={() => setDescriptionAlert(true)}
-          sx={{ fontWeight: 600 }}
-        >
-          বিবরণ
-        </Button>
       </Box>
 
       {!noticeId ? (
