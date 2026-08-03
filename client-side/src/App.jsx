@@ -1,9 +1,10 @@
-import { HashRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./frontend/Login";
 import PublicLayout from "./layouts/PublicLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
 import Notice from "./dashboard/Notice";
 import NoticeBoard from "./dashboard/NoticeBoard";
+import NoticeDetail from "./dashboard/pages/NoticeDetail";
 import AuthContextProvider from "./contexts/AuthContext";
 import AuthRoutes from "./routes/AuthRoutes";
 import NoticeTable from "./dashboard/QuestionAnswer";
@@ -59,7 +60,7 @@ import RoleRoute from "./routes/RoleRoute";
 function App() {
   return (
     <AuthContextProvider>
-      <HashRouter>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<PublicLayout />}>
             <Route index element={<Login />} />
@@ -78,6 +79,7 @@ function App() {
             {/* All authenticated users */}
             <Route index element={<NoticeBoard />} />
             <Route path={"notice/:id"} element={<Notice />} />
+            <Route path={"notice-view/:slug"} element={<NoticeDetail />} />
 
             {/* Thana-only pages */}
             <Route path={"thana-empty-answer/:id/:date"} element={<RoleRoute roles={["thana"]}><ThanaEmptyNotice /></RoleRoute>} />
@@ -134,7 +136,7 @@ function App() {
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </AuthContextProvider>
   );
 }

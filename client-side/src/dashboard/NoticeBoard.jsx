@@ -10,6 +10,7 @@ import convertToBengaliNumber from "./time/NumberConverter";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import NodataFound from "./time/NodataFound";
+import { buildNoticeSlug } from "../utils/noticeSlug";
 
 // MUI components
 import Box from "@mui/material/Box";
@@ -52,13 +53,22 @@ const RoleActions = ({ userInfo, notice, onDelete, handleReload }) => {
       <Stack direction="row" spacing={1} justifyContent="center">
         <Button
           component={Link}
-          to={`notice-answer/${notice?._id}`}
+          to={`notice-view/${buildNoticeSlug(notice)}`}
+          state={{ id: notice?._id }}
           variant="outlined"
           size="small"
-          disabled
           sx={{ px: 1, minWidth: 0 }}
         >
           View
+        </Button>
+        <Button
+          component={Link}
+          to={`thana-submission/${notice?._id}`}
+          variant="outlined"
+          size="small"
+          sx={{ px: 1, minWidth: 0 }}
+        >
+          Report
         </Button>
         <Button
           component={Link}
@@ -75,29 +85,53 @@ const RoleActions = ({ userInfo, notice, onDelete, handleReload }) => {
 
   if (userInfo?.userRole === "branch") {
     return (
-      <Button
-        component={Link}
-        to={`branch-data-interface/${notice?._id}`}
-        variant="outlined"
-        size="small"
-        sx={{ px: 1, minWidth: 0 }}
-      >
-        View
-      </Button>
+      <Stack direction="row" spacing={1} justifyContent="center">
+        <Button
+          component={Link}
+          to={`notice-view/${buildNoticeSlug(notice)}`}
+          state={{ id: notice?._id }}
+          variant="outlined"
+          size="small"
+          sx={{ px: 1, minWidth: 0 }}
+        >
+          View
+        </Button>
+        <Button
+          component={Link}
+          to={`branch-data-interface/${notice?._id}`}
+          variant="outlined"
+          size="small"
+          sx={{ px: 1, minWidth: 0 }}
+        >
+          Report
+        </Button>
+      </Stack>
     );
   }
 
   if (userInfo?.userRole === "zonal") {
     return (
-      <Button
-        component={Link}
-        to={`zonal-data-interface/${notice?._id}`}
-        variant="outlined"
-        size="small"
-        sx={{ px: 1, minWidth: 0 }}
-      >
-        View
-      </Button>
+      <Stack direction="row" spacing={1} justifyContent="center">
+        <Button
+          component={Link}
+          to={`notice-view/${buildNoticeSlug(notice)}`}
+          state={{ id: notice?._id }}
+          variant="outlined"
+          size="small"
+          sx={{ px: 1, minWidth: 0 }}
+        >
+          View
+        </Button>
+        <Button
+          component={Link}
+          to={`zonal-data-interface/${notice?._id}`}
+          variant="outlined"
+          size="small"
+          sx={{ px: 1, minWidth: 0 }}
+        >
+          Report
+        </Button>
+      </Stack>
     );
   }
 
@@ -106,12 +140,22 @@ const RoleActions = ({ userInfo, notice, onDelete, handleReload }) => {
       <Stack direction="row" spacing={1} justifyContent="center">
         <Button
           component={Link}
-          to={`admin-data-interface/${notice?._id}`}
+          to={`notice-view/${buildNoticeSlug(notice)}`}
+          state={{ id: notice?._id }}
           variant="outlined"
           size="small"
           sx={{ px: 1, minWidth: 0 }}
         >
           View
+        </Button>
+        <Button
+          component={Link}
+          to={`admin-data-interface/${notice?._id}`}
+          variant="outlined"
+          size="small"
+          sx={{ px: 1, minWidth: 0 }}
+        >
+          Report
         </Button>
         <Button
           component={Link}
@@ -157,7 +201,7 @@ const RoleActions = ({ userInfo, notice, onDelete, handleReload }) => {
 const STATUS_META = {
   upcoming: { chipLabel: "আপকামিং", chipColor: "warning", text: "রিপোর্ট প্রদান শুরু হতে বাকি আছে" },
   ongoing: { chipLabel: "চলমান", chipColor: "success", text: "রিপোর্ট চলছে" },
-  ended: { chipLabel: "শেষ", chipColor: "error", text: "সাবমিট শেষ" },
+  ended: { chipLabel: "শেষ", chipColor: "error", text: "রিপোর্ট গ্রহণ শেষ" },
 };
 
 const getNoticeStatus = (notice) => {

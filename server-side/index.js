@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const path = require("path");
+const fs = require("fs");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -54,7 +55,17 @@ server.use(express.static(clientBuildPath));
 // 6. Routes
 server.use(allRouter());
 
-// 7. Connect to MongoDB and Start the Server
+// 7. SPA fallback: BrowserRouter needs the server to hand back index.html for
+//    any client-side route (direct link, refresh) that isn't an API route or
+//    a static asset. In dev the SPA runs on its own port (3000), so this is a
+//    no-op there since no built index.html exists at clientBuildPath.
+server.get("*", (req, res, next) => {
+  const indexHtml = path.join(clientBuildPath, "index.html");
+  if (!fs.existsSync(indexHtml)) return next();
+  res.sendFile(indexHtml);
+});
+
+// 8. Connect to MongoDB and Start the Server
 mongoose.connect(dbConnector).then((a) => {
   console.log(`Connected to MongoDB ${a.connections[0].name}`);
   server.listen(port, () => {
