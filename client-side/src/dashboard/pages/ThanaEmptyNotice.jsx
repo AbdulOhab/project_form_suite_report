@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
@@ -31,7 +31,9 @@ import BASE_URL from "../../auth/dbUrl";
 import { buildNoticeSlug } from "../../utils/noticeSlug";
 
 function ThanaEmptyNotice() {
-  const { id, date } = useParams();
+  const { date } = useParams();
+  const location = useLocation();
+  const id = location.state?.id;
   const { userInfo } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -43,6 +45,8 @@ function ThanaEmptyNotice() {
   const [confirmDialog, setConfirmDialog] = useState({ open: false });
 
   useEffect(() => {
+    if (!id) return;
+
     const getQuestionFromDb = async () => {
       try {
         const response = await fetch(`${BASE_URL}/get-question/${id}`, {
@@ -149,6 +153,12 @@ function ThanaEmptyNotice() {
           <Box sx={{ minWidth: 90 }} />
         </Box>
 
+        {!id ? (
+          <Typography color="text.secondary">
+            দৈনিক রিপোর্ট থেকে সাবমিট বাটনে ক্লিক করে আসুন।
+          </Typography>
+        ) : (
+        <>
         {/* Notice description card */}
         {notice?.doc_desc && (
           <Paper
@@ -307,6 +317,8 @@ function ThanaEmptyNotice() {
             </Button>
           </Box>
         </Box>
+        </>
+        )}
       </Box>
 
       {/* Confirmation Dialog */}

@@ -159,7 +159,15 @@ function ZonalTableDataInterfce({
                 </TableCell>
                 {questions?.map((question, index) => (
                   <TableCell
-                    sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                    sx={{
+                      color: "common.white",
+                      textAlign: "center",
+                      cursor: "pointer",
+                      minWidth: 140,
+                      maxWidth: 200,
+                      whiteSpace: "normal",
+                      wordBreak: "break-word",
+                    }}
                     key={index}
                     onClick={() => handleSort(question?.questionText)}
                   >
@@ -200,7 +208,7 @@ function ZonalTableDataInterfce({
                     </TableCell>
                     {questions.map((question, questionIndex) => (
                       <TableCell key={questionIndex} sx={{ textAlign: "center" }}>
-                        {currentDateData[question.questionText]}
+                        {currentDateData[question.questionText] || "0"}
                       </TableCell>
                     ))}
                     <TableCell sx={{ textAlign: "center" }}>

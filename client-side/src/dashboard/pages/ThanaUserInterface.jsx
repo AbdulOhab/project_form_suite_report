@@ -4,6 +4,7 @@ import { Box, Button, Paper, Typography, Chip } from "@mui/material";
 import { ArrowBack, TableChartOutlined } from "@mui/icons-material";
 import DateByDayCount from "../time/DateByDayCount";
 import BASE_URL from "../../auth/dbUrl";
+import { buildNoticeSlug } from "../../utils/noticeSlug";
 
 // Same status convention as the Notice Board card (upcoming / ongoing / ended).
 const STATUS_META = {
@@ -128,7 +129,7 @@ function ThanaUserInterface() {
             >
               <TableChartOutlined fontSize="small" color="action" />
               <Typography variant="subtitle2" fontWeight={600} color="text.secondary">
-                দৈনিক রিপোর্ট বিশ্লেষণ
+                দৈনিক রিপোর্ট
               </Typography>
             </Box>
             <Box sx={{ p: 1 }}>
@@ -139,6 +140,7 @@ function ThanaUserInterface() {
                 questions={notice?.questions}
                 totalData={totalData}
                 id={id}
+                slug={buildNoticeSlug(notice)}
               />
             </Box>
           </Paper>

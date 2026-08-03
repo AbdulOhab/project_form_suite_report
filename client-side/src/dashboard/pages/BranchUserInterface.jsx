@@ -175,7 +175,7 @@ function BranchUserInterface() {
           <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider", display: "flex", alignItems: "center", gap: 1 }}>
             <TableChartOutlined fontSize="small" color="action" />
             <Typography variant="subtitle2" fontWeight={600} color="text.secondary">
-              থানা রিপোর্ট বিশ্লেষণ
+              থানা রিপোর্ট
             </Typography>
           </Box>
           <Box sx={{ p: 1 }}>

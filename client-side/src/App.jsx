@@ -82,8 +82,8 @@ function App() {
             <Route path={"notice-view/:slug"} element={<NoticeDetail />} />
 
             {/* Thana-only pages */}
-            <Route path={"thana-empty-answer/:id/:date"} element={<RoleRoute roles={["thana"]}><ThanaEmptyNotice /></RoleRoute>} />
-            <Route path={"thana-edit-answer/:id/:answerId"} element={<RoleRoute roles={["thana"]}><EditQuestionAnswerByThana /></RoleRoute>} />
+            <Route path={"thana-empty-answer/:slug/:date"} element={<RoleRoute roles={["thana"]}><ThanaEmptyNotice /></RoleRoute>} />
+            <Route path={"thana-edit-answer/:slug/:date"} element={<RoleRoute roles={["thana"]}><EditQuestionAnswerByThana /></RoleRoute>} />
             <Route path={"thana-submission/:slug"} element={<RoleRoute roles={["thana"]}><ThanaUserInterface /></RoleRoute>} />
 
             {/* Branch-only pages */}

@@ -128,7 +128,7 @@ function BranchDataInterface() {
             >
               <TableChartOutlined fontSize="small" color="action" />
               <Typography variant="subtitle2" fontWeight={600} color="text.secondary">
-                দৈনিক রিপোর্ট বিশ্লেষণ
+                দৈনিক রিপোর্ট
               </Typography>
             </Box>
             <Box sx={{ p: 1 }}>

@@ -20,6 +20,7 @@ function DateByDayCount({
   questions = [],
   totalData = [],
   id,
+  slug,
 }) {
   const [dateList, setDateList] = useState([]);
   const [sortConfig, setSortConfig] = useState({
@@ -141,7 +142,15 @@ function DateByDayCount({
               </TableCell>
               {questions.map((question, index) => (
                 <TableCell
-                  sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
+                  sx={{
+                    color: "common.white",
+                    textAlign: "center",
+                    cursor: "pointer",
+                    minWidth: 140,
+                    maxWidth: 200,
+                    whiteSpace: "normal",
+                    wordBreak: "break-word",
+                  }}
                   key={index}
                   onClick={() => handleSort(question.questionText)}
                 >
@@ -181,7 +190,7 @@ function DateByDayCount({
                 </TableCell>
                 {questions.map((question, qIndex) => (
                   <TableCell key={qIndex} sx={{ textAlign: "center", whiteSpace: "pre-line" }}>
-                    {data[question.questionText]}
+                    {data[question.questionText] || "0"}
                   </TableCell>
                 ))}
                 <TableCell sx={{ textAlign: "center" }}>
@@ -191,7 +200,8 @@ function DateByDayCount({
                       color="success"
                       size="small"
                       component={Link}
-                      to={`/dashboard/thana-edit-answer/${id}/${data.answerId}`}
+                      to={`/dashboard/thana-edit-answer/${slug}/${data.date}`}
+                      state={{ id, answerId: data.answerId }}
                       sx={{ minWidth: 0, px: 1 }}
                     >
                       <EditOutlined fontSize="small" />
@@ -203,7 +213,8 @@ function DateByDayCount({
                       size="small"
                       disabled={data.date !== today}
                       component={Link}
-                      to={`/dashboard/thana-empty-answer/${id}/${data.date}`}
+                      to={`/dashboard/thana-empty-answer/${slug}/${data.date}`}
+                      state={{ id }}
                     >
                       সাবমিট
                     </Button>

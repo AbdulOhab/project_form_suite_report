@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
@@ -30,7 +30,9 @@ import BASE_URL from "../../auth/dbUrl";
 import { buildNoticeSlug } from "../../utils/noticeSlug";
 
 function EditQuestionAnswerByThana() {
-  const { id, answerId } = useParams();
+  const location = useLocation();
+  const id = location.state?.id;
+  const answerId = location.state?.answerId;
   const navigate = useNavigate();
 
   const [notice, setNotice] = useState(null);
@@ -41,6 +43,8 @@ function EditQuestionAnswerByThana() {
   const [confirmDialog, setConfirmDialog] = useState({ open: false });
 
   useEffect(() => {
+    if (!answerId) return;
+
     const getAnswerFromDb = async () => {
       try {
         const response = await fetch(`${BASE_URL}/get-answer/${answerId}`, {
@@ -149,6 +153,12 @@ function EditQuestionAnswerByThana() {
           <Box sx={{ minWidth: 90 }} />
         </Box>
 
+        {!answerId ? (
+          <Typography color="text.secondary">
+            দৈনিক রিপোর্ট বিশ্লেষণ থেকে Edit বাটনে ক্লিক করে আসুন।
+          </Typography>
+        ) : (
+        <>
         {/* Notice description card */}
         {notice?.doc_desc && (
           <Paper
@@ -307,6 +317,8 @@ function EditQuestionAnswerByThana() {
             </Button>
           </Box>
         </Box>
+        </>
+        )}
       </Box>
 
       {/* Confirmation Dialog */}
