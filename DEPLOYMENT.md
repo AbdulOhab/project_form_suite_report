@@ -34,6 +34,12 @@
   network-এ। তাই DB-তে যেকোনো কাজ (seeder ইত্যাদি) container-এর ভেতর থেকে চালাতে হয়।
 - **ডেটা টেকে:** Mongo data (`mongo_data`) আর আপলোড করা ফাইল (`app_uploads`)
   named volume-এ থাকে, restart/rebuild-এ হারায় না।
+- **uploads ফোল্ডার auto-create হয়:** `server-side/router/routes/usersCreateUpdateRoutes.js`
+  সার্ভার স্টার্টের সময় `fs.mkdirSync(uploadDir, { recursive: true })` দিয়ে
+  uploads ফোল্ডার নিশ্চিত করে বানায় (আগে এটা না থাকায় CSV upload ভেঙে যেত —
+  git খালি ফোল্ডার ট্র্যাক করে না, তাই fresh clone-এ ফোল্ডারটা তৈরিই হতো না)।
+  Docker image-এও `Dockerfile`-এ আলাদাভাবে `mkdir -p /app/uploads` আছে —
+  দুটোই থাকায় bare-metal আর Docker দুই ক্ষেত্রেই কাজ করবে।
 
 ---
 

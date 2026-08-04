@@ -1,13 +1,21 @@
 const express = require("express");
+const fs = require("fs");
+const path = require("path");
 const usersController = require("../../controller/usersController");
 const authMiddleware = require("../../middleware/authMiddleware");
 const { requireRole } = require("../../middleware/roleMiddleware");
 const router = express.Router();
 const multer = require("multer");
 
+// "./uploads/" is relative to process.cwd(), not this file — and multer
+// throws ENOENT on the first write if the directory doesn't already exist
+// (it won't after a fresh clone, since git doesn't track empty dirs).
+const uploadDir = path.join(__dirname, "../../uploads");
+fs.mkdirSync(uploadDir, { recursive: true });
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./uploads/");
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);

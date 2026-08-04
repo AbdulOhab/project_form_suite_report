@@ -13,9 +13,6 @@ pending-list.txt রিভিউ — কোডের বর্তমান অ�
    পুশ হয়ে গেছে, secret বদলালে ওই token invalid হবে (production action)
 ২. request.http-এর git history clean করা — git filter-repo/BFG দিয়ে (repo public হলে)
 ৩. Helmet + express-rate-limit যোগ করা — server-side/index.js-এ এখনো নেই
-১০. CLAUDE.md ও PRODUCTION_PLAN.md আপডেট — এখনো লেখা আছে "HashRouter" (আসলে
-    BrowserRouter), "50 of 52 routes unprotected" (আসলে requireRole প্রায় সব রুটে
-    বসানো) — কম effort, কিন্তু ডকুমেন্ট এখন ভুল তথ্য দিচ্ছে
 
 🟡 করলে ভালো, জরুরি না
 ----------------------
