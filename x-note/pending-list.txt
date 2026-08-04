@@ -1,17 +1,7 @@
-১. [⬜ বাকি — production action, কোড থেকে verify করা যায় না] JWT_SECRET rotate করা — request.http-এ থাকা real token commit 1981fcc-এ GitHub-এ পুশ হয়ে গেছে, secret বদলালে ওই token invalid হয়ে যাবে
-২. [⬜ বাকি — production action, কোড থেকে verify করা যায় না] request.http-এর git history clean করা (repo public হলে) — git filter-repo বা BFG দিয়ে
-৩. [⬜ বাকি] Helmet + express-rate-limit যোগ করা server-side/index.js-এ (এখনো package.json-এ নেই)
-৪. [🟡 আংশিক — index.js-এ শুধু process.on("unhandledRejection"/"uncaughtException") স্টপগ্যাপ হিসেবে আছে, প্রপার Express ৪-আর্গুমেন্ট error middleware নেই] Global error handler যোগ করা index.js-এর শেষে
-৫. [⬜ বাকি — এখনো ৪৫টা ফাইলে "Dadeline" আছে] "Dadeline" → "Deadline" টাইপো ফিক্স (৩২৩ জায়গায়, server-side + client-side)
-৬. [⬜ বাকি — adminModel.js/branchModel.js/zonalModel.js/checkModel.js এখনো আছে] অব্যবহৃত model ফাইল মুছে ফেলা — adminModel.js, branchModel.js, zonalModel.js, checkModel.js (কোনো controller এগুলো ব্যবহার করে না, শুধু thanaModel ব্যবহার হয়)
-৮. [⬜ বাকি — mongoose এখনো ^8.4.1, express এখনো ^4.19.2] Dependency আপডেট — bcrypt, bcryptjs, body-parser, multer (নিরাপদ); mongoose 8→9 আর express 4→5 আলাদাভাবে টেস্ট করে (breaking changes আছে)
-১০. [⬜ বাকি — এবং স্টেলনেস যা ভাবা হয়েছিল তার চেয়ে বড়: auth middleware + role-based access (requireRole) এখন প্রায় সব রুটে বসানো আছে, HashRouter থেকে BrowserRouter-এ চেঞ্জ হয়েছে — কিন্তু CLAUDE.md এখনো লিখে রেখেছে "50 of 52 routes have no auth middleware" এবং HashRouter ব্যবহারের কথা] CLAUDE.md ও PRODUCTION_PLAN.md আপডেট করা — এখন অনেক জায়গায় বাস্তব কোডের সাথে মিলছে না (auth middleware, JWT secret, Bearer scheme, logout fix, AdminReview — এসব ইতিমধ্যে হয়ে গেছে কিন্তু ডকে এখনো "pending/broken" লেখা)
-
-
-ADMIN — Create Notice
-৬. [⬜ বাকি — Notice.jsx/NoticeEditor.jsx-এ Notice Type Select-এ শুধু ফিক্সড প্রিসেট (1/2/3/7/15/10 দিন), 
-"Custom" ইনপুট নেই] Notice Type-এ নতুন অপশন "Custom" রাখা (২০/২৫/১২ দিন নিজের ইচ্ছেমতো দেয়া যাবে)
-৮. ⬜ বাকি — Question-এ Dropdown দেয়ার সিস্টেম যুক্ত করা
+[🟡 আংশিক — index.js-এ শুধু process.on("unhandledRejection"/"uncaughtException") স্টপগ্যাপ হিসেবে আছে, প্রপার Express ৪-আর্গুমেন্ট error middleware নেই] Global error handler যোগ করা index.js-এর শেষে
+[⬜ বাকি — এখনো ৪৫টা ফাইলে "Dadeline" আছে] "Dadeline" → "Deadline" টাইপো ফিক্স (৩২৩ জায়গায়, server-side + client-side)
+[⬜ বাকি — adminModel.js/branchModel.js/zonalModel.js/checkModel.js এখনো আছে] অব্যবহৃত model ফাইল মুছে ফেলা — adminModel.js, branchModel.js, zonalModel.js, checkModel.js (কোনো controller এগুলো ব্যবহার করে না, শুধু thanaModel ব্যবহার হয়)
+[⬜ বাকি — এবং স্টেলনেস যা ভাবা হয়েছিল তার চেয়ে বড়: auth middleware + role-based access (requireRole) এখন প্রায় সব রুটে বসানো আছে, HashRouter থেকে BrowserRouter-এ চেঞ্জ হয়েছে — কিন্তু CLAUDE.md এখনো লিখে রেখেছে "50 of 52 routes have no auth middleware" এবং HashRouter ব্যবহারের কথা] 
 
 ADMIN — User List / Create User
 ৯. [⬜ বাকি — UnifiedUsersList.jsx-এ শুধু role tabs + rows-per-page, সার্চ/ফিল্টার/কলাম-সর্ট নেই] User List-এ Filter & sorting অপশন যুক্ত করা

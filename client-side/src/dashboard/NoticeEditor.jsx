@@ -30,6 +30,7 @@ import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import BASE_URL from "../auth/dbUrl";
+import NOTICE_TYPE_OPTIONS from "../utils/noticeTypeOptions";
 
 const NoticeEditor = () => {
   const { id } = useParams();
@@ -365,12 +366,11 @@ const NoticeEditor = () => {
               <InputLabel>Notice Type</InputLabel>
               <Select value={range || ""} onChange={rangeHandler} label="Notice Type">
                 <MenuItem value=""><em>Select</em></MenuItem>
-                <MenuItem value="1">One Day</MenuItem>
-                <MenuItem value="2">Two Days</MenuItem>
-                <MenuItem value="3">Three Days</MenuItem>
-                <MenuItem value="7">Weekly</MenuItem>
-                <MenuItem value="15">Bi-Weekly</MenuItem>
-                <MenuItem value="10">Occasion</MenuItem>
+                {NOTICE_TYPE_OPTIONS.map((opt) => (
+                  <MenuItem key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <TextField
