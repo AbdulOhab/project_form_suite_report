@@ -62,7 +62,7 @@ function BranchUsers() {
   ].filter((v, i, a) => v > 0 && a.indexOf(v) === i);
 
   return (
-    <Box sx={{ mt: 2 }}>
+    <Box sx={{ py: 2 }}>
       <Paper sx={{ p: 3, borderRadius: 2 }}>
         <Stack direction="row" gap={2} alignItems="center">
           <TextField
@@ -101,7 +101,7 @@ function BranchUsers() {
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ mt: 2 }}
+          sx={{ mt: 2, mb: 4 }}
         >
           <Typography
             variant="body2"
