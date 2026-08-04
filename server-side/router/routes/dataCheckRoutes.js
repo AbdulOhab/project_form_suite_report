@@ -18,11 +18,11 @@ router.get(`/zonal/data-interface/:id`, authMiddleware, requireRole("zonal"), da
 router.get(`/zonal/zonal-data-daycount/:dayId/:branchId/:noticeId`, authMiddleware, requireRole("zonal"), dataCheckController.zonalDayCountData);
 
 // Admin routes
-router.get(`/admin/submission-overview`, authMiddleware, requireRole("admin"), dataCheckController.submissionOverview);
-router.get(`/admin/data-interface/:id`, authMiddleware, requireRole("admin"), dataCheckController.adminDataInterface);
-router.get(`/admin/data-checkout/:dayId/:noticeId`, authMiddleware, requireRole("admin"), dataCheckController.adminZonalData);
-router.get(`/admin/branch/data-checkout/:dayId/:zonalId/:noticeId`, authMiddleware, requireRole("admin"), dataCheckController.adminBranchData);
-router.get(`/admin/thana-data-daycount/:dayId/:zonalId/:branchId/:noticeId`, authMiddleware, requireRole("admin"), dataCheckController.adminThanaDayCountData);
-router.get(`/admin/get-all-branches/:noticeId/:dayId`, authMiddleware, requireRole("admin"), dataCheckController.getAllBranches);
+router.get(`/admin/submission-overview`, authMiddleware, requireRole("admin", "owner"), dataCheckController.submissionOverview);
+router.get(`/admin/data-interface/:id`, authMiddleware, requireRole("admin", "owner"), dataCheckController.adminDataInterface);
+router.get(`/admin/data-checkout/:dayId/:noticeId`, authMiddleware, requireRole("admin", "owner"), dataCheckController.adminZonalData);
+router.get(`/admin/branch/data-checkout/:dayId/:zonalId/:noticeId`, authMiddleware, requireRole("admin", "owner"), dataCheckController.adminBranchData);
+router.get(`/admin/thana-data-daycount/:dayId/:zonalId/:branchId/:noticeId`, authMiddleware, requireRole("admin", "owner"), dataCheckController.adminThanaDayCountData);
+router.get(`/admin/get-all-branches/:noticeId/:dayId`, authMiddleware, requireRole("admin", "owner"), dataCheckController.getAllBranches);
 
 module.exports = () => router;

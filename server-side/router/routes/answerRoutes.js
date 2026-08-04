@@ -8,6 +8,6 @@ router.post(`/create-answer/:id`, authMiddleware, requireRole("thana", "branch")
 router.get("/get-answer/:id", authMiddleware, requireRole("branch"), answerController.getAnswer);
 router.get("/get-question/:id", authMiddleware, requireRole("thana", "branch"), answerController.getQuestion);
 router.post("/update-answer/:id", authMiddleware, requireRole("branch"), answerController.update);
-router.get("/notice-answer/branch", authMiddleware, requireRole("branch", "zonal", "admin"), answerController.allData);
+router.get("/notice-answer/branch", authMiddleware, requireRole("branch", "zonal", "admin", "owner"), answerController.allData);
 
 module.exports = () => router;

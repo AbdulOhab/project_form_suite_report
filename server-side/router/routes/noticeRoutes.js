@@ -5,9 +5,9 @@ const { requireRole } = require("../../middleware/roleMiddleware");
 const router = express.Router();
 
 // Admin manages notices
-router.post(`/create-notice/:id`, authMiddleware, requireRole("admin"), noticeboardController.createNotice);
-router.post("/update-notice/:id", authMiddleware, requireRole("admin"), noticeboardController.updateNotice);
-router.post("/delete-notice/:id", authMiddleware, requireRole("admin"), noticeboardController.deleteItem);
+router.post(`/create-notice/:id`, authMiddleware, requireRole("admin", "owner"), noticeboardController.createNotice);
+router.post("/update-notice/:id", authMiddleware, requireRole("admin", "owner"), noticeboardController.updateNotice);
+router.post("/delete-notice/:id", authMiddleware, requireRole("admin", "owner"), noticeboardController.deleteItem);
 
 // All authenticated users view notices
 router.get("/get-notice/:id", authMiddleware, noticeboardController.getNotice);

@@ -130,7 +130,7 @@ const RoleActions = ({ userInfo, notice, onDelete, handleReload }) => {
     );
   }
 
-  if (userInfo?.userRole === "admin") {
+  if (userInfo?.userRole === "admin" || userInfo?.userRole === "owner") {
     return (
       <Stack direction="row" spacing={1} justifyContent="center">
         <Button

@@ -14,7 +14,7 @@ const DashboardLayout = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const role = userInfo?.userRole || "thana";
-  const hasSidebar = role === "admin";
+  const hasSidebar = role === "admin" || role === "owner";
 
   return (
     <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "background.default" }}>

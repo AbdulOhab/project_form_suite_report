@@ -1,3 +1,4 @@
+const ownerSeeder = require("./model/seeders/ownerSeeder");
 const adminSeeder = require("./model/seeders/adminSeeder");
 const zonalSeeder = require("./model/seeders/zonalSeeder");
 const branchSeeder = require("./model/seeders/branchSeeder");
@@ -10,6 +11,9 @@ const command = process.argv[2];
 
 const run = async () => {
   switch (command) {
+    case "owner":
+      await ownerSeeder();
+      break;
     case "admin":
       await adminSeeder();
       break;
@@ -40,6 +44,7 @@ const run = async () => {
       console.log("");
       console.log("  Commands:");
       console.log("    seed     - Seed ALL users (3 admin + 5 zonal + 15 branch + 45 thana)");
+      console.log("    owner    - Seed owner user only");
       console.log("    admin    - Seed admin users only");
       console.log("    zonal    - Seed zonal users only");
       console.log("    branch   - Seed branch users only");

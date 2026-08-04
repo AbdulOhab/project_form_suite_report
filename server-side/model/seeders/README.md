@@ -9,6 +9,9 @@ node server-side/model/seeders/seederChecker.js
 # Step 3: Wipe All data
 node server-side/model/seeders/wipeAllSeeder.js
 
+# Single Owner Seed
+node server-side/model/seeders/ownerSeeder.js
+
 # Single Admin Seed
 node server-side/model/seeders/adminSeeder.js
 
@@ -24,6 +27,7 @@ node server-side/model/seeders/masterSeeder.js
 cd server-side
 
 node seeder.js seed     # Seed ALL users (3 admin + 5 zonal + 15 branch + 45 thana)
+node seeder.js owner    # Seed owner only
 node seeder.js admin    # Seed admins only
 node seeder.js zonal    # Seed zonals only
 node seeder.js branch   # Seed branches only

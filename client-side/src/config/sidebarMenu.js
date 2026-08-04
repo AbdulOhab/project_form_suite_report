@@ -54,5 +54,7 @@ const menuConfig = {
   ],
 };
 
+menuConfig.owner = menuConfig.admin;
+
 export const getMenuItems = (role) => menuConfig[role] || menuConfig.thana;
 export default menuConfig;

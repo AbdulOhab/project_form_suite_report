@@ -81,7 +81,8 @@ docker compose ps                 # সব container healthy কিনা দে
 > `server-side/...` নয়)।
 
 ```bash
-docker compose exec app node model/seeders/masterSeeder.js    # users
+docker compose exec app node model/seeders/masterSeeder.js    # users (admin/zonal/branch/thana)
+docker compose exec app node model/seeders/ownerSeeder.js     # owner (super-admin login)
 docker compose exec app node model/seeders/noticeSeeder.js    # sample notices
 docker compose exec app node seeder.js check                  # যাচাই
 ```

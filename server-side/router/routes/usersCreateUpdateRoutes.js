@@ -25,7 +25,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // All user management is admin-only
-router.use(authMiddleware, requireRole("admin"));
+router.use(authMiddleware, requireRole("admin", "owner"));
 
 router.get("/download-users-csv", usersController.downloadUsersCsv);
 router.post("/upload-user-file", upload.single("csvFile"), usersController.uploadUser);

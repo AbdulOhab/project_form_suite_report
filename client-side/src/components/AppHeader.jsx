@@ -49,7 +49,7 @@ const AppHeader = ({ onMenuToggle }) => {
       }}
     >
       <Toolbar variant="dense" sx={{ gap: 1, minHeight: 44 }}>
-        {isMobile && role === "admin" && (
+        {isMobile && (role === "admin" || role === "owner") && (
           <IconButton
             color="inherit"
             edge="start"
