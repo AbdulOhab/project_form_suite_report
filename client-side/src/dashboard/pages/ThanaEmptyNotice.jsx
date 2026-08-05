@@ -275,7 +275,7 @@ function ThanaEmptyNotice() {
         <DialogTitle sx={{ fontWeight: 700 }}>তথ্য সংরক্ষণ করবেন?</DialogTitle>
         <DialogContent>
           <DialogContentText variant="body2">
-            সাবমিট করলে আজকের রিপোর্ট সংরক্ষিত হবে। এটি পরে সম্পাদনা করা যাবে।
+            সাবমিট করলে আজকের রিপোর্ট সংরক্ষিত হবে। এটি পরে সম্পাদনা করা যাবে না।
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>

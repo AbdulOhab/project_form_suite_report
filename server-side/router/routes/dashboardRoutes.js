@@ -4,7 +4,6 @@ const authMiddleware = require("../../middleware/authMiddleware");
 const { requireRole } = require("../../middleware/roleMiddleware");
 const router = express.Router();
 
-router.get("/dashboard", authMiddleware, requireRole("admin", "owner"), dsashboardController.all);
 router.get("/thana-users", authMiddleware, requireRole("admin", "owner"), dsashboardController.getAllUsers);
 router.get("/zonal-users", authMiddleware, requireRole("admin", "owner"), dsashboardController.getAllZonalUsers);
 router.get("/branch-users", authMiddleware, requireRole("admin", "owner"), dsashboardController.getAllBranchUsers);

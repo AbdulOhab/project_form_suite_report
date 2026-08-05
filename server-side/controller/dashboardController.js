@@ -1,17 +1,6 @@
 const thanaModel = require("../model/thanaModel");
 
 const dsashboardController = {
-  all: async (req, res, next) => {
-    const tokenData = req.userData;
-    if (tokenData) {
-      const user = await thanaModel.findOne().where({
-        userId: tokenData?.userId,
-      });
-      return res.status(200).json({ user });
-    } else {
-      return res.status(404).json({ message: "Alien users are not allowed" });
-    }
-  },
   getAllUsers: async (req, res, next) => {
     const thanaUsers = await thanaModel.find({
       userRole: "thana",

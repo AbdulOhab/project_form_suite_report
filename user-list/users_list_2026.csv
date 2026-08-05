@@ -1,0 +1,2498 @@
+userId,password,userName,email,zonalCode,branchCode,thanaCode,userRole
+110011,4R1Se4rJ,Admin User 1,110011@instance.com,,,,admin
+110012,AelHXbxO,Admin User 2,110012@instance.com,,,,admin
+110013,qzJG3bGB,Admin User 3,110013@instance.com,,,,admin
+3001,S1HANTO7,ঢাকা অঞ্চল উত্তর,3001@instance.com,3001,,,zonal
+3002,9SHANTO2,ঢাকা অঞ্চল দক্ষিণ,3002@instance.com,3002,,,zonal
+3003,SHA3NTO8,ঢাকা ক্যাম্পাস অঞ্চল,3003@instance.com,3003,,,zonal
+3004,4SHANT5O,রংপুর অঞ্চল,3004@instance.com,3004,,,zonal
+3005,SH6ANTO1,দিনাজপুর অঞ্চল,3005@instance.com,3005,,,zonal
+3006,2SHAN7TO,বগুড়া অঞ্চল,3006@instance.com,3006,,,zonal
+3007,SHAN8T3O,রাজশাহী অঞ্চল পূর্ব,3007@instance.com,3007,,,zonal
+3008,7S8HANTO,রাজশাহী অঞ্চল পশ্চিম,3008@instance.com,3008,,,zonal
+3009,SH9AN2TO,খুলনা অঞ্চল,3009@instance.com,3009,,,zonal
+3010,3SHANTO6,যশোর অঞ্চল,3010@instance.com,3010,,,zonal
+3011,S4HANT8O,ইবি অঞ্চল,3011@instance.com,3011,,,zonal
+3012,SHAN5TO7,সিলেট অঞ্চল,3012@instance.com,3012,,,zonal
+3013,6SH1ANTO,ফরিদপুর অঞ্চল,3013@instance.com,3013,,,zonal
+3014,SHANTO34,ময়মনসিংহ অঞ্চল,3014@instance.com,3014,,,zonal
+3015,45SHANTO,বরিশাল অঞ্চল,3015@instance.com,3015,,,zonal
+3016,S9HANTO1,নোয়াখালী অঞ্চল,3016@instance.com,3016,,,zonal
+3017,SH2ANTO6,কুমিল্লা অঞ্চল,3017@instance.com,3017,,,zonal
+3018,8SHA4NTO,চট্টগ্রাম অঞ্চল উত্তর,3018@instance.com,3018,,,zonal
+3019,SHAN3T5O,চট্টগ্রাম অঞ্চল দক্ষিণ,3019@instance.com,3019,,,zonal
+1,RAyHAN251#,ঢাকা মহানগর উত্তর,1@instance.com,3001,1,,branch
+2,RAyhaN252%,ঢাকা মহানগর দক্ষিণ,2@instance.com,3002,2,,branch
+3,rayHAN253&,ঢাকা মহানগর পূর্ব,3@instance.com,3002,3,,branch
+4,RAYHan254*,ঢাকা মহানগর পশ্চিম,4@instance.com,3001,4,,branch
+5,RaYHAN255#,ঢাকা বিশ্ববিদ্যালয়,5@instance.com,3003,5,,branch
+6,RAYHAn256%,জাহাঙ্গীরনগর বিশ্ববিদ্যালয়,6@instance.com,3003,6,,branch
+7,RAyHAN257&,জগন্নাথ বিশ্ববিদ্যালয়,7@instance.com,3003,7,,branch
+8,rAYHAN258*,প্রাইভেট ইউনিভার্সিটি পূর্ব,8@instance.com,3003,8,,branch
+9,RaYhAn259#,ঢাকা কলেজ,9@instance.com,3003,9,,branch
+11,rAYHAN911%,গাজীপুর মহানগর,11@instance.com,3001,11,,branch
+12,rAYHAN812&,ঢাকা জেলা উত্তর,12@instance.com,3001,12,,branch
+13,RAyhAN713*,ঢাকা জেলা দক্ষিণ,13@instance.com,3002,13,,branch
+14,raYHAN614#,মানিকগঞ্জ জেলা,14@instance.com,3001,14,,branch
+15,RAyHAn515%,ডাইনামিক ইন্সটিটিউট,15@instance.com,3003,15,,branch
+16,RAYHAn416&,গাজীপুর জেলা,16@instance.com,3001,16,,branch
+17,RaYHAN317*,নারায়ণগঞ্জ মহানগর,17@instance.com,3002,17,,branch
+18,RaYHAN218#,নারায়ণগঞ্জ জেলা,18@instance.com,3002,18,,branch
+19,rAyHaN119%,মুন্সিগঞ্জ জেলা,19@instance.com,3002,19,,branch
+21,rAyHaN921&,নরসিংদী জেলা,21@instance.com,3002,21,,branch
+23,RAYhAN823*,টাঙ্গাইল জেলা,23@instance.com,3001,23,,branch
+24,RayHaN724#,বাকৃবি,24@instance.com,3014,24,,branch
+25,rayHAN625%,ময়মনসিংহ মহানগর,25@instance.com,3014,25,,branch
+26,RAYHaN526&,ময়মনসিংহ জেলা,26@instance.com,3014,26,,branch
+28,RAyhAN428*,কিশোরগঞ্জ জেলা,28@instance.com,3001,28,,branch
+30,RAyhAn330#,নেত্রকোনা জেলা,30@instance.com,3014,30,,branch
+31,RAYHAn231%,জামালপুর জেলা,31@instance.com,3014,31,,branch
+32,raYHAN132&,শেরপুর জেলা,32@instance.com,3014,32,,branch
+33,RayHAN933*,ফরিদপুর শহর,33@instance.com,3013,33,,branch
+34,RAYhan834#,ফরিদপুর জেলা,34@instance.com,3013,34,,branch
+35,rayHAN735%,রাজবাড়ী জেলা,35@instance.com,3013,35,,branch
+36,RAYHaN636&,গোপালগঞ্জ জেলা,36@instance.com,3013,36,,branch
+37,rAYHAn537*,মাদারীপুর জেলা,37@instance.com,3013,37,,branch
+38,rAyHAn438#,শরীয়তপুর জেলা,38@instance.com,3013,38,,branch
+39,rAYhAn339%,চট্টগ্রাম মহানগর উত্তর,39@instance.com,3018,39,,branch
+40,rAyhAN240&,চট্টগ্রাম মহানগর দক্ষিণ,40@instance.com,3019,40,,branch
+41,rAyHaN141*,চট্টগ্রাম বিশ্ববিদ্যালয়,41@instance.com,3018,41,,branch
+42,RAyhaN942#,ইসলামিক ইন্সটিটিউট,42@instance.com,3018,42,,branch
+43,raYhAN843%,চট্টগ্রাম জেলা উত্তর,43@instance.com,3018,43,,branch
+44,RAYhAN744&,চট্টগ্রাম জেলা দক্ষিণ,44@instance.com,3019,44,,branch
+46,RAyhAn646*,রাঙ্গামাটি পার্বত্য জেলা,46@instance.com,3018,46,,branch
+47,RAyHAN547#,খাগড়াছড়ি পার্বত্য জেলা,47@instance.com,3018,47,,branch
+48,RaYHAn448%,বান্দরবান পার্বত্য জেলা,48@instance.com,3019,48,,branch
+50,raYHAN350&,কক্সবাজার জেলা,50@instance.com,3019,50,,branch
+51,rAYHaN251*,কুমিল্লা মহানগর,51@instance.com,3017,51,,branch
+52,raYHAN152#,কুমিল্লা বিশ্ববিদ্যালয়,52@instance.com,3017,52,,branch
+53,RAyHAN953%,কুমিল্লা জেলা উত্তর,53@instance.com,3017,53,,branch
+54,rAYHaN854&,কুমিল্লা জেলা দক্ষিণ,54@instance.com,3017,54,,branch
+56,RAYhAN756*,ব্রাহ্মণবাড়িয়া জেলা,56@instance.com,3017,56,,branch
+57,rAyHAn657#,চাঁদপুর শহর,57@instance.com,3017,57,,branch
+58,RAYHAn558%,চাঁদপুর জেলা,58@instance.com,3017,58,,branch
+59,RAYhaN459&,নোয়াখালী শহর,59@instance.com,3016,59,,branch
+60,rAyHaN360*,নোয়াখালী জেলা উত্তর,60@instance.com,3016,60,,branch
+61,RAyhAN261#,নোয়াখালী জেলা দক্ষিণ,61@instance.com,3016,61,,branch
+62,raYhAN162%,ফেনী শহর,62@instance.com,3016,62,,branch
+63,raYHAn963&,ফেনী জেলা,63@instance.com,3016,63,,branch
+64,RAYhaN864*,লক্ষ্মীপুর শহর,64@instance.com,3016,64,,branch
+65,raYHAn765#,লক্ষ্মীপুর জেলা,65@instance.com,3016,65,,branch
+66,RAyHaN666%,সিলেট মহানগর,66@instance.com,3012,66,,branch
+67,RaYhAN567&,শাবিপ্রবি,67@instance.com,3012,67,,branch
+68,RAyHAn468*,সিলেট জেলা পূর্ব,68@instance.com,3012,68,,branch
+69,RaYhAN369#,সিলেট জেলা পশ্চিম,69@instance.com,3012,69,,branch
+70,RAyhAN270%,সুনামগঞ্জ জেলা,70@instance.com,3012,70,,branch
+71,rAYHAN171&,মৌলভীবাজার শহর,71@instance.com,3012,71,,branch
+72,RAYhaN972*,মৌলভীবাজার জেলা,72@instance.com,3012,72,,branch
+73,RAYhaN873#,হবিগঞ্জ জেলা,73@instance.com,3012,73,,branch
+74,RAYhaN774%,রাজশাহী মহানগর,74@instance.com,3008,74,,branch
+75,rAYHAN675&,রাজশাহী বিশ্ববিদ্যালয়,75@instance.com,3007,75,,branch
+76,raYHAn576*,রাজশাহী জেলা পূর্ব,76@instance.com,3007,76,,branch
+77,RaYhAN477#,রাজশাহী জেলা পশ্চিম,77@instance.com,3008,77,,branch
+78,rayHAN378%,নাটোর জেলা,78@instance.com,3007,78,,branch
+79,RaYHaN279&,চাঁপাইনবাবগঞ্জ শহর,79@instance.com,3008,79,,branch
+80,rAYHAN180*,চাঁপাইনবাবগঞ্জ জেলা পশ্চিম,80@instance.com,3008,80,,branch
+81,RAyHAN981#,নওগাঁ জেলা,81@instance.com,3008,81,,branch
+83,RAYHAn883%,পাবনা শহর,83@instance.com,3007,83,,branch
+84,RayHAn784&,পাবনা জেলা,84@instance.com,3007,84,,branch
+86,rAYhaN686*,সিরাজগঞ্জ শহর,86@instance.com,3006,86,,branch
+87,raYHAn587#,সিরাজগঞ্জ জেলা,87@instance.com,3006,87,,branch
+88,rAYHAN488%,বগুড়া মহানগর,88@instance.com,3006,88,,branch
+89,rAyHAN389&,বগুড়া জেলা পূর্ব,89@instance.com,3006,89,,branch
+90,RAyhAn290*,বগুড়া জেলা পশ্চিম,90@instance.com,3006,90,,branch
+91,rAYHAN191#,জয়পুরহাট জেলা,91@instance.com,3006,91,,branch
+92,rAYHan992%,রংপুর মহানগর,92@instance.com,3004,92,,branch
+93,rAYhaN893&,রংপুর জেলা,93@instance.com,3004,93,,branch
+94,RAYhaN794*,কুড়িগ্রাম জেলা,94@instance.com,3004,94,,branch
+95,RaYHan695#,নীলফামারী জেলা,95@instance.com,3004,95,,branch
+96,RAYHan596%,লালমনিরহাট জেলা,96@instance.com,3004,96,,branch
+97,RAyhAN497&,গাইবান্ধা জেলা,97@instance.com,3004,97,,branch
+98,rAYHaN398*,দিনাজপুর শহর,98@instance.com,3005,98,,branch
+99,RaYhAN299#,দিনাজপুর জেলা উত্তর,99@instance.com,3005,99,,branch
+100,RAYHAn1100%,দিনাজপুর জেলা দক্ষিণ,100@instance.com,3005,100,,branch
+101,rAyHaN9101&,ঠাকুরগাঁও জেলা,101@instance.com,3005,101,,branch
+102,RAYhaN8102*,পঞ্চগড় জেলা,102@instance.com,3005,102,,branch
+103,rAYHan7103#,খুলনা মহানগর,103@instance.com,3009,103,,branch
+104,RaYhAN6104%,খুলনা জেলা উত্তর,104@instance.com,3009,104,,branch
+105,rAYHAn5105&,খুলনা জেলা দক্ষিণ,105@instance.com,3009,105,,branch
+106,RAyHAN4106*,বাগেরহাট জেলা,106@instance.com,3009,106,,branch
+107,rAYhAn3107#,সাতক্ষীরা শহর,107@instance.com,3009,107,,branch
+108,RAYHaN2108%,সাতক্ষীরা জেলা,108@instance.com,3009,108,,branch
+109,RaYHAN1109&,যশোর শহর,109@instance.com,3010,109,,branch
+110,RAyHan9110*,যশোর জেলা পূর্ব,110@instance.com,3010,110,,branch
+111,RAYhan8111#,যশোর জেলা পশ্চিম,111@instance.com,3010,111,,branch
+112,RAYhan7112%,নড়াইল জেলা,112@instance.com,3010,112,,branch
+113,raYHaN6113&,মাগুরা জেলা,113@instance.com,3010,113,,branch
+114,RAyhAn5114*,ইসলামী বিশ্ববিদ্যালয়,114@instance.com,3011,114,,branch
+115,RaYhAn4115#,ঝিনাইদহ শহর,115@instance.com,3011,115,,branch
+116,RAYhAN3116%,ঝিনাইদহ জেলা,116@instance.com,3011,116,,branch
+117,rAYHAN2117&,কুষ্টিয়া শহর,117@instance.com,3011,117,,branch
+118,RAyhaN1118*,কুষ্টিয়া জেলা,118@instance.com,3011,118,,branch
+119,rAyhAN9119#,চুয়াডাঙ্গা জেলা,119@instance.com,3011,119,,branch
+120,RAYHAn8120%,মেহেরপুর জেলা,120@instance.com,3011,120,,branch
+121,RaYHAN7121&,বরিশাল মহানগর,121@instance.com,3015,121,,branch
+122,RayhAN6122*,বরিশাল জেলা,122@instance.com,3015,122,,branch
+124,rAYHAN5124#,ঝালকাঠি জেলা,124@instance.com,3015,124,,branch
+125,rAYHAN4125%,পিরোজপুর জেলা,125@instance.com,3015,125,,branch
+126,rayHAN3126&,পটুয়াখালী জেলা,126@instance.com,3015,126,,branch
+127,rAyHAN2127*,বরগুনা জেলা,127@instance.com,3015,127,,branch
+128,rAyHAN1128#,ভোলা শহর,128@instance.com,3015,128,,branch
+129,rAYHAN129%,ভোলা জেলা,129@instance.com,3015,129,,branch
+130,rAYHAN9130&,মেডিকেল জোন,130@instance.com,3003,130,,branch
+131,rAyHAN8131*,ইংলিশ মিডিয়াম,131@instance.com,3003,131,,branch
+132,RAyHAN7132#,সাইমুম,132@instance.com,3002,132,,branch
+134,RayHan6134%,ঠাকুরগাঁও শহর,134@instance.com,3005,134,,branch
+135,RAyhaN5135&,নোবিপ্রবি,135@instance.com,3016,135,,branch
+136,RAYHAn4136*,মডেল ইন্সটিটিউট,136@instance.com,3001,136,,branch
+137,RAyHAN3137#,বেরোবি,137@instance.com,3004,137,,branch
+139,rAYHAN2139%,চট্টগ্রাম জেলা পশ্চিম,139@instance.com,3019,139,,branch
+141,RAYHan1141&,নীলফামারী শহর,141@instance.com,3004,141,,branch
+142,RayHAn9142*,চাঁপাইনবাবগঞ্জ জেলা পূর্ব,142@instance.com,3008,142,,branch
+143,rAyHAN8143#,সায়েন্স একাডেমি,143@instance.com,3003,143,,branch
+144,RAYHAn7144%,গোবিপ্রবি,144@instance.com,3013,144,,branch
+145,rAYHAN6145&,বরিশাল বিশ্ববিদ্যালয়,145@instance.com,3015,145,,branch
+146,RAYhAn5146*,জাককানইবি,146@instance.com,3014,146,,branch
+147,RayHAN147*,প্রাইভেট ইউনিভার্সিটি পশ্চিম,147@instance.com,3003,147,,branch
+148,RAyHan148#,হোপ ইন্সটিটিউট,148@instance.com,3005,148,,branch
+149,rAYhan149%,যশোর টেক একাডেমি,149@instance.com,3010,149,,branch
+401,RAYHan401&,শেকৃবি,401@instance.com,3003,401,,branch
+402,RaYhAn402*,রেডিয়েন্ট একাডেমি,402@instance.com,3007,402,,branch
+403,rAyHAN403#,নলেজ একাডেমি,403@instance.com,3009,403,,branch
+404,RAYhAN404%,ক্রিয়েটিভ একাডেমি,404@instance.com,3018,404,,branch
+405,RaYhAN405%,সবুজ ক্যাম্পাস,405@instance.com,3009,405,,branch
+1130,2lu9hEKT,আই এইচটি,1130@instance.com,3001,1,1130,thana
+1310,yO0rGDSi,ইংলিশ মিডিয়াম উত্তরা,1310@instance.com,3001,1,1310,thana
+1300,9b22OrFq,ইংলিশ মিডিয়াম গুলশান,1300@instance.com,3001,1,1300,thana
+1340,4P8K7P7A,উচ্চারণ শিল্পীগোষ্ঠী,1340@instance.com,3001,1,1340,thana
+1210,kjqEo5oa,উত্তরখান,1210@instance.com,3001,1,1210,thana
+1230,NyHljjRG,উত্তরা পশ্চিম,1230@instance.com,3001,1,1230,thana
+1220,yQipoSzS,উত্তরা পূর্ব,1220@instance.com,3001,1,1220,thana
+190,O75fHexg,খিলক্ষেত,190@instance.com,3001,1,190,thana
+170,UwWYvoIb,গুলশান,170@instance.com,3001,1,170,thana
+1140,xdsbbKU6,ডিপিআই,1140@instance.com,3001,1,1140,thana
+1350,7ePX7PUK,ডিবেট,1350@instance.com,3001,1,1350,thana
+13101,BEPYfJET,তুরাগ উত্তর,13101@instance.com,3001,1,13101,thana
+1250,uelqou7U,তুরাগ দক্ষিণ,1250@instance.com,3001,1,1250,thana
+1100,JtMICK39,তেজগাঁও,1100@instance.com,3001,1,1100,thana
+1110,ENffG0hD,তেজগাঁও শিল্পাঞ্চল,1110@instance.com,3001,1,1110,thana
+1190,3kFfQLjH,দক্ষিণখান উত্তর,1190@instance.com,3001,1,1190,thana
+1200,gy0ioiwp,দক্ষিণখান দক্ষিণ,1200@instance.com,3001,1,1200,thana
+1201,plHKK3sk,বনশ্রী,1201@instance.com,3001,1,1201,thana
+1170,R6j9iDGT,বনানী,1170@instance.com,3001,1,1170,thana
+150,YOhJUBTN,বাড্ডা উত্তর,150@instance.com,3001,1,150,thana
+160,oxU6uW1i,বাড্ডা দক্ষিণ,160@instance.com,3001,1,160,thana
+1180,n792Nhc2,বিমানবন্দর,1180@instance.com,3001,1,1180,thana
+1150,J8SxaPtj,বুটেক্স,1150@instance.com,3001,1,1150,thana
+180,ZYfTEX8r,ভাটারা,180@instance.com,3001,1,180,thana
+1120,QYaXrH0n,মাদরাসা জোন,1120@instance.com,3001,1,1120,thana
+1320,9rsLjAaR,মেডিকেল জোন,1320@instance.com,3001,1,1320,thana
+1101,eblQNlAr,রামপুরা,1101@instance.com,3001,1,1101,thana
+1290,7EzyEomK,শিশুকল্যাণ উত্তরা,1290@instance.com,3001,1,1290,thana
+1280,HIN9M8MK,শিশুকল্যাণ গুলশান,1280@instance.com,3001,1,1280,thana
+1160,kZHjH204,সরকারী তিতুমীর কলেজ,1160@instance.com,3001,1,1160,thana
+1330,uSs4A8if,সাংবাদিক ফোরাম,1330@instance.com,3001,1,1330,thana
+1360,nrbXeuYj,সাহিত্য সভা,1360@instance.com,3001,1,1360,thana
+1270,mVNrISIe,স্কুল উত্তরা,1270@instance.com,3001,1,1270,thana
+1260,r5nrQy2P,স্কুল তেজগাঁও,1260@instance.com,3001,1,1260,thana
+140,3WTxyoSC,হাতিরঝিল পশ্চিম,140@instance.com,3001,1,140,thana
+1301,KlUZNByO,হাতিরঝিল পূর্ব,1301@instance.com,3001,1,1301,thana
+2230,agQnCWiT,অনুপম,2230@instance.com,3002,2,2230,thana
+2220,Wjq4sLtK,ইংলিশ মিডিয়াম,2220@instance.com,3002,2,2220,thana
+2170,ZfSkBoCS,ওয়ারী,2170@instance.com,3002,2,2170,thana
+260,hN75ANHS,কদমতলী,260@instance.com,3002,2,260,thana
+280,ya4zRY5w,কদমতলী উত্তর,280@instance.com,3002,2,280,thana
+2190,lOHqliGG,কদমতলী পশ্চিম,2190@instance.com,3002,2,2190,thana
+2160,1KqFZHrF,কবি নজরুল,2160@instance.com,3002,2,2160,thana
+2100,DmwzeGZl,ক্যাম্পাস,2100@instance.com,3002,2,2100,thana
+2200,oXUODqSd,গেন্ডারিয়া,2200@instance.com,3002,2,2200,thana
+210,EnC76V4D,ডেমরা উত্তর,210@instance.com,3002,2,210,thana
+220,I5BaQoDD,ডেমরা দক্ষিণ,220@instance.com,3002,2,220,thana
+290,znBKYkvT,দনিয়া কলেজ,290@instance.com,3002,2,290,thana
+2240,syplh8yw,প্রচার বিভাগ,2240@instance.com,3002,2,2240,thana
+240,PF3jkn8X,মাতুয়াইল পূর্ব,240@instance.com,3002,2,240,thana
+230,IkHQpsTi,মাদরাসা,230@instance.com,3002,2,230,thana
+2110,dWCmMgZ1,মিল্লাত আবাসিক,2110@instance.com,3002,2,2110,thana
+250,Ew1hHVcw,যাত্রাবাড়ি পূর্ব,250@instance.com,3002,2,250,thana
+2130,3YvTPexZ,যাত্রাবাড়ী,2130@instance.com,3002,2,2130,thana
+2120,IIvKm7iH,যাত্রাবাড়ী পশ্চিম,2120@instance.com,3002,2,2120,thana
+2210,r6DRbzs6,শিশুকল্যাণ,2210@instance.com,3002,2,2210,thana
+2180,2Mt3oQbB,শ্যামপুর,2180@instance.com,3002,2,2180,thana
+2140,3iPFTZrf,সুত্রাপুর,2140@instance.com,3002,2,2140,thana
+2150,OjC7yZTj,সোহরাওয়ার্দী,2150@instance.com,3002,2,2150,thana
+270,ILiTmwjL,স্কুল,270@instance.com,3002,2,270,thana
+3220,8lykO3up,বাংলাদেশ ইসলামী বিশ্ববিদ্যালয়,3220@instance.com,3002,3,3220,thana
+3250,S3Z4bTsm,সাংবাদিক ফেরাম,3250@instance.com,3002,3,3250,thana
+360,s8nZVeET,আদর্শ শাখা,360@instance.com,3002,3,360,thana
+3260,2vKqHGGt,ইংলিশ,3260@instance.com,3002,3,3260,thana
+330,7zLlaLwh,কামরাঙ্গিরচর,330@instance.com,3002,3,330,thana
+3160,DIljayru,খিলগাঁও,3160@instance.com,3002,3,3160,thana
+370,RzfXq5b7,চকবাজার,370@instance.com,3002,3,370,thana
+3240,VO4XuCcV,জাগরণ,3240@instance.com,3002,3,3240,thana
+350,LhOv4DHg,ঢাকা আলিয়া,350@instance.com,3002,3,350,thana
+3180,uMwpOyqr,দক্ষিন বনশ্রী,3180@instance.com,3002,3,3180,thana
+310,nlvmBu4Y,ধানমন্ডি,310@instance.com,3002,3,310,thana
+390,4nZ4mAMK,পল্টন,390@instance.com,3002,3,390,thana
+380,7SkNWAFz,বংশাল,380@instance.com,3002,3,380,thana
+3100,uJME1REw,মতিঝিল,3100@instance.com,3002,3,3100,thana
+3110,XvVqxNi0,মিসবাহুল উলুম মাদরাসা,3110@instance.com,3002,3,3110,thana
+3210,2d6kO8sj,মুগদা,3210@instance.com,3002,3,3210,thana
+3140,Gg8I35Ri,রমনা,3140@instance.com,3002,3,3140,thana
+340,JYu9xpuU,লালবাগ,340@instance.com,3002,3,340,thana
+3130,pqiYEHjA,শাহজাহানপুর,3130@instance.com,3002,3,3130,thana
+3230,DJFMz8Fz,শিশু কল্যান,3230@instance.com,3002,3,3230,thana
+3190,Q37gTuRi,সবুজবাগ,3190@instance.com,3002,3,3190,thana
+3170,tAjHOiRL,স্কুল খিলগাঁও,3170@instance.com,3002,3,3170,thana
+3120,YUSZkqi6,স্কুল মতিঝিল,3120@instance.com,3002,3,3120,thana
+3200,4j4rA7KZ,স্কুল সবুজবাগ,3200@instance.com,3002,3,3200,thana
+3150,JIzncVoT,স্টামফোর্ড ইউনিভার্সিটি,3150@instance.com,3002,3,3150,thana
+320,O0zWouDV,হাজারীবাগ,320@instance.com,3002,3,320,thana
+450,bmbf3s8V,আদাবর,450@instance.com,3001,4,450,thana
+4270,6ZqadGB3,ইংলিশ মিডিয়াম,4270@instance.com,3001,4,4270,thana
+4230,nmQXkAD4,কাফরুল,4230@instance.com,3001,4,4230,thana
+4250,B37IdJM0,ক্যান্টনমেন্ট,4250@instance.com,3001,4,4250,thana
+4260,ySwoRJ7F,জি এইচ এম সি,4260@instance.com,3001,4,4260,thana
+4210,SPlUukX5,ডি আই এম সি,4210@instance.com,3001,4,4210,thana
+4160,4Q5Sy4Xx,ঢা সা স,4160@instance.com,3001,4,4160,thana
+470,eobxjMlx,তেজগাও কলেজ,470@instance.com,3001,4,470,thana
+4130,Xyp4j3LA,দারুস সালাম,4130@instance.com,3001,4,4130,thana
+4180,Rk9zCPxr,পল্লবী,4180@instance.com,3001,4,4180,thana
+4240,FzIYo6KC,ভাষানটেক,4240@instance.com,3001,4,4240,thana
+4110,YVHtQ53b,মডেল বিভাগ,4110@instance.com,3001,4,4110,thana
+4140,YZRPPKwO,মিরপুর পশ্চিম,4140@instance.com,3001,4,4140,thana
+4100,7qrOuIBN,মিরপুর পূর্ব,4100@instance.com,3001,4,4100,thana
+440,vhzgsGcS,মোহাম্মদপুর ক্যম্পাস জোন,440@instance.com,3001,4,440,thana
+430,gf863Fls,মোহাম্মদপুর দক্ষিন,430@instance.com,3001,4,430,thana
+410,OJCxmorv,মোহাম্মাদপুর উত্তর,410@instance.com,3001,4,410,thana
+4170,e9kmhKmt,রুপনগর,4170@instance.com,3001,4,4170,thana
+4150,aBvhImtd,শাহআলী,4150@instance.com,3001,4,4150,thana
+460,phntjktC,শিশু কল্যান,460@instance.com,3001,4,460,thana
+490,38K6bU5J,শেরেবাংলা নগর,490@instance.com,3001,4,490,thana
+4220,2AfEGdDH,সন্দিপন,4220@instance.com,3001,4,4220,thana
+4120,2lreoWBi,সরকারী বাঙলা কলেজ,4120@instance.com,3001,4,4120,thana
+4200,KtCf2NEU,স্কুল,4200@instance.com,3001,4,4200,thana
+5130,IzS3WjpW,আই এফ,5130@instance.com,3003,5,5130,thana
+5270,aWzGQi1I,আইলেট,5270@instance.com,3003,5,5270,thana
+5150,3H7XCXBD,আজিমপুর,5150@instance.com,3003,5,5150,thana
+5170,dtV6IQRW,ই এম,5170@instance.com,3003,5,5170,thana
+530,0rU5lRsl,ই কে হল,530@instance.com,3003,5,530,thana
+5230,ISPgOgv9,ইউ টি,5230@instance.com,3003,5,5230,thana
+5120,EseJO4Bl,এ এফ,5120@instance.com,3003,5,5120,thana
+5250,aTEjs12i,একাত্তর পদ্মা,5250@instance.com,3003,5,5250,thana
+5260,t5lnL4Uv,একাত্তর যমুনা,5260@instance.com,3003,5,5260,thana
+5210,39J9rb5q,এনেক্স,5210@instance.com,3003,5,5210,thana
+560,ngch7wMD,এফ আর হল,560@instance.com,3003,5,560,thana
+510,3pARJzlD,এফ এইচ হল,510@instance.com,3003,5,510,thana
+570,vEoXPoQ9,এম এইচ হল,570@instance.com,3003,5,570,thana
+520,TaiCkOnt,এস এইচ হল,520@instance.com,3003,5,520,thana
+540,KE7gCanW,এস এম হল,540@instance.com,3003,5,540,thana
+5220,N8HA8ItE,এস এস এফ,5220@instance.com,3003,5,5220,thana
+580,l5sJSsI1,এস এস হল,580@instance.com,3003,5,580,thana
+5180,SAQ8Qd7B,এস কে,5180@instance.com,3003,5,5180,thana
+590,h0izke1O,ক জ হল,590@instance.com,3003,5,590,thana
+5190,zeUvZGwc,কে এফ,5190@instance.com,3003,5,5190,thana
+5320,rzRoqgSs,ক্যাম্পাস,5320@instance.com,3003,5,5320,thana
+5110,idx7ixz8,জিয়া হল,5110@instance.com,3003,5,5110,thana
+550,UNsWW3yt,জেড এইচ হল,550@instance.com,3003,5,550,thana
+5200,80BiIH2r,প্রবাহ,5200@instance.com,3003,5,5200,thana
+5140,bnGTYTkY,বি এফ,5140@instance.com,3003,5,5140,thana
+5100,gf7ILPTv,বি বি হল,5100@instance.com,3003,5,5100,thana
+5160,JSweUN9Q,শাহবাগ,5160@instance.com,3003,5,5160,thana
+5240,WhZepq6j,সি এম এইচ,5240@instance.com,3003,5,5240,thana
+6110,3J6pnCVc,অরণ্য সাহিত্য সংসদ,6110@instance.com,3003,6,6110,thana
+6130,xiLhFbrq,ফোরাম,6130@instance.com,3003,6,6130,thana
+660,IBZmt3wI,শহীদ আইয়ুব আলী জোন,660@instance.com,3003,6,660,thana
+690,KOj5MMfS,শহীদ আবুল কাশেম পাঠান জোন,690@instance.com,3003,6,690,thana
+640,kuI7JsVr,শহীদ আব্দুল মালেক জোন,640@instance.com,3003,6,640,thana
+630,f7nzoZm7,শহীদ ইবনুল ইসলাম পারভেজ জোন,630@instance.com,3003,6,630,thana
+6120,nUoSILms,শহীদ ইব্রাহীম জোন,6120@instance.com,3003,6,6120,thana
+610,Odsv9us8,শহীদ কামরুল ইসলাম জোন,610@instance.com,3003,6,610,thana
+650,gGSc7wyi,শহীদ জোবায়ের হোসেন জোন,650@instance.com,3003,6,650,thana
+6100,YYzpYuWX,শহীদ মাসুদ বিন হাবিব জোন,6100@instance.com,3003,6,6100,thana
+680,0jhRba9h,শহীদ মুজাহিদুল ইসলাম জোন,680@instance.com,3003,6,680,thana
+620,xEDXZ6KW,শহীদ শরীফুজ্জামান নোমানী জোন,620@instance.com,3003,6,620,thana
+6150,WJaIXxus,শহীদ শহিদুল্লাহ তুষার জোন,6150@instance.com,3003,6,6150,thana
+6140,m32892Un,শহীদ শীষ মুহাম্মদ জোন,6140@instance.com,3003,6,6140,thana
+670,YJymj4zB,শহীদ সাব্বির আহমেদ জোন,670@instance.com,3003,6,670,thana
+6160,yP1LkO1F,সিডিপি,6160@instance.com,3003,6,6160,thana
+770,ePfdJz1Q,আই ই আর থানা,770@instance.com,3003,7,770,thana
+740,HOGTZlfW,আইন আনুষদ,740@instance.com,3003,7,740,thana
+7200,4b5hoPyR,আদর্শ থানা,7200@instance.com,3003,7,7200,thana
+7190,xtdV2yr2,আধুনিক থানা,7190@instance.com,3003,7,7190,thana
+7170,6cCpsupH,ইংলিশ মিডিয়াম,7170@instance.com,3003,7,7170,thana
+7180,h8in8h4n,ইউ আর এফ,7180@instance.com,3003,7,7180,thana
+710,Jrkthclx,কলা অনুষদ,710@instance.com,3003,7,710,thana
+790,wXHZYJCL,কোতোয়ালি থানা,790@instance.com,3003,7,790,thana
+780,aaTHJl7I,ক্যাম্পাস থানা,780@instance.com,3003,7,780,thana
+7150,rNLiWXHH,নিমন্ত্রণ সাংস্কৃতিক সংসদ,7150@instance.com,3003,7,7150,thana
+730,9lMOyAVX,বিজ্ঞান অনুষদ,730@instance.com,3003,7,730,thana
+750,kAgUcUKh,ব্যবসায় শিক্ষা অনুষদ,750@instance.com,3003,7,750,thana
+760,jVuOfdVX,লাইফ এন্ড আর্থ সাইন্স আনুষদ,760@instance.com,3003,7,760,thana
+7100,1JZyyXvZ,শহী আব্দুল্লা আল ফয়সাল জোন,7100@instance.com,3003,7,7100,thana
+7120,FV60hGqX,শহীদ আব্দুল মালেক জোন,7120@instance.com,3003,7,7120,thana
+7110,bSMA9yGD,শহীদ আব্দু্ল খালেক জোন,7110@instance.com,3003,7,7110,thana
+7160,gxbKsVj4,শিক্ষা সেন্টার,7160@instance.com,3003,7,7160,thana
+7140,JwRoBypG,সবুজ মালা (শিশু বিভাগ),7140@instance.com,3003,7,7140,thana
+720,oaG9dWi4,সামাজিক বিজ্ঞান অনুষদ,720@instance.com,3003,7,720,thana
+7130,hilOPJg8,স্কুল বিভাগ,7130@instance.com,3003,7,7130,thana
+860,2BMMFDe7,AIUB,860@instance.com,3003,8,860,thana
+8140,ZZXdKiA9,AUST,8140@instance.com,3003,8,8140,thana
+8300,uMmVhQgO,AVASH,8300@instance.com,3003,8,8300,thana
+8100,9KXytErc,DIU,8100@instance.com,3003,8,8100,thana
+8120,B8kPzNZE,EWU,8120@instance.com,3003,8,8120,thana
+8110,ZbXzDixo,GP,8110@instance.com,3003,8,8110,thana
+880,DE7PxfZh,IUB,880@instance.com,3003,8,880,thana
+810,2Lts4MIU,IUBAT,810@instance.com,3003,8,810,thana
+8150,wKbtykid,NSUE,8150@instance.com,3003,8,8150,thana
+870,W2KX5IA2,NSUHA,870@instance.com,3003,8,870,thana
+840,ZSm4c2KE,NUB,840@instance.com,3003,8,840,thana
+850,GiVtMm79,PP,850@instance.com,3003,8,850,thana
+8400,MogMm8Qr,SARGAM (CF),8400@instance.com,3003,8,8400,thana
+8130,cFThL0aH,SEU,8130@instance.com,3003,8,8130,thana
+830,BINHYJt6,TP,830@instance.com,3003,8,830,thana
+820,Lm9JmncM,UP,820@instance.com,3003,8,820,thana
+890,GU4zmFj6,VP,890@instance.com,3003,8,890,thana
+9300,1qD0w62E,আন্তর্জাতিক হল,9300@instance.com,3003,9,9300,thana
+9230,Ui2ppn2z,একাডেমিক,9230@instance.com,3003,9,9230,thana
+9130,6roZ37HG,কলা অনুষদ,9130@instance.com,3003,9,9130,thana
+9190,ttzOrfVY,কলাবাগান পশ্চিম,9190@instance.com,3003,9,9190,thana
+9180,kcASSrMW,কলাবাগান পূর্ব,9180@instance.com,3003,9,9180,thana
+9210,Oe8GyLqP,কলেজ জোন,9210@instance.com,3003,9,9210,thana
+9100,szztFLOL,ক্যাম্পাস,9100@instance.com,3003,9,9100,thana
+9200,use6nSAd,গবঃ ল্যাব স্কুল,9200@instance.com,3003,9,9200,thana
+9220,nC0jnZqP,ঢাকা সিটি কলেজ,9220@instance.com,3003,9,9220,thana
+9170,CnA85vDI,নিউমার্কেট উত্তর,9170@instance.com,3003,9,9170,thana
+9290,ho7h6v7p,নিউমার্কেট দক্ষিণ,9290@instance.com,3003,9,9290,thana
+9250,sy7nk8mi,পাঠশালা,9250@instance.com,3003,9,9250,thana
+9260,RiIuZ85c,বর্ণালী লেখক পরিষদ,9260@instance.com,3003,9,9260,thana
+9140,cxmGw7sW,বাণিজ্য অনুষদ,9140@instance.com,3003,9,9140,thana
+9150,HUW9TJV4,বিজ্ঞান অনুষদ,9150@instance.com,3003,9,9150,thana
+9280,36eTFAKQ,ভয়েজার ডিবেটিং সোসাইটি,9280@instance.com,3003,9,9280,thana
+9270,gjGYfRna,শিশুকল্যাণ,9270@instance.com,3003,9,9270,thana
+9240,8HHe5yk0,সওগাত সাহিত্য সাংস্কৃতিক সংসদ,9240@instance.com,3003,9,9240,thana
+9160,MgJB8OkS,সামাজিক বিজ্ঞান অনুষদ,9160@instance.com,3003,9,9160,thana
+9110,yHdkc3P7,হল উত্তর,9110@instance.com,3003,9,9110,thana
+9120,hI17xu9M,হল দক্ষিণ,9120@instance.com,3003,9,9120,thana
+11200,nc5T5F4X,ইংলিশ মিডিয়াম,11200@instance.com,3001,11,11200,thana
+11101,lzLNXJ0y,কাশিমপুর,11101@instance.com,3001,11,11101,thana
+11220,nSFqtHAl,কৃষ্ণচূড়া,11220@instance.com,3001,11,11220,thana
+11260,aED7rciu,কোচিং,11260@instance.com,3001,11,11260,thana
+11301,Kk728L4Q,কোনাবাড়ী,11301@instance.com,3001,11,11301,thana
+11110,JDOqYHNX,গাছা পশ্চিম,11110@instance.com,3001,11,11110,thana
+11100,kxyrUuzi,গাছা পূর্ব,11100@instance.com,3001,11,11100,thana
+11130,sz7kPMdF,টংগী পূর্ব,11130@instance.com,3001,11,11130,thana
+11140,lvcQZGG3,টংগী শিল্পাঞ্চল,11140@instance.com,3001,11,11140,thana
+11120,zBs6GWku,টংগী সরকারী কলেজ,11120@instance.com,3001,11,11120,thana
+11150,ySPnZROR,পূবাইল,11150@instance.com,3001,11,11150,thana
+11901,FsUMXng5,বাসন,11901@instance.com,3001,11,11901,thana
+11401,iRxcuL7S,ভাওয়াল কলেজ,11401@instance.com,3001,11,11401,thana
+11190,uSIL9D2Y,মেডিকেল জোন,11190@instance.com,3001,11,11190,thana
+11701,L8iDv8Iw,শিমুলতলী,11701@instance.com,3001,11,11701,thana
+11250,3JVUj0E4,শিশু কল্যান,11250@instance.com,3001,11,11250,thana
+11801,3P3ZKOBK,সদর মেট্রো,11801@instance.com,3001,11,11801,thana
+11240,IVeAxutH,সাংবাদিক ফোরাম,11240@instance.com,3001,11,11240,thana
+11601,BHdX7C8i,সালনা,11601@instance.com,3001,11,11601,thana
+11210,xihAITF5,সুইট,11210@instance.com,3001,11,11210,thana
+11170,vRjzJb2y,স্কুল গাছা,11170@instance.com,3001,11,11170,thana
+11180,A6nYgKCf,স্কুল গাজীপুর,11180@instance.com,3001,11,11180,thana
+11160,H81XKTSc,স্কুল টংগী,11160@instance.com,3001,11,11160,thana
+11230,syqqkrEg,স্পন্দন,11230@instance.com,3001,11,11230,thana
+1240,ahIjCEgf,আশুলিয়া আদর্শ শাখা,1240@instance.com,3001,12,1240,thana
+12100,1eoyVIO5,ধামরাই উপজেলা,12100@instance.com,3001,12,12100,thana
+12601,ZmwZWinn,ধামরাই পৌরসভা,12601@instance.com,3001,12,12601,thana
+12101,s4A074hS,পাথালিয়া,12101@instance.com,3001,12,12101,thana
+12120,Dp9NvknE,প্রতীতি সাহিত্য সাংস্কৃতিক সংসদ,12120@instance.com,3001,12,12120,thana
+12501,kKLiZPU9,প্রাইম ইন্সটিটিউট আদর্শ শাখা,12501@instance.com,3001,12,12501,thana
+12130,zQbt3wvK,মডেল ইন্সটিটিউট,12130@instance.com,3001,12,12130,thana
+12110,8ct0UItt,মাদরাসা থানা,12110@instance.com,3001,12,12110,thana
+12901,61ceen2D,মেডিকেল ইন্সটিটিউট,12901@instance.com,3001,12,12901,thana
+12801,IaAnLs34,মেডিকেল জোন,12801@instance.com,3001,12,12801,thana
+12701,3jnhta6s,সাভার থানা,12701@instance.com,3001,12,12701,thana
+12301,Okm9E8X0,সাভার পৌরসভা আদর্শ শাখা,12301@instance.com,3001,12,12301,thana
+12201,GvWilY8d,সাভার সরকারি কলেজ,12201@instance.com,3001,12,12201,thana
+13201,RUi2KZYD,কেরাণীগঞ্জ মডেল,13201@instance.com,3002,13,13201,thana
+131011,xQgYPgfO,কেরাণীগঞ্জ মডেল পশ্চিম,131011@instance.com,3002,13,131011,thana
+13301,dTnojMwD,দক্ষিণ কেরাণীগঞ্জ,13301@instance.com,3002,13,13301,thana
+13601,jpHQfYiB,দোহার,13601@instance.com,3002,13,13601,thana
+13501,ZJjwNsoE,নবাবগঞ্জ পশ্চিম,13501@instance.com,3002,13,13501,thana
+13401,iQYs2XPI,নবাবগঞ্জ পূর্ব,13401@instance.com,3002,13,13401,thana
+1380,c1V9O5J8,বুড়িগঙ্গা সাহিত্য ও সাংস্কৃতিক সংসদ,1380@instance.com,3002,13,1380,thana
+1370,kBx0Nu0K,শিশুকল্যাণ,1370@instance.com,3002,13,1370,thana
+1460,m1bnayxx,মানিকগঞ্জ সদর,1460@instance.com,3001,14,1460,thana
+14220,YMhW0yXg,কলেজ শাখা,14220@instance.com,3001,14,14220,thana
+1410,RwSNBgb0,ঘিওর,1410@instance.com,3001,14,1410,thana
+1420,G1WV2n27,দৌলতপুর,1420@instance.com,3001,14,1420,thana
+14550,vDfXydQP,নবতরঙ্গ শিল্পীগোষ্ঠী,14550@instance.com,3001,14,14550,thana
+14440,NnctTG9g,মাদরাসা,14440@instance.com,3001,14,14440,thana
+14330,MURE5rEW,মেডিকেল,14330@instance.com,3001,14,14330,thana
+14100,UIPdJIZE,শহর সাথী শাখা,14100@instance.com,3001,14,14100,thana
+1430,I5zExCgP,শিবালয়,1430@instance.com,3001,14,1430,thana
+1480,0UQWvT3F,শিশুকল্যান,1480@instance.com,3001,14,1480,thana
+1470,7El3hfE3,সাটুরিয়া থানা,1470@instance.com,3001,14,1470,thana
+1450,eTUs3nkq,সিংগাইর,1450@instance.com,3001,14,1450,thana
+1490,ePBz7bHt,স্কুল,1490@instance.com,3001,14,1490,thana
+14501,6Flqv3NI,হরিরামপুর,14501@instance.com,3001,14,14501,thana
+15120,siomuahm,আবাসন পশ্চিম,15120@instance.com,3003,15,15120,thana
+15110,xEy1ebZF,আবাসন পূর্ব,15110@instance.com,3003,15,15110,thana
+1530,NUylmnMz,আল বিরুনী,1530@instance.com,3003,15,1530,thana
+1550,9GjLJpm4,ইবনে সিনা,1550@instance.com,3003,15,1550,thana
+1580,GgudXX1p,পলিটেকনিক থানা,1580@instance.com,3003,15,1580,thana
+1590,UnxXHX3l,পূর্বাচল,1590@instance.com,3003,15,1590,thana
+1540,shCr53oH,শহিদ তিতুমীর,1540@instance.com,3003,15,1540,thana
+1570,yW0865lU,শহিদ মেহেদি,1570@instance.com,3003,15,1570,thana
+1520,YiiD3yKJ,শহিদ সাব্বির,1520@instance.com,3003,15,1520,thana
+15130,AakzlLwm,শহিদ হাসান আল বান্না,15130@instance.com,3003,15,15130,thana
+15140,h8edq08W,শহীদ আব্দুল মালেক,15140@instance.com,3003,15,15140,thana
+1560,9T49evWL,শহীদ ইয়াসিন,1560@instance.com,3003,15,1560,thana
+15100,tkDCCGJ7,শিশুকল্যাণ,15100@instance.com,3003,15,15100,thana
+1510,0q9iPIog,হাজী মহসিন,1510@instance.com,3003,15,1510,thana
+1690,H4uPWowX,কাপাসিয়া উত্তর,1690@instance.com,3001,16,1690,thana
+16100,QeDL7ZvH,কাপাসিয়া দক্ষিণ,16100@instance.com,3001,16,16100,thana
+16110,OGtyeRzY,কাপাসিয়া পূর্ব,16110@instance.com,3001,16,16110,thana
+16120,vjMfnL8B,কালিগঞ্জ উত্তর,16120@instance.com,3001,16,16120,thana
+16130,RnkEr7DL,কালিগঞ্জ দক্ষিণ,16130@instance.com,3001,16,16130,thana
+1650,50qVOOc2,কালিয়াকৈর পশ্চিম,1650@instance.com,3001,16,1650,thana
+1640,t6HGShW0,কালিয়াকৈর পূর্ব,1640@instance.com,3001,16,1640,thana
+1660,Ipy0HLfJ,কালিয়াকৈর পৌরসভা,1660@instance.com,3001,16,1660,thana
+1610,wUSEA252,ভাওয়াল সাহিত্য সাংস্কৃতিক সংসদ,1610@instance.com,3001,16,1610,thana
+16140,fO80anff,শিশুকল্যাণ,16140@instance.com,3001,16,16140,thana
+1670,2ODYj5SB,শ্রীপুর আদর্শ শাখা,1670@instance.com,3001,16,1670,thana
+1680,iRYYFxVo,শ্রীপুর উত্তর,1680@instance.com,3001,16,1680,thana
+1630,tloa1cdu,সদর পশ্চিম,1630@instance.com,3001,16,1630,thana
+1620,Qkk64fNT,সদর পূর্ব,1620@instance.com,3001,16,1620,thana
+17170,VOX6Luo5,সরকারি তোলারাম কলেজ,17170@instance.com,3002,17,17170,thana
+17200,08onbU7Q,ঐতিহ্য,17200@instance.com,3002,17,17200,thana
+17150,I1qxlDFT,কওমি ছাত্র পরিষদ,17150@instance.com,3002,17,17150,thana
+1730,98RDHEAD,নারায়ণগঞ্জ সদর,1730@instance.com,3002,17,1730,thana
+17100,mDDw3wIO,ফতুল্লা উত্তর,17100@instance.com,3002,17,17100,thana
+17110,YKdIpTfN,ফতুল্লা দক্ষিণ,17110@instance.com,3002,17,17110,thana
+17120,VD0pZJ7d,ফতুল্লা শিল্পাঞ্চল,17120@instance.com,3002,17,17120,thana
+1790,Wi9T17jp,ফতুল্লা সদর,1790@instance.com,3002,17,1790,thana
+17160,Qjt7Pg2a,বন্দর দক্ষিণ,17160@instance.com,3002,17,17160,thana
+17140,lzQYTdkl,বন্দর পশ্চিম,17140@instance.com,3002,17,17140,thana
+17130,UPRH1vud,বন্দর পুর্ব,17130@instance.com,3002,17,17130,thana
+17180,NntAESQb,শিশুকল্যান,17180@instance.com,3002,17,17180,thana
+1720,Z2j219E5,সদর উত্তর,1720@instance.com,3002,17,1720,thana
+1710,bjm2Beuh,সদর দক্ষিণ,1710@instance.com,3002,17,1710,thana
+1740,GpkcM4OH,সদর পশ্চিম,1740@instance.com,3002,17,1740,thana
+1750,GCEzKqaQ,সিদ্ধিরগঞ্জ উওর,1750@instance.com,3002,17,1750,thana
+1760,ETx9tRew,সিদ্ধিরগঞ্জ দক্ষিণ,1760@instance.com,3002,17,1760,thana
+1770,OYetTiWW,সিদ্ধিরগঞ্জ পশ্চিম,1770@instance.com,3002,17,1770,thana
+1780,zTXUfAji,সিদ্ধিরগঞ্জ পূর্ব,1780@instance.com,3002,17,1780,thana
+17190,inWoxton,স্কুল,17190@instance.com,3002,17,17190,thana
+1810,qf1MTHWa,আড়াইহাজার আদর্শ  থানা,1810@instance.com,3002,18,1810,thana
+1830,DvqF9T1W,আড়াইহাজার পশ্চিম,1830@instance.com,3002,18,1830,thana
+1820,czBORLup,আড়াইহাজার পূর্ব,1820@instance.com,3002,18,1820,thana
+18130,LgFDd916,কাঞ্চন পৌরসভা,18130@instance.com,3002,18,18130,thana
+1890,dpsnBotk,তারাব পৌরসভা,1890@instance.com,3002,18,1890,thana
+1880,S5n4BCQ8,বন্দর আদর্শ থানা,1880@instance.com,3002,18,1880,thana
+18120,T4MWwkNV,মুড়াপাড়া কলেজ থানা,18120@instance.com,3002,18,18120,thana
+18100,0EhIHFMv,রূপগঞ্জ আদর্শ থানা,18100@instance.com,3002,18,18100,thana
+18140,4Mi3hzyS,রূপগঞ্জ উপশহর,18140@instance.com,3002,18,18140,thana
+18110,HLlyo8YV,রূপগঞ্জ পশ্চিম,18110@instance.com,3002,18,18110,thana
+1840,kq1ZyeQA,সোনারগা আদর্শ থানা,1840@instance.com,3002,18,1840,thana
+1870,6Ny2ErJY,সোনারগা পশ্চিম,1870@instance.com,3002,18,1870,thana
+1850,YBGCovCO,সোনারগা পূর্ব,1850@instance.com,3002,18,1850,thana
+1860,AliJLZcu,সোনারগাঁ দক্ষিণ,1860@instance.com,3002,18,1860,thana
+1970,Q7SJrYiI,গজারিয়া,1970@instance.com,3002,19,1970,thana
+1960,pR1gqVS8,টঙ্গিবাড়ি,1960@instance.com,3002,19,1960,thana
+1920,jZ3GbH1v,মিরকাদিম,1920@instance.com,3002,19,1920,thana
+1950,10ao67C8,মুন্সিগঞ্জ পলিটেকনিক  ইনস্টিটিউট,1950@instance.com,3002,19,1950,thana
+1930,v1zN00cA,মুন্সিগঞ্জ সদর,1930@instance.com,3002,19,1930,thana
+1910,kSFVWTay,মুন্সীগঞ্জ পৌরসভা,1910@instance.com,3002,19,1910,thana
+19110,77fMB5sl,লৌহজং,19110@instance.com,3002,19,19110,thana
+19100,8W8MHZbI,শ্রীনগর,19100@instance.com,3002,19,19100,thana
+1940,aZNkQQYG,সরকারি হরগঙ্গা কলেজ,1940@instance.com,3002,19,1940,thana
+1980,UUpIrNRK,সিরাজদিখান,1980@instance.com,3002,19,1980,thana
+21180,XXtHXW3y,ঊজ্জীবন,21180@instance.com,3002,21,21180,thana
+21301,EBOXiVtG,চিনিশপুর থানা,21301@instance.com,3002,21,21301,thana
+21101,t6hAaLRx,জামেয়া ক্যাম্পাস,21101@instance.com,3002,21,21101,thana
+21201,bSCUbQIU,জামেয়া্ আবাসিক,21201@instance.com,3002,21,21201,thana
+21701,kMthGYGt,নরসিংদী পলিটেকনিক ই্ন্সটিটিউট,21701@instance.com,3002,21,21701,thana
+21601,llzTQ6ua,নরসিংদী প্রাইভেট কলেজ,21601@instance.com,3002,21,21601,thana
+21801,oglEDWil,নরসিংদী সদর দাক্ষিণ,21801@instance.com,3002,21,21801,thana
+21501,3VcsPbMU,নরসিংদী সরকারী কলেজ,21501@instance.com,3002,21,21501,thana
+21110,d4Di4ctM,পলাশ থানা উত্তর,21110@instance.com,3002,21,21110,thana
+21100,G5LvtAcJ,পলাশ থানা দক্ষিণ,21100@instance.com,3002,21,21100,thana
+21401,n8HDcmO3,পৌরসভা থানা,21401@instance.com,3002,21,21401,thana
+21150,gGP8vi9H,বেলাবো থানা,21150@instance.com,3002,21,21150,thana
+21140,x9vLLKpc,মনোহরদী উত্তর,21140@instance.com,3002,21,21140,thana
+21130,m48dnbw4,মনোহরদী দক্ষিণ,21130@instance.com,3002,21,21130,thana
+21901,KyEMp93r,মাধবদী,21901@instance.com,3002,21,21901,thana
+21170,jg5lGQ5z,রায়পুরা পশ্চিম,21170@instance.com,3002,21,21170,thana
+21160,j4v2fOg4,রায়পুরা পূর্ব,21160@instance.com,3002,21,21160,thana
+21120,Q4ZjI2Nh,শিবপুর,21120@instance.com,3002,21,21120,thana
+21190,2NPRwuWP,শিশুকল্যান,21190@instance.com,3002,21,21190,thana
+23190,j1uZ4aAj,আলিয়া মাদরাসা,23190@instance.com,3001,23,23190,thana
+23250,fksZg7ZD,আসাস,23250@instance.com,3001,23,23250,thana
+23130,vgexEitt,এম এম আলী কলেজ,23130@instance.com,3001,23,23130,thana
+23110,DiOjGkAh,কালিহাতি থানা শাখা,23110@instance.com,3001,23,23110,thana
+2320,ZgT389Ji,গোপালপুর থানা,2320@instance.com,3001,23,2320,thana
+23100,A6khB1an,ঘাটাইল থানা শাখা,23100@instance.com,3001,23,23100,thana
+23140,sY9V3U2S,টিটেক,23140@instance.com,3001,23,23140,thana
+2380,VDbGmTDY,দেলদুয়ার থানা শাখা,2380@instance.com,3001,23,2380,thana
+23160,Hjcqqu9t,ধনবাড়ি থানা শাখা,23160@instance.com,3001,23,23160,thana
+23120,puPsPsfL,নাগরপুর থানা শাখা,23120@instance.com,3001,23,23120,thana
+23150,u3xPK26i,পলিটেকনিক (টিপিআই),23150@instance.com,3001,23,23150,thana
+23220,8Qcv8Ehx,পৌরসভা উত্তর,23220@instance.com,3001,23,23220,thana
+23180,0It909M5,পৌরসভা দক্ষিন,23180@instance.com,3001,23,23180,thana
+2390,RvquMde4,বাসাইল থানা শাখা,2390@instance.com,3001,23,2390,thana
+2360,WtBJQbMu,বিশ্ববিদ্যালয় (ইউটি),2360@instance.com,3001,23,2360,thana
+2310,QxpBffHs,ভূঞাপুর থানা শাখা,2310@instance.com,3001,23,2310,thana
+2370,SuA1QQnL,মধুপুর থানা শাখা,2370@instance.com,3001,23,2370,thana
+2330,PUab7fHd,মির্জাপুর আদর্শ থানা শাখা,2330@instance.com,3001,23,2330,thana
+23200,I31053R5,মেডিকেল কলেজ,23200@instance.com,3001,23,23200,thana
+2350,tfQVknJC,যমুনা সাংগঠনিক থানা শাখা,2350@instance.com,3001,23,2350,thana
+23260,Eg7hqRDx,শহীদ জোবায়ের,23260@instance.com,3001,23,23260,thana
+23240,lJhUEawl,শিশুকল্যাণ,23240@instance.com,3001,23,23240,thana
+2340,etNmENQq,সখিপুুর থানা শাখা,2340@instance.com,3001,23,2340,thana
+23170,Fgdc6sqN,সদর থানা শাখা,23170@instance.com,3001,23,23170,thana
+23210,FwmUseQe,সাদত কলেজ,23210@instance.com,3001,23,23210,thana
+23230,TR5rv3DH,স্কুল বিভাগ,23230@instance.com,3001,23,23230,thana
+2420,oPVURbPF,CSM,2420@instance.com,3014,24,2420,thana
+24120,zeVIDbMO,Forum,24120@instance.com,3014,24,24120,thana
+2410,VYEwdDok,SA,2410@instance.com,3014,24,2410,thana
+2490,oLFqPmda,ইঙ্গিত সাহিত্য সংসদ,2490@instance.com,3014,24,2490,thana
+24100,H70RMgug,খলিফা ওমর ফারুক,24100@instance.com,3014,24,24100,thana
+2470,zqwRG3Ex,বর্নালি,2470@instance.com,3014,24,2470,thana
+2430,a4ebpMVJ,ব্রক্ষপুত্র,2430@instance.com,3014,24,2430,thana
+24110,WxUzXxsw,শহীদ আবু সাইদ,24110@instance.com,3014,24,24110,thana
+2450,6gUxCE4D,শহীদ আব্দুল ওয়াহেদ,2450@instance.com,3014,24,2450,thana
+2440,Obx8moGS,শহীদ আব্দুল খালেক হামিদ,2440@instance.com,3014,24,2440,thana
+2460,ouvD7MWp,শহীদ শান্ত,2460@instance.com,3014,24,2460,thana
+2480,3vGkIJ9q,সালাউদ্দিন আইয়্যুবি,2480@instance.com,3014,24,2480,thana
+25110,uNTKCvMu,আকুয়া,25110@instance.com,3014,25,25110,thana
+2510,PdvpI675,আনন্দমোহন,2510@instance.com,3014,25,2510,thana
+25130,yFQrnxsv,কলেজ বিভাগ,25130@instance.com,3014,25,25130,thana
+2590,72FPDkqW,কেওয়াটখালী,2590@instance.com,3014,25,2590,thana
+25100,OPJn2GrO,কোতোয়ালী,25100@instance.com,3014,25,25100,thana
+2560,bJv6HCKi,ঘাগড়া,2560@instance.com,3014,25,2560,thana
+2580,CIWwtBoT,চরপাড়া,2580@instance.com,3014,25,2580,thana
+2550,cZdIxB7b,দাপুনিয়া,2550@instance.com,3014,25,2550,thana
+2530,JLu9t4qz,পলিটেকনিক,2530@instance.com,3014,25,2530,thana
+2570,El9us272,বিদ্যাগঞ্জ,2570@instance.com,3014,25,2570,thana
+2540,hWY0zSC6,মুয়েট,2540@instance.com,3014,25,2540,thana
+2520,EWZxUgky,মেডিকেল,2520@instance.com,3014,25,2520,thana
+25120,cNvveh5c,শিশু কল্যাণ,25120@instance.com,3014,25,25120,thana
+25150,gPVJHHZe,সংস্কৃতি,25150@instance.com,3014,25,25150,thana
+25140,iOk9ZilJ,স্কুল বিভাগ,25140@instance.com,3014,25,25140,thana
+2660,6sdXULdL,ইলহাম সাংস্কৃতিক সংসদ,2660@instance.com,3014,26,2660,thana
+26100,KwmEubZp,ঈশ্বরগঞ্জ উপজেলা,26100@instance.com,3014,26,26100,thana
+26110,xL6T6RIN,ঈশ্বরগঞ্জ ডি এস কামিল মাদ্রাসা,26110@instance.com,3014,26,26110,thana
+2620,wdi4bont,গফরগাঁও উপজেলা,2620@instance.com,3014,26,2620,thana
+26120,QtW6cViX,গৌরিপুর উপজেলা,26120@instance.com,3014,26,26120,thana
+26170,CZpf3gMc,গৌরিপুর সরকারি কলেজ,26170@instance.com,3014,26,26170,thana
+26130,hZ15GzEv,তারাকান্দা উপজেলা,26130@instance.com,3014,26,26130,thana
+2640,KMlGtZ1c,ত্রিশাল আদর্শ শাখা,2640@instance.com,3014,26,2640,thana
+26160,MWDxhxZz,ধোবাউড়া উপজেলা,26160@instance.com,3014,26,26160,thana
+2690,PDczoQC6,নান্দাইল উপজেলা,2690@instance.com,3014,26,2690,thana
+2610,DJn6KmNk,পাগলা থানা শাখা,2610@instance.com,3014,26,2610,thana
+26140,yESVgibo,ফুলপুর উপজেলা,26140@instance.com,3014,26,26140,thana
+2650,IBn4wMoc,ফুলবাড়িয়া উপজেলা,2650@instance.com,3014,26,2650,thana
+2630,gNjNCaCU,ভালুকা উপজেলা,2630@instance.com,3014,26,2630,thana
+2670,38bQC3Dj,মুক্তাগাছা উপজেলা,2670@instance.com,3014,26,2670,thana
+2680,Z7owQHlE,মুক্তাগাছা সরকারি কলেজ,2680@instance.com,3014,26,2680,thana
+26150,dB8RS8d0,হালুয়াঘাট উপজেলা,26150@instance.com,3014,26,26150,thana
+28160,zS0pwqYS,অষ্টগ্রাম উপজেলা,28160@instance.com,3001,28,28160,thana
+28180,OY0coedO,ইটনা উপজেলা,28180@instance.com,3001,28,28180,thana
+28210,iMbABDEP,ওয়ালী নেওয়াজ খান কলেজ,28210@instance.com,3001,28,28210,thana
+2830,ZOEkKup2,কটিয়াদী উপজেলা,2830@instance.com,3001,28,2830,thana
+2890,UFnseBsp,করিমগঞ্জ উপজেলা,2890@instance.com,3001,28,2890,thana
+28130,1y2knGiZ,কুলিয়ারচর উপজেলা,28130@instance.com,3001,28,28130,thana
+2840,EMgsLe05,গুরুদয়াল সরকারি কলেজ আদর্শ থানা,2840@instance.com,3001,28,2840,thana
+28100,JKo9Gaf3,তাড়াইল উপজেলা,28100@instance.com,3001,28,28100,thana
+28240,OAteXmDF,ধুমকেতু,28240@instance.com,3001,28,28240,thana
+28150,zOhfzshv,নিকলী উপজেলা,28150@instance.com,3001,28,28150,thana
+28220,ZiKhVC2c,পলিটেকনিক,28220@instance.com,3001,28,28220,thana
+2880,kywFsOdV,পাকুন্দিয়া উপজেলা,2880@instance.com,3001,28,2880,thana
+28110,TXhUmcAW,পুলেরঘাট আঞ্চলিক শাখা,28110@instance.com,3001,28,28110,thana
+28120,sFG5yqE6,বাজিতপুর উপজেলা,28120@instance.com,3001,28,28120,thana
+28140,wvqFXzdG,ভৈরব উপজেলা,28140@instance.com,3001,28,28140,thana
+28190,SKndfjcs,মঙ্গলবাড়ীয়া কামিল মাদরাসা,28190@instance.com,3001,28,28190,thana
+2850,UyXVGI3x,মাদ্রাসা আদর্শ থানা,2850@instance.com,3001,28,2850,thana
+28170,3Yaw6M03,মিঠামইন উপজেলা,28170@instance.com,3001,28,28170,thana
+28230,alVn7WFR,মেডিকেল জোন থানা,28230@instance.com,3001,28,28230,thana
+2810,iEPZOvyQ,শহর আদর্শ থানা,2810@instance.com,3001,28,2810,thana
+2820,HngRmywz,সদর পশ্চিম আদর্শ থানা,2820@instance.com,3001,28,2820,thana
+2860,Ei0ni7ei,সদর পূর্ব,2860@instance.com,3001,28,2860,thana
+28200,kr7HjgaZ,স্কুল শাখা,28200@instance.com,3001,28,28200,thana
+2870,qeDoDDds,হোসেনপুর উপজেলা,2870@instance.com,3001,28,2870,thana
+30110,vRTOjOs1,আটপাড়া পশ্চিম শাখা,30110@instance.com,3014,30,30110,thana
+30130,Zf74f6qY,আটপাড়া পূর্ব শাখা,30130@instance.com,3014,30,30130,thana
+3070,8xlTJlcd,আবু আব্বাছ শাখা,3070@instance.com,3014,30,3070,thana
+3030,nY7Lca7L,আলিয়া শাখা,3030@instance.com,3014,30,3030,thana
+30170,zcdt7dpe,কলমাকান্দা থানা শাখা,30170@instance.com,3014,30,30170,thana
+30120,o2PlAy7P,কেন্দুয়া থানা শাখা,30120@instance.com,3014,30,30120,thana
+30210,ngU7LDDV,খালিয়াজুরী থানা শাখা,30210@instance.com,3014,30,30210,thana
+30200,0eYQhUST,দূর্গাপুর থানা শাখা,30200@instance.com,3014,30,30200,thana
+30190,9sq10fMQ,পূর্বধলা থানা শাখা,30190@instance.com,3014,30,30190,thana
+3090,2AkXgSu9,প্রত্যাসা সাংষ্কৃতিক সংসদ,3090@instance.com,3014,30,3090,thana
+30150,LeF0FDDZ,বারহাট্টা থানা শাখা,30150@instance.com,3014,30,30150,thana
+301101,JT7pU27h,মদন থানা শাখা,301101@instance.com,3014,30,301101,thana
+30160,wJUe2Z6U,মোহনগঞ্জ থানা শাখা,30160@instance.com,3014,30,30160,thana
+30101,pYbgHNXb,শহর আর্দশ থানা শাখা,30101@instance.com,3014,30,30101,thana
+30100,XZa3gcsB,শিশু কল্যাণ শাখা,30100@instance.com,3014,30,30100,thana
+30180,qBvTxzaZ,শ্যামগঞ্জ থানা শাখা,30180@instance.com,3014,30,30180,thana
+3050,eX1cKrr7,সদর দক্ষিণ শাখা,3050@instance.com,3014,30,3050,thana
+3060,GSZzJBeU,সদর পশ্চিম শাখা,3060@instance.com,3014,30,3060,thana
+3040,uQnKDXO7,সদর পূর্ব আদর্শ শাখা,3040@instance.com,3014,30,3040,thana
+3020,IcmeIfur,সরকারি কলেজ আদর্শ শাখা,3020@instance.com,3014,30,3020,thana
+3080,RLZ1ZeGF,স্কুল ও বির্তক শাখা,3080@instance.com,3014,30,3080,thana
+31100,1FNHw4iM,ইসলামপুর উপজেলা,31100@instance.com,3014,31,31100,thana
+31101,pGNPIGK4,জামালপুর শহর আদর্শ থানা,31101@instance.com,3014,31,31101,thana
+31170,YuH5wFM6,দিগন্ত সাংস্কৃতিক সংসদ (দিসাস),31170@instance.com,3014,31,31170,thana
+31110,lWdarNr3,দেওয়ানগঞ্জ আদর্শ থানা,31110@instance.com,3014,31,31110,thana
+31120,r6McV1Fb,বকশীগঞ্জ উপজেলা,31120@instance.com,3014,31,31120,thana
+31140,pyUK0PGJ,বিশ্ববিদ্যালয়,31140@instance.com,3014,31,31140,thana
+31701,eQwEicyK,মাদারগঞ্জ উপজেলা,31701@instance.com,3014,31,31701,thana
+31501,tNjFM3QC,মেলান্দহ আদর্শ থানা,31501@instance.com,3014,31,31501,thana
+31160,FqbVwY8o,শিশুকল্যাণ,31160@instance.com,3014,31,31160,thana
+31401,4eFaFiVj,সদর থানা দক্ষিণ,31401@instance.com,3014,31,31401,thana
+31301,MhGIb1JM,সদর থানা পূর্ব,31301@instance.com,3014,31,31301,thana
+31201,OzdiS4QX,সরকারি আশেক মাহমুদ কলেজ,31201@instance.com,3014,31,31201,thana
+31801,31l61rJX,সরিষাবাড়ী উত্তর আদর্শ থানা,31801@instance.com,3014,31,31801,thana
+31901,VwfhJGit,সরিষাবাড়ী দক্ষিণ আদর্শ থানা,31901@instance.com,3014,31,31901,thana
+31130,x85tbAOj,সানন্দবাড়ী,31130@instance.com,3014,31,31130,thana
+31150,vMnR66Hs,স্কুল বিভাগ,31150@instance.com,3014,31,31150,thana
+31601,Xq0Q3Pju,হাজরাবাড়ী পৌরসভা,31601@instance.com,3014,31,31601,thana
+32301,HYbE8I1B,ঝিনাইগাতী,32301@instance.com,3014,32,32301,thana
+32501,Dkt77k8M,নকলা,32501@instance.com,3014,32,32501,thana
+32401,PL58iIhA,নালিতাবাড়ী,32401@instance.com,3014,32,32401,thana
+32110,Ln5HAOFa,শিশুকল্যাণ,32110@instance.com,3014,32,32110,thana
+32601,JHJO22lA,শেরপুর শহর,32601@instance.com,3014,32,32601,thana
+3270,CAzD7DK7,শেরপুর সদর,3270@instance.com,3014,32,3270,thana
+3280,3cHX3FI0,শেরপুর সরকারী কলেজ,3280@instance.com,3014,32,3280,thana
+32100,zfOU7zgx,শেরপুর সরকারী পলিটেকনিক ইনস্টিটিউট,32100@instance.com,3014,32,32100,thana
+32101,GExTcPGA,শ্রীবরদী উত্তর,32101@instance.com,3014,32,32101,thana
+32201,Fv0XnHj0,শ্রীবরদী দক্ষিণ,32201@instance.com,3014,32,32201,thana
+32120,vmIhYI8v,সঞ্জিবন সাংস্কৃতিক সংসদ,32120@instance.com,3014,32,32120,thana
+3290,P7f44aUA,স্কুল বিভাগ,3290@instance.com,3014,32,3290,thana
+3320,dThBQDYg,মেডিকেল,3320@instance.com,3013,33,3320,thana
+33170,LYfI0lnh,আলিয়াবাদ,33170@instance.com,3013,33,33170,thana
+3350,MNAKVn7k,ইঞ্জিনিয়ারিং কলেজ,3350@instance.com,3013,33,3350,thana
+3340,tAhB9u9l,ইয়াসিন কলেজ,3340@instance.com,3013,33,3340,thana
+33180,ahW6w1EN,গেরদা,33180@instance.com,3013,33,33180,thana
+33120,9T32ep5U,চরমাধবদিয়া,33120@instance.com,3013,33,33120,thana
+33100,yXwABMdk,ঝংকার শিল্পীগোষ্ঠী,33100@instance.com,3013,33,33100,thana
+33190,FwrIwJGv,নর্থচ্যানেল,33190@instance.com,3013,33,33190,thana
+3330,nOkBuhcT,পলিটেকনিক ইন্সটিটিউট,3330@instance.com,3013,33,3330,thana
+33160,s3qzzxRF,পৌর উত্তর,33160@instance.com,3013,33,33160,thana
+33140,JCDRDKpC,পৌর পশ্চিম,33140@instance.com,3013,33,33140,thana
+33150,naxxgtAq,পৌর পূর্ব,33150@instance.com,3013,33,33150,thana
+3380,RZQG1kbM,মাদ্রাসা বিভাগ,3380@instance.com,3013,33,3380,thana
+33200,g6Ef0Y1X,মেরিন ইন্সটিটিউট,33200@instance.com,3013,33,33200,thana
+3360,Ny9RsQiZ,ম্যাটস ইন্সটিটিউট,3360@instance.com,3013,33,3360,thana
+3310,muPF0pSH,রাজেন্দ্র কলেজ,3310@instance.com,3013,33,3310,thana
+3390,IGGQZ4jf,শিশু কল্যাণ,3390@instance.com,3013,33,3390,thana
+33130,YTz9ANov,সদর উত্তর,33130@instance.com,3013,33,33130,thana
+33110,SNo4Utw6,সদর পশ্চিম,33110@instance.com,3013,33,33110,thana
+3370,wTUK6A5F,স্কুল বিভাগ,3370@instance.com,3013,33,3370,thana
+3480,USKnZRVm,আলফাডাঙ্গা উপজেলা,3480@instance.com,3013,34,3480,thana
+34140,9aKCtdnw,চরভদ্রাসন উপজেলা,34140@instance.com,3013,34,34140,thana
+34100,Ytb9pvqn,নগরকান্দা উপজেলা,34100@instance.com,3013,34,34100,thana
+3450,EHpjykPJ,বোয়ালমারী উপজেলা,3450@instance.com,3013,34,3450,thana
+3470,RyLco0iH,বোয়ালমারী দক্ষিণ,3470@instance.com,3013,34,3470,thana
+3460,J9GKUumP,বোয়ালমারী পৌরসভা,3460@instance.com,3013,34,3460,thana
+34120,zExzq5HY,ভাংগা উপজেলা,34120@instance.com,3013,34,34120,thana
+34110,aIY5ooXl,ভাংগা পৌরসভা,34110@instance.com,3013,34,34110,thana
+3440,9wVjQixO,মধুখালী দক্ষিণ,3440@instance.com,3013,34,3440,thana
+3430,ZBarL8ed,মধুখালী পশ্চিম,3430@instance.com,3013,34,3430,thana
+3410,q4hoeiki,মধুখালী পূর্ব,3410@instance.com,3013,34,3410,thana
+3420,WmT6JK7K,মধুখালী পৌরসভা,3420@instance.com,3013,34,3420,thana
+34130,6NtAmIkj,সদরপুর উপজেলা,34130@instance.com,3013,34,34130,thana
+3490,CjqQuN9S,সালথা উপজেলা,3490@instance.com,3013,34,3490,thana
+35100,6eLNf1VP,কালুখালি উপজেলা,35100@instance.com,3013,35,35100,thana
+3580,roXDD931,গোয়ালন্দ উপজেলা,3580@instance.com,3013,35,3580,thana
+35120,JPT3IXGH,পাংশা উপজেলা,35120@instance.com,3013,35,35120,thana
+35110,mt3MWDyW,পাংশা পৌরসভা,35110@instance.com,3013,35,35110,thana
+3590,mxdlr86j,বালিয়াকান্দি,3590@instance.com,3013,35,3590,thana
+35140,x7zno9ip,মাদরাসা বিভাগ,35140@instance.com,3013,35,35140,thana
+3530,9neAfkBf,মিজানপুর,3530@instance.com,3013,35,3530,thana
+3520,jfaho1IX,রাজবাড়ী কলেজ,3520@instance.com,3013,35,3520,thana
+3510,gjFvokvo,রাজবাড়ী পৌরসভা আদর্শ থানা,3510@instance.com,3013,35,3510,thana
+35160,SnDE80T9,শিশু বিভাগ,35160@instance.com,3013,35,35160,thana
+3560,P5ufISIj,সদর উত্তর,3560@instance.com,3013,35,3560,thana
+3570,F7POkUA0,সদর দক্ষিণ,3570@instance.com,3013,35,3570,thana
+3550,VMzUhQhq,সদর পম্চিম,3550@instance.com,3013,35,3550,thana
+3540,sOt3ZwKq,সদর পূর্ব,3540@instance.com,3013,35,3540,thana
+35130,jublkKYb,সাংস্কৃতিক বিভাগ,35130@instance.com,3013,35,35130,thana
+35150,dnLgB4Xj,স্কুল বিভাগ,35150@instance.com,3013,35,35150,thana
+3670,NhKRK7I8,কলেজ,3670@instance.com,3013,36,3670,thana
+3620,jJx1y5Ym,কাশিয়ানি,3620@instance.com,3013,36,3620,thana
+3630,Ple6fIJF,কোটালিপাড়া,3630@instance.com,3013,36,3630,thana
+36100,6V7Fwxi5,টেক্সটাইল,36100@instance.com,3013,36,36100,thana
+3690,It78Oo7d,প্রত্যুষা,3690@instance.com,3013,36,3690,thana
+36120,6F1z3bVf,মসাস,36120@instance.com,3013,36,36120,thana
+3680,eABB2Dy9,মাদ্রাসা,3680@instance.com,3013,36,3680,thana
+3610,54aDYfQd,মুকসুদপুর,3610@instance.com,3013,36,3610,thana
+3650,VGHcCVGH,শহর,3650@instance.com,3013,36,3650,thana
+36110,mtwwJQT3,শিশু কল্যাণ,36110@instance.com,3013,36,36110,thana
+3640,KUqn5wuK,সদর,3640@instance.com,3013,36,3640,thana
+3660,rHdrkHsH,স্কুল,3660@instance.com,3013,36,3660,thana
+3770,0BgvQJ01,কালকিনী উপজেলা,3770@instance.com,3013,37,3770,thana
+3760,nkw52WK7,কালকিনী পেীরসভা,3760@instance.com,3013,37,3760,thana
+3750,ya6bTknm,ডাসার,3750@instance.com,3013,37,3750,thana
+37130,QLLp8HUv,নীহরিকা সাহিত্য সাংস্কৃতিক সংসদ,37130@instance.com,3013,37,37130,thana
+3720,REtzw9jy,পৌরসভা,3720@instance.com,3013,37,3720,thana
+3710,SdB6l9Ua,মাদারীপুর সরকারি কলেজ,3710@instance.com,3013,37,3710,thana
+37100,DKvdZm2C,রাজৈর উপজেলা,37100@instance.com,3013,37,37100,thana
+37110,MNSarssT,শিবচর উপজেলা,37110@instance.com,3013,37,37110,thana
+37120,MasdpJwc,শিশুকল্যাণ,37120@instance.com,3013,37,37120,thana
+3730,AKgFfsHL,সদর পশ্চিম,3730@instance.com,3013,37,3730,thana
+3740,O0yoqkV2,সদর পূর্ব,3740@instance.com,3013,37,3740,thana
+3790,4t52tz4C,সাহবেরামপুর,3790@instance.com,3013,37,3790,thana
+37140,q9rtG0KF,স্কুল বিভাগ,37140@instance.com,3013,37,37140,thana
+3780,EVoWtkt8,স্নানঘাটা,3780@instance.com,3013,37,3780,thana
+38130,860rZezR,এসপিআই থানা,38130@instance.com,3013,38,38130,thana
+3840,mtJTygCZ,গোসাইরহাট থানা,3840@instance.com,3013,38,3840,thana
+38100,cSUO9MCr,জাজিরা থানা,38100@instance.com,3013,38,38100,thana
+3820,wLNWFRiV,ডামুড্যা আদর্শ থানা,3820@instance.com,3013,38,3820,thana
+3860,s9G1Wr7i,ডামুড্যা উত্তর থানা,3860@instance.com,3013,38,3860,thana
+3850,zcQCAOvC,ডামুড্যা পশ্চিম থানা,3850@instance.com,3013,38,3850,thana
+3890,SQkBfctj,নড়িয়া থানা,3890@instance.com,3013,38,3890,thana
+3830,iw1PhghG,ভেদরগঞ্জ আদর্শ থানা,3830@instance.com,3013,38,3830,thana
+3870,F2wYq3bM,ভেদরগঞ্জ উত্তর থানা,3870@instance.com,3013,38,3870,thana
+3810,WGCtVcAx,শহর আদর্শ থানা,3810@instance.com,3013,38,3810,thana
+3880,mDJ4Vnuz,সখিপুর থানা,3880@instance.com,3013,38,3880,thana
+38110,gDHTW2GZ,সদর উত্তর থানা,38110@instance.com,3013,38,38110,thana
+38120,hz0f3Vok,সরকারী কলেজ,38120@instance.com,3013,38,38120,thana
+39140,TRXxgvqx,আলীয়া মদরাসা,39140@instance.com,3018,39,39140,thana
+39250,U0ZKBP5h,ইংলিশ মিডিয়াম,39250@instance.com,3018,39,39250,thana
+3980,ylFdt0Tl,কোতোয়ালি উত্তর,3980@instance.com,3018,39,3980,thana
+3990,cnTHU25Q,কোতোয়ালি দক্ষিণ,3990@instance.com,3018,39,3990,thana
+3970,so8f9VJ6,চকবাজার,3970@instance.com,3018,39,3970,thana
+39120,iX4zQEuI,চট্টগ্রাম কলেজ,39120@instance.com,3018,39,39120,thana
+39180,4UHE0BqL,চট্টগ্রাম পলিটেকনিক ইনস্টিটিউট,39180@instance.com,3018,39,39180,thana
+39150,RwWRl0ZV,চট্টগ্রাম মেডিকেল কলেজ,39150@instance.com,3018,39,39150,thana
+3910,PpCd8wxQ,চান্দগাঁও উত্তর,3910@instance.com,3018,39,3910,thana
+3920,W6U6oDm1,চান্দগাঁও দক্ষিণ,3920@instance.com,3018,39,3920,thana
+3930,fah0KVyW,চান্দগাঁও পশ্চিম,3930@instance.com,3018,39,3930,thana
+3950,YumkWWmO,পাঁচলাইশ উত্তর,3950@instance.com,3018,39,3950,thana
+3960,9qn6GmqU,পাঁচলাইশ দক্ষিণ,3960@instance.com,3018,39,3960,thana
+39110,31akcUo9,বাকলিয়া উত্তর,39110@instance.com,3018,39,39110,thana
+39100,C1AgtIN2,বাকলিয়া থানা দক্ষিণ,39100@instance.com,3018,39,39100,thana
+3940,CkYF6geZ,বায়েজিদ,3940@instance.com,3018,39,3940,thana
+39210,uKdb6WAe,বেসরকারি কলেজ,39210@instance.com,3018,39,39210,thana
+39200,eORnZf2s,বেসরকারি বিশ্ববিদ্যালয়,39200@instance.com,3018,39,39200,thana
+39190,8zw5TEFi,বেসরকারি মেডিকেল,39190@instance.com,3018,39,39190,thana
+39130,VuIucAwk,মহসিন কলেজ,39130@instance.com,3018,39,39130,thana
+39230,9Ow0lbDX,মাদরাসা বিভাগ,39230@instance.com,3018,39,39230,thana
+39220,WpSjyGVe,শিশুকল্যাণ,39220@instance.com,3018,39,39220,thana
+39240,DtZSWjNd,সাহিত্য সাংস্কৃতি,39240@instance.com,3018,39,39240,thana
+39160,WlVkaJjx,স্কুল উত্তর,39160@instance.com,3018,39,39160,thana
+39170,vWVLGPAl,স্কুল থানা দক্ষিণ,39170@instance.com,3018,39,39170,thana
+40150,WlkzzTVo,BSA,40150@instance.com,3019,40,40150,thana
+40140,YWCzwoO4,BSC,40140@instance.com,3019,40,40140,thana
+40120,UIe5c8XS,C1,40120@instance.com,3019,40,40120,thana
+40130,sNhQFwFf,C2,40130@instance.com,3019,40,40130,thana
+40160,f2ctg4bD,PM,40160@instance.com,3019,40,40160,thana
+4090,hH5gaLWv,আকবরশাহ,4090@instance.com,3019,40,4090,thana
+4020,f5jGUo63,ইপিজেড,4020@instance.com,3019,40,4020,thana
+40100,fRq2Srts,খুলশী,40100@instance.com,3019,40,40100,thana
+4050,P9TqUJCM,ডবলমুরিং,4050@instance.com,3019,40,4050,thana
+4010,snjQ8glc,পতেঙ্গা থানা,4010@instance.com,3019,40,4010,thana
+4080,U6bBfX2N,পাহাড়তলী,4080@instance.com,3019,40,4080,thana
+4030,wplqoH6e,বন্দর,4030@instance.com,3019,40,4030,thana
+40220,LZlC316O,বিএস বিভাগ,40220@instance.com,3019,40,40220,thana
+40110,ylILd6X2,বিশ্ববিদ্যালয়,40110@instance.com,3019,40,40110,thana
+40210,nXN81AhZ,মডেল স্কুল,40210@instance.com,3019,40,40210,thana
+40190,Gx93kjfq,শিশুকল্যাণ,40190@instance.com,3019,40,40190,thana
+40200,oyvhLMpR,সংস্কৃতি,40200@instance.com,3019,40,40200,thana
+4040,CUcF4pLk,সদরঘাট,4040@instance.com,3019,40,4040,thana
+40180,VZf28mvz,স্কুল উত্তর,40180@instance.com,3019,40,40180,thana
+40170,8SbWmhrV,স্কুল দক্ষিণ,40170@instance.com,3019,40,40170,thana
+4060,0xIZEtoh,হালিশহর পশ্চিম,4060@instance.com,3019,40,4060,thana
+4070,Yk7vNFSK,হালিশহর পূর্ব,4070@instance.com,3019,40,4070,thana
+41150,yGxIHjPj,অতীশ দীপঙ্কর হল,41150@instance.com,3018,41,41150,thana
+41601,lP9563Bk,আইন অনুষদ,41601@instance.com,3018,41,41601,thana
+4190,nXdG1hkZ,আমানত হল,4190@instance.com,3018,41,4190,thana
+41100,zKbxVzoD,আলাওল হল,41100@instance.com,3018,41,41100,thana
+41110,JxKEoY8t,এএফ রহমান হল,41110@instance.com,3018,41,41110,thana
+41280,chqm23Rr,এগ্রিকালচার টেনিং ইনিস্টিটিউট,41280@instance.com,3018,41,41280,thana
+41200,TMcrTKnQ,কটেজ উত্তর,41200@instance.com,3018,41,41200,thana
+41210,CfZxHTrU,কটেজ দক্ষিণ,41210@instance.com,3018,41,41210,thana
+41501,2csrdR0P,কলা অনুষদ,41501@instance.com,3018,41,41501,thana
+41180,rezClD6P,ক্যাম্পাস,41180@instance.com,3018,41,41180,thana
+41301,T1IMgLaO,জীববিজ্ঞান অনুষদ,41301@instance.com,3018,41,41301,thana
+41220,RUM7azgE,দক্ষিণ পাহাড়তলী,41220@instance.com,3018,41,41220,thana
+41260,9GFdQbW7,দুর্নিবার,41260@instance.com,3018,41,41260,thana
+41160,Azcfw3ie,ফতেপুর,41160@instance.com,3018,41,41160,thana
+41101,WF8QBsDv,বিজ্ঞান অনুষদ,41101@instance.com,3018,41,41101,thana
+41201,XVqWOyHt,ব্যবসায় প্রশাসন অনুষদ,41201@instance.com,3018,41,41201,thana
+41240,a4kCEl58,মাদরাসা,41240@instance.com,3018,41,41240,thana
+41120,yC1Ff0Og,শহীদ আব্দুর রব হল,41120@instance.com,3018,41,41120,thana
+41230,V8QPUACY,শহীদ ফরহাদ হল,41230@instance.com,3018,41,41230,thana
+41701,16u2oxEU,শাহজালাল হল,41701@instance.com,3018,41,41701,thana
+41250,s8bjrg4R,শিশুকল্যাণ,41250@instance.com,3018,41,41250,thana
+41270,eFogbRaH,সবুজালয়,41270@instance.com,3018,41,41270,thana
+41401,tcC919zu,সমাজবিজ্ঞান অনুষদ,41401@instance.com,3018,41,41401,thana
+41190,baVfK9ic,সূর্যসেন হল,41190@instance.com,3018,41,41190,thana
+41801,uawuqK2H,সোহরাওয়ার্দী হল,41801@instance.com,3018,41,41801,thana
+41130,HSd43YrB,হাটহাজারী দক্ষিণ,41130@instance.com,3018,41,41130,thana
+41140,qzXxcWje,হাটহাজারী পূর্ব,41140@instance.com,3018,41,41140,thana
+41170,ba2VcK0S,হাটহাজারী সদর,41170@instance.com,3018,41,41170,thana
+42160,zVNgbvhm,আবাবিল,42160@instance.com,3018,42,42160,thana
+42180,i8QlMGhR,ইকোজোন,42180@instance.com,3018,42,42180,thana
+42170,uZAdyRQx,ট্রেডজোন,42170@instance.com,3018,42,42170,thana
+42200,ADltqYFN,ড্রিমনেস্ট,42200@instance.com,3018,42,42200,thana
+42100,pPsM6lpt,দরিয়া,42100@instance.com,3018,42,42100,thana
+42250,rlxDOAOB,দর্পণ,42250@instance.com,3018,42,42250,thana
+42140,1GcmvJJK,দিগন্ত,42140@instance.com,3018,42,42140,thana
+42220,iwzRmVXM,দ্বীপ,42220@instance.com,3018,42,42220,thana
+42110,tllA9af5,ধানসিঁড়ি,42110@instance.com,3018,42,42110,thana
+42130,dbi8SC4F,মোহনা,42130@instance.com,3018,42,42130,thana
+42120,9h7PLZf6,মৌচাক,42120@instance.com,3018,42,42120,thana
+42240,uILpeRHZ,শতাব্দী,42240@instance.com,3018,42,42240,thana
+42190,NVD8iP0n,সঞ্চিতা,42190@instance.com,3018,42,42190,thana
+42150,OGkJIBpM,সানরাইজ,42150@instance.com,3018,42,42150,thana
+4360,XllMfmpW,আবুতোরাব থানা,4360@instance.com,3018,43,4360,thana
+43330,hlaFI174,আলমশাহপাড়া আলীয়া মাদ্রাসা,43330@instance.com,3018,43,43330,thana
+43320,boiCeK09,এবি কলেজ থানা,43320@instance.com,3018,43,43320,thana
+43360,CAc9J2FC,এস কে এম থানা,43360@instance.com,3018,43,43360,thana
+4310,qvDN8f4E,করেরহাট  থfনা,4310@instance.com,3018,43,4310,thana
+43370,qpXVyuqB,কসাস,43370@instance.com,3018,43,43370,thana
+43250,OZhBGkfG,গহিরা,43250@instance.com,3018,43,43250,thana
+4330,jAC8XHvr,জোরারগন্জ থানা,4330@instance.com,3018,43,4330,thana
+43340,011hjWNX,নাজিরহাট আলীয়া মাদ্রাসা,43340@instance.com,3018,43,43340,thana
+43350,UW1JNtOd,নাজিরহাট কলেজ,43350@instance.com,3018,43,43350,thana
+43120,nMEmt1UM,নাজিরহাট পৌরসভা,43120@instance.com,3018,43,43120,thana
+43140,WrrNeKZ4,নাজিরহাট শহর,43140@instance.com,3018,43,43140,thana
+4370,Fd1b5w8v,নিজামপুর থানা,4370@instance.com,3018,43,4370,thana
+43100,Id2FQeoS,পাইন্দং,43100@instance.com,3018,43,43100,thana
+43110,Mfvb9Da0,ফটিকছড়ি শহর,43110@instance.com,3018,43,43110,thana
+43220,BdAT449R,বাঁশবাড়িয়া থানা,43220@instance.com,3018,43,43220,thana
+43210,GltFXGnN,বাড়বকুন্ড থানা,43210@instance.com,3018,43,43210,thana
+4380,hPkLc2E2,ভূজপুর উত্তর,4380@instance.com,3018,43,4380,thana
+4390,sf4jfDXS,ভূজপুর মধ্যম,4390@instance.com,3018,43,4390,thana
+43310,XGlNxfps,মডেল  থানা,43310@instance.com,3018,43,43310,thana
+4320,n9Vpkddh,মিরসরাই উত্তর,4320@instance.com,3018,43,4320,thana
+4350,SbIo6zdd,মীরসরাই শহর,4350@instance.com,3018,43,4350,thana
+43270,4kXv3lrP,রাউজান দক্ষিন,43270@instance.com,3018,43,43270,thana
+43260,172hCDrd,রাউজান শহর,43260@instance.com,3018,43,43260,thana
+43290,iQzwme5q,রাঙ্গুনিয়া উত্তর,43290@instance.com,3018,43,43290,thana
+43280,RM15JBLd,রাঙ্গুনিয়া শহর,43280@instance.com,3018,43,43280,thana
+43300,0F64AEcO,রানিরহাট,43300@instance.com,3018,43,43300,thana
+43130,GpmQJ4aL,শিশু কল্যান,43130@instance.com,3018,43,43130,thana
+43150,ccWjQplX,সন্দ্বীপ উত্তর,43150@instance.com,3018,43,43150,thana
+43170,YCfRUvBl,সন্দ্বীপ দক্ষিণ,43170@instance.com,3018,43,43170,thana
+43180,jN3D8zL1,সন্দ্বীপ পূর্ব,43180@instance.com,3018,43,43180,thana
+43160,yJMVx3CR,সন্দ্বীপ শহর,43160@instance.com,3018,43,43160,thana
+43190,YiSs1FeX,সীতাকুন্ড উত্তর,43190@instance.com,3018,43,43190,thana
+43230,olzwKfpN,সীতাকুন্ড দক্ষিণ,43230@instance.com,3018,43,43230,thana
+43200,zu8PyGqq,সীতাকুন্ড শহর,43200@instance.com,3018,43,43200,thana
+4340,rAx6nVGd,সুফিয়া থানা,4340@instance.com,3018,43,4340,thana
+43240,Ja2oOJEn,হাটহাজারী উত্তর,43240@instance.com,3018,43,43240,thana
+44100,K98r7s1r,কেরানীহাট আদর্শ থানা শাখা,44100@instance.com,3019,44,44100,thana
+4460,rbnwnQ3m,গারাংগিয়া আদর্শ থানা শাখা,4460@instance.com,3019,44,4460,thana
+44120,P2XBFhJr,চন্দনাইশ দক্ষিণ থানা শাখা,44120@instance.com,3019,44,44120,thana
+44130,qqsPCpa4,চন্দনাইশ শহর থানা শাখা,44130@instance.com,3019,44,44130,thana
+4410,LcyjbKwX,চুনতি আদর্শ থানা শাখা,4410@instance.com,3019,44,4410,thana
+44160,lDmb8Lq8,দারুল হিকমাহ,44160@instance.com,3019,44,44160,thana
+4450,RZbB1pxb,লোহাগাড়া উত্তর থানা শাখা,4450@instance.com,3019,44,4450,thana
+4420,aE20WeUy,লোহাগাড়া পশ্চিম আদর্শ থানা শাখা,4420@instance.com,3019,44,4420,thana
+4440,zCkcg2bn,লোহাগাড়া পূর্ব থানা শাখা,4440@instance.com,3019,44,4440,thana
+4430,ho5FpTve,লোহাগাড়া শহর আদর্শ থানা শাখা,4430@instance.com,3019,44,4430,thana
+44140,qy67ZQb9,শহীদ আলী হোসাইন (SAH) থানা শাখা,44140@instance.com,3019,44,44140,thana
+44150,1JeKlK9w,শিশুকল্যাণ,44150@instance.com,3019,44,44150,thana
+44170,vd7RScBo,সংস্কৃতি বিভাগ,44170@instance.com,3019,44,44170,thana
+44110,9pUgll2L,সাতকানিয়া উত্তর থানা শাখা,44110@instance.com,3019,44,44110,thana
+4480,VAGG7OmK,সাতকানিয়া কলেজ থানা শাখা,4480@instance.com,3019,44,4480,thana
+4490,hhFRolVT,সাতকানিয়া পশ্চিম থানা শাখা,4490@instance.com,3019,44,4490,thana
+4470,jYCD0RTV,সাতকানিয়া শহর আদর্শ থানা শাখা,4470@instance.com,3019,44,4470,thana
+4690,nP7QHWm4,কাওখালী থানা,4690@instance.com,3018,46,4690,thana
+4670,i1uxMPcC,কাপ্তাই দক্ষিণ,4670@instance.com,3018,46,4670,thana
+4680,mnDqhX9x,চন্দ্রঘোনা থানা,4680@instance.com,3018,46,4680,thana
+4660,PbQ5ntTw,পলিটেকনিক থানা,4660@instance.com,3018,46,4660,thana
+46120,zDKN3kXx,বাঘাইছড়ি থানা শাখা,46120@instance.com,3018,46,46120,thana
+46140,zZzQs6mw,বিশ্ববিদ্যালয় থানা,46140@instance.com,3018,46,46140,thana
+4650,M3Ed0pAs,মাদরাসা বিভাগ,4650@instance.com,3018,46,4650,thana
+4620,VdbO7nma,রাঙ্গামাটি সদর থানা,4620@instance.com,3018,46,4620,thana
+4630,WFoEF6Wl,রাঙ্গামাটি সরকারী কলেজ,4630@instance.com,3018,46,4630,thana
+46100,yzeuNFfR,লংগদু থানা,46100@instance.com,3018,46,46100,thana
+4610,UWPx6Btf,শহর আদর্শ শাখা,4610@instance.com,3018,46,4610,thana
+46130,tTzb3lH9,শিশুকল্যাণ বিভাগ,46130@instance.com,3018,46,46130,thana
+4640,ZJQT7lgc,স্কুল বিভাগ,4640@instance.com,3018,46,4640,thana
+4760,EWSiiCi8,খাগড়াছাড়ি সরকারি কলেজ,4760@instance.com,3018,47,4760,thana
+4710,8oI9LdNe,খাগড়াছড়ি সদর,4710@instance.com,3018,47,4710,thana
+4740,DDCLs08c,গুইমারা,4740@instance.com,3018,47,4740,thana
+4790,W0J2epDE,তবলছড়ি,4790@instance.com,3018,47,4790,thana
+47110,XRJenx25,দীঘিনালা,47110@instance.com,3018,47,47110,thana
+4750,qKEdHbEp,পলিটেকনিক,4750@instance.com,3018,47,4750,thana
+4770,vYl1ys3S,পানছড়ি,4770@instance.com,3018,47,4770,thana
+47100,dMzG9CbJ,মহালছড়ি,47100@instance.com,3018,47,47100,thana
+4730,ud7j4mv6,মাটিরাংগা,4730@instance.com,3018,47,4730,thana
+4780,vNnIYctL,মানিকছড়ি,4780@instance.com,3018,47,4780,thana
+47120,7AwonYMg,মুক্তধারা সাহিত্য সাংস্কৃতিক সংসদ,47120@instance.com,3018,47,47120,thana
+4720,mDP2Hlix,রামগড়,4720@instance.com,3018,47,4720,thana
+4890,3rHYyntU,আজিজনগর সাংগঠণিক থানা,4890@instance.com,3019,48,4890,thana
+48110,eWE7npUY,আালিকদম উপজেলা,48110@instance.com,3019,48,48110,thana
+48120,bkohj9lZ,নাইক্ষ্যংছড়ি উপজেলা,48120@instance.com,3019,48,48120,thana
+48130,ulIxdVwj,বাইশাারী  সাংগঠনিক থানা,48130@instance.com,3019,48,48130,thana
+4830,lLnEwTNp,বান্দরবন স্কুল বিভাগ,4830@instance.com,3019,48,4830,thana
+4820,QcuZac9n,বান্দরবান আর্দশ থানা,4820@instance.com,3019,48,4820,thana
+4840,rKFvIDNd,বান্দরবান মাদ্রাসা বিভাগ,4840@instance.com,3019,48,4840,thana
+4810,t7is8T7y,বান্দরবান সরকারি কলেজ,4810@instance.com,3019,48,4810,thana
+4870,C0SwDo6w,রোয়াংছড়ি উপজেলা,4870@instance.com,3019,48,4870,thana
+48100,BtIdcvug,লামা উপজেলা,48100@instance.com,3019,48,48100,thana
+4850,1uNHRCr2,শিশু কল্যাণ বিভাগ,4850@instance.com,3019,48,4850,thana
+4880,Y6wrL8iX,শৈলচূড়া সাংস্কৃতিক সংসদ,4880@instance.com,3019,48,4880,thana
+4860,fhfCoHJ2,সদর উপজেলা,4860@instance.com,3019,48,4860,thana
+5080,HB7bVTGd,ঈদগাঁও উপজেলা আদর্শ থানা,5080@instance.com,3019,50,5080,thana
+5070,9obGunqn,উখিয়া উপজেলা আদর্শ থানা,5070@instance.com,3019,50,5070,thana
+50120,oJFUovwm,কক্সবাজার পলিটেকনিক ইনস্টিটিউট,50120@instance.com,3019,50,50120,thana
+5010,1f3EiGSb,কক্সবাজার পৌরসভা,5010@instance.com,3019,50,5010,thana
+5040,3mgUpAPK,কক্সবাজার মেডিকেল কলেজ,5040@instance.com,3019,50,5040,thana
+5060,6S0RjOBJ,কক্সবাজার সদর উপজেলা শাখা,5060@instance.com,3019,50,5060,thana
+5020,bLDbXXRt,কক্সবাজার সরকারি কলেজ,5020@instance.com,3019,50,5020,thana
+50140,g2dnvvz0,কক্সবাজার সিটি কলেজ,50140@instance.com,3019,50,50140,thana
+5050,54ukWIv1,কক্সবাজার হাশেমিয়া কামিল (মাস্টার্স) মাদ্রাসা,5050@instance.com,3019,50,5050,thana
+50200,ZpKV91La,কুতুবদিয়া উপজেলা,50200@instance.com,3019,50,50200,thana
+50110,dKjMSZy9,গর্জনিয়া সাংগঠনিক আদর্শ থানা শাখা,50110@instance.com,3019,50,50110,thana
+5030,dRxk6t6I,চকরিয়া উপজেলা আদর্শ থানা শাখা,5030@instance.com,3019,50,5030,thana
+50150,BQUxiKf0,চকরিয়া পৌরসভা,50150@instance.com,3019,50,50150,thana
+50100,wtuuPTxk,টেকনাফ উপজেলা আদর্শ থানা শাখা,50100@instance.com,3019,50,50100,thana
+5090,TUYt3ydt,পেকুয়া উপজেলা আদর্শ থানা শাখা,5090@instance.com,3019,50,5090,thana
+50190,Y4ZgDprm,মহেশখালী উপজেলা উত্তর,50190@instance.com,3019,50,50190,thana
+50180,smBKsOp9,মহেশখালী উপজেলা দক্ষিণ,50180@instance.com,3019,50,50180,thana
+50170,Mk9wGbYk,মাতামূহুরী উপজেলা,50170@instance.com,3019,50,50170,thana
+50130,PIKbOgMa,রামু উপজেলা শাখা,50130@instance.com,3019,50,50130,thana
+50220,8a9o9EmA,শিশুকল্যাণ:,50220@instance.com,3019,50,50220,thana
+50210,ZL96zVm3,সাংস্কৃতিক বিভাগ,50210@instance.com,3019,50,50210,thana
+50160,YQpaN79Y,স্কুল বিভাগ,50160@instance.com,3019,50,50160,thana
+51210,fxVafm2f,অজিতগুহ কলেজ,51210@instance.com,3017,51,51210,thana
+51240,g1i6oSPE,আমড়াতলী,51240@instance.com,3017,51,51240,thana
+51200,jmDLDZ1b,আলিয়া মাদ্রসা,51200@instance.com,3017,51,51200,thana
+51110,IYmYT9HT,ইবনে তাইমিয়া কলেজ,51110@instance.com,3017,51,51110,thana
+51100,4Iu22LpL,ইবনে তাইমিয়া স্কুল,51100@instance.com,3017,51,51100,thana
+51190,mXNjsN0m,কুমিল্লা মেডিকেল কলেজ,51190@instance.com,3017,51,51190,thana
+51270,AR75D5CX,কোচিং,51270@instance.com,3017,51,51270,thana
+51170,b4UcVWTZ,চৌয়ারা মাদ্রাসা,51170@instance.com,3017,51,51170,thana
+51180,3Bfc4Nvv,জগন্নাথপুর,51180@instance.com,3017,51,51180,thana
+51501,PHFbVQq8,দূর্গাপুর উত্তর,51501@instance.com,3017,51,51501,thana
+51150,NcgjGB8w,নেউরা মাদ্রাসা,51150@instance.com,3017,51,51150,thana
+51230,slideU38,পাঁচথুবী,51230@instance.com,3017,51,51230,thana
+51130,wnHOcJCP,প্রাইভেট মেডিকেল কলেজ শাখা,51130@instance.com,3017,51,51130,thana
+51140,RdqIzDhP,বিশ্বরোড,51140@instance.com,3017,51,51140,thana
+51101,kHvnazFL,ভিক্টোরিয়া কলেজ ডিগ্রি,51101@instance.com,3017,51,51101,thana
+51201,hFrwRWFN,ভিসি আবাসিক,51201@instance.com,3017,51,51201,thana
+51601,BwHSWhX8,ভিসি উচ্চ মাধ্যমিক,51601@instance.com,3017,51,51601,thana
+51220,GTqwhTRQ,মুন্সেফ কোয়াটার,51220@instance.com,3017,51,51220,thana
+51701,DgjVHZ0Z,রেসিডেন্সিয়াল স্কুল এন্ড কলেজ,51701@instance.com,3017,51,51701,thana
+51801,dUY9TAIg,শিক্ষাবোর্ড মডেল কলেজ,51801@instance.com,3017,51,51801,thana
+51250,8jldFA5i,শিশুকল্যাণ,51250@instance.com,3017,51,51250,thana
+51301,FK5i2QON,সরকারি কলেজ,51301@instance.com,3017,51,51301,thana
+51120,iukl1MrQ,সরকারি সিটি কলেজ,51120@instance.com,3017,51,51120,thana
+51401,SiDN9Cm8,সরকারী কলেজ আবাসিক,51401@instance.com,3017,51,51401,thana
+51260,tbu7mXBc,সিন্দাবাদ,51260@instance.com,3017,51,51260,thana
+51901,a37FyGAC,স্কুল বিভাগ,51901@instance.com,3017,51,51901,thana
+51160,I2HQEovr,হাউজিং এস্টেট,51160@instance.com,3017,51,51160,thana
+52201,JeeK3nfO,কলা ও মানবিক অনুষদ,52201@instance.com,3017,52,52201,thana
+52140,DBIJsce9,কালিরবাজার,52140@instance.com,3017,52,52140,thana
+5280,wFvn8mhR,পলিটেকনিক ক্যাম্পাস,5280@instance.com,3017,52,5280,thana
+52160,ficX3YEN,প্যারাডাইজ হল,52160@instance.com,3017,52,52160,thana
+52501,2vJUZQcv,প্রকৌশল অনুষদ,52501@instance.com,3017,52,52501,thana
+52401,ZxDLlrD4,বিজ্ঞান অনুষদ,52401@instance.com,3017,52,52401,thana
+52150,P2T3wBev,বিজয়-২৪ হল,52150@instance.com,3017,52,52150,thana
+52110,hJ4jhUqe,বিজয়পুর,52110@instance.com,3017,52,52110,thana
+52101,eOkWFbd9,বিশ্ববিদ্যালয় ক্যাম্পাস,52101@instance.com,3017,52,52101,thana
+52120,ByZ1At4U,বেলতলী,52120@instance.com,3017,52,52120,thana
+52601,GzXKh3DZ,ব্যবসায় শিক্ষা অনুষদ,52601@instance.com,3017,52,52601,thana
+52130,QjMj3oL3,ময়নামতি,52130@instance.com,3017,52,52130,thana
+52190,9YrkF06H,লালমাই থিয়েটার,52190@instance.com,3017,52,52190,thana
+52200,DChx7UDe,শিশুকল্যান,52200@instance.com,3017,52,52200,thana
+52170,3Smld5VN,সানলাইট মিডিয়া,52170@instance.com,3017,52,52170,thana
+52301,aXEz1nCk,সামাজিক বিজ্ঞান অনুষদ,52301@instance.com,3017,52,52301,thana
+52701,bxcx64Bj,সিসিএন ক্যাম্পাস,52701@instance.com,3017,52,52701,thana
+52180,gDgjgo40,স্কুল বিভাগ,52180@instance.com,3017,52,52180,thana
+5290,ahT3DnJL,২৩ নং ওয়ার্ড,5290@instance.com,3017,52,5290,thana
+52100,LUICdzUI,২৪ নং ওয়ার্ড,52100@instance.com,3017,52,52100,thana
+53240,EsGshOJq,গোমতী সাহিত্য সাংস্কৃতিক সংসদ,53240@instance.com,3017,53,53240,thana
+5350,84ufipeN,চান্দিনা উপজেলা,5350@instance.com,3017,53,5350,thana
+53150,EuIGinii,চান্দিনা উপজেলা  দক্ষিন,53150@instance.com,3017,53,53150,thana
+53170,FLiOZgLt,তিতাস উপজেলা,53170@instance.com,3017,53,53170,thana
+5340,qV1aqIey,দাউদকান্দি উপজেলা,5340@instance.com,3017,53,5340,thana
+53220,WZnYGzc2,দাউদকান্দি উপজেলা দক্ষিন,53220@instance.com,3017,53,53220,thana
+53160,Nry8OpcW,দাউদকান্দি উপজেলা পূর্ব,53160@instance.com,3017,53,53160,thana
+5370,aCevMeU9,দেবিদ্বার উত্তর,5370@instance.com,3017,53,5370,thana
+5310,5qOKm8XX,দেবিদ্বার উপজেলা,5310@instance.com,3017,53,5310,thana
+53200,LjiUF1Ll,দেবিদ্বার দক্ষিণ,53200@instance.com,3017,53,53200,thana
+53100,3m9bSky1,দেবিদ্বার পশ্চিম,53100@instance.com,3017,53,53100,thana
+5390,sSOaqJQs,দেবিদ্বার পূর্ব,5390@instance.com,3017,53,5390,thana
+5380,gRno2A2g,ধামতী আলিয়া,5380@instance.com,3017,53,5380,thana
+53190,Cvixla5z,বাঙ্গরা বাজার,53190@instance.com,3017,53,53190,thana
+53130,ZnraZcuw,বি-পাড়া উত্তর,53130@instance.com,3017,53,53130,thana
+5330,QXS93YHK,বি-পাড়া উপজেলা,5330@instance.com,3017,53,5330,thana
+53201,poI8Kr05,বুড়িচং উপজেলা,53201@instance.com,3017,53,53201,thana
+53110,5IfRm47O,বুড়িচং দক্ষিণ,53110@instance.com,3017,53,53110,thana
+53120,OqtVKGNv,বুড়িচং পশ্চিম,53120@instance.com,3017,53,53120,thana
+5360,6JzlUdoA,মুরাদনগর উপজেলা,5360@instance.com,3017,53,5360,thana
+53210,y46Uq6um,মুরাদনগর দক্ষিণ,53210@instance.com,3017,53,53210,thana
+53140,y2eNRvH8,মুরাদনগর পূর্ব,53140@instance.com,3017,53,53140,thana
+53230,m57mxI47,মেঘনা উপজেলা,53230@instance.com,3017,53,53230,thana
+53180,dn286dCi,হোমনা উপজেলা,53180@instance.com,3017,53,53180,thana
+54110,uWcJqTqw,চৌদ্দগ্রাম উপজেলা উত্তর,54110@instance.com,3017,54,54110,thana
+54120,02CSyGF8,চৌদ্দগ্রাম উপজেলা দক্ষিণ,54120@instance.com,3017,54,54120,thana
+54100,LtqjOODe,চৌদ্দগ্রাম উপজেলা সদর,54100@instance.com,3017,54,54100,thana
+54130,GDfIT7R4,চৌদ্দগ্রাম পৌরসভা,54130@instance.com,3017,54,54130,thana
+5440,Yn1yaqnJ,নওয়াব ফয়েজুন্নেছা সরকারি কলেজ,5440@instance.com,3017,54,5440,thana
+5490,NVQDlNuQ,নাঙ্গলকোট উপজেলা উত্তর,5490@instance.com,3017,54,5490,thana
+5480,pSH2mXWw,নাঙ্গলকোট উপজেলা দক্ষিন,5480@instance.com,3017,54,5480,thana
+5470,cBlwFfoJ,নাঙ্গলকোট উপজেলা সদর,5470@instance.com,3017,54,5470,thana
+54210,P5pT7eyC,প্লাবণ সাহিত্য সাংস্কৃতিক সংসদ,54210@instance.com,3017,54,54210,thana
+54150,EdlLmXFr,বরুড়া উপজেলা দক্ষিণ,54150@instance.com,3017,54,54150,thana
+54160,O5WNr7VR,বরুড়া উপজেলা পশ্চিম,54160@instance.com,3017,54,54160,thana
+54140,gqLBDSVW,বরুড়া উপজেলা সদর,54140@instance.com,3017,54,54140,thana
+5450,G2hQeeGE,মনোহরগঞ্জ উপজেলা পূর্ব,5450@instance.com,3017,54,5450,thana
+5460,CzU1Oi1J,মনোহরগঞ্জ উপজেলা সদর,5460@instance.com,3017,54,5460,thana
+5430,eVrbChm9,লাকসাম উপজেলা পশ্চিম,5430@instance.com,3017,54,5430,thana
+5420,7G9eifTa,লাকসাম উপজেলা পূর্ব,5420@instance.com,3017,54,5420,thana
+5410,QV6kA2mk,লাকসাম শহর,5410@instance.com,3017,54,5410,thana
+54170,Y6HdrMQj,লালমাই উপজেলা উত্তর,54170@instance.com,3017,54,54170,thana
+54180,1Ib2Pjwr,লালমাই উপজেলা দক্ষিণ,54180@instance.com,3017,54,54180,thana
+54220,m0KF0Wkr,শিশু কল্যান,54220@instance.com,3017,54,54220,thana
+54200,y5IcEWts,সদর দক্ষিণ উপজেলা পশ্চিম,54200@instance.com,3017,54,54200,thana
+54190,O8XffmcR,সদর দক্ষিণ উপজেলা পূর্ব,54190@instance.com,3017,54,54190,thana
+5680,vQluyhlF,বাঞ্ছারামপুর উপজেলা,5680@instance.com,3017,56,5680,thana
+5640,aXgBbOWh,সদর উত্তর শাখা,5640@instance.com,3017,56,5640,thana
+56130,eRM8Nmx4,আখাউড়া,56130@instance.com,3017,56,56130,thana
+56190,IwuXhKy0,আল মাহমুদ,56190@instance.com,3017,56,56190,thana
+56150,xbpDGUxP,আশুগঞ্জ উপজেলা,56150@instance.com,3017,56,56150,thana
+56110,1nw4mgm1,কসবা পশ্চিম,56110@instance.com,3017,56,56110,thana
+56100,EdpgEJPV,কসবা পূর্ব,56100@instance.com,3017,56,56100,thana
+56180,2gKcbazs,তিতাস,56180@instance.com,3017,56,56180,thana
+5670,5Nbf3icc,নবীনগর উপজেলা,5670@instance.com,3017,56,5670,thana
+56160,lysplZip,নাসির নগর,56160@instance.com,3017,56,56160,thana
+5690,SbrhyLug,নুর নগর,5690@instance.com,3017,56,5690,thana
+56170,mNu51K6w,পলিটেকনিক,56170@instance.com,3017,56,56170,thana
+5660,0hPdzRFo,বিজয়নগর উপজেলা,5660@instance.com,3017,56,5660,thana
+56120,J9Bbkvev,মাদ্রাসা,56120@instance.com,3017,56,56120,thana
+5610,C3GB541m,শহর শাখা,5610@instance.com,3017,56,5610,thana
+56200,X9PGyCqo,শিশু কল্যাণ,56200@instance.com,3017,56,56200,thana
+5650,dL8TviZ2,সদর দক্ষিণ,5650@instance.com,3017,56,5650,thana
+5620,ZHkfb5Rj,সরকারি কলেজ শাখা,5620@instance.com,3017,56,5620,thana
+56140,QPt5yNHS,সরাইল,56140@instance.com,3017,56,56140,thana
+5630,WhKpSqBW,স্কুল শাখা,5630@instance.com,3017,56,5630,thana
+5720,wVARTMCd,আদর্শ থানা শাখা,5720@instance.com,3017,57,5720,thana
+5760,Wz3XiBMe,গাছতলা,5760@instance.com,3017,57,5760,thana
+5710,OnKi5QfK,চাঁদপুর সরকারি কলেজ,5710@instance.com,3017,57,5710,thana
+5750,06OqLSEE,পৌরসভা দক্ষিণ,5750@instance.com,3017,57,5750,thana
+5730,wtGsxCGG,পৌরসভা পশ্চিম,5730@instance.com,3017,57,5730,thana
+5740,kcIkqziJ,পৌরসভা পূর্ব,5740@instance.com,3017,57,5740,thana
+5770,aYXKcvOM,শাহতলী আলীয়া,5770@instance.com,3017,57,5770,thana
+57130,tkvfigib,শিশুকল্যাণ,57130@instance.com,3017,57,57130,thana
+57120,R1RjCs5U,সংস্কৃতি বিভাগ,57120@instance.com,3017,57,57120,thana
+57100,fr6fgRmI,সদর উত্তর,57100@instance.com,3017,57,57100,thana
+57110,88OG7EAo,সদর দক্ষিণ,57110@instance.com,3017,57,57110,thana
+5790,PnS0RvNt,সদর পূর্ব,5790@instance.com,3017,57,5790,thana
+57160,xBMAZwd1,সম্ভাবনা,57160@instance.com,3017,57,57160,thana
+57140,Slmz7XEQ,স্কুল বিভাগ,57140@instance.com,3017,57,57140,thana
+57150,ruPoTIyV,হাইমচর উত্তর,57150@instance.com,3017,57,57150,thana
+5780,tsyRbpjT,হাইমচর দক্ষিণ,5780@instance.com,3017,57,5780,thana
+58160,Fk9r2YYz,কচুয়া উত্তর থানা শাখা,58160@instance.com,3017,58,58160,thana
+58150,sZjDc75B,কচুয়া দক্ষিণ আদর্শ থানা শাখা,58150@instance.com,3017,58,58150,thana
+58140,O1lxaMXA,কচুয়া শহর আদর্শ থানা শাখা,58140@instance.com,3017,58,58140,thana
+58110,IvaFfBTw,ফরিদগঞ্জ আলীয়া থানা শাখা,58110@instance.com,3017,58,58110,thana
+58130,cAPlSQBX,ফরিদগঞ্জ উত্তর থানা শাখা,58130@instance.com,3017,58,58130,thana
+5890,eUvHs1UR,ফরিদগঞ্জ দক্ষিণ আদর্শ থানা শাখা,5890@instance.com,3017,58,5890,thana
+58120,R8Bp0LB2,ফরিদগঞ্জ পশ্চিম থানা শাখা,58120@instance.com,3017,58,58120,thana
+58100,SuspNz37,ফরিদগঞ্জ পূর্ব আদর্শ থানা শাখা,58100@instance.com,3017,58,58100,thana
+5880,xBZkyVNa,ফরিদগঞ্জ শহর আদর্শ থানা শাখা,5880@instance.com,3017,58,5880,thana
+58200,wXGl1YIo,মতলব উত্তর থানা শাখা,58200@instance.com,3017,58,58200,thana
+58190,PSCVnnMZ,মতলব দক্ষিণ থানা শাখা,58190@instance.com,3017,58,58190,thana
+58180,UZzgU905,মতলব পৌরসভা থানা শাখা,58180@instance.com,3017,58,58180,thana
+5860,4Z0EH5yy,শাহরাস্তি উত্তর আদর্শ থানা শাখা,5860@instance.com,3017,58,5860,thana
+5870,wKHUkWMt,শাহরাস্তি দক্ষিণ আদর্শ থানা শাখা,5870@instance.com,3017,58,5870,thana
+5850,chyns6ZV,শাহরাস্তি শহর আদর্শ থানা শাখা,5850@instance.com,3017,58,5850,thana
+58210,Ha51NvHp,সাংস্কৃতিক বিভাগ,58210@instance.com,3017,58,58210,thana
+58170,4XSD9PgI,"সি,পি,আই সাংগঠনিক থানা শাখা",58170@instance.com,3017,58,58170,thana
+5820,hRusVCSr,হাজীগঞ্জ আলীয়া আদর্শ থানা শাখা,5820@instance.com,3017,58,5820,thana
+5840,J6gj20mr,হাজীগঞ্জ উত্তর আদর্শ থানা শাখা,5840@instance.com,3017,58,5840,thana
+5830,3K7PRK8d,হাজীগঞ্জ দক্ষিণ আদর্শ থানা শাখা,5830@instance.com,3017,58,5830,thana
+5810,aqkQxpkC,হাজীগঞ্জ শহর আদর্শ থানা শাখা,5810@instance.com,3017,58,5810,thana
+59370,ApN9TkxF,অশ্বদিয়া ইউনিয়ন,59370@instance.com,3016,59,59370,thana
+59130,MayYXecT,ইসলামিয়া,59130@instance.com,3016,59,59130,thana
+59240,Rui78Dd8,উচ্চ মাধ্যমিক,59240@instance.com,3016,59,59240,thana
+59140,JUkZ9gVT,এওজবালিয়া ইউনিয়ন,59140@instance.com,3016,59,59140,thana
+59270,MBgo1xz2,এখলাশপুর ইউনিয়ন,59270@instance.com,3016,59,59270,thana
+59250,Y6ilp1WI,এনএমএস,59250@instance.com,3016,59,59250,thana
+59330,Q5RhQhXT,এনএমসি,59330@instance.com,3016,59,59330,thana
+59120,NZNOu6dC,কারামাতিয়া,59120@instance.com,3016,59,59120,thana
+59290,NG1o7mzO,ছয়ানী ইউনিয়ন,59290@instance.com,3016,59,59290,thana
+59380,fWUzBOOR,দাদপুর ইউনিয়ন,59380@instance.com,3016,59,59380,thana
+59340,St0zHEjH,দ্বিমীক,59340@instance.com,3016,59,59340,thana
+59180,jVpQOU7G,নিয়াজপুর ইউনিয়ন,59180@instance.com,3016,59,59180,thana
+59230,GBhWmlID,নোসক আবাসিক,59230@instance.com,3016,59,59230,thana
+59220,SWmNesob,নোয়াখালী সরকারী কলেজ,59220@instance.com,3016,59,59220,thana
+59210,Cf80Q8HX,নোয়ান্নই ইউনিয়ন,59210@instance.com,3016,59,59210,thana
+59110,yxZ6fhh7,পৌরসভা দক্ষিণ,59110@instance.com,3016,59,59110,thana
+59190,JTXQqFVf,পৌরসভা পশ্চিম,59190@instance.com,3016,59,59190,thana
+59170,S6nr0aXZ,পৌরসভা পূর্ব,59170@instance.com,3016,59,59170,thana
+59260,2SBCobHF,প্রাইভেট কলেজ,59260@instance.com,3016,59,59260,thana
+59200,yxqwlZcM,বিনোদপুর ইউনিয়ন,59200@instance.com,3016,59,59200,thana
+59280,S0pv5ucX,রাজগঞ্জ ইউনিয়ন,59280@instance.com,3016,59,59280,thana
+59150,464wBwFt,র্ক্ণফুলী,59150@instance.com,3016,59,59150,thana
+59350,uN4leot5,শিশু কল্যাণ,59350@instance.com,3016,59,59350,thana
+59360,vaU3Un96,সংস্কৃতি,59360@instance.com,3016,59,59360,thana
+59300,iOcPb94i,সদর উত্তর,59300@instance.com,3016,59,59300,thana
+59160,pH8DUg7V,স্কুল বিভাগ,59160@instance.com,3016,59,59160,thana
+59320,iPcwThJy,১৯নং পূর্ব চরমটুয়া,59320@instance.com,3016,59,59320,thana
+59310,rtggwGg9,২০নং আন্ডারচর,59310@instance.com,3016,59,59310,thana
+60120,lVpunFgq,আমিশাপাড়া  শাখা,60120@instance.com,3016,60,60120,thana
+6030,ZMjspUw7,কান্ডারী সাহিত্য সাস্কতিক সংসদ,6030@instance.com,3016,60,6030,thana
+60160,77BAH8KQ,চাটখিল উত্তর,60160@instance.com,3016,60,60160,thana
+60140,vdOVRwWW,চাটখিল দক্ষিন,60140@instance.com,3016,60,60140,thana
+60150,WZHVtuM3,চাটখিল পশ্চিম,60150@instance.com,3016,60,60150,thana
+60130,zTwQ7AiJ,চাটখিল সদর,60130@instance.com,3016,60,60130,thana
+6020,zsBRRRvo,চৌমুহনী কলেজ,6020@instance.com,3016,60,6020,thana
+6010,gLIcmkJ4,চৌমুহনী শহর,6010@instance.com,3016,60,6010,thana
+6070,6ftUM5Oy,বাংলাবাজার,6070@instance.com,3016,60,6070,thana
+6050,ibbYiqHF,বেগমগঞ্জ,6050@instance.com,3016,60,6050,thana
+6060,5G6Ls6eE,বেগমগঞ্জ পশ্চিম,6060@instance.com,3016,60,6060,thana
+6080,aAHYgMSq,বেগমগঞ্জ পূর্ব,6080@instance.com,3016,60,6080,thana
+6040,Yh0y9OBc,শিশু কল্যান,6040@instance.com,3016,60,6040,thana
+60190,6QzZGJbA,সেনবাগ উত্তর,60190@instance.com,3016,60,60190,thana
+60180,ek0Ybo3c,সেনবাগ দক্ষিন,60180@instance.com,3016,60,60180,thana
+60170,YVkjJdgb,সেনবাগ সদর,60170@instance.com,3016,60,60170,thana
+60100,vC6so3gY,সোনাইমুড়ি উত্তর,60100@instance.com,3016,60,60100,thana
+60110,S37RM8Ef,সোনাইমুড়ী পূর্ব,60110@instance.com,3016,60,60110,thana
+6090,TPvOTT9c,সোনাইমুড়ী সদর,6090@instance.com,3016,60,6090,thana
+61401,4iYjWlfz,আল-আমিন শিল্পি গোষ্ঠি,61401@instance.com,3016,61,61401,thana
+6180,9Pn6Yo7J,কবিরহাট আদর্শ  থানা শাখা,6180@instance.com,3016,61,6180,thana
+6190,wkWQZFCS,কবিরহাট উত্তর থানা শাখা,6190@instance.com,3016,61,6190,thana
+61100,OzNpyYUu,কবিরহাট দক্ষিন থানা শাখা,61100@instance.com,3016,61,61100,thana
+6170,9kPg64zs,কবিরহাট পূর্ব শাখা,6170@instance.com,3016,61,6170,thana
+61110,dSYofiY0,কবিরহাট সরকারি কলেজ শাখা,61110@instance.com,3016,61,61110,thana
+61201,R3MrSuGZ,কোম্পনিগন্জ পূর্ব শাখা,61201@instance.com,3016,61,61201,thana
+61101,WekFVyIp,কোম্পানিগন্জ আদর্শ থানা শাখা,61101@instance.com,3016,61,61101,thana
+61501,oEpGTdVz,কোম্পানিগন্জ দক্ষিন আদর্শ থানা শাখা,61501@instance.com,3016,61,61501,thana
+61601,ODp3wO1R,কোম্পানিগন্জ পশি্চম,61601@instance.com,3016,61,61601,thana
+61210,50zdygQX,শিশু কল্যান বিভাগ,61210@instance.com,3016,61,61210,thana
+61301,kxad22E6,সরকারি মুজিব কলেজ শাখা,61301@instance.com,3016,61,61301,thana
+61130,a3NV9fUr,সুবর্ণচর পশ্চিম শাখা,61130@instance.com,3016,61,61130,thana
+61120,CeVPcIV3,সূবর্ণচর আদর্শ থানা শাখা,61120@instance.com,3016,61,61120,thana
+61150,xICC5Jvr,সূবর্ণচর দক্ষিন শাখা,61150@instance.com,3016,61,61150,thana
+61160,iziAgQyP,সূবর্ণচর পূর্ব থানা শাখা,61160@instance.com,3016,61,61160,thana
+61140,OglubLGd,সৈকত সরকারি কলেজ,61140@instance.com,3016,61,61140,thana
+61180,x3JEkXTf,হাতিয়া আদর্শ থানা শাখা,61180@instance.com,3016,61,61180,thana
+61170,MAZQAUUt,হাতিয়া উত্তর থানা শাখা,61170@instance.com,3016,61,61170,thana
+61190,kTPlDY2I,হাতিয়া দক্ষিন থানা শাখা,61190@instance.com,3016,61,61190,thana
+61200,WW1TJ31R,হাতিয়া মাদ্রাসা শাখা,61200@instance.com,3016,61,61200,thana
+62120,SRoi9DFy,অংকুর শিশু কিশোর সাহিত্য সাংস্কুতিক সংসদ,62120@instance.com,3016,62,62120,thana
+6260,MtaQOaYw,আল-জামেয়াতুল ফালাহিয়া কমিল মাদ্রাসা,6260@instance.com,3016,62,6260,thana
+6290,1TJa8Hod,কম্পিউটার ইনস্টিটিউট,6290@instance.com,3016,62,6290,thana
+62240,Wr69Y2Wj,কাজিরবাগ ইউনিয়ন,62240@instance.com,3016,62,62240,thana
+62180,56YkdtQY,কালিদাহ ইউনিয়ন,62180@instance.com,3016,62,62180,thana
+62200,NCNEVuBF,ছনুয়া ইউনিয়ন,62200@instance.com,3016,62,62200,thana
+62130,nrFqvZrB,ধর্মপুর ইউনিয়ন,62130@instance.com,3016,62,62130,thana
+62170,86u2Eoaq,ধলিয়া ইউনিয়ন,62170@instance.com,3016,62,62170,thana
+6280,cCPNKeVf,পলিটেকনিক ইনস্টিটিউট,6280@instance.com,3016,62,6280,thana
+62150,fB5rxePD,পাচঁগাছিয়া ইউনিয়ন,62150@instance.com,3016,62,62150,thana
+6230,JreFSUCT,পৌরসভা পশ্চিম,6230@instance.com,3016,62,6230,thana
+6220,DWjD92BA,পৌরসভা উত্তর,6220@instance.com,3016,62,6220,thana
+6240,yyNApRvr,পৌরসভা দক্ষিণ,6240@instance.com,3016,62,6240,thana
+6210,9Qbnsf98,পৌরসভা পূর্ব,6210@instance.com,3016,62,6210,thana
+62100,qqHLkiCF,প্রাইভেট পলিটেকনিক ইনস্টিটিউট,62100@instance.com,3016,62,62100,thana
+62210,RKuCUOu2,ফরহাদনগর ইউনিয়ন,62210@instance.com,3016,62,62210,thana
+62220,mtnReJ2n,ফাজিলপুর ইউনিয়ন,62220@instance.com,3016,62,62220,thana
+6270,IsqtWlF7,ফেনী আলিয়া কামিল মাদ্রাসা,6270@instance.com,3016,62,6270,thana
+6250,mNNLzvRK,ফেনী সরকারী কলেজ,6250@instance.com,3016,62,6250,thana
+62160,F1I1NrZq,বালিগাঁও ইউনিয়ন,62160@instance.com,3016,62,62160,thana
+62230,uxRPTuET,মোটবী ইউনিয়ন,62230@instance.com,3016,62,62230,thana
+62190,ZPfzC7OA,লেমুয়া ইউনিয়ন,62190@instance.com,3016,62,62190,thana
+62140,likRIrpy,শর্শদী ইউনিয়ন,62140@instance.com,3016,62,62140,thana
+62110,0dOg6V4D,শাহীন একাডেমী স্কুল এন্ড কলেজ,62110@instance.com,3016,62,62110,thana
+62260,ZdLlonKg,শিশুকল্যান,62260@instance.com,3016,62,62260,thana
+62250,8IV3THpq,স্বরুপ সাহিত্য সাংস্কৃতিক সংসদ,62250@instance.com,3016,62,62250,thana
+6380,TOFjcEam,ছাগলনাইয়া আদর্শ শাখা (CMS),6380@instance.com,3016,63,6380,thana
+63110,mQBazFl7,ছাগলনাইয়া উপজেলা পশ্চিম (CUW),63110@instance.com,3016,63,63110,thana
+6390,l28vLdz1,ছাগলনা্ইয়া দক্ষিণ আদর্শ শাখা (CDM),6390@instance.com,3016,63,6390,thana
+63100,4K00L5R8,ছাগলানাইয়া উপজেলা উত্তর (CUN),63100@instance.com,3016,63,63100,thana
+6310,2TwcS6tC,দাগনভুইয়া আদর্শ শাখা (DMS),6310@instance.com,3016,63,6310,thana
+6330,HxcGQQgE,দাগনভুইয়া উপজেলা উত্তর (DUN),6330@instance.com,3016,63,6330,thana
+6320,QKNu8vCh,দাগনভুইয়া উপজেলা দক্ষিণ (DUS),6320@instance.com,3016,63,6320,thana
+63140,itqGDwwK,পরশুরাম আদর্শ শাখা (PMS),63140@instance.com,3016,63,63140,thana
+63150,xZ9dIccK,পরশুরাম উপজেলা দক্ষিণ (PUS),63150@instance.com,3016,63,63150,thana
+63120,XiSksVS5,ফুলগাজী উপজেলা (FU),63120@instance.com,3016,63,63120,thana
+6340,RBgDd6HI,সিলোনিয়া আদর্শ শাখা (SMS),6340@instance.com,3016,63,6340,thana
+6350,1nkuRsXP,সোনাগাজী আদর্শ শাখা (SM),6350@instance.com,3016,63,6350,thana
+6370,9GihI7EQ,সোনাগাজী উপজেলা উত্তর (SUN),6370@instance.com,3016,63,6370,thana
+6360,rex1L96S,সোনাগাজী পশ্চিম আদর্শ শাখা (SWM),6360@instance.com,3016,63,6360,thana
+64270,NbLAbIkY,টুমচর মাদ্রাসা,64270@instance.com,3016,64,64270,thana
+64250,PQnrTdSU,পলিটেকনিক,64250@instance.com,3016,64,64250,thana
+6430,q0W1LuMt,পৌরসভা দক্ষিণ,6430@instance.com,3016,64,6430,thana
+6420,RenhPjGQ,পৌরসভা উত্তর,6420@instance.com,3016,64,6420,thana
+6440,ie4OcexQ,পৌরসভা পূর্ব,6440@instance.com,3016,64,6440,thana
+64300,ToRIIk3O,শিশুকল্যাণ বিভাগ,64300@instance.com,3016,64,64300,thana
+6450,KWiuMUCA,সরকারি কলেজ,6450@instance.com,3016,64,6450,thana
+64290,afsHvd7N,সাংস্কৃতিক বিভাগ,64290@instance.com,3016,64,64290,thana
+64280,W0KGVKMU,স্কুল বিভাগ,64280@instance.com,3016,64,64280,thana
+6460,y28vKVRK,০১নং ইউনিয়ন,6460@instance.com,3016,64,6460,thana
+6470,zOza0B70,০২নং ইউনিয়ন,6470@instance.com,3016,64,6470,thana
+6480,EcoNJHcm,০৩নং ইউনিয়ন,6480@instance.com,3016,64,6480,thana
+6490,iYoagNqN,০৪নং ইউনিয়ন,6490@instance.com,3016,64,6490,thana
+64100,Ly4ZotM8,০৫নং ইউনিয়ন,64100@instance.com,3016,64,64100,thana
+64110,TuzTc51Y,০৬নং ইউনিয়ন,64110@instance.com,3016,64,64110,thana
+64120,KAp7Tf8o,০৭নং ইউনিয়ন,64120@instance.com,3016,64,64120,thana
+64130,ketU14PR,০৮নং ইউনিয়ন,64130@instance.com,3016,64,64130,thana
+64140,cupCZxHH,০৯নং ইউনিয়ন,64140@instance.com,3016,64,64140,thana
+64150,XnQ5QEhM,১০নং ইউনিয়ন,64150@instance.com,3016,64,64150,thana
+64160,W8Xvs1pg,১১নং ইউনিয়ন,64160@instance.com,3016,64,64160,thana
+64170,KCX2JF8Z,১২নং ইউনিয়ন,64170@instance.com,3016,64,64170,thana
+64180,yKUvhYcq,১৩নং ইউনিয়ন,64180@instance.com,3016,64,64180,thana
+64190,h07l6zeH,১৪নং ইউনিয়ন,64190@instance.com,3016,64,64190,thana
+64200,QxpZzWHI,১৫নং ইউনিয়ন,64200@instance.com,3016,64,64200,thana
+64210,RpxbtKu8,১৬নং ইউনিয়ন,64210@instance.com,3016,64,64210,thana
+64220,HJELNma5,১৭নং ইউনিয়ন,64220@instance.com,3016,64,64220,thana
+64230,dua5Pk5s,১৮নং ইউনিয়ন,64230@instance.com,3016,64,64230,thana
+64330,ZKASCH4K,১৯নং ইউনিয়ন,64330@instance.com,3016,64,64330,thana
+64240,qjP5PpZl,২১নং ইউনিয়ন,64240@instance.com,3016,64,64240,thana
+65190,nqWihZ1K,কমলনগর পশ্চিম,65190@instance.com,3016,65,65190,thana
+65180,VqNjjLT2,কমলনগর পূর্ব,65180@instance.com,3016,65,65180,thana
+65130,ef2tqGzR,রামগঞ্জ উত্তর,65130@instance.com,3016,65,65130,thana
+65140,hddi1fIN,রামগঞ্জ দক্ষিণ,65140@instance.com,3016,65,65140,thana
+65160,ky4sS364,রামগঞ্জ পশ্চিম,65160@instance.com,3016,65,65160,thana
+65150,H8aB9Und,রামগঞ্জ পূর্ব,65150@instance.com,3016,65,65150,thana
+65110,Ummz5IAg,রামগঞ্জ শহর,65110@instance.com,3016,65,65110,thana
+65220,QVhaxZFN,রামগতি উত্তর,65220@instance.com,3016,65,65220,thana
+65240,AX4xQdLd,রামগতি দক্ষিণ,65240@instance.com,3016,65,65240,thana
+65210,MJi1hRMg,রামগতি শহর,65210@instance.com,3016,65,65210,thana
+6550,6iLK6ipQ,রায়পুর উত্তর,6550@instance.com,3016,65,6550,thana
+6520,nnpJMpMj,রায়পুর কলেজ,6520@instance.com,3016,65,6520,thana
+6570,FmMXU1mM,রায়পুর দক্ষিণ,6570@instance.com,3016,65,6570,thana
+6510,sb8bAom6,রায়পুর শহর,6510@instance.com,3016,65,6510,thana
+6580,WHkp5UBT,রায়পুুর পশ্চিম,6580@instance.com,3016,65,6580,thana
+65200,8f0dKvpz,হাজিরহাট,65200@instance.com,3016,65,65200,thana
+6590,4PgnUirr,হায়দরগঞ্জ আদর্শ,6590@instance.com,3016,65,6590,thana
+65100,Y1pDPq18,হায়দরগঞ্জ থানা,65100@instance.com,3016,65,65100,thana
+66260,dFETYcKY,ইংলিশ মিডিয়াম (২৬),66260@instance.com,3012,66,66260,thana
+66100,SCSmy40v,এম সি কলেজ,66100@instance.com,3012,66,66100,thana
+66190,jhfmizWh,কলেজ বিভাগ,66190@instance.com,3012,66,66190,thana
+6620,lECcqkoJ,কোতোয়ালী থানা পশ্চিম,6620@instance.com,3012,66,6620,thana
+6610,GX9aT2E3,কোতোয়ালী থানা পূর্ব,6610@instance.com,3012,66,6610,thana
+6690,oV058j3I,জালালাবাদ থানা,6690@instance.com,3012,66,6690,thana
+6660,8h7QoxlU,দক্ষিণ সুরমা থানা পশ্চিম,6660@instance.com,3012,66,6660,thana
+6650,rXnCmS9J,দক্ষিণ সুরমা পূর্ব,6650@instance.com,3012,66,6650,thana
+66230,d2yHV65W,দক্ষিণ সুরমা সরকারি কলেজ,66230@instance.com,3012,66,66230,thana
+66250,l24KfkEG,দিশারী শিল্পী গোষ্ঠী,66250@instance.com,3012,66,66250,thana
+66170,dMEFrSD8,প্রাইভেট বিশ্ববিদ্যালয়,66170@instance.com,3012,66,66170,thana
+66180,u3YyueUc,প্রাইভেট মেডিকেল,66180@instance.com,3012,66,66180,thana
+6670,PV0nfFBH,বিমানবন্দর থানা,6670@instance.com,3012,66,6670,thana
+6680,g6slJWVB,বুরহান উদ্দিন রহ. থানা,6680@instance.com,3012,66,6680,thana
+66120,6BzHULzx,মদন মোহন কলেজ,66120@instance.com,3012,66,66120,thana
+66210,TUFkaBxz,মিরাবাজার স্কুল অ্যান্ড কলেজ,66210@instance.com,3012,66,66210,thana
+66150,Wl9XqtO7,শাহজালাল জামেয়া ইসলামিয়া কামিল মাদরাসা,66150@instance.com,3012,66,66150,thana
+6640,23s6kheW,শাহপরান থানা পশ্চিম,6640@instance.com,3012,66,6640,thana
+6630,xjNipZ8y,শাহপরান থানা পূর্ব,6630@instance.com,3012,66,6630,thana
+66240,MN2VBZQc,শিশুকল্যাণ,66240@instance.com,3012,66,66240,thana
+66110,EhS7e7im,সিলেট ওসমানী মেডিকেল কলেজ,66110@instance.com,3012,66,66110,thana
+66160,tgDqVLER,সিলেট কৃষি বিশ্ববিদ্যালয়,66160@instance.com,3012,66,66160,thana
+66220,uv4wnyWV,সিলেট পলিটেকনিক ইন্সিটিটিউট,66220@instance.com,3012,66,66220,thana
+66140,XonxTFws,সিলেট সরকারি আলিয়া মাদরাসা,66140@instance.com,3012,66,66140,thana
+66130,0BY6jNe4,সিলেট সরকারি কলেজ,66130@instance.com,3012,66,66130,thana
+66200,3ia9urM7,স্কুল বিভাগ,66200@instance.com,3012,66,66200,thana
+6790,1V1QdsWW,অঙ্গীকার সাংস্কৃতিক সংসদ,6790@instance.com,3012,67,6790,thana
+6740,W78uZ7oM,খান জাহান আলী থানা,6740@instance.com,3012,67,6740,thana
+6760,yQhupPM0,জালালাবাদ থানা পশ্চিম,6760@instance.com,3012,67,6760,thana
+6750,jU4eZUAp,জালালাবাদ থানা পূর্ব,6750@instance.com,3012,67,6750,thana
+6780,CY3ItmLy,মাদ্রাসা বিভাগ,6780@instance.com,3012,67,6780,thana
+6730,xVlaL1SI,শহীদ আব্দুল মুনিম বেলাল থানা,6730@instance.com,3012,67,6730,thana
+6710,b3FFDxYv,শহীদ মীর কাশেম আলী থানা,6710@instance.com,3012,67,6710,thana
+6720,3l8KdWZp,শাহ মাখদুম থানা,6720@instance.com,3012,67,6720,thana
+67100,2J7z2ox6,সি-১,67100@instance.com,3012,67,67100,thana
+67110,t30sboIA,সি-২,67110@instance.com,3012,67,67110,thana
+67120,mBdnGRGV,সুরমা থানা,67120@instance.com,3012,67,67120,thana
+6770,FbT7FNZM,স্কুল ও কলেজ বিভাগ,6770@instance.com,3012,67,6770,thana
+6820,M0JcOZOT,কানাইঘাট উপজেলা পশ্চিম,6820@instance.com,3012,68,6820,thana
+6840,SZr5OJVG,কানাইঘাট উপজেলা পূর্ব,6840@instance.com,3012,68,6840,thana
+6830,FnlmUFX2,কানাইঘাট উপজেলা সদর,6830@instance.com,3012,68,6830,thana
+6810,mGrD50Cg,গাছবাড়ী,6810@instance.com,3012,68,6810,thana
+6890,kGTkfQjq,গোলাপগঞ্জ পশ্চিম,6890@instance.com,3012,68,6890,thana
+68100,2KfX4RRU,গোলাপগঞ্জ পূর্ব,68100@instance.com,3012,68,68100,thana
+68120,GXDtVNwN,গোয়াইনঘাট উপজেলা,68120@instance.com,3012,68,68120,thana
+68130,GifosvA4,জকিগঞ্জ উপজেলা,68130@instance.com,3012,68,68130,thana
+68110,S9FiNvYG,জৈন্তাপুর উপজেলা,68110@instance.com,3012,68,68110,thana
+6860,linX5vLs,বিয়ানিবাজার উত্তর,6860@instance.com,3012,68,6860,thana
+6850,jOn7Y56l,বিয়ানিবাজার দক্ষিন,6850@instance.com,3012,68,6850,thana
+6880,mqLqyoZS,বিয়ানিবাজার পশ্চিম,6880@instance.com,3012,68,6880,thana
+6870,2Wf2wCAB,বিয়ানিবাজার সরকারী কলেজ,6870@instance.com,3012,68,6870,thana
+68140,Y8p7QwU5,সুরমা সাংস্কৃতিক সংসদ,68140@instance.com,3012,68,68140,thana
+6970,ViBPNI3x,ওসমানীনগর উপজেলা আদর্শ শাখা,6970@instance.com,3012,69,6970,thana
+69160,cetGE0d9,কোম্পানিগঞ্জ উপজেলা আদর্শ শাখা,69160@instance.com,3012,69,69160,thana
+6990,UtSW3ALI,তাজপুর ডিগ্রি কলেজ,6990@instance.com,3012,69,6990,thana
+6980,kn2Hhpnv,দক্ষিন সুরমা থানা আদর্শ শাখা,6980@instance.com,3012,69,6980,thana
+69180,CU8hkSwL,নিসর্গ শিল্পীগোষ্ঠী,69180@instance.com,3012,69,69180,thana
+69170,ZdiIaD4g,ফতেহপুর কামিল মাদ্রাসা,69170@instance.com,3012,69,69170,thana
+6910,6DkF3jyw,ফেঞ্চুগঞ্জ উপজেলা আদর্শ শাখা,6910@instance.com,3012,69,6910,thana
+6920,hOaiSfXQ,ফেঞ্চুগঞ্জ সরকারি কলেজ,6920@instance.com,3012,69,6920,thana
+6960,wUAkhm8W,বালাগঞ্জ উপজেলা উত্তর আদর্শ শাখা,6960@instance.com,3012,69,6960,thana
+6950,lkRFnJSb,বালাগঞ্জ উপজেলা দক্ষিন,6950@instance.com,3012,69,6950,thana
+69120,jNdgbvvG,বিশ্বনাথ উপজেলা উত্তর,69120@instance.com,3012,69,69120,thana
+69110,G8j0Kqcb,বিশ্বনাথ উপজেলা পশ্চিম,69110@instance.com,3012,69,69110,thana
+69100,yhwmRba6,বিশ্বনাথ পৌরসভা আদর্শ শাখা,69100@instance.com,3012,69,69100,thana
+6940,YoMqKIEx,মোগলাবাজার থানা পশ্চিম আদর্শ শাখা,6940@instance.com,3012,69,6940,thana
+6930,aZ6mmQNk,মোগলাবাজার থানা পুর্ব,6930@instance.com,3012,69,6930,thana
+69140,0nnlMJlj,সদর উপজেলা উত্তর,69140@instance.com,3012,69,69140,thana
+69130,8EqAVPAC,সদর উপজেলা দক্ষিন আদর্শ শাখা,69130@instance.com,3012,69,69130,thana
+69150,J80gVc0i,সদর উপজেলা পূর্ব আদর্শ শাখা,69150@instance.com,3012,69,69150,thana
+7020,ixYwMu8S,ছাতক উপজেলা আদর্শ শাখা,7020@instance.com,3012,70,7020,thana
+70150,4AWZfevW,ছাতক পৌরসভা থানা শাখা,70150@instance.com,3012,70,70150,thana
+7030,kC85Vkhk,জগন্নাথপুর উপজেলা আদর্শ  শাখা,7030@instance.com,3012,70,7030,thana
+70100,VrKIRneL,জামালগঞ্জ উপজেলা,70100@instance.com,3012,70,70100,thana
+7080,GITdV3NJ,তাহিরপুর উপজেলা  শাখা,7080@instance.com,3012,70,7080,thana
+7040,H4Jwb7tj,দক্ষিন ছাতক উপজেলা আদর্শ শাখা,7040@instance.com,3012,70,7040,thana
+70120,uuGK6EJR,দিরাই উপজেলা,70120@instance.com,3012,70,70120,thana
+7050,6KTFBnUg,দোয়ারা বাজার উপজেলা আদর্শ শাখা,7050@instance.com,3012,70,7050,thana
+70130,wh05vE8r,ধর্মপাশা উপজেলা,70130@instance.com,3012,70,70130,thana
+7060,mG4GWjKN,বিশ্বম্ভরপুর উপজেলা,7060@instance.com,3012,70,7060,thana
+70160,7BYd9Pps,মধ্যনগর উপজেলা,70160@instance.com,3012,70,70160,thana
+70170,PbFFODzI,"রংধনু শিল্পীগোষ্টী, সুনামগঞ্জ",70170@instance.com,3012,70,70170,thana
+70110,B375z4F4,শান্তিগঞ্জ ‍উপজেলা,70110@instance.com,3012,70,70110,thana
+70140,Zk5U0te9,শাল্লা উপজেলা,70140@instance.com,3012,70,70140,thana
+70180,L1OulluY,শিশুকল্যান,70180@instance.com,3012,70,70180,thana
+7070,JO3WgIhf,সুনামগঞ্জ  সদর উপজেলা  শাখা,7070@instance.com,3012,70,7070,thana
+7010,9tI4VpMr,সুনামগঞ্জ পৌরসভা,7010@instance.com,3012,70,7010,thana
+7090,ucDzByEn,সুনামগঞ্জ সরকারী কলেজ,7090@instance.com,3012,70,7090,thana
+70210,U3z9YDEK,সুনামগঞ্জ স্কুল বিভাগ,70210@instance.com,3012,70,70210,thana
+71301,O26P102v,মৌলভীবাজার টাউন কামিল মাদরাসা,71301@instance.com,3012,71,71301,thana
+71901,2n7sOlG7,মৌলভীবাজার পলিটেকনিক,71901@instance.com,3012,71,71901,thana
+71201,8qX1EQpG,মৌলভীবাজার পৌরসভা,71201@instance.com,3012,71,71201,thana
+71401,wZyUkKYz,মৌলভীবাজার সদর উত্তর,71401@instance.com,3012,71,71401,thana
+71501,jCS9fEbF,মৌলভীবাজার সদর দক্ষিণ,71501@instance.com,3012,71,71501,thana
+71101,oz23EdKC,মৌলভীবাজার সরকারি কলেজ,71101@instance.com,3012,71,71101,thana
+71100,KJmfitJ1,মৌলভীবাজার স্কুল বিভাগ,71100@instance.com,3012,71,71100,thana
+71130,5OQsO8UW,মৌসাফ,71130@instance.com,3012,71,71130,thana
+71120,LrRFusse,মৌসাস,71120@instance.com,3012,71,71120,thana
+71601,f3QJn5R7,রাজনগর উপজেলা,71601@instance.com,3012,71,71601,thana
+71701,0u4iIHDt,রাজনগর উপজেলা উত্তর,71701@instance.com,3012,71,71701,thana
+71801,UnjELGVd,রাজনগর উপজেলা দক্ষিণ,71801@instance.com,3012,71,71801,thana
+71140,7dAsYFdh,শিক্ষা বিভাগ,71140@instance.com,3012,71,71140,thana
+71110,vpwZmNmo,শিশু কল্যান,71110@instance.com,3012,71,71110,thana
+7230,kuI1vY8Q,কমলগঞ্জ উত্তর,7230@instance.com,3012,72,7230,thana
+7220,gjzZnK1g,কমলগঞ্জ দক্ষিণ,7220@instance.com,3012,72,7220,thana
+7240,Sy8qRgYk,কুলাউড়া উপজেলা,7240@instance.com,3012,72,7240,thana
+7260,KUKidPBa,কুলাউড়া দক্ষিণ,7260@instance.com,3012,72,7260,thana
+7250,EzvOPAdk,কুলাউড়া পশ্চিম,7250@instance.com,3012,72,7250,thana
+72150,KQGEyhYU,জলপ্রপাত শিল্পী গুষ্ঠী,72150@instance.com,3012,72,72150,thana
+7270,4sN5er8f,জুড়ী উপজেলা,7270@instance.com,3012,72,7270,thana
+7290,ZheL8xYJ,জুড়ী দক্ষিণ,7290@instance.com,3012,72,7290,thana
+7280,Ih5dgTvg,জুড়ী পূর্ব,7280@instance.com,3012,72,7280,thana
+72110,SgB3rYPE,বড়লেখা উত্তর,72110@instance.com,3012,72,72110,thana
+72120,iGhOGpGY,বড়লেখা দক্ষিণ,72120@instance.com,3012,72,72120,thana
+72130,UYmWbCGc,বড়লেখা পশ্চিম,72130@instance.com,3012,72,72130,thana
+72100,fGceYMqe,বড়লেখা শহর,72100@instance.com,3012,72,72100,thana
+7210,z6QV83Wl,শ্রীমঙ্গল উপজেলা,7210@instance.com,3012,72,7210,thana
+72140,vtIekXDn,সুজাউল মাদ্রাসা,72140@instance.com,3012,72,72140,thana
+7350,xxP94vZN,আজমীরিগঞ্জ উপজেলা,7350@instance.com,3012,73,7350,thana
+73100,LGKWnPbO,চুনারুঘাট উপজেলা,73100@instance.com,3012,73,73100,thana
+7360,VRYRqctL,নবিগঞ্জ পুর্ব,7360@instance.com,3012,73,7360,thana
+7370,zOq1up00,নবীগঞ্জ উপজেলা পশ্চীম,7370@instance.com,3012,73,7370,thana
+73150,3y0jJn2d,পলিটেকনিক ইনিস্টিটিঊট,73150@instance.com,3012,73,73150,thana
+7340,5us2ppUF,বানিয়াচং উপজেলা,7340@instance.com,3012,73,7340,thana
+7380,6YQgX0ZI,বাহুবল ঊপজেলা,7380@instance.com,3012,73,7380,thana
+7310,BClEgkaR,বৃন্দাবন সরকারি কলেজ,7310@instance.com,3012,73,7310,thana
+73110,WOMbfkuX,মাধবপুর উপজেলা,73110@instance.com,3012,73,73110,thana
+73120,SFhFnd4V,লাখাই উপজেলা,73120@instance.com,3012,73,73120,thana
+73140,txgeJUE7,শায়েস্তাগঞ্জ কামিল মাত্রাসা,73140@instance.com,3012,73,73140,thana
+73130,LiB6f305,শায়েস্তাগন্জ  উপজেলা,73130@instance.com,3012,73,73130,thana
+73160,tstXUD1F,স্কুল বিভাগ,73160@instance.com,3012,73,73160,thana
+7320,TkMM5cJz,হবিগঞ্জ পৌরসভা,7320@instance.com,3012,73,7320,thana
+7330,YA3bMMhJ,হবিগঞ্জ সদর ঊ্পজেলা,7330@instance.com,3012,73,7330,thana
+7470,4hk1ICjE,ইন্সটিটিউট অব হেল্পথ টেকনোলোজি,7470@instance.com,3008,74,7470,thana
+7440,mcpV6zpP,ইসলামী ব্যাংক মেডিকেল কলেজ,7440@instance.com,3008,74,7440,thana
+74210,FNuFyHHz,কর্ণহার,74210@instance.com,3008,74,74210,thana
+74120,RipOJ0iE,কাশিয়াডাঙ্গা,74120@instance.com,3008,74,74120,thana
+74200,mPALxEdc,দামকুড়া,74200@instance.com,3008,74,74200,thana
+7450,xlbuYBwX,নিউ গভঃ ডিগ্রী কলেজ,7450@instance.com,3008,74,7450,thana
+74190,HwHbVBXi,পবা,74190@instance.com,3008,74,74190,thana
+74110,88VHbsEN,প্রত্যয় শিল্পীগোষ্ঠী,74110@instance.com,3008,74,74110,thana
+74230,qSArac4J,প্রাইভেট বিশ্ববিদ্যালয় জোন,74230@instance.com,3008,74,74230,thana
+74140,dD6cdeVv,বোয়লিয়া পশ্চিম,74140@instance.com,3008,74,74140,thana
+74130,1FOzK06k,বোয়ালিয়া উত্তর,74130@instance.com,3008,74,74130,thana
+74150,OqPCAOyC,বোয়ালিয়া পুর্ব,74150@instance.com,3008,74,74150,thana
+74160,G8rG57dj,বোয়ালিয়া সাংগঠনিক,74160@instance.com,3008,74,74160,thana
+74100,JQKt1mHi,মদিনাতুল উলুম কামিল মাদ্রাসা,74100@instance.com,3008,74,74100,thana
+74180,45nDyXBd,রাজপাড়া,74180@instance.com,3008,74,74180,thana
+7420,MFddGqc4,রাজশাহী কলেজ,7420@instance.com,3008,74,7420,thana
+7480,JVodcfNL,রাজশাহী পলিটেকনিক ইন্সটিটিউট,7480@instance.com,3008,74,7480,thana
+7410,lGI4JeOp,রাজশাহী মেডিকেল কলেজ,7410@instance.com,3008,74,7410,thana
+7460,7uuc9GLv,রাজশাহী সিটি কলেজ,7460@instance.com,3008,74,7460,thana
+74170,BLBqbb6S,শাহমখদুম,74170@instance.com,3008,74,74170,thana
+7430,grlLiqbG,শিশুকল্যাণ,7430@instance.com,3008,74,7430,thana
+74220,mTuaVTxH,সাংবাদিক ফোরাম,74220@instance.com,3008,74,74220,thana
+7490,aUEaSeFi,স্কুল বিভাগ,7490@instance.com,3008,74,7490,thana
+75160,WTJTq6Dj,আইন ও ভূমি অনুষদ,75160@instance.com,3007,75,75160,thana
+75330,vir2JYqh,আদর্শ বিভাগ,75330@instance.com,3007,75,75330,thana
+75130,JNTVooPD,কলা অনুষদ,75130@instance.com,3007,75,75130,thana
+75260,T3dmxNOy,কাটাখালী পৌরসভা,75260@instance.com,3007,75,75260,thana
+75200,8yVNydkJ,কৃষি ও চারুকলা,75200@instance.com,3007,75,75200,thana
+75180,hEBpE6AM,জীব ও ভূ-বিজ্ঞান অনুষদ,75180@instance.com,3007,75,75180,thana
+7560,0Km2vlb1,নবাব আব্দুল লতিফ হল,7560@instance.com,3007,75,7560,thana
+75280,UUaS9S1g,পারিলা ইউনিয়ন,75280@instance.com,3007,75,75280,thana
+75190,exiYgfi0,প্রকৌশল অনুষদ,75190@instance.com,3007,75,75190,thana
+75290,MKMlVVyS,বিকল্প সাহিত্য সাংস্কৃতিক সংসদ,75290@instance.com,3007,75,75290,thana
+75170,7srQZabp,বিজ্ঞান অনুষদ,75170@instance.com,3007,75,75170,thana
+7590,IZ5bDOjT,বিজয়-২৪ হল,7590@instance.com,3007,75,7590,thana
+75100,2TLA5L5G,মতিহার হল,75100@instance.com,3007,75,75100,thana
+7530,isKR6F5r,মাদারবখশ হল,7530@instance.com,3007,75,7530,thana
+75120,cco6c6ia,মেসজোন,75120@instance.com,3007,75,75120,thana
+75150,YvYnt6jz,রবীন্দ্র বিজনেস অনুষদ,75150@instance.com,3007,75,75150,thana
+7520,uPK6H3gm,শহীদ জিয়াউর রহমান হল,7520@instance.com,3007,75,7520,thana
+7550,DyHT31zV,শহীদ শামসুজ্জোহা হল,7550@instance.com,3007,75,7550,thana
+7540,V7wJrvIG,শহীদ সোহরাওয়ার্দী হল,7540@instance.com,3007,75,7540,thana
+7510,RsIr4rOM,শহীদ হবিবুর রহমান হল,7510@instance.com,3007,75,7510,thana
+7580,XqLAXX1v,শাহ মখদুম হল,7580@instance.com,3007,75,7580,thana
+75320,hCeuMjIJ,শিশুকল্যাণ,75320@instance.com,3007,75,75320,thana
+75110,d6HOJWad,শের ই বাংলা হল,75110@instance.com,3007,75,75110,thana
+75310,7dUceciy,সন্দীপন সাহিত্য পরিষদ,75310@instance.com,3007,75,75310,thana
+75140,4zM7ovUW,সামাজিক বিজ্ঞান অনুষদ,75140@instance.com,3007,75,75140,thana
+75340,pONVeVc2,সিডিসি-১,75340@instance.com,3007,75,75340,thana
+75350,nzF3thlS,সিডিসি-২,75350@instance.com,3007,75,75350,thana
+7570,rfdmQYQG,সৈয়দ আমীর আলী হল,7570@instance.com,3007,75,7570,thana
+75300,SXjsfP5a,স্কুল বিভাগ,75300@instance.com,3007,75,75300,thana
+75270,poTllvS7,হরিয়ান ইউনিয়ন,75270@instance.com,3007,75,75270,thana
+75210,NxjtWrK4,২৬ নং ওয়ার্ড,75210@instance.com,3007,75,75210,thana
+75220,nrPzU2jK,২৮ নং ওয়ার্ড,75220@instance.com,3007,75,75220,thana
+75230,XPWbHZ7Y,২৯ নং ওয়ার্ড,75230@instance.com,3007,75,75230,thana
+75240,Eby9rj7m,৩০ নং ওয়ার্ড উত্তর,75240@instance.com,3007,75,75240,thana
+75250,Fxm30Jqj,৩০ নং ওয়ার্ড দক্ষিণ,75250@instance.com,3007,75,75250,thana
+7640,VYh3WKaY,আলীপুর সাংগঠনিক থানা শাখা,7640@instance.com,3007,76,7640,thana
+76110,g1l5bD9C,চারঘাট আদর্শ থানা শাখা,76110@instance.com,3007,76,76110,thana
+7630,RwEUEbtU,তাহেরপুর আদর্শ থানা শাখা,7630@instance.com,3007,76,7630,thana
+7650,wbJ2raIs,দূর্গাপুর আদর্শ থানা শাখা,7650@instance.com,3007,76,7650,thana
+76100,8ZoOSdJ7,নন্দনগাছী আদর্শ থানা শাখা,76100@instance.com,3007,76,76100,thana
+7660,EsnxfBKz,পুঠিয়া আদর্শ থানা শাখা,7660@instance.com,3007,76,7660,thana
+7610,jAUKspDT,বাগমারা পশ্চিম সাংগঠনিক থানা শাখা,7610@instance.com,3007,76,7610,thana
+7620,bJ9fjlhQ,বাগমারা পূর্ব আদর্শ  থানা শাখা,7620@instance.com,3007,76,7620,thana
+76120,hnE3nf7Z,বাঘা উত্তর সাংগঠনিক থানা শাখা,76120@instance.com,3007,76,76120,thana
+76130,1Gq2rJvK,বাঘা দক্ষিণ আদর্শ থানা শাখা,76130@instance.com,3007,76,76130,thana
+7670,kd7LCmM2,বানেশ্বর আদর্শ থানা শাখা,7670@instance.com,3007,76,7670,thana
+7680,2emlazov,বেলপুকুর আদর্শ থানা শাখা,7680@instance.com,3007,76,7680,thana
+7690,n560eJzf,হলিদাগাছী সাংগঠনিক থানা শাখা,7690@instance.com,3007,76,7690,thana
+7740,GQg5y43d,কাকনহাট সাংগঠনিক থানা,7740@instance.com,3008,77,7740,thana
+7720,x1hak792,গোদাগাড়ী পশ্চিম থানা,7720@instance.com,3008,77,7720,thana
+7730,tUG12Nxm,গোদাগাড়ী পূর্ব থানা,7730@instance.com,3008,77,7730,thana
+7710,NOfjiRxJ,গোদাগাড়ী সদর থানা,7710@instance.com,3008,77,7710,thana
+7770,OnUIoIgu,তানোর দক্ষিণ থানা,7770@instance.com,3008,77,7770,thana
+7750,x2qAodIp,তানোর পশ্চিম থানা,7750@instance.com,3008,77,7750,thana
+7760,oRZxOxK3,তানোর পূর্ব  থানা,7760@instance.com,3008,77,7760,thana
+77100,1tQ4D7CX,মোহনপুর উত্তর থানা,77100@instance.com,3008,77,77100,thana
+7790,KieAqRQR,মোহনপুর পশ্চিম থানা,7790@instance.com,3008,77,7790,thana
+7780,wVOZ4gWi,মোহনপুর পূর্ব থানা,7780@instance.com,3008,77,7780,thana
+7870,N35a1CPX,গুরুদাসপুর,7870@instance.com,3007,78,7870,thana
+78110,GwPGoKQr,নবাব সিরাজউদ্দৌলা কলেজ নাটোর,78110@instance.com,3007,78,78110,thana
+78120,5DGu9ngy,নলডাঙ্গা,78120@instance.com,3007,78,78120,thana
+78100,feYGkRV4,নাটোর শহর,78100@instance.com,3007,78,78100,thana
+7890,UKOptFag,নাটোর সদর উত্তর,7890@instance.com,3007,78,7890,thana
+7880,SRVXnVqE,নাটোর সদর দক্ষিণ,7880@instance.com,3007,78,7880,thana
+7850,jnaQZMxs,বনপাড়া,7850@instance.com,3007,78,7850,thana
+7830,mGkcxwT3,বাগাতিপাড়া,7830@instance.com,3007,78,7830,thana
+7860,9GD8Tuth,বড়াইগ্রাম,7860@instance.com,3007,78,7860,thana
+7840,jl9NUId5,বড়াইগ্রাম দক্ষিণ,7840@instance.com,3007,78,7840,thana
+7810,Mo5EaxFT,লালপুর পশ্চিম,7810@instance.com,3007,78,7810,thana
+7820,H4okdfvw,লালপুর পূর্ব,7820@instance.com,3007,78,7820,thana
+78140,ay9sHwRm,শিশু কল্যাণ,78140@instance.com,3007,78,78140,thana
+78130,LED0LStC,সিংড়া,78130@instance.com,3007,78,78130,thana
+79210,XmEvJSas,অভিযাত্রী শিল্পীগোষ্ঠী,79210@instance.com,3008,79,79210,thana
+79260,VPOsFsSt,আমনুরা,79260@instance.com,3008,79,79260,thana
+79250,yaJMLriH,কামিল মাদ্রাসা,79250@instance.com,3008,79,79250,thana
+79100,f2deMGYY,নবাবগঞ্জ কলেজ,79100@instance.com,3008,79,79100,thana
+79200,TIgtqVCJ,পলিটেকনিক,79200@instance.com,3008,79,79200,thana
+79130,P84nFg0L,পৌর দক্ষিণ,79130@instance.com,3008,79,79130,thana
+79110,cIPokwi4,পৌর পশ্চিম,79110@instance.com,3008,79,79110,thana
+79120,5qEKvsTv,পৌর পূর্ব,79120@instance.com,3008,79,79120,thana
+79190,lQmLWSuu,মহারাজপুর,79190@instance.com,3008,79,79190,thana
+79220,j8ohqeLv,রানিহাটি,79220@instance.com,3008,79,79220,thana
+79160,pEi4lsH7,শিশুকল্যাণ,79160@instance.com,3008,79,79160,thana
+79170,xoJD0YaO,সদর উত্তর,79170@instance.com,3008,79,79170,thana
+79230,vUboHRo2,সদর দক্ষিণ,79230@instance.com,3008,79,79230,thana
+79140,Z90Bso0s,সদর পশ্চিম,79140@instance.com,3008,79,79140,thana
+79150,9aWBkiLr,সদর পূর্ব,79150@instance.com,3008,79,79150,thana
+79180,kwDgkttT,স্কুল বিভাগ,79180@instance.com,3008,79,79180,thana
+79240,LGtvoxeZ,হেফজুল মাদ্রাসা,79240@instance.com,3008,79,79240,thana
+8010,5DftXL3k,আদিনা কলেজ,8010@instance.com,3008,80,8010,thana
+80100,3RBi9oCW,ঘোড়াপাখিয়া,80100@instance.com,3008,80,80100,thana
+8070,BIV0ioCp,চককীর্তি,8070@instance.com,3008,80,8070,thana
+8080,cVBtvzxj,ধাইনগর,8080@instance.com,3008,80,8080,thana
+8090,yzUTG34J,বিনোদপুর,8090@instance.com,3008,80,8090,thana
+8040,Od18n2oc,শিবগঞ্জ উত্তর,8040@instance.com,3008,80,8040,thana
+8060,R4bLXEWJ,শিবগঞ্জ দক্ষিণ,8060@instance.com,3008,80,8060,thana
+8050,ITPkV97m,শিবগঞ্জ পশ্চিম,8050@instance.com,3008,80,8050,thana
+8020,Dqcs6tdw,শিবগঞ্জ পৌরসভা,8020@instance.com,3008,80,8020,thana
+80130,kmYdDlqm,শিল্পী গোষ্ঠী,80130@instance.com,3008,80,80130,thana
+80120,VESvXEVM,শিশু কল্যাণ,80120@instance.com,3008,80,80120,thana
+8030,x8B4zMyk,সোনামসজিদ,8030@instance.com,3008,80,8030,thana
+80110,vzEvVIfr,স্কুল বিভাগ,80110@instance.com,3008,80,80110,thana
+81110,dtriWv9d,আত্রাই উপজেলা শাখা,81110@instance.com,3008,81,81110,thana
+81220,hRKBVQyM,আল হেলাল ইসলামি একাডেমি,81220@instance.com,3008,81,81220,thana
+81160,hvHKfNGn,টাওয়ার,81160@instance.com,3008,81,81160,thana
+81140,IrymgUl2,দিশা সাহিত্য সাংস্কৃতি সংসদ,81140@instance.com,3008,81,81140,thana
+81250,xRRz1rMV,ধামইরহাট উপজেলা,81250@instance.com,3008,81,81250,thana
+81501,IxP0wnNG,নওগাঁ পলিটেকনিক ইনস্টিটিউট,81501@instance.com,3008,81,81501,thana
+81301,oiZ5x0xj,নওগাঁ পৌরসভা,81301@instance.com,3008,81,81301,thana
+81260,lT2szfU5,নওগাঁ মেডিকেল কলেজ,81260@instance.com,3008,81,81260,thana
+81401,AsAkLwGD,নওগাঁ সদর,81401@instance.com,3008,81,81401,thana
+81201,3WlJ5BWb,নওগাঁ সরকারি কলেজ,81201@instance.com,3008,81,81201,thana
+81101,UuOibRjB,"নামাজগড় গাউসুল আজম কামিল মাদরাসা,নওগাঁ।",81101@instance.com,3008,81,81101,thana
+81170,gaHLOmid,নিয়ামাতপুর  উত্তর,81170@instance.com,3008,81,81170,thana
+81180,wZF2XjDj,নিয়ামাতপুর দক্ষিণ,81180@instance.com,3008,81,81180,thana
+81240,BK9Onh5L,পত্নীতলা উপজেলা,81240@instance.com,3008,81,81240,thana
+81190,lpDoIKXu,পোরশা উপজেলা,81190@instance.com,3008,81,81190,thana
+81100,bEnX5P5v,বদলগাছি উপজেলা শাখা,81100@instance.com,3008,81,81100,thana
+8190,fSk3VSs6,মহাদেবপুর উপজেলা শাখা,8190@instance.com,3008,81,8190,thana
+8170,2mrYQe6n,মান্দা উপজেলা পশ্চিম,8170@instance.com,3008,81,8170,thana
+8180,ynV77j9L,মান্দা উপজেলা পূর্ব,8180@instance.com,3008,81,8180,thana
+81120,aKDRI2yQ,রাণীনগর উপজেলা শাখা,81120@instance.com,3008,81,81120,thana
+81230,kV14D6nv,শহীদ আব্দুল জব্বার,81230@instance.com,3008,81,81230,thana
+81130,OIQktMVi,শিশু কল্যাণ,81130@instance.com,3008,81,81130,thana
+81150,Jt5JtrJS,সাংবাদিক ফোরাম,81150@instance.com,3008,81,81150,thana
+81200,1G7jC6KW,সাপাহার উপজেলা,81200@instance.com,3008,81,81200,thana
+81210,GkXecITY,সাপাহার কলেজ শাখা,81210@instance.com,3008,81,81210,thana
+8160,5GqFhM2l,স্কুল বিভাগ,8160@instance.com,3008,81,8160,thana
+83220,MbWkoJhZ,অনির্বাণ,83220@instance.com,3007,83,83220,thana
+83170,OZmMNtAb,আলিয়া মাদরাসা,83170@instance.com,3007,83,83170,thana
+83110,5cs9ZZta,উপশহর,83110@instance.com,3007,83,83110,thana
+83210,R236glnS,কলেজ বিভাগ,83210@instance.com,3007,83,83210,thana
+83240,pPZtO1wp,দাপুনিয়া,83240@instance.com,3007,83,83240,thana
+83130,k0gmY7eJ,দারুল আমান ট্রাস্ট,83130@instance.com,3007,83,83130,thana
+8340,HKiykSuH,দোগাচি-পশ্চিম,8340@instance.com,3007,83,8340,thana
+8320,7ldjHH61,দোগাছি - ভাড়ারা অঞ্চল,8320@instance.com,3007,83,8320,thana
+83140,Zurs6aKi,পাবনা টেক্সটাইল ইঞ্জিনিয়ারিং কলেজ,83140@instance.com,3007,83,83140,thana
+83160,Jdkq1rQI,পাবনা পলিটেকনিক ইনস্টিটিউট,83160@instance.com,3007,83,83160,thana
+83180,7HWSPjzu,পাবনা মেডিকেল কলেজ,83180@instance.com,3007,83,83180,thana
+83120,Jltpbks1,পাবিপ্রবি,83120@instance.com,3007,83,83120,thana
+8390,LwfWbB03,পৌর দক্ষিণ,8390@instance.com,3007,83,8390,thana
+8380,4yD6L7Gk,পৌর পশ্চিম,8380@instance.com,3007,83,8380,thana
+83100,DccZi8Ks,মালঞ্চি,83100@instance.com,3007,83,83100,thana
+8370,OnZZkFBd,মালিগাছা,8370@instance.com,3007,83,8370,thana
+83190,5UMEWcLr,শিক্ষা বিভাগ,83190@instance.com,3007,83,83190,thana
+83230,DfZvxOqJ,শিশুকল্যাণ,83230@instance.com,3007,83,83230,thana
+8350,gL8P9Jbw,সদর দক্ষিণ,8350@instance.com,3007,83,8350,thana
+8310,PhcQFrNN,সদরপূর্ব,8310@instance.com,3007,83,8310,thana
+83150,7TxUu1JJ,সরকারি এডওয়ার্ড কলেজ,83150@instance.com,3007,83,83150,thana
+83200,94bTi3QD,স্কুল বিভাগ,83200@instance.com,3007,83,83200,thana
+8360,Q49EAeAa,হিমাইতপুর,8360@instance.com,3007,83,8360,thana
+84260,qBLaY9N4,আটঘরিয়া উপজেলা পশ্চিম,84260@instance.com,3007,84,84260,thana
+84250,V6vliPOh,আটঘরিয়া উপজেলা পূর্ব,84250@instance.com,3007,84,84250,thana
+8460,0og5K3c2,আতাইকুলা সাংগঠনিক থানা শাখা,8460@instance.com,3007,84,8460,thana
+84100,QcaRIPq9,আমিনপুর থানা শাখা,84100@instance.com,3007,84,84100,thana
+84210,tcpTXsXB,ঈশ্বরদী উপজেলা পশ্চিম,84210@instance.com,3007,84,84210,thana
+84220,xcXdE1uo,ঈশ্বরদী উপজেলা পূর্ব,84220@instance.com,3007,84,84220,thana
+84290,7N74YThN,ঈশ্বরদী সরকারী কলেজ,84290@instance.com,3007,84,84290,thana
+8450,60luEYGj,কাশিনাথপুর সাংগঠনিক থানা শাখা,8450@instance.com,3007,84,8450,thana
+84280,11e1UiDB,চাটমোহর উপজেলা,84280@instance.com,3007,84,84280,thana
+8480,X3zHAG3y,ধুলাউড়ী কাওছাড়িয়া কামিল মাদরাসা,8480@instance.com,3007,84,8480,thana
+8440,ZpyjmW9f,ফরিদপুর উপজেলা শাখা,8440@instance.com,3007,84,8440,thana
+8420,55fXMwZw,বেড়া উপজেলা শাখা,8420@instance.com,3007,84,8420,thana
+84270,o5Ua5rN0,ভাঙ্গুরা উপজেলা,84270@instance.com,3007,84,84270,thana
+8470,vQyLubJi,সদর পূর্ব থানা শাখা,8470@instance.com,3007,84,8470,thana
+8410,Ex1FXBIe,সাথিঁয়া উপজেলা শাখা,8410@instance.com,3007,84,8410,thana
+8430,ekvolH7g,সুজানগর উপজেলা শাখা,8430@instance.com,3007,84,8430,thana
+84110,J5G3QoIw,সৃজন সাহিত্য সাংস্কৃতিক সংসদ,84110@instance.com,3007,84,84110,thana
+8620,LgT78uLV,ইসলামিয়া সরকারি কলেজ,8620@instance.com,3006,86,8620,thana
+86150,CDRNx8j8,খোকশাবাড়ি,86150@instance.com,3006,86,86150,thana
+86160,62ANDHN5,ছোনগাছা,86160@instance.com,3006,86,86160,thana
+86130,ngbR8XRk,পৌরসভা উত্তর,86130@instance.com,3006,86,86130,thana
+86140,gA4lrqjD,পৌরসভা দক্ষিণ,86140@instance.com,3006,86,86140,thana
+86120,ZKg9W2UE,পৌরসভা পশ্চিম,86120@instance.com,3006,86,86120,thana
+86110,IOnGhXa8,পৌরসভা পূর্ব,86110@instance.com,3006,86,86110,thana
+86170,IB23k32B,বহুলী উত্তর,86170@instance.com,3006,86,86170,thana
+86180,JQEPlhha,বহুলী দক্ষিণ,86180@instance.com,3006,86,86180,thana
+86100,XfvQycCA,ব্যতিক্রম সাহিত্য সাংস্কৃতিক সংসদ,86100@instance.com,3006,86,86100,thana
+8680,bXQqIgvQ,মাদ্রাসা অঞ্চল,8680@instance.com,3006,86,8680,thana
+8670,d1eOHmKx,মাদ্রাসা বিভাগ,8670@instance.com,3006,86,8670,thana
+8690,KsEDipkY,শিশুকল্যাণ,8690@instance.com,3006,86,8690,thana
+86190,Q78khC2Z,শিয়ালকোল পশ্চিম,86190@instance.com,3006,86,86190,thana
+86200,UJ3lBDVq,শিয়ালকোল পূর্ব,86200@instance.com,3006,86,86200,thana
+86220,2P3qZeih,সায়দাবাদ,86220@instance.com,3006,86,86220,thana
+8640,3tmcJtGm,সিরাজগঞ্জ পলিটেকনিক ইন্সটিটিউট,8640@instance.com,3006,86,8640,thana
+8630,5YhdNbQo,সিরাজগঞ্জ মেডিকেল-জোন,8630@instance.com,3006,86,8630,thana
+8610,UgGXEyaT,সিরাজগঞ্জ সরকারী কলেজ,8610@instance.com,3006,86,8610,thana
+8660,3KnakDx7,স্কুল বিভাগ পশ্চিম,8660@instance.com,3006,86,8660,thana
+8650,f3xUq30x,স্কুল বিভাগ পূর্ব,8650@instance.com,3006,86,8650,thana
+86210,rvAl0j5Z,হরিপুর,86210@instance.com,3006,86,86210,thana
+8770,fiKBSUvZ,উল্লাপাড়া উপজেলা  শাখা,8770@instance.com,3006,87,8770,thana
+8780,6GHdcwaC,উল্লাপাড়া কামিল মাদ্রাসা শাখা,8780@instance.com,3006,87,8780,thana
+87110,f1zDAbkL,এনায়তপুর থানা শাখা,87110@instance.com,3006,87,87110,thana
+8710,Xp3TVrs2,কাজিপুর উপজেলা  শাখা,8710@instance.com,3006,87,8710,thana
+87130,6JW9nCIm,কামারখন্দ উপজেলা শাখা,87130@instance.com,3006,87,87130,thana
+8760,8K8BJ7HW,তাড়াশ উপজেলা শাখা,8760@instance.com,3006,87,8760,thana
+87120,t9BA8VMq,বেলকুচি উপজেলা শাখা,87120@instance.com,3006,87,87120,thana
+8730,dVByIDLl,রায়গঞ্জ উপজেলা শাখা,8730@instance.com,3006,87,8730,thana
+8790,STRH6T0E,শাহজাদপুর উপজেলা পশ্চিম  শাখা,8790@instance.com,3006,87,8790,thana
+87100,DKQuIMe6,শাহজাদপুর ‍উপজেলা পূর্ব শাখা,87100@instance.com,3006,87,87100,thana
+8750,lT02I7Sg,সলঙ্গা থানা শাখা,8750@instance.com,3006,87,8750,thana
+8740,OU8u8upZ,সিরাজগঞ্জ রোড থানা শাখা,8740@instance.com,3006,87,8740,thana
+8720,D81GWLXZ,সিরাজগঞ্জ সদর উপজেলা শাখা,8720@instance.com,3006,87,8720,thana
+8860,eF5sSttL,আইএইচটি,8860@instance.com,3006,88,8860,thana
+8880,oh4BS0vV,আলিয়া,8880@instance.com,3006,88,8880,thana
+88140,9qmxPUwA,উপশহর,88140@instance.com,3006,88,88140,thana
+88120,XzlIvhh4,চারমাথা,88120@instance.com,3006,88,88120,thana
+88130,pMV3swCa,তিনমাথা,88130@instance.com,3006,88,88130,thana
+88170,VrJIIEMy,নারুলী,88170@instance.com,3006,88,88170,thana
+8850,Xxr38AVN,পলিটেকনিক,8850@instance.com,3006,88,8850,thana
+8890,9hxNtLES,পুরাতন ভবন,8890@instance.com,3006,88,8890,thana
+8870,U1UissG4,পুলিশ লাইন্স,8870@instance.com,3006,88,8870,thana
+88160,rV844mRa,পূর্ব বগুড়া,88160@instance.com,3006,88,88160,thana
+88150,Q75urGNZ,মাটিডালী,88150@instance.com,3006,88,88150,thana
+8840,yPiN1qh6,শহীদ জিয়াউর রহমান মেডিকেল কলেজ,8840@instance.com,3006,88,8840,thana
+88210,nSs3C3k1,শিশু,88210@instance.com,3006,88,88210,thana
+88220,ErQLaIFu,সমন্বয়,88220@instance.com,3006,88,88220,thana
+8810,F6AM9B6K,সরকারি আজিজুল হক কলেজ,8810@instance.com,3006,88,8810,thana
+8830,eIWFIhpc,সরকারি শাহ সুলতান কলেজ,8830@instance.com,3006,88,8830,thana
+88180,DWjoJJFX,সাতমাথা,88180@instance.com,3006,88,88180,thana
+88190,2AYOnJpf,সিডিসি,88190@instance.com,3006,88,88190,thana
+88200,52YMBt93,সিডিসি একাডেমি,88200@instance.com,3006,88,88200,thana
+88110,Wk3a8UDf,স্কুল পশ্চিম,88110@instance.com,3006,88,88110,thana
+88100,Rdw3uCMC,স্কুল পূর্ব,88100@instance.com,3006,88,88100,thana
+8820,WswPwape,স্টেডিয়াম,8820@instance.com,3006,88,8820,thana
+8990,JZAh0swq,গাবতলী উপজেলা,8990@instance.com,3006,89,8990,thana
+8940,uWX0wtxL,ধুনট উপজেলা,8940@instance.com,3006,89,8940,thana
+8980,8HjtSqaL,শাজাহানপুর দক্ষিণ,8980@instance.com,3006,89,8980,thana
+8970,Fz3vmMlY,শাজাহানপুর পশ্চিম,8970@instance.com,3006,89,8970,thana
+8960,0CVHqxFh,শাজাহানপুর পূর্ব,8960@instance.com,3006,89,8960,thana
+8950,u1fs0Uox,শাজাহানপুর শহর,8950@instance.com,3006,89,8950,thana
+8920,z6NZXKCS,শেরপুর উত্তর,8920@instance.com,3006,89,8920,thana
+8930,luH9J5JE,শেরপুর দক্ষিন,8930@instance.com,3006,89,8930,thana
+8910,9i94ntVg,শেরপুর শহর,8910@instance.com,3006,89,8910,thana
+89130,HsVeSvVD,"সম্মিলন সাহিত্য সাংস্কৃতিক সংসদ, বগুড়া",89130@instance.com,3006,89,89130,thana
+89110,TY7w6RGK,সারিয়াকান্দি উপজেলা,89110@instance.com,3006,89,89110,thana
+89100,CZ2W1XRH,সৈয়দ আহম্মদ,89100@instance.com,3006,89,89100,thana
+89120,uJ1nOIOo,সোনাতলা উপজেলা,89120@instance.com,3006,89,89120,thana
+9010,lOCXfoj4,আদমদিঘী পশ্চিম,9010@instance.com,3006,90,9010,thana
+9020,ZgLsuPgh,আদমদিঘী পূর্ব,9020@instance.com,3006,90,9020,thana
+9050,vYOykZ2A,কাহালু উত্তর,9050@instance.com,3006,90,9050,thana
+9060,2R5oy8eW,কাহালু দক্ষিন,9060@instance.com,3006,90,9060,thana
+9040,Qj8lSNCA,তালোড়া সাংগঠনিক থানা,9040@instance.com,3006,90,9040,thana
+9030,Vn8uymIe,দুপচাঁচিয়া,9030@instance.com,3006,90,9030,thana
+9070,z9Mihrg1,নন্দীগ্রাম,9070@instance.com,3006,90,9070,thana
+90120,H2wbGHbQ,পিরগাছা,90120@instance.com,3006,90,90120,thana
+90100,4O5RtW2U,পিরব সাংগঠনিক থানা,90100@instance.com,3006,90,90100,thana
+9080,RbJIOGBz,মহাস্থান,9080@instance.com,3006,90,9080,thana
+90130,CCEgWOvP,মাহী সাহিত্য সাংস্কূতিক সংসদ,90130@instance.com,3006,90,90130,thana
+90110,zy1n6Ai7,মোকামতলা,90110@instance.com,3006,90,90110,thana
+9090,VkgnOsTA,শিবগঞ্জ,9090@instance.com,3006,90,9090,thana
+91110,jX03ODcz,আক্কেলপুর উপজেলা শাখা,91110@instance.com,3006,91,91110,thana
+91170,3Gl1ipBW,উদ্ভাবন সাহিত্য সাংস্কৃৃতিক সংসদ,91170@instance.com,3006,91,91170,thana
+91201,oaRuNeMZ,কলেজ,91201@instance.com,3006,91,91201,thana
+91901,Jb6X8qdU,কালাই উপজেলা শাখা,91901@instance.com,3006,91,91901,thana
+91100,oMpawBQq,ক্ষেতলাল উপজেলা শাখা,91100@instance.com,3006,91,91100,thana
+91140,K6Poszkr,কড়ই মাদ্রাসা,91140@instance.com,3006,91,91140,thana
+91801,aqM6Vti0,পাঁচবিবি পশ্চিম,91801@instance.com,3006,91,91801,thana
+91701,Cjmzxau6,পাঁচবিবি পূর্ব,91701@instance.com,3006,91,91701,thana
+91150,YfstHql3,বানিয়াপাড়া,91150@instance.com,3006,91,91150,thana
+91101,qOdhtRjc,শহর,91101@instance.com,3006,91,91101,thana
+91160,jZulwotD,শহর স্কুল,91160@instance.com,3006,91,91160,thana
+91180,5dNSdKq6,শিশুকল্যাণ,91180@instance.com,3006,91,91180,thana
+91501,RabeUei4,সদর উত্তর,91501@instance.com,3006,91,91501,thana
+91601,ZkE65uas,সদর দক্ষিণ,91601@instance.com,3006,91,91601,thana
+91401,6RruAhAl,সদর পশ্চিম,91401@instance.com,3006,91,91401,thana
+91301,dvrEwWOH,সদর পূর্ব,91301@instance.com,3006,91,91301,thana
+91120,eBDPSGqc,হাজী মাদ্রাসা,91120@instance.com,3006,91,91120,thana
+91130,DuS1f5zE,হানাইল,91130@instance.com,3006,91,91130,thana
+92200,LhqZaLly,CR,92200@instance.com,3004,92,92200,thana
+92150,PN5SC0zD,অঙ্গীকার,92150@instance.com,3004,92,92150,thana
+92701,eyhqRL6m,আই আর,92701@instance.com,3004,92,92701,thana
+92170,0zYyIJOF,ইংলিশ মিডিয়াম,92170@instance.com,3004,92,92170,thana
+92101,6dCAkusd,কারমাইকেল কলেজ,92101@instance.com,3004,92,92101,thana
+92100,jG5kYsO4,কোতয়ালী উত্তর,92100@instance.com,3004,92,92100,thana
+92901,4T86Hv9A,কোতয়ালী দক্ষিণ,92901@instance.com,3004,92,92901,thana
+92140,69HrXLXZ,টার্মিনাল থানা,92140@instance.com,3004,92,92140,thana
+92180,7HZwdTDf,ডিবেট,92180@instance.com,3004,92,92180,thana
+92120,LCkrPQMy,পরশুরাম থানা,92120@instance.com,3004,92,92120,thana
+92501,C4Soe4D2,পলিটেকনিক,92501@instance.com,3004,92,92501,thana
+92190,YDWYoLNE,ফোরাম,92190@instance.com,3004,92,92190,thana
+92201,lEt4S9wg,মেডিকেল থানা,92201@instance.com,3004,92,92201,thana
+92301,4Im87SZH,রংপুর সরকারি কলেজ,92301@instance.com,3004,92,92301,thana
+92220,skr95i4O,শাপলা,92220@instance.com,3004,92,92220,thana
+92160,265XxxYD,শিশুকল্যাণ,92160@instance.com,3004,92,92160,thana
+92401,fvxIhI99,সাতগাড়া মাদ্রাসা,92401@instance.com,3004,92,92401,thana
+92601,W1fQCRY0,স্কুল,92601@instance.com,3004,92,92601,thana
+92130,Hj8VqcjE,হাজীরহাট,92130@instance.com,3004,92,92130,thana
+92110,BknNPcDW,হারাগাছ থানা,92110@instance.com,3004,92,92110,thana
+93200,ZdwZzZdM,কম্পন শিল্পী গোষ্ঠী,93200@instance.com,3004,93,93200,thana
+9390,wHOwX2Ol,কাউনিয়া পূর্ব থানা শাখা,9390@instance.com,3004,93,9390,thana
+9320,cWLzKCth,গংগাচড়া পশ্চিম থানা শাখা,9320@instance.com,3004,93,9320,thana
+9310,zmYvnUVK,গংগাচড়া পূর্ব থানা শাখা,9310@instance.com,3004,93,9310,thana
+9330,YCTPW3me,তারাগঞ্জ থানা শাখা,9330@instance.com,3004,93,9330,thana
+93180,4PzmzTD7,পীরগঞ্জ পশ্চিম থানা শাখা,93180@instance.com,3004,93,93180,thana
+93170,lEQQPqJA,পীরগঞ্জ পূর্ব থানা শাখা,93170@instance.com,3004,93,93170,thana
+93160,Adj6tStz,পীরগঞ্জ সদর আদর্শ থানা,93160@instance.com,3004,93,93160,thana
+9380,U5sutVPd,পীরগাছা উত্তর থানা শাখা,9380@instance.com,3004,93,9380,thana
+9360,13htZC3h,পীরগাছা দক্ষিণ থানা শাখা,9360@instance.com,3004,93,9360,thana
+9370,nMERfB7A,পীরগাছা প্রোপার থানা শাখা,9370@instance.com,3004,93,9370,thana
+9340,JhkzeZ7f,বদরগঞ্জ থানা শাখা,9340@instance.com,3004,93,9340,thana
+93140,hwy35V1u,মিঠাপুকুর উত্তর থানা শাখা,93140@instance.com,3004,93,93140,thana
+93150,S0QJh7I9,মিঠাপুকুর দক্ষিণ থানা শাখা,93150@instance.com,3004,93,93150,thana
+93130,8hRvCvsL,মিঠাপুকুর পশ্চিম আদর্শ থানা,93130@instance.com,3004,93,93130,thana
+93120,GJqFK5qW,মিঠাপুকুর পূর্ব আদর্শ থানা,93120@instance.com,3004,93,93120,thana
+93110,dJ2BW3Tp,মিঠাপুকুর সদর আদর্শ থানা,93110@instance.com,3004,93,93110,thana
+9350,JcRJ4Zld,রংপুর সদর আদর্শ থানা শাখা,9350@instance.com,3004,93,9350,thana
+93210,QFH20Ab3,রাইটার্স ফোরাম,93210@instance.com,3004,93,93210,thana
+93100,uqqdIPep,হারাগাছ মেট্রোপলিটন থানা শাখা,93100@instance.com,3004,93,93100,thana
+94110,y9Pzhd9N,আলিয়া মাদ্রাসা,94110@instance.com,3004,94,94110,thana
+9450,PrIU9wf4,উলিপুর উত্তর,9450@instance.com,3004,94,9450,thana
+9440,fGaApE2W,উলিপুর দক্ষিণ,9440@instance.com,3004,94,9440,thana
+94170,tdTG7Fcr,কচাকাটা,94170@instance.com,3004,94,94170,thana
+94230,PxThlkvL,কুড়িগ্রাম পলিটেকনিক,94230@instance.com,3004,94,94230,thana
+9480,GqdsCszK,কুড়িগ্রাম শহর,9480@instance.com,3004,94,9480,thana
+9490,2JXQsLRo,কুড়িগ্রাম সরকারি কলেজ,9490@instance.com,3004,94,9490,thana
+9430,FaV7KiKD,চিলমারী,9430@instance.com,3004,94,9430,thana
+94240,jcGqJADC,ধরলা সাংস্কৃতিক সংসদ,94240@instance.com,3004,94,94240,thana
+94150,BqlKyhVz,নাগেশ্বরী উত্তর,94150@instance.com,3004,94,94150,thana
+94140,umJJaEfS,নাগেশ্বরী দক্ষিণ,94140@instance.com,3004,94,94140,thana
+94180,MxVY9OCD,ফুলবাড়ি পশ্চিম,94180@instance.com,3004,94,94180,thana
+94220,7qa320h3,ফুলবাড়ি পুর্ব,94220@instance.com,3004,94,94220,thana
+94160,KNaueU54,ভুরুঙ্গামারী,94160@instance.com,3004,94,94160,thana
+9470,V55Uil3Z,রাজারহাট পশ্চিম,9470@instance.com,3004,94,9470,thana
+9460,vohC3uQY,রাজারহাট পুর্ব,9460@instance.com,3004,94,9460,thana
+9410,RNOXfoom,রাজিবপুর,9410@instance.com,3004,94,9410,thana
+9420,1s1Uy1J1,রৌমারী,9420@instance.com,3004,94,9420,thana
+94190,N35jSQ7D,সদর উত্তর,94190@instance.com,3004,94,94190,thana
+94200,J5vfAu88,সদর দক্ষিণ,94200@instance.com,3004,94,94200,thana
+94120,tdJLYJYE,সদর পশ্চিম,94120@instance.com,3004,94,94120,thana
+94130,Fszmf5iS,সদর পুর্ব,94130@instance.com,3004,94,94130,thana
+94100,vlfh9Gru,স্কুল বিভাগ,94100@instance.com,3004,94,94100,thana
+95100,7vUXwe4Y,কাঁঠালী সাংগঠনিক থানা শাখা,95100@instance.com,3004,95,95100,thana
+95130,nAoRsIlh,কিশোরগঞ্জ সাংগঠনিক থানা,95130@instance.com,3004,95,95130,thana
+9550,TWqKFTu6,খালিশা চাপানি সাংগঠনিক থানা,9550@instance.com,3004,95,9550,thana
+9570,rsodBsms,গোলমুন্ডা আদর্শ থানা,9570@instance.com,3004,95,9570,thana
+9520,pBKI6RE8,চিলাহাটি সাংগঠনিক থানা,9520@instance.com,3004,95,9520,thana
+95140,tpFsTnUb,ছিটমীরগঞ্জ কামিল মাদরাসা সাংগঠনিক থানা,95140@instance.com,3004,95,95140,thana
+9580,wOJOPX8I,জলঢাকা আদর্শ থানা,9580@instance.com,3004,95,9580,thana
+95170,G5n2xglV,জলঢাকা সরকারি কলেজ সাংগঠনিক  থানা শাখা,95170@instance.com,3004,95,95170,thana
+9560,T4hq0rot,ঝুনাগাছ চাপানি সাংগঠনিক থানা,9560@instance.com,3004,95,9560,thana
+95110,xKXShkWp,টেংগনমারী সাংগঠনিক থানা,95110@instance.com,3004,95,95110,thana
+9530,otkus9UR,ডিমলা আদর্শ থানা,9530@instance.com,3004,95,9530,thana
+9510,tdzdVvBU,ডোমার আদর্শ থানা,9510@instance.com,3004,95,9510,thana
+9540,YEAYVDJA,নাউতারা সাংগঠনিক থানা,9540@instance.com,3004,95,9540,thana
+95150,et4ljidV,বোরাগাড়ী সাংগঠনিক থানা,95150@instance.com,3004,95,95150,thana
+95120,3VpresIR,বড়ভিটা সাংগঠনিক থানা,95120@instance.com,3004,95,95120,thana
+95400,Vmtkcx60,মনোহর সাংস্কৃতিক সংসদ,95400@instance.com,3004,95,95400,thana
+9590,vybh3HZv,মীরগঞ্জ সাংগঠনিক থানা,9590@instance.com,3004,95,9590,thana
+95300,UBUyR6WQ,শিশু কল্যাণ,95300@instance.com,3004,95,95300,thana
+9690,38trtMJo,আদিতমারী থানা,9690@instance.com,3004,96,9690,thana
+96210,vS5AYbet,এভিয়েশন এন্ড অ্যারোস্পেস ইউনিভার্সিটি,96210@instance.com,3004,96,96210,thana
+9680,o4RalEqR,কাকিনা উত্তরবাংলা কলেজ,9680@instance.com,3004,96,9680,thana
+9670,bXH2mJzw,কালিগঞ্জ পশ্চিম সাথী শাখা,9670@instance.com,3004,96,9670,thana
+9660,Jdh1y2wh,কালিগঞ্জ পূর্ব,9660@instance.com,3004,96,9660,thana
+96180,i51NK2yS,জেলা স্কুল বিভাগ,96180@instance.com,3004,96,96180,thana
+96190,nWk3x41K,টর্ণেডো সাংস্কৃতিক সংসদ,96190@instance.com,3004,96,96190,thana
+9610,IfgshxOE,পাটগ্রাম পশ্চিম,9610@instance.com,3004,96,9610,thana
+9620,jUV1slsw,পাটগ্রাম পূর্ব সাথী শাখা,9620@instance.com,3004,96,9620,thana
+9630,zAJNn1LK,বাউড়া বড়খাতা,9630@instance.com,3004,96,9630,thana
+96200,tctESldn,রাইটার্স ফোরাম,96200@instance.com,3004,96,96200,thana
+96160,JLKndyJy,লালমনিরহাট নেছারিয়া কামিল মাদ্রাসা,96160@instance.com,3004,96,96160,thana
+96140,wFyPS99U,লালমনিরহাট শহর,96140@instance.com,3004,96,96140,thana
+96150,Acp0ufxp,লালমনিরহাট সরকারি কলেজ,96150@instance.com,3004,96,96150,thana
+96170,KkAiNIDY,শিশু কল্যাণ,96170@instance.com,3004,96,96170,thana
+96110,rrQg7JHk,সদর উত্তর,96110@instance.com,3004,96,96110,thana
+96130,oCFnFfbW,সদর দক্ষিণ,96130@instance.com,3004,96,96130,thana
+96100,sB4TyMQB,সদর পশ্চিম,96100@instance.com,3004,96,96100,thana
+96120,ClujMfIj,সদর পূর্ব,96120@instance.com,3004,96,96120,thana
+9640,6hTHi19l,হাতিবান্ধা কলেজ,9640@instance.com,3004,96,9640,thana
+9650,WJZfKiWc,হাতিবান্ধা সাথী শাখা,9650@instance.com,3004,96,9650,thana
+9710,yqlvDh40,গাইবান্ধা শহর আদর্শ শাখা,9710@instance.com,3004,97,9710,thana
+97120,ISdWN19h,গাইবান্ধা সদর উপজেলা শাখা,97120@instance.com,3004,97,97120,thana
+97100,78qSfM6m,গাইবান্ধা সরকারি কলেজ শাখা,97100@instance.com,3004,97,97100,thana
+9730,unSwUOe3,গোবিন্দগঞ্জ আদর্শ থানা শাখা,9730@instance.com,3004,97,9730,thana
+97200,kYyNMM1F,গোবিন্দগঞ্জ উপজেলা শাখা,97200@instance.com,3004,97,97200,thana
+97170,SaUHcXGZ,নবোচ্ছ্বাস সাহিত্য সাংস্কৃতিক সংসদ (নসাস),97170@instance.com,3004,97,97170,thana
+9790,k4ZJoZyr,পলাশবাড়ী উপজেলা আদর্শ থানা শাখা,9790@instance.com,3004,97,9790,thana
+97110,SeNzlPiI,পলাশবাড়ী পূর্ব থানা শাখা,97110@instance.com,3004,97,97110,thana
+9740,dv94uLnA,পলাশবাড়ী পৌর থানা শাখা,9740@instance.com,3004,97,9740,thana
+9770,1HvapN8p,ফুলছড়ি থানা শাখা,9770@instance.com,3004,97,9770,thana
+97190,I1rZikAT,মহিমাগঞ্জ আলিয়া থানা শাখা,97190@instance.com,3004,97,97190,thana
+97180,ri865HnA,শিশুকল্যাণ,97180@instance.com,3004,97,97180,thana
+9760,nX6vrYcs,সাঘাটা থানা শাখা,9760@instance.com,3004,97,9760,thana
+9750,c4jAlWT9,সাদুল্লাপুর উত্তর থানা শাখা,9750@instance.com,3004,97,9750,thana
+97140,jvbd3Ciw,সাদুল্লাপুর দক্ষিণ থানা শাখা,97140@instance.com,3004,97,97140,thana
+9720,XU5SfKlf,সুন্দরগঞ্জ আদর্শ থানা শাখা,9720@instance.com,3004,97,9720,thana
+9780,1Wg98OBf,সুন্দরগঞ্জ পূর্ব থানা শাখা,9780@instance.com,3004,97,9780,thana
+97150,n6oUt30U,সুন্দরগঞ্জ পৌর থানা শাখা,97150@instance.com,3004,97,97150,thana
+97160,hWBlVG4S,স্কুল শাখা,97160@instance.com,3004,97,97160,thana
+98190,K2SrcV2N,উপশহর,98190@instance.com,3005,98,98190,thana
+98100,DkQb4uND,কলেজ বিভাগ,98100@instance.com,3005,98,98100,thana
+9890,yBKrr9hV,কেবিএম,9890@instance.com,3005,98,9890,thana
+9880,FEAfWtCU,দিনাজপুর টেক্সটাইল  ইনস্টিটিউট,9880@instance.com,3005,98,9880,thana
+9860,9IL1qlRp,দিনাজপুর পলিটেকনিক ইন্সিটিউট,9860@instance.com,3005,98,9860,thana
+9850,Vsg65v8p,দিনাজপুর মেডিকেল কলেজ,9850@instance.com,3005,98,9850,thana
+9810,sfKruIid,দিনাজপুর সরকারি কলেজ,9810@instance.com,3005,98,9810,thana
+98160,CJotWIDG,পৌর পশ্চিম,98160@instance.com,3005,98,98160,thana
+98150,vlDONiyj,পৌর পূর্ব,98150@instance.com,3005,98,98150,thana
+9870,7hJmkKWj,মাদ্রাসা বিভাগ,9870@instance.com,3005,98,9870,thana
+98200,DGDhHeMU,রাহবার সাহিত্য সাংস্কৃতিক সংসদ,98200@instance.com,3005,98,98200,thana
+98210,1OPzmuVh,শিশুকল্যাণ,98210@instance.com,3005,98,98210,thana
+98170,w5BxIbb7,সদর দক্ষিণ,98170@instance.com,3005,98,98170,thana
+98180,DUjkFV6C,স্কুল বিভাগ,98180@instance.com,3005,98,98180,thana
+9990,G9553a3X,কাহারোল থানা শাখা,9990@instance.com,3005,99,9990,thana
+99150,u8jwKaHh,কাহারোল পূর্ব সাংগঠনিক থানা,99150@instance.com,3005,99,99150,thana
+9950,7JfuFFgW,খানসামা আদর্শ থানা শাখা,9950@instance.com,3005,99,9950,thana
+99130,bYuIKzOt,খানসামা উত্তর সাংগঠনিক থানা,99130@instance.com,3005,99,99130,thana
+9930,uboRKunM,চিরিরিবন্দর থানা শাখা,9930@instance.com,3005,99,9930,thana
+99100,H6Uo2Mq1,দশ মাইল সাংগঠনিক থানা শাখা,99100@instance.com,3005,99,99100,thana
+9920,tobkEW4D,বিরল আদর্শ থানা শাখা,9920@instance.com,3005,99,9920,thana
+99120,cYkRRI5s,বিরল উত্তর সাংগঠনিক থানা,99120@instance.com,3005,99,99120,thana
+9960,XDxZpJ92,বীরগঞ্জ থানা শাখা,9960@instance.com,3005,99,9960,thana
+99140,MhpMuDvv,বীরগঞ্জ পূর্ব সাংগঠনিক থানা,99140@instance.com,3005,99,99140,thana
+9970,76bEfHA1,বীরগঞ্জ পৌর সাংগঠনিক থানা,9970@instance.com,3005,99,9970,thana
+9980,3Q2QcQ9O,বীরগঞ্জ সরকারী কলেজ সাংগঠনিক থানা,9980@instance.com,3005,99,9980,thana
+9910,KgAUgvvp,বোচাগঞ্জ আদর্শ থানা,9910@instance.com,3005,99,9910,thana
+9940,UOQrhiVA,রানীরবন্দর সাংগঠনকি থানা শাখা,9940@instance.com,3005,99,9940,thana
+100100,YABbo26Z,আফতাবগঞ্জ সাংগঠনিক থানা শাখা,100100@instance.com,3005,100,100100,thana
+100150,kwZk92pE,আমবাড়ী সাংগঠনিক থানা শাখা,100150@instance.com,3005,100,100150,thana
+10070,XLKygD3z,ঘোড়াঘাট আদর্শ থানা  শাখা,10070@instance.com,3005,100,10070,thana
+10060,YxfQvlCH,ঘোড়াঘাট পৌর থানা শাখা,10060@instance.com,3005,100,10060,thana
+10090,kfTfBRti,নবাবগঞ্জ উত্তর থানা শাখা,10090@instance.com,3005,100,10090,thana
+10080,AnMxXct9,নবাবগঞ্জ দক্ষিণ থানা শাখা,10080@instance.com,3005,100,10080,thana
+100130,CMAO3guc,পার্বতীপুর প্রশাসনিক থানা শাখা,100130@instance.com,3005,100,100130,thana
+100160,hmM6EcK6,প্রতিধ্বনি সাহিত্য সাংস্কৃতিক সংসদ,100160@instance.com,3005,100,100160,thana
+100110,lETP89cX,ফুলবাড়ী আদর্শ থানা  শাখা,100110@instance.com,3005,100,100110,thana
+100120,Wp4te1Ls,ফুলবাড়ী সরকারি কলেজ থানা শাখা,100120@instance.com,3005,100,100120,thana
+10030,tb0WJfFN,বিজুল মাদ্রাসা থানা শাখা,10030@instance.com,3005,100,10030,thana
+10010,BUUfw9aj,বিরামপুর থানা শাখা,10010@instance.com,3005,100,10010,thana
+10020,34YbWcUE,বিরামপুর পৌর আদর্শ শাখা,10020@instance.com,3005,100,10020,thana
+100140,gUxsRo0V,ভবানীপুর মাদ্রাসা থানা শাখা,100140@instance.com,3005,100,100140,thana
+10040,WkW7eJj3,হাকিমপুর উত্তর থানা শাখা,10040@instance.com,3005,100,10040,thana
+10050,41zu5lJD,হাকিমপুর দক্ষিণ থানা শাখা,10050@instance.com,3005,100,10050,thana
+101110,1JES8o9O,আাবাদতাকিয়া মাদরাসা থানা শাখা,101110@instance.com,3005,101,101110,thana
+10110,cgnj39Xb,নেকমরদ আাদর্শ  থানা শাখা,10110@instance.com,3005,101,10110,thana
+10150,QWGGzKIU,পীর উত্তর  আাদর্শ  থানা শাখা,10150@instance.com,3005,101,10150,thana
+10190,K6eiSS3T,পীর দক্ষিণ শাখা,10190@instance.com,3005,101,10190,thana
+101100,j1J7DMDT,পীর সরকারি কলেজ,101100@instance.com,3005,101,101100,thana
+10180,rg6RXQ4R,বালিয়াডাঙ্গী উত্তর সাংগঠনিক থানা শাখা,10180@instance.com,3005,101,10180,thana
+10120,gRHKQgbp,বালিয়াডাঙ্গী উপজেলা আদর্শ খানা শাাখা,10120@instance.com,3005,101,10120,thana
+10130,LEuvlKDC,রাণী পৌর আদর্শ শাখা,10130@instance.com,3005,101,10130,thana
+10140,IEu9K163,রাণীশৈংকৈল আদর্শ  থানা শাখা,10140@instance.com,3005,101,10140,thana
+101120,pBQMnXmC,রানীশংকৈল ডিগ্রি কলেজ,101120@instance.com,3005,101,101120,thana
+10160,PHmTvu5R,হরি উত্তর শাখা,10160@instance.com,3005,101,10160,thana
+10170,G5bT1HW1,হরি দক্ষিণ থানা শাখা,10170@instance.com,3005,101,10170,thana
+102100,A7V8XhDb,আটোয়ারী উপজেলা,102100@instance.com,3005,102,102100,thana
+102130,Su7Jpzej,কালীগঞ্জ সাংগঠনিক থানা,102130@instance.com,3005,102,102130,thana
+10260,x2DOKptz,তেঁতুলিয়া উপজেলা,10260@instance.com,3005,102,10260,thana
+10250,5e7pXcve,দেবীগঞ্জ আদর্শ শাখা,10250@instance.com,3005,102,10250,thana
+102120,0qFsquFs,দেবীগঞ্জ শহর,102120@instance.com,3005,102,102120,thana
+10210,IIpVISpX,পঞ্চগড় শহর আদর্শ শাখা,10210@instance.com,3005,102,10210,thana
+102110,JKz99kXV,বোদা উপজেলা,102110@instance.com,3005,102,102110,thana
+10240,21126zXt,ভাউলাগঞ্জ আদর্শ শাখা,10240@instance.com,3005,102,10240,thana
+10270,3verURol,মকবুলার রহমান সরকারি কলেজ,10270@instance.com,3005,102,10270,thana
+102160,ZMIQugi7,শিশু কল্যাণ শাখা,102160@instance.com,3005,102,102160,thana
+10220,MLXPmD3q,সদর উত্তর আদর্শ শাখা,10220@instance.com,3005,102,10220,thana
+10290,fRLOLEZD,সদর পশ্চিম সাংগঠনিক থানা শাখা,10290@instance.com,3005,102,10290,thana
+10230,mM9vlQHe,সদর পূর্ব আদর্শ শাখা,10230@instance.com,3005,102,10230,thana
+102150,1fAhdTqZ,সীমান্ত সাহিত্য সংসদ,102150@instance.com,3005,102,102150,thana
+102140,NS5bmm6k,স্কুল বিভাগ,102140@instance.com,3005,102,102140,thana
+103290,Rp6ug8NH,আলিয়া মাদরাসা,103290@instance.com,3009,103,103290,thana
+10330,ObttisbJ,আড়ংঘাটা,10330@instance.com,3009,103,10330,thana
+103220,A4eCtnuq,কমার্স কলেজ,103220@instance.com,3009,103,103220,thana
+103160,9k6j6jGm,কার্ডিয়া,103160@instance.com,3009,103,103160,thana
+103130,PlKfmdvk,কে পি আই,103130@instance.com,3009,103,103130,thana
+10390,gO0cLFCl,খালিশপুর পশ্চিম,10390@instance.com,3009,103,10390,thana
+10380,VybKwK5Q,খালিশপুর পূর্ব,10380@instance.com,3009,103,10380,thana
+103260,ojZOCA2l,টাইফুন শিল্পীগোষ্টী,103260@instance.com,3009,103,103260,thana
+10310,aMTXQcN2,দৌলতপুর উত্তর,10310@instance.com,3009,103,10310,thana
+10340,Wh8vZFNQ,দৌলতপুর দক্ষিণ,10340@instance.com,3009,103,10340,thana
+103100,66pItENj,নেছারিয়া মাদ্রাসা,103100@instance.com,3009,103,103100,thana
+10360,RB4mvwMc,বিএল কলেজ,10360@instance.com,3009,103,10360,thana
+103180,RygSyHf9,মিল্লাত মাদ্রাসা,103180@instance.com,3009,103,103180,thana
+103120,14WLfD2k,মুহাসিন কলেজ,103120@instance.com,3009,103,103120,thana
+103310,HCl7x6ab,লবণচরা,103310@instance.com,3009,103,103310,thana
+103150,NBKiXm1S,শিশু কল্যাণ,103150@instance.com,3009,103,103150,thana
+103230,YVpROcTE,সদর থানা (উত্তর),103230@instance.com,3009,103,103230,thana
+103240,Hv6hj7Xd,সদর থানা (দক্ষিন),103240@instance.com,3009,103,103240,thana
+103270,Sck3yQp0,সিটি কলেজ,103270@instance.com,3009,103,103270,thana
+103250,fwPHPPvD,সিদ্দিকীয়া মাদরাসা,103250@instance.com,3009,103,103250,thana
+103170,OwPFai1c,সোনাডাঙ্গা থানা উত্তর,103170@instance.com,3009,103,103170,thana
+103190,paOBMGjB,সোনাডাঙ্গা থানা দক্ষিণ,103190@instance.com,3009,103,103190,thana
+103140,6RRIBPXg,স্কুল বিভাগ,103140@instance.com,3009,103,103140,thana
+103210,nSdGqTW5,হরিণটানা থানা,103210@instance.com,3009,103,103210,thana
+10410,cSQLMoxc,খানজাহান আলী থানা,10410@instance.com,3009,104,10410,thana
+10440,ATl0nzDY,ডুমুরিয়া উত্তর,10440@instance.com,3009,104,10440,thana
+10450,afv55x9C,ডুমুরিয়া পশ্চিম,10450@instance.com,3009,104,10450,thana
+10460,oPotJ8qI,ডুমুরিয়া সদর,10460@instance.com,3009,104,10460,thana
+104120,sVbqLpDJ,তেরখাদা পশ্চিম,104120@instance.com,3009,104,104120,thana
+104110,RAKaG3Zr,তেরখাদা সদর,104110@instance.com,3009,104,104110,thana
+104140,qEMDBl3i,দিঘলিয়া পশ্চিম,104140@instance.com,3009,104,104140,thana
+104130,ndd8Iy3Y,দিঘলিয়া পূর্ব,104130@instance.com,3009,104,104130,thana
+10430,bli9yqUJ,ফুলতলা পশ্চিম,10430@instance.com,3009,104,10430,thana
+10420,O7qmqiHU,ফুলতলা সদর,10420@instance.com,3009,104,10420,thana
+10480,Y1tg3a33,বটিয়াঘাটা,10480@instance.com,3009,104,10480,thana
+104100,aqJV1Bx9,রুপসা পশ্চিম,104100@instance.com,3009,104,104100,thana
+10490,AUXTuFoE,রুপসা পূর্ব,10490@instance.com,3009,104,10490,thana
+10520,Ju5KTAvS,কয়রা থানা উত্তর,10520@instance.com,3009,105,10520,thana
+10530,NLL2YXd7,কয়রা থানা দক্ষিণ,10530@instance.com,3009,105,10530,thana
+10510,AocilGg4,কয়রা থানা সদর,10510@instance.com,3009,105,10510,thana
+10590,gfBSC2AS,দাকোপ থানা,10590@instance.com,3009,105,10590,thana
+10550,E4KUbVnR,পাইকগাছা থানা উত্তর,10550@instance.com,3009,105,10550,thana
+10560,n6u9arh4,পাইকগাছা থানা দক্ষিণ,10560@instance.com,3009,105,10560,thana
+10570,TMmPoQAr,পাইকগাছা পৌরসভা,10570@instance.com,3009,105,10570,thana
+10580,VcbUuSKw,সুরছন্দ শিল্পীগোষ্ঠী,10580@instance.com,3009,105,10580,thana
+10540,WUrP0s1A,স্কুল বিভাগ (অর্কিড),10540@instance.com,3009,105,10540,thana
+106220,ygTYTihd,মোল্লাহাট,106220@instance.com,3009,106,106220,thana
+10680,3j8jt6yu,কচুয়া ঊত্তর,10680@instance.com,3009,106,10680,thana
+10690,gYde82yC,কচুয়া দক্ষিণ,10690@instance.com,3009,106,10690,thana
+106230,h3ndkop2,চিতলমারী,106230@instance.com,3009,106,106230,thana
+10620,DHXCkSTM,পিসি সি,10620@instance.com,3009,106,10620,thana
+106210,fEvBLvZ6,ফকিরহাট পশ্চিম,106210@instance.com,3009,106,106210,thana
+106200,y9R9SrHV,ফকিরহাট পূর্ব,106200@instance.com,3009,106,106200,thana
+10610,AlDrztxk,বাগেরহাট পোর,10610@instance.com,3009,106,10610,thana
+10660,MWNgJ1BN,বারুইপাড়া,10660@instance.com,3009,106,10660,thana
+106270,InKoNcHs,বেমরতা,106270@instance.com,3009,106,106270,thana
+106140,Kz0HjgIw,মংলা থানা,106140@instance.com,3009,106,106140,thana
+106130,7xvmcUki,মংলা পৌর,106130@instance.com,3009,106,106130,thana
+106160,WiBcrIpQ,মোড়েলগঞ্জ ঊত্তর,106160@instance.com,3009,106,106160,thana
+106170,q2BbUCFL,মোড়েলগঞ্জ দক্ষিণ,106170@instance.com,3009,106,106170,thana
+106150,ZaZlFpQg,মোড়েলগঞ্জ পৌর,106150@instance.com,3009,106,106150,thana
+106280,V9ENf6Yh,ম্যাটস,106280@instance.com,3009,106,106280,thana
+106100,5EL1uIoL,রামপাল  পূর্ব,106100@instance.com,3009,106,106100,thana
+106120,AHJTwPal,রামপাল পশ্চিম,106120@instance.com,3009,106,106120,thana
+106190,yrorQpTv,শরনখোলা উত্তর,106190@instance.com,3009,106,106190,thana
+106180,aRrFJIgC,শরনখোলা দক্ষিন,106180@instance.com,3009,106,106180,thana
+106110,64Oar7Ej,শরাফপুর,106110@instance.com,3009,106,106110,thana
+106260,29Yik95W,শিশু,106260@instance.com,3009,106,106260,thana
+10650,rnsyms3b,সদর ঊত্তর,10650@instance.com,3009,106,10650,thana
+10670,ELwLXVqA,সদর দক্ষিণ,10670@instance.com,3009,106,10670,thana
+10640,C1lkB1xW,সদর পশ্চিম,10640@instance.com,3009,106,10640,thana
+10630,GvcFwUqd,সদর পূর্ব,10630@instance.com,3009,106,10630,thana
+106240,VrQ9fQq9,সাংস্কৃতি,106240@instance.com,3009,106,106240,thana
+106250,FUx9pwTI,স্কুল,106250@instance.com,3009,106,106250,thana
+107150,60vNCch6,আগরদাড়ী আমিনিয়া কামিল মাদ্রাসা,107150@instance.com,3009,107,107150,thana
+107210,NglPwOGK,আদর্শ বিভাগ,107210@instance.com,3009,107,107210,thana
+107130,kqNhQQzs,আলিপুর,107130@instance.com,3009,107,107130,thana
+107190,mBcLrtjg,কপোতাক্ষ,107190@instance.com,3009,107,107190,thana
+107170,xwoVLPdG,ঝাউডাঙ্গা,107170@instance.com,3009,107,107170,thana
+10750,IrT2hP4b,পৌর পূর্ব,10750@instance.com,3009,107,10750,thana
+10710,oMDbBUUA,পৌর উত্তর,10710@instance.com,3009,107,10710,thana
+10760,TBjNmJdz,পৌর দক্ষিণ,10760@instance.com,3009,107,10760,thana
+10770,LFz61Wj0,পৌর পশ্চিম,10770@instance.com,3009,107,10770,thana
+107180,mB4swTzm,লাবসা,107180@instance.com,3009,107,107180,thana
+10720,Dp1qpU13,শিশুকল্যাণ,10720@instance.com,3009,107,10720,thana
+107160,VXKX9FAA,সদর উত্তর,107160@instance.com,3009,107,107160,thana
+107120,7FjYipYO,সদর দক্ষিণ,107120@instance.com,3009,107,107120,thana
+107140,79Q5JZOa,সদর পশ্চিম,107140@instance.com,3009,107,107140,thana
+107110,MHDNje0H,সদর পূর্ব,107110@instance.com,3009,107,107110,thana
+10740,fbVKJo7l,সাতক্ষীরা সরকারি কলেজ,10740@instance.com,3009,107,10740,thana
+10790,fTg6XLHs,সাতক্ষীরা সরকারি পলিটেকনিক ইনস্টিটিউট,10790@instance.com,3009,107,10790,thana
+10780,k89u8OWC,সাতক্ষীরা সিটি কলেজ,10780@instance.com,3009,107,10780,thana
+107200,9YsGzREf,সাত্ক্ষীরা সরকারি মেডিকেল কলেজ,107200@instance.com,3009,107,107200,thana
+10730,MNSXehns,স্কুল বিভাগ,10730@instance.com,3009,107,10730,thana
+107100,NkBx69t7,"হযরত আবু বকর (রা:) সিদ্দীকিয়া কামিল মাদরাসা, জাহানাবাজ",107100@instance.com,3009,107,107100,thana
+10890,VGuHknOu,আশাশুনি উপজেলা শহর,10890@instance.com,3009,108,10890,thana
+108100,hid76nqh,আশাশুনি দক্ষিণ,108100@instance.com,3009,108,108100,thana
+10810,TclWognY,কলারোয়া উপজেলা,10810@instance.com,3009,108,10810,thana
+108120,RFNZQR3l,কালিগঞ্জ উপজেলা,108120@instance.com,3009,108,108120,thana
+10850,aWjsxBnP,তালা,10850@instance.com,3009,108,10850,thana
+10860,Iw7ALrb1,দেবহাটা উপজেলা,10860@instance.com,3009,108,10860,thana
+10840,T2JM1ZnC,পাটকেলঘাটা,10840@instance.com,3009,108,10840,thana
+108160,Nrh7LbTd,শ্যামনগর উপজেলা,108160@instance.com,3009,108,108160,thana
+109140,GSz38P6d,আইডিয়াল,109140@instance.com,3010,109,109140,thana
+109130,BTVCkaSm,আরবপুর,109130@instance.com,3010,109,109130,thana
+109270,6YF3YUbT,কচুয়া,109270@instance.com,3010,109,109270,thana
+109100,ikmf3ZKl,চাঁচড়া,109100@instance.com,3010,109,109100,thana
+109290,6gHQIDRU,ডাক্তার আব্দুর রাজ্জাক মিউঃ কলেজ,109290@instance.com,3010,109,109290,thana
+109150,s4vG1m7y,দেয়াড়া,109150@instance.com,3010,109,109150,thana
+109200,UNNd27PB,নরেন্দ্রপুর,109200@instance.com,3010,109,109200,thana
+10920,ls5fKNDx,পৌর থানা,10920@instance.com,3010,109,10920,thana
+109210,DVD7OE16,ফতেহপুর,109210@instance.com,3010,109,109210,thana
+10970,dIihTa8d,যশোর আমিনিয়া কামিল মাদ্রাসা,10970@instance.com,3010,109,10970,thana
+109230,pJJAksIg,যশোর পলিটেকনিক ইন্সটিটিউট,109230@instance.com,3010,109,109230,thana
+10990,qojPsSiD,যশোর মেডিকেল কলেজ,10990@instance.com,3010,109,10990,thana
+109220,pmpVtjId,রামনগর,109220@instance.com,3010,109,109220,thana
+109160,g3TVuxVX,শিশুকল্যাণ,109160@instance.com,3010,109,109160,thana
+10940,TaJoAtt5,সংস্কৃতি,10940@instance.com,3010,109,10940,thana
+109190,3Vs1vADj,সদর উত্তর,109190@instance.com,3010,109,109190,thana
+109240,6o6APvU9,সদর পূর্ব,109240@instance.com,3010,109,109240,thana
+10910,ci3p5TD7,সরকারি এম এম কলেজ,10910@instance.com,3010,109,10910,thana
+10950,YtEFx4JY,সরকারি সিটি কলেজ,10950@instance.com,3010,109,10950,thana
+10930,BPgsEOJf,স্কুল,10930@instance.com,3010,109,10930,thana
+109280,CvQiR2GK,হামিদপুর আল-হেরা ডিগ্রী কলেজ,109280@instance.com,3010,109,109280,thana
+11070,9esJ6Rve,অভয়নগর পশ্চিম থানা শাখা,11070@instance.com,3010,110,11070,thana
+11060,r19To7ZZ,অভয়নগর পূর্ব আদর্শ শাখা,11060@instance.com,3010,110,11060,thana
+11050,Qyw8KTjN,অভয়নগর পৌর আদর্শ শাখা,11050@instance.com,3010,110,11050,thana
+110150,s9WsUnNV,কেশবপুর পশ্চিম আদর্শ শাখা,110150@instance.com,3010,110,110150,thana
+110160,mFrM5aLq,কেশবপুর পূর্ব,110160@instance.com,3010,110,110160,thana
+110140,EFzIL7LW,কেশবপুর পৌর শাখা,110140@instance.com,3010,110,110140,thana
+110180,lAJugNW9,খাজুরা আদর্শ শাখা,110180@instance.com,3010,110,110180,thana
+11020,llXhHXuG,বসুন্দিয়া আদর্শ শাখা,11020@instance.com,3010,110,11020,thana
+11040,blBpRD19,বাঘারপাড়া দক্ষিণ,11040@instance.com,3010,110,11040,thana
+11030,EBEdiACH,বাঘারপাড়া পৌর আদর্শ শাখা,11030@instance.com,3010,110,11030,thana
+110110,k9R5eC6r,মণিরামপুর উওর,110110@instance.com,3010,110,110110,thana
+11080,YxFWiS5X,মণিরামপুর পূর্ব আদর্শ শাখা,11080@instance.com,3010,110,11080,thana
+110100,NVXUnN1K,মনিরামপুর দক্ষিণ আদর্শ শাখা,110100@instance.com,3010,110,110100,thana
+11010,b3akEOp8,মনিরামপুর পশ্চিম সাংগঠনিক শাখা,11010@instance.com,3010,110,11010,thana
+11090,YUVeYkm6,মনিরামপুর পৌর আদর্শ শাখা,11090@instance.com,3010,110,11090,thana
+110130,UBE9w3aI,রাজগন্জ আদর্শ শাখা,110130@instance.com,3010,110,110130,thana
+110120,ibGr4ZOD,রাজগন্জ উওর,110120@instance.com,3010,110,110120,thana
+110170,9LWLiHT4,সাগরদাড়ি থানা শাখা,110170@instance.com,3010,110,110170,thana
+111201,XXedjrip,গাজীর দরগাহ আদর্শ থানা শাখা,111201@instance.com,3010,111,111201,thana
+111100,ilnSZPvx,চৌগাছা আদর্শ থানা শাখা,111100@instance.com,3010,111,111100,thana
+111110,4qhDoq7l,চৌগাছা উত্তর আদর্শ থানা শাখা,111110@instance.com,3010,111,111110,thana
+111120,QRXkGq5W,চৌগাছা দক্ষিণ সাংগঠনিক শাখা,111120@instance.com,3010,111,111120,thana
+111101,ZcD7GHSu,ঝিকরগাছা আদর্শ থানা শাখা,111101@instance.com,3010,111,111101,thana
+111301,rPFPbOEl,ঝিকরগাছা উত্তর সাংগঠনিক শাখা,111301@instance.com,3010,111,111301,thana
+111501,OLhxxCV0,ঝিকরগাছা দক্ষিণ সাংগঠনিক শাখা,111501@instance.com,3010,111,111501,thana
+111401,TxAhiGBj,ঝিকরগাছা পশ্চিম সাংগঠনিক শাখা,111401@instance.com,3010,111,111401,thana
+111901,mg761rWx,বেনাপোল আদর্শ থানা শাখা,111901@instance.com,3010,111,111901,thana
+111130,EqwK2cen,রেনেসাঁ শিল্পী গোষ্ঠী,111130@instance.com,3010,111,111130,thana
+111601,7kOKP0Fw,শার্শা আদর্শ থানা শাখা,111601@instance.com,3010,111,111601,thana
+111801,AADFSGyd,শার্শা উত্তর সাংগঠনিক শাখা,111801@instance.com,3010,111,111801,thana
+111701,iM1xX3DK,শার্শা দক্ষিণ আদর্শ থানা শাখা,111701@instance.com,3010,111,111701,thana
+11280,ozJkK3ea,কলেজ শাখা,11280@instance.com,3010,112,11280,thana
+112120,Uf7USs8z,কালিয়া পশ্চিম,112120@instance.com,3010,112,112120,thana
+112100,6XNku03a,কালিয়া পুর্ব,112100@instance.com,3010,112,112100,thana
+112101,x0WK9rZR,নড়াইল পৌর,112101@instance.com,3010,112,112101,thana
+11290,AUzwyyED,নড়াগাতি,11290@instance.com,3010,112,11290,thana
+112401,eMdrmRbR,লোহাগড়া উত্তর,112401@instance.com,3010,112,112401,thana
+112501,U6uu6ZuP,লোহাগড়া দক্ষিন,112501@instance.com,3010,112,112501,thana
+112201,5FoXFBQD,লোহাগড়া পৌর,112201@instance.com,3010,112,112201,thana
+11270,oYmMQXff,শাহাবাদ মডেল শাখা,11270@instance.com,3010,112,11270,thana
+112301,6yc708eF,সদর উত্তর,112301@instance.com,3010,112,112301,thana
+112110,77EUktOn,সদর দক্ষিন,112110@instance.com,3010,112,112110,thana
+112601,9q6ux369,সদর পুর্ব,112601@instance.com,3010,112,112601,thana
+112130,C7F2alNQ,সাংস্কৃতিক শাখা,112130@instance.com,3010,112,112130,thana
+11310,c5s6yZn6,পৌরসভা,11310@instance.com,3010,113,11310,thana
+11380,2LnsByJi,মহম্মদপুর,11380@instance.com,3010,113,11380,thana
+11340,fF1WPox7,মাগুরা পলিটেকনিক ইনিস্টিটিউট,11340@instance.com,3010,113,11340,thana
+11350,CptHHgKV,মাগুরা সিদ্দিকিয়া কামিল এম.এ মাস্টার্স মাদ্রাসা,11350@instance.com,3010,113,11350,thana
+11320,rW5onMYq,মাগুরা হোসেন শহিদ সোরাওয়ার্দী কলেজ,11320@instance.com,3010,113,11320,thana
+11390,GNG3rMdh,শালিখা,11390@instance.com,3010,113,11390,thana
+11370,lYJK0rXY,শ্রীপুর,11370@instance.com,3010,113,11370,thana
+11360,MXsIchx7,সদর,11360@instance.com,3010,113,11360,thana
+11330,uJYyAUpm,স্কুল বিভাগ,11330@instance.com,3010,113,11330,thana
+114110,KRoWVGcL,আইন ও শরিয়াহ অনুষদ,114110@instance.com,3011,114,114110,thana
+114320,q35VtfGM,আব্দালপুর,114320@instance.com,3011,114,114320,thana
+11490,T86xExOb,আরবী ভাষা ও সাহিত্য,11490@instance.com,3011,114,11490,thana
+11450,18hVBhIt,আল কুরআন,11450@instance.com,3011,114,11450,thana
+11460,G7ioaJcz,আল হাদিস,11460@instance.com,3011,114,11460,thana
+114310,bSopQ36L,ইসলামপুর,114310@instance.com,3011,114,114310,thana
+114330,3gGJQ3Na,উজানগ্রাম,114330@instance.com,3011,114,114330,thana
+11480,k5HStIsc,কলা অনুষদ,11480@instance.com,3011,114,11480,thana
+114250,X142g12p,কাঁচেরকোল,114250@instance.com,3011,114,114250,thana
+114230,6BBGEXfq,গাড়াগঞ্জ,114230@instance.com,3011,114,114230,thana
+114130,OzKEnfi0,জীব বিজ্ঞান অনুষদ,114130@instance.com,3011,114,114130,thana
+114290,v6qQEODF,জোড়াদহ,114290@instance.com,3011,114,114290,thana
+114350,Lo7zNbqS,ঝাউদিয়া পশ্চিম,114350@instance.com,3011,114,114350,thana
+114340,iga3L1NA,ঝাউদিয়া পূর্ব,114340@instance.com,3011,114,114340,thana
+114270,DoQn90I0,ত্রিবেনী,114270@instance.com,3011,114,114270,thana
+11470,xgdcpm8m,দা’ওয়াহ,11470@instance.com,3011,114,11470,thana
+114140,dJACjPMp,প্রকৌশল অনুষদ,114140@instance.com,3011,114,114140,thana
+114150,RFBc806d,বিজ্ঞান অনুষদ,114150@instance.com,3011,114,114150,thana
+114160,sv2W7A72,ব্যতিক্রম সাহিত্য সাংস্কৃতিক জোট,114160@instance.com,3011,114,114160,thana
+114120,KwMxmEAp,ব্যবসায় প্রশাসন অনুষদ,114120@instance.com,3011,114,114120,thana
+114240,DhgBQm2i,মদনডাঙ্গা,114240@instance.com,3011,114,114240,thana
+114280,LTgCz7sE,মির্জাপুর,114280@instance.com,3011,114,114280,thana
+114170,vVxiTL9G,মেস শাখা,114170@instance.com,3011,114,114170,thana
+11430,8mmovni0,লালন শাহ হল,11430@instance.com,3011,114,11430,thana
+11420,bz2XC9YU,শহিদ জিয়াউর রহমান হল,11420@instance.com,3011,114,11420,thana
+114300,RF52UXyh,শান্তিডাঙ্গা,114300@instance.com,3011,114,114300,thana
+11440,5sMY1RBq,শাহ আজিজুুর রহমান হল,11440@instance.com,3011,114,11440,thana
+114260,0D8ZEWto,শেখপাড়া,114260@instance.com,3011,114,114260,thana
+114210,5pxH8LNc,শৈলকুপা থানা,114210@instance.com,3011,114,114210,thana
+114220,H6x1Szy7,শৈলকুপা পৌরসভা,114220@instance.com,3011,114,114220,thana
+11410,08iYs1Su,সাদ্দাম হোসেন হল,11410@instance.com,3011,114,11410,thana
+114100,bgLvxgzN,সামাজিক বিজ্ঞান অনুষদ,114100@instance.com,3011,114,114100,thana
+115100,z0WoWUdT,কলেজ বিভাগ,115100@instance.com,3011,115,115100,thana
+11590,TZ6LXsfd,কে সি কলেজ,11590@instance.com,3011,115,11590,thana
+115190,lV6ldC60,টেক্সটাইল কলেজ,115190@instance.com,3011,115,115190,thana
+115150,psGamV8O,ডিপ্লোমা এসোসিয়েশন,115150@instance.com,3011,115,115150,thana
+11530,1iZVJdkG,পৌর দক্ষিণ,11530@instance.com,3011,115,11530,thana
+11520,s5rS3DGj,পৌর পশ্চিম,11520@instance.com,3011,115,11520,thana
+11510,63j1MX5C,পৌর পূর্ব,11510@instance.com,3011,115,11510,thana
+115170,8pwwZ7lx,প্রভাতি,115170@instance.com,3011,115,115170,thana
+11580,kI6fYfE2,ভাটই অঞ্চল,11580@instance.com,3011,115,11580,thana
+115110,Qw1OX6RK,মাদ্রাসা বিভাগ,115110@instance.com,3011,115,115110,thana
+115140,0smU6XoQ,মেস বিভাগ,115140@instance.com,3011,115,115140,thana
+115130,YOLyyOWR,শিক্ষা বিভাগ,115130@instance.com,3011,115,115130,thana
+115160,GTWDRoh7,শিশু কল্যাণ,115160@instance.com,3011,115,115160,thana
+115180,YGjNFzJG,সদর দক্ষিণ,115180@instance.com,3011,115,115180,thana
+11560,DdlDv0EP,সদর পশ্চিম,11560@instance.com,3011,115,11560,thana
+11540,NnWXowXM,সদর পূর্ব -১,11540@instance.com,3011,115,11540,thana
+11550,WYaljpF7,সদর পূর্ব -২,11550@instance.com,3011,115,11550,thana
+115120,vDZI6Jep,স্কুল বিভাগ,115120@instance.com,3011,115,115120,thana
+11570,eXufs6EK,হলিধানী অঞ্চল,11570@instance.com,3011,115,11570,thana
+11660,DtNJhamj,কালীগঞ্জ দক্ষিন আদর্শ থানা শাখা,11660@instance.com,3011,116,11660,thana
+11620,MwefD4Or,কালীগঞ্জ আদর্শ থানা শাখা,11620@instance.com,3011,116,11620,thana
+11690,bgoM4PEV,কালীগঞ্জ পূর্ব সাংগঠনিক থানা,11690@instance.com,3011,116,11690,thana
+116100,kTiFcTiN,কালীগঞ্জ পৌর সাংগঠনিক থানা,116100@instance.com,3011,116,116100,thana
+11610,GvxlrFGZ,কোটচাঁদপুর আদর্শ থানা শাখা,11610@instance.com,3011,116,11610,thana
+11680,7QgbZ6ke,কোটচাঁদপুর পশ্চিম সাংগঠনিক থানা,11680@instance.com,3011,116,11680,thana
+116130,IQNEDa17,কোটচাদপুর পেীর সাং থানা শাখা,116130@instance.com,3011,116,116130,thana
+11650,V3gfE3lp,খালিশপুর আদর্শ থানা শাখা,11650@instance.com,3011,116,11650,thana
+116110,euyr8HL7,গান্না সাংগঠনিক থানা,116110@instance.com,3011,116,116110,thana
+11630,YDguCm0a,মহেশপুর আদর্শ থানা শাখা,11630@instance.com,3011,116,11630,thana
+11670,zgUfD6RL,মহেশপুর পশ্চিম সাংগঠনিক থানা,11670@instance.com,3011,116,11670,thana
+116120,rODlMEzt,মহেশপুর পেীর সাং থানা শাখা,116120@instance.com,3011,116,116120,thana
+11640,r1Bmvhad,হরিনাকুন্ডু আদর্শ থানা শাখা,11640@instance.com,3011,116,11640,thana
+116140,ZBXSJpMK,হরিনাকুন্ডু পেীর সাং থানা শাখা,116140@instance.com,3011,116,116140,thana
+117130,gQG4Nhhm,কলেজ বিভাগ,117130@instance.com,3011,117,117130,thana
+117170,0nId4Xow,কুষ্টিয়া মেডিকেল কলেজ,117170@instance.com,3011,117,117170,thana
+11740,pziYJews,কয়া,11740@instance.com,3011,117,11740,thana
+11780,dy3OdcEU,তালবাড়ীয়া,11780@instance.com,3011,117,11780,thana
+117120,CdZBwRqy,পলিটেকনিক,117120@instance.com,3011,117,117120,thana
+11710,7wp2iNRq,পৌর পশ্চিম,11710@instance.com,3011,117,11710,thana
+11720,URccWJHC,পৌর পূর্ব,11720@instance.com,3011,117,11720,thana
+11770,2C6XmpEz,বারখাদা,11770@instance.com,3011,117,11770,thana
+11790,vov8k5nS,ভাদালিয়া,11790@instance.com,3011,117,11790,thana
+117150,LCcvKJbL,মাদ্রাসা,117150@instance.com,3011,117,117150,thana
+117160,Y7ipcy4o,মেস বিভাগ,117160@instance.com,3011,117,117160,thana
+117180,VJXMsHf5,ম্যাটস,117180@instance.com,3011,117,117180,thana
+117100,ObXeSh3y,লাহিনী,117100@instance.com,3011,117,117100,thana
+11750,s1wUBKbL,শিলাইদহ,11750@instance.com,3011,117,11750,thana
+117190,794ded8W,শিশু কল্যাণ,117190@instance.com,3011,117,117190,thana
+11730,nw4sTpOT,সদর দক্ষিণ,11730@instance.com,3011,117,11730,thana
+117110,Twl1jc6J,সরকারি কলেজ,117110@instance.com,3011,117,117110,thana
+117140,BI52g0qx,স্কুল বিভাগ,117140@instance.com,3011,117,117140,thana
+11760,pjI2irBg,হরিপুর,11760@instance.com,3011,117,11760,thana
+117200,3aKK0RgY,হিল্লোল সাহিত্য সাংস্কৃতিক সংসদ,117200@instance.com,3011,117,117200,thana
+11830,X4UwUhfX,কুমারখালী উত্তর থানা শাখা,11830@instance.com,3011,118,11830,thana
+11860,vg39mPpm,কুমারখালী দক্ষিন থানা শাখা,11860@instance.com,3011,118,11860,thana
+118100,oiCS0yxh,কুমারখালী পশ্চিম থানা শাখা,118100@instance.com,3011,118,118100,thana
+11840,0ibgopao,খোকসা উত্তর থানা শাখা,11840@instance.com,3011,118,11840,thana
+118120,mn7nQhqs,খোকসা দক্ষিন থানা শাখা,118120@instance.com,3011,118,118120,thana
+118110,HixArrH3,দেীলতপুর উত্তর থানা শাখা,118110@instance.com,3011,118,118110,thana
+11890,cvS1kgSX,দৌলতপুর দক্ষিন থানা শাখা,11890@instance.com,3011,118,11890,thana
+11820,ZMNyHRf0,পোড়াদহ থানা শাখা,11820@instance.com,3011,118,11820,thana
+11850,MlEEmyKM,ভেড়ামরা থানা শাখা,11850@instance.com,3011,118,11850,thana
+11810,IA1FXBf2,মিরপুর আদর্শ শাখা,11810@instance.com,3011,118,11810,thana
+11880,Z6Kuz0et,মিরপুর পশ্চিম থানা,11880@instance.com,3011,118,11880,thana
+11870,TThiu8Fi,হালসা থানা শাখা,11870@instance.com,3011,118,11870,thana
+119150,SnQNq9wW,অন্বেষণ সাহিত্য সাংস্কৃতিক সংসদ,119150@instance.com,3011,119,119150,thana
+119100,FCzmg2WP,আলমডাঙ্গা থানা শাখা,119100@instance.com,3011,119,119100,thana
+119110,0ZL92Lm1,আলমডাঙ্গা পৌর শাখা,119110@instance.com,3011,119,119110,thana
+11910,zMY9YQ5y,চুয়াডাঙ্গা পৌর আদর্শ থানা শাখা,11910@instance.com,3011,119,11910,thana
+11920,t6B54orh,চুয়াডাঙ্গা সরকারি কলেজ শাখা,11920@instance.com,3011,119,11920,thana
+11990,gkbuxjdA,জি.এ সাংগঠনিক থানা শাখা,11990@instance.com,3011,119,11990,thana
+11960,EudPknTf,জীবননগর আদর্শ থানা শাখা,11960@instance.com,3011,119,11960,thana
+11950,WpCldn2C,জীবননগর পৌর থানা শাখা,11950@instance.com,3011,119,11950,thana
+11940,lQ90Bu11,দর্শনা পৌর শাখা,11940@instance.com,3011,119,11940,thana
+11930,ZNijmq0s,দামুড়হুদা থানা শাখা,11930@instance.com,3011,119,11930,thana
+119130,aCLyVwok,বদরগঞ্জ কামিল মাদ্রাসা থানা শাখা,119130@instance.com,3011,119,119130,thana
+119140,1zs0GMfW,শিশু কল্যান বিভাগ,119140@instance.com,3011,119,119140,thana
+119120,690Cac1L,সদর পশ্চিম থানা শাখা,119120@instance.com,3011,119,119120,thana
+11980,ppLNF4h9,হারদি কলেজ শাখা,11980@instance.com,3011,119,11980,thana
+11970,Um5ERueR,হাসাদাহ কামিল মাদ্রাসা থানা শাখা,11970@instance.com,3011,119,11970,thana
+120220,aPxxbvWU,গাংনী আদর্শ থানা শাখা,120220@instance.com,3011,120,120220,thana
+120270,1QmHwj1a,গাংনী পশ্চিম থানা শাখা,120270@instance.com,3011,120,120270,thana
+120250,zszwdIaG,বামুন্দি থানা শাখা,120250@instance.com,3011,120,120250,thana
+120230,G4dfWLgS,মুজিবনগর থানা শাখা,120230@instance.com,3011,120,120230,thana
+120280,pDk5Scrg,মেহেরপুর সরকারি কলেজ শাখা,120280@instance.com,3011,120,120280,thana
+120210,EOTjGXPN,শহর আদর্শ থানা শাখা,120210@instance.com,3011,120,120210,thana
+120260,OTfCTr8p,সদর পশ্চিম থানা শাখা,120260@instance.com,3011,120,120260,thana
+120240,b3CKLRkM,সদরপূর্ব থানা শাখা,120240@instance.com,3011,120,120240,thana
+12190,YRaBhvVP,BPI,12190@instance.com,3015,121,12190,thana
+121130,vl21oMd9,কাউনিয়া,121130@instance.com,3015,121,121130,thana
+121140,Yaacqf8P,নথুল্লাবাদ,121140@instance.com,3015,121,121140,thana
+121101,e66LtLw4,বন্দর,121101@instance.com,3015,121,121101,thana
+12180,HVVD9asv,বরিশাল কলেজ,12180@instance.com,3015,121,12180,thana
+121120,YF0Likpj,বাঘিয়া মাদ্রাসা,121120@instance.com,3015,121,121120,thana
+12170,Hm8RWdvB,বিএম কলেজ,12170@instance.com,3015,121,12170,thana
+121110,Lwl2sj9l,বিমানবন্দর,121110@instance.com,3015,121,121110,thana
+121201,FlYCSjLs,মডেল,121201@instance.com,3015,121,121201,thana
+12160,p0AS9p6l,মেডিকেল,12160@instance.com,3015,121,12160,thana
+12140,m3YnP5W1,শিশুকল্যাণ,12140@instance.com,3015,121,12140,thana
+12150,JtTlAsrA,সংস্কৃতি বিভাগ,12150@instance.com,3015,121,12150,thana
+121301,E1hIj0Cm,স্কুল বিভাগ,121301@instance.com,3015,121,121301,thana
+121100,hGQg5f6G,হাতেম আলী কলেজ,121100@instance.com,3015,121,121100,thana
+122140,GO6u1p0y,আগৈলঝাড়া উপজেলা,122140@instance.com,3015,122,122140,thana
+122120,18MpKcMi,উজিরপুর উপজেলা,122120@instance.com,3015,122,122120,thana
+122130,HcLQGVqT,উজিরপুর উপজেলা উত্তর,122130@instance.com,3015,122,122130,thana
+12270,1oCtuRVk,কাজিরহাট থানা,12270@instance.com,3015,122,12270,thana
+122150,YwA3kBvD,গৌরনদী উপজেলা,122150@instance.com,3015,122,122150,thana
+12210,x3pvTcQW,বাকেরগঞ্জ উপজেলা,12210@instance.com,3015,122,12210,thana
+12220,o7M6bEVm,বাকেরগঞ্জ উপজেলা পূর্ব,12220@instance.com,3015,122,12220,thana
+122110,0vi9n9Lx,বানারীপাড়া উপজেলা,122110@instance.com,3015,122,122110,thana
+122100,2pdfiH3v,বাবুগঞ্জ উত্তর,122100@instance.com,3015,122,122100,thana
+12290,S3iAEZn8,বাবুগঞ্জ উপজেলা,12290@instance.com,3015,122,12290,thana
+12280,MyeBbpve,মুলাদি উপজেলা,12280@instance.com,3015,122,12280,thana
+12230,bE5o6zdn,মেহেন্দিগঞ্জ উপজেলা,12230@instance.com,3015,122,12230,thana
+12250,xaVbP31c,মেহেন্দিগঞ্জ উপজেলা দক্ষিণ,12250@instance.com,3015,122,12250,thana
+12240,BMG6qt40,মেহেন্দিগঞ্জ উপজেলা পূর্ব,12240@instance.com,3015,122,12240,thana
+12260,FlOpRy4Z,হিজলা উপজেলা,12260@instance.com,3015,122,12260,thana
+12440,M5dYecda,কাঠলিয়া উপজেলা,12440@instance.com,3015,124,12440,thana
+12430,xkidyEH9,নলছিটি উপজেলা,12430@instance.com,3015,124,12430,thana
+12410,Ic2o13hS,পৌরসভা,12410@instance.com,3015,124,12410,thana
+12450,mAxrEegu,মোল্লারহাট,12450@instance.com,3015,124,12450,thana
+12420,E0sHuKF3,রাজাপুর উপজেলা,12420@instance.com,3015,124,12420,thana
+124110,NNTN0h0F,শিশু,124110@instance.com,3015,124,124110,thana
+12460,JxaRzTwO,সদর উত্তর,12460@instance.com,3015,124,12460,thana
+12470,sDPBzAOR,সদর পশ্চিম,12470@instance.com,3015,124,12470,thana
+12480,xO7PaE3m,সদর পূর্ব,12480@instance.com,3015,124,12480,thana
+124100,hppQ2JIJ,সরকারি কলেজ,124100@instance.com,3015,124,124100,thana
+12490,aBCtJENI,সরকারি স্কুল,12490@instance.com,3015,124,12490,thana
+124120,Jo4IPtTl,সাংস্কৃতি,124120@instance.com,3015,124,124120,thana
+125270,Ot88KHmZ,আলোর দিশা শিল্পিগোষ্ঠী,125270@instance.com,3015,125,125270,thana
+125190,tq0C3an5,কাউখালি,125190@instance.com,3015,125,125190,thana
+125180,ZSiihBE3,জিয়ানগর,125180@instance.com,3015,125,125180,thana
+125170,OL2Z4JDH,টগরা কামিল মাদরাসা,125170@instance.com,3015,125,125170,thana
+125120,WgsBJeCX,নাজিরপুর,125120@instance.com,3015,125,125120,thana
+125110,y27qny23,নেছারাবাদ,125110@instance.com,3015,125,125110,thana
+125130,U14ZQUQ3,পিরোজপুর শহর,125130@instance.com,3015,125,125130,thana
+125210,NGobo4Yv,ভান্ডারিয়া পশ্চিম,125210@instance.com,3015,125,125210,thana
+125200,JODheTz6,ভান্ডারিয়া সদর,125200@instance.com,3015,125,125200,thana
+125230,YfKl9DCc,মঠবাড়িয়া উত্তর,125230@instance.com,3015,125,125230,thana
+125240,NTpxb5a4,মঠবাড়িয়া দক্ষিন,125240@instance.com,3015,125,125240,thana
+125220,LldFwlkS,মঠবাড়িয়া পৌরসভা,125220@instance.com,3015,125,125220,thana
+125250,9DYNwyr9,শিশুকল্যান বিভাগ,125250@instance.com,3015,125,125250,thana
+125140,EFVc2Grr,সদর উত্তর,125140@instance.com,3015,125,125140,thana
+125150,lX4aN87V,সদর দক্ষিন,125150@instance.com,3015,125,125150,thana
+125160,3GLyPDPC,"সরকারি সোহরাওয়ার্দী কলেজ,পিরোজপুর",125160@instance.com,3015,125,125160,thana
+125260,1QgUAWz7,স্কুল বিভাগ,125260@instance.com,3015,125,125260,thana
+126170,gctVpEyW,কলতান সাংস্কৃতিক সংসদ,126170@instance.com,3015,126,126170,thana
+12620,eFcQypn9,কলাপাড়া,12620@instance.com,3015,126,12620,thana
+12640,YZYiy7x5,গলাচিপা,12640@instance.com,3015,126,12640,thana
+12650,Pr1GajMz,দশমিনা,12650@instance.com,3015,126,12650,thana
+12670,CADo8iYs,দুমকি,12670@instance.com,3015,126,12670,thana
+126120,BzDileLn,পটুয়াখালী পলিটেকনিক ইন্সটিটিউট,126120@instance.com,3015,126,126120,thana
+126130,Bgnj5S6W,পটুয়াখালী পৌরসভা,126130@instance.com,3015,126,126130,thana
+12680,mBzoTRNx,পটুয়াখালী বিজ্ঞান ও প্রযুক্তি বিশ্ববিদ্যালয়,12680@instance.com,3015,126,12680,thana
+126100,PgNdjly8,পটুয়াখালী মেডিকেল কলেজ,126100@instance.com,3015,126,126100,thana
+126110,bo72sTM8,পটুয়াখালী সরকারি কলেজ,126110@instance.com,3015,126,126110,thana
+12660,csiPR7g8,বাউফল,12660@instance.com,3015,126,12660,thana
+12610,rAofRvNV,মহিপুর,12610@instance.com,3015,126,12610,thana
+126180,B9uwSmew,মাদরাসা,126180@instance.com,3015,126,126180,thana
+126150,sSQ0qLAF,মির্জাগঞ্জ,126150@instance.com,3015,126,126150,thana
+12630,ESSmcTnc,রাঙ্গাবালী,12630@instance.com,3015,126,12630,thana
+126160,ahAu4sD1,শিশুকল্যাণ,126160@instance.com,3015,126,126160,thana
+12690,VuvUokQB,সদর উত্তর,12690@instance.com,3015,126,12690,thana
+126140,oVCeWp7n,সদর দক্ষিন,126140@instance.com,3015,126,126140,thana
+126190,I2OrMpgg,স্কুল,126190@instance.com,3015,126,126190,thana
+127110,tCYvYA6M,আমতলী,127110@instance.com,3015,127,127110,thana
+127120,G1CarfZX,তালতলী,127120@instance.com,3015,127,127120,thana
+12770,cwqE0Yvk,পাথরঘাটা উত্তর,12770@instance.com,3015,127,12770,thana
+12780,L4wrXBf7,পাথরঘাটা দক্ষিণ,12780@instance.com,3015,127,12780,thana
+12730,kCVlVmZ6,বরগুনা আলিয়া মাদ্রাসা,12730@instance.com,3015,127,12730,thana
+12740,d84cvG6r,বরগুনা জেলা স্কুল,12740@instance.com,3015,127,12740,thana
+12750,wGG1zfCm,বরগুনা পলিটেকনিক,12750@instance.com,3015,127,12750,thana
+12710,PPZrw6mv,বরগুনা শহর,12710@instance.com,3015,127,12710,thana
+12760,poiJczha,বরগুনা সদর উপজেলা,12760@instance.com,3015,127,12760,thana
+12720,lq1pOWdU,বরগুনা সরকারি কলেজ,12720@instance.com,3015,127,12720,thana
+12790,aHBhKrlt,বামনা,12790@instance.com,3015,127,12790,thana
+127100,3i8UxntF,বেতাগী,127100@instance.com,3015,127,127100,thana
+127130,8YZnN6pk,শিশু বিভাগ,127130@instance.com,3015,127,127130,thana
+127140,58geSUe6,সংস্কৃতি বিভাগ,127140@instance.com,3015,127,127140,thana
+128100,KjN2Z5wf,ঘুইংগার হাট,128100@instance.com,3015,128,128100,thana
+128120,UAmEwXGq,দৌলতখান,128120@instance.com,3015,128,128120,thana
+128110,XCElCbHm,বাংলাবাজার,128110@instance.com,3015,128,128110,thana
+128150,qK8pqJU6,বি পি আই,128150@instance.com,3015,128,128150,thana
+128130,iq1RpvMJ,বোরহানউদ্দিন আলিয়া,128130@instance.com,3015,128,128130,thana
+128140,DzcVBAo7,বোরহানউদ্দিন উত্তর,128140@instance.com,3015,128,128140,thana
+12860,ymamIHob,ভোলা আলিয়া,12860@instance.com,3015,128,12860,thana
+12890,94F2AU7F,ভোলা কলেজ আবাসিক,12890@instance.com,3015,128,12890,thana
+12870,RZbRBHZa,ভোলা পৌরসভা,12870@instance.com,3015,128,12870,thana
+12810,AxpGnexd,ভোলা সদর উ্ত্তর,12810@instance.com,3015,128,12810,thana
+12850,hE8F0QKu,ভোলা সদর দক্ষিন,12850@instance.com,3015,128,12850,thana
+12830,JsNP6hdl,ভোলা সদর পশ্চিম,12830@instance.com,3015,128,12830,thana
+12840,lMuwLxU9,ভোলা সদর পূর্ব,12840@instance.com,3015,128,12840,thana
+12880,MaQdHEUh,ভোলা সরকারি কলেজ ক্যাম্পাস,12880@instance.com,3015,128,12880,thana
+12820,y1RHk1Vr,মৌলভীর হাট,12820@instance.com,3015,128,12820,thana
+128180,yxt1qm8m,শহর স্কুল,128180@instance.com,3015,128,128180,thana
+128160,DZ8r4n1V,শিশু কল্যান,128160@instance.com,3015,128,128160,thana
+128170,r9SVLbQw,সংস্কৃতি,128170@instance.com,3015,128,128170,thana
+12940,0WUBdvyd,কুঞ্জেরহাট,12940@instance.com,3015,129,12940,thana
+129100,qpmludHc,চরফ্যাশন উপজেলা,129100@instance.com,3015,129,129100,thana
+12990,1XpAJHqT,চরফ্যাশন পৌরসভা,12990@instance.com,3015,129,12990,thana
+12950,gIEpiUUH,তজুমদ্দিন উপজেলা,12950@instance.com,3015,129,12950,thana
+129120,PxbQFQQc,দুলারহাট থানা,129120@instance.com,3015,129,129120,thana
+12960,iJJLJDCS,দ্বীপাঞ্চল শিল্পী গোষ্টী,12960@instance.com,3015,129,12960,thana
+12920,udTL1slM,বোরহানউদ্দিন দক্ষিন,12920@instance.com,3015,129,12920,thana
+12930,6hRcy2AA,বোরহানউদ্দিন পূর্ব,12930@instance.com,3015,129,12930,thana
+12910,6wkBd58F,বোহানউদ্দিন পৌরসভা,12910@instance.com,3015,129,12910,thana
+129130,c9pUFPne,মনপুরা উপজেলা,129130@instance.com,3015,129,129130,thana
+12970,8fgAE4Bv,লালমোহন উত্তর,12970@instance.com,3015,129,12970,thana
+12980,EIaiePNI,লালমোহন দক্ষিন,12980@instance.com,3015,129,12980,thana
+129110,lj82zUch,শশীভূষন,129110@instance.com,3015,129,129110,thana
+13080,mHntGXZY,ইবনে সিনা মেডিকেল কলেজ,13080@instance.com,3003,130,13080,thana
+130100,zHeHmC6I,ঢাকা উত্তর মেডিকেল থানা,130100@instance.com,3003,130,130100,thana
+13050,PBfc6P5A,ঢাকা ডেন্টাল কলেজ,13050@instance.com,3003,130,13050,thana
+13010,G0KDFbIY,ঢাকা মেডিকেল কলেজ,13010@instance.com,3003,130,13010,thana
+13090,m1sI34hT,ধানমন্ডি মেডিকেল থানা,13090@instance.com,3003,130,13090,thana
+13060,52Tjkd8r,প্রাইভেট মেডিকেল ও  ডেন্টাল থানা,13060@instance.com,3003,130,13060,thana
+13070,6iZoCbIY,মিরপুর মেডিকেল থানা,13070@instance.com,3003,130,13070,thana
+13040,hd2G8dnO,মুগদা মেডিকেল কলেজ,13040@instance.com,3003,130,13040,thana
+13030,y6yjzMHL,শহীদ সোহরাওয়ারদী মেডিকেল কলেজ,13030@instance.com,3003,130,13030,thana
+13020,PrTfTczx,স্যার সলিমুল্লাহ মেডিকেল কলেজ,13020@instance.com,3003,130,13020,thana
+13230,8O11lKw1,কিশোর বিভাগ,13230@instance.com,3002,132,13230,thana
+13220,9gtwcwpP,থিয়েটার বিভাগ,13220@instance.com,3002,132,13220,thana
+13240,8AitaaaC,শিশু বিভাগ,13240@instance.com,3002,132,13240,thana
+13210,Nt7aVbAe,সংগীত বিভাগ,13210@instance.com,3002,132,13210,thana
+134120,rrID9Zvh,গড়েয়া,134120@instance.com,3005,134,134120,thana
+13470,ZKznGGJs,চৌধুরিহাট,13470@instance.com,3005,134,13470,thana
+13410,BZT9UPeG,ঠাকুরগাঁও সরকারি কলেজ,13410@instance.com,3005,134,13410,thana
+134180,72WvBs8y,দানারহাট ফাযিল মাদরাসা,134180@instance.com,3005,134,134180,thana
+13440,CJrMcsuh,পলিটেকনিক,13440@instance.com,3005,134,13440,thana
+13450,wdeIbGxC,পৌর পশ্চিম,13450@instance.com,3005,134,13450,thana
+13460,qRCBQrhS,পৌর পূর্ব,13460@instance.com,3005,134,13460,thana
+13490,DvyyXwl5,ফাড়াবাড়ি,13490@instance.com,3005,134,13490,thana
+13480,Vy2FkfRJ,ভুল্লি,13480@instance.com,3005,134,13480,thana
+134140,5Qu7Bcjy,রুহিয়া,134140@instance.com,3005,134,134140,thana
+134150,8PmZYElI,শিবগঞ্জ পশ্চিম,134150@instance.com,3005,134,134150,thana
+134160,OyTpnwye,শিবগঞ্জ পূর্ব,134160@instance.com,3005,134,134160,thana
+134210,jy1LXJwW,শিশু কল্যাণ,134210@instance.com,3005,134,134210,thana
+134100,9rGh7cRM,সদর উত্তর,134100@instance.com,3005,134,134100,thana
+134170,gaDGgjHT,সদর দক্ষিণ,134170@instance.com,3005,134,134170,thana
+134130,cIKoxSVZ,সদর পশ্চিম,134130@instance.com,3005,134,134130,thana
+134110,IzQH7sfn,সদর পূর্ব,134110@instance.com,3005,134,134110,thana
+134200,oqHrFrDD,সাংবাদিক ফোরাম,134200@instance.com,3005,134,134200,thana
+134190,zfjAqcHa,সাইক্লোন সাহিত্য সাংস্কৃতিক সংসদ,134190@instance.com,3005,134,134190,thana
+13420,h7ifvJ5k,সালন্দর মাদরাসা,13420@instance.com,3005,134,13420,thana
+13430,k0u2DvZo,স্কুল বিভাগ,13430@instance.com,3005,134,13430,thana
+13570,EhyOHZMw,আইডিয়াল মাদ্রাসা,13570@instance.com,3016,135,13570,thana
+13550,iCeTX7lw,আবাসিক উত্তর,13550@instance.com,3016,135,13550,thana
+13560,WzlO4vxi,আবাসিক দক্ষিণ,13560@instance.com,3016,135,13560,thana
+135130,jylKwfUG,আব্দুস সালাম হল,135130@instance.com,3016,135,135130,thana
+13530,NG5wjUQf,আর্টস ফ্যাকাল্টি,13530@instance.com,3016,135,13530,thana
+13520,KcHSyuKg,ইঞ্জিনিয়ারিং ফ্যাকাল্টি,13520@instance.com,3016,135,13520,thana
+13590,jVeQ04k2,উত্তর ওয়াপদা,13590@instance.com,3016,135,13590,thana
+13540,arj98GZP,ছাত্রাবাস,13540@instance.com,3016,135,13540,thana
+135120,5WZjDUja,ফোরাম,135120@instance.com,3016,135,135120,thana
+13580,F4p4X41K,মান্নান নগর,13580@instance.com,3016,135,13580,thana
+135140,SD5Zlvan,মালেক উকিল হল,135140@instance.com,3016,135,135140,thana
+135110,RxI21bB0,শিক্ষা বিভাগ,135110@instance.com,3016,135,135110,thana
+13510,SySJfk2h,সাইন্স ফ্যাকাল্টি,13510@instance.com,3016,135,13510,thana
+135100,4coOSWBP,স্বজন সাংষ্কৃতিক সংসদ,135100@instance.com,3016,135,135100,thana
+136150,wVJcYAB2,আল-ইত্তিহাদ ফাউন্ডেশন,136150@instance.com,3001,136,136150,thana
+13620,D4z7Fj24,আলিম,13620@instance.com,3001,136,13620,thana
+136110,N4BVms27,গাজীপুরা থানা,136110@instance.com,3001,136,136110,thana
+136120,apgcRGj6,টঙ্গী পশ্চিম থানা,136120@instance.com,3001,136,136120,thana
+13680,NBkrh3ZK,ট্রাস্ট পশ্চিম,13680@instance.com,3001,136,13680,thana
+13670,ZyCKJqwP,ট্রাস্ট পূর্ব,13670@instance.com,3001,136,13670,thana
+13660,9XZejUPs,তিতুমীর হল,13660@instance.com,3001,136,13660,thana
+136140,KBvkDRbp,তুরাগ শিল্পী গোষ্ঠী,136140@instance.com,3001,136,136140,thana
+13630,eqwmSPUr,দাখিল,13630@instance.com,3001,136,13630,thana
+13610,vwucuzLW,ফাযিল কামিল,13610@instance.com,3001,136,13610,thana
+136100,okdQXvqg,বালাদিল আমীন পশ্চিম,136100@instance.com,3001,136,136100,thana
+13690,0gU3JVM9,বালাদিল আমীন পূর্ব,13690@instance.com,3001,136,13690,thana
+136160,yOKjW8v4,মিল্লাত ক্যারিয়ার কাউন্সিল-এমসিসি,136160@instance.com,3001,136,136160,thana
+13650,NipySYI1,শরীয়তুল্লাহ হল,13650@instance.com,3001,136,13650,thana
+13640,S9deZFZw,সোনালী আসর,13640@instance.com,3001,136,13640,thana
+136130,zonH05kl,স্কুল,136130@instance.com,3001,136,136130,thana
+137110,tfZCSXuZ,আলিয়া মাদ্রাসা,137110@instance.com,3004,137,137110,thana
+13760,DljDi4po,তাজহাট উত্তর,13760@instance.com,3004,137,13760,thana
+13750,EGGAZFCr,তাজহাট দক্ষিন,13750@instance.com,3004,137,13750,thana
+13780,w7a3FNTc,দেউতি,13780@instance.com,3004,137,13780,thana
+13710,FvbRoAqB,বিজ্ঞান,13710@instance.com,3004,137,13710,thana
+137150,iRqZson1,বিবিএ,137150@instance.com,3004,137,137150,thana
+13770,x4NOC6jB,মাহিগঞ্জ,13770@instance.com,3004,137,13770,thana
+13740,SI0vsZWM,রঙ্গন,13740@instance.com,3004,137,13740,thana
+137140,tleRM7N3,শিশু কল্যাণ,137140@instance.com,3004,137,137140,thana
+137100,1TbdSs6v,সানরাইজ,137100@instance.com,3004,137,137100,thana
+13720,qiRKQQsD,সামাজিক বি. থানা,13720@instance.com,3004,137,13720,thana
+13790,KtmsVY82,স্কুল,13790@instance.com,3004,137,13790,thana
+13730,BWxgQ06i,হল,13730@instance.com,3004,137,13730,thana
+13960,d3EIoclR,আনোয়ারা শহর আদর্শ থানা শাখা,13960@instance.com,3019,139,13960,thana
+13980,o8veaRkf,কর্ণফুলি থানা শাখা,13980@instance.com,3019,139,13980,thana
+139190,Qz09hvpq,কে বি থানা শাখা,139190@instance.com,3019,139,139190,thana
+139160,Nf7IjdnL,দারুল হিকমা,139160@instance.com,3019,139,139160,thana
+139110,cbnSpaPu,পটিয়া কলেজ আদর্শ থানা শাখা,139110@instance.com,3019,139,139110,thana
+13990,LjvO2rqf,পটিয়া পশ্চিম থানা শাখা,13990@instance.com,3019,139,13990,thana
+139120,tPtsPdFm,পটিয়া শহর আদর্শ থানা শাখা,139120@instance.com,3019,139,139120,thana
+13940,MAjwiJDU,বাঁশখালী উত্তর আদর্শ থানা শাখা,13940@instance.com,3019,139,13940,thana
+13910,8nqvOrDv,বাঁশখালী দক্ষিণ থানা শাখা,13910@instance.com,3019,139,13910,thana
+13920,1L35vELK,বাঁশখালী মধ্যম থানা শাখা,13920@instance.com,3019,139,13920,thana
+13930,St3NzSV2,বাঁশখালী শহর আদর্শ থানা শাখা,13930@instance.com,3019,139,13930,thana
+139150,tLwVYIE9,বোয়ালখালী পূর্ব আদর্শ থানা শাখা,139150@instance.com,3019,139,139150,thana
+139140,F5PhrpDF,বোয়ালখালী শহর আদর্শ থানা শাখা,139140@instance.com,3019,139,139140,thana
+139200,ncgspto1,শিশুকল্যান,139200@instance.com,3019,139,139200,thana
+139170,ivuuFCU7,সুরতরী সাহিত্য ও সাংস্কৃতিক সংসদ,139170@instance.com,3019,139,139170,thana
+141100,D6jHapb7,ইটাখোলা,141100@instance.com,3004,141,141100,thana
+141130,dZX4hdSl,উসাস,141130@instance.com,3004,141,141130,thana
+14190,zn4yT3s0,কুন্দুপুকুর,14190@instance.com,3004,141,14190,thana
+141110,eYDbLQ9d,টুপামারী,141110@instance.com,3004,141,141110,thana
+14110,D8ftbizE,নীলফামারী পৌরসভা,14110@instance.com,3004,141,14110,thana
+14120,FdcerWq7,নীলফামারী সরকারী কলেজ,14120@instance.com,3004,141,14120,thana
+141120,EGdxuHz0,রামনগর,141120@instance.com,3004,141,141120,thana
+141140,cVMGqzYu,শিশুকল্যাণ,141140@instance.com,3004,141,141140,thana
+14150,ns2GPEyF,সদর উত্তর,14150@instance.com,3004,141,14150,thana
+14160,ESDyCJZP,সদর দক্ষিণ,14160@instance.com,3004,141,14160,thana
+14140,GKlNsoNg,সদর পশ্চিম,14140@instance.com,3004,141,14140,thana
+14130,thSNjlDb,সদর পূর্ব,14130@instance.com,3004,141,14130,thana
+14170,LyuZG67v,সৈয়দপুর পৌরসভা,14170@instance.com,3004,141,14170,thana
+14180,Nmmtlego,সোনাখুলী,14180@instance.com,3004,141,14180,thana
+14280,bmwb5jnL,আল হেলাল সাংস্কৃতিক সংসদ,14280@instance.com,3008,142,14280,thana
+14260,96guskIf,গোমস্তাপুর পশ্চিম আদর্শ থানা,14260@instance.com,3008,142,14260,thana
+14250,v1GnTtRi,গোমস্তাপুর পূর্ব থানা,14250@instance.com,3008,142,14250,thana
+14230,v7WrYGxa,নাচোল পশ্চিম থানা,14230@instance.com,3008,142,14230,thana
+14270,4UxyEFx1,নাচোল পূর্ব থানা,14270@instance.com,3008,142,14270,thana
+14210,nPpBX3fj,ভোলাহাট পশ্চিম আদর্শ থানা,14210@instance.com,3008,142,14210,thana
+142201,bd12s1Pj,ভোলাহাট পূর্ব আদর্শ থানা,142201@instance.com,3008,142,142201,thana
+142110,yU0Taeoe,রহনপুর ইউসুফ আলী সরকারী কলেজ,142110@instance.com,3008,142,142110,thana
+14240,hTA7FLue,রহনপুর পৌরসভা আদর্শ থানা,14240@instance.com,3008,142,14240,thana
+14290,VjxD73e9,স্কুল বিভাগ,14290@instance.com,3008,142,14290,thana
+14370,OWdibSnE,CZ,14370@instance.com,3003,143,14370,thana
+14350,EEfLlH0A,EZ,14350@instance.com,3003,143,14350,thana
+14360,a75eJ9CU,EZ-2,14360@instance.com,3003,143,14360,thana
+14380,61r2cE5v,FZ,14380@instance.com,3003,143,14380,thana
+143301,GsEppUzq,MZ-1,143301@instance.com,3003,143,143301,thana
+14340,gt7qvqhV,MZ-2,14340@instance.com,3003,143,14340,thana
+143801,UvYN5JIi,Step Up,143801@instance.com,3003,143,143801,thana
+14310,W6C0pFHZ,WZ-1,14310@instance.com,3003,143,14310,thana
+14320,G9gs3uAW,WZ-2,14320@instance.com,3003,143,14320,thana
+144110,D72UU6aQ,আইডিয়াল ফোরাম,144110@instance.com,3013,144,144110,thana
+14460,EHufywvi,ই এস,14460@instance.com,3013,144,14460,thana
+144100,7yFp7495,উচ্চারণ সাহিত্য সংসদ,144100@instance.com,3013,144,144100,thana
+144401,fsH7XCFH,এল এ,144401@instance.com,3013,144,144401,thana
+14430,bUE4Pqmh,এসএসবি,14430@instance.com,3013,144,14430,thana
+14480,9sfjYlvR,ক্রিয়েটিভ ইন্সটিটিউট,14480@instance.com,3013,144,14480,thana
+14410,aR6XCRt3,টুঙ্গিপাড়া,14410@instance.com,3013,144,14410,thana
+14420,rOya8MeT,প্রবাহ,14420@instance.com,3013,144,14420,thana
+14470,WtcJCwFd,মধুমতি,14470@instance.com,3013,144,14470,thana
+14490,syY2jMub,রূপান্তর্ সাংস্কৃতিক সংসদ,14490@instance.com,3013,144,14490,thana
+144120,HjOlUKl1,শিশু কল্যান,144120@instance.com,3013,144,144120,thana
+14450,ShNnk43x,হল,14450@instance.com,3013,144,14450,thana
+145501,TzToII6M,আর্টস ফ্যাকাল্টি থানা,145501@instance.com,3015,145,145501,thana
+145110,EkjeJnA1,ফোরাম থানা,145110@instance.com,3015,145,145110,thana
+14520,UUSEtgJJ,বায়োসাইন্স এন্ড ইঞ্জিনিয়ারিং ফ্যাকাল্টি থানা,14520@instance.com,3015,145,14520,thana
+14540,GHQLilrR,বিএসএস ফ্যাকাল্টি থানা,14540@instance.com,3015,145,14540,thana
+14530,npanEkUp,বিজনেস স্টাডিজ ফ্যাকাল্টি থানা,14530@instance.com,3015,145,14530,thana
+145100,xDf2EA96,বিজয়-২৪ হল,145100@instance.com,3015,145,145100,thana
+14570,GYDWPjgG,বিশ্ববিদ্যালয় আবাসিক পশ্চিম থানা,14570@instance.com,3015,145,14570,thana
+14580,9KDFX9RU,বিশ্ববিদ্যালয় আবাসিক পূর্ব থানা,14580@instance.com,3015,145,14580,thana
+14590,WM3D3Q6M,শেরেবাংলা হল,14590@instance.com,3015,145,14590,thana
+145130,pwzcaHSy,সংকল্প সাংস্কৃতিক সংসদ,145130@instance.com,3015,145,145130,thana
+14510,3CkBe4dr,সাইন্স ফ্যাকাল্টি থানা,14510@instance.com,3015,145,14510,thana
+14560,iCZYMaWW,সাগরদি ইসলামিয়া কামিল মাদ্রাসা থানা,14560@instance.com,3015,145,14560,thana
+145120,V6BsPDdj,স্কুল বিভাগ থানা,145120@instance.com,3015,145,145120,thana
+14630,JLTTyLRu,কলা অনুষদ,14630@instance.com,3014,146,14630,thana
+14660,zur51eNu,ত্রিশাল পৌর,14660@instance.com,3014,146,14660,thana
+14640,bLdakkxj,বিজ্ঞান  ও প্রকৌশল অনুষদ,14640@instance.com,3014,146,14640,thana
+14620,iBoFXFA8,বিবিএ অনুষদ,14620@instance.com,3014,146,14620,thana
+14670,HTqzSkeF,শিক্ষা বিভাগ,14670@instance.com,3014,146,14670,thana
+14610,UNRnQLPH,সামাজিক বিজ্ঞান অনুষদ,14610@instance.com,3014,146,14610,thana
+14650,LUeT7lTM,হল থানা,14650@instance.com,3014,146,14650,thana
+14730,CDUPFLAe,AP,14730@instance.com,3003,147,14730,thana
+147110,LVhJzOj4,BUBT,147110@instance.com,3003,147,147110,thana
+14740,57gD6CGK,CU,14740@instance.com,3003,147,14740,thana
+14710,nxofFN4g,DCS,14710@instance.com,3003,147,14710,thana
+14720,opD7PTz2,DEA,14720@instance.com,3003,147,14720,thana
+14780,x3fHkXbz,MDP,14780@instance.com,3003,147,14780,thana
+14760,0bKgwHmW,MHA,14760@instance.com,3003,147,14760,thana
+147120,LRNmB2U2,MLM,147120@instance.com,3003,147,147120,thana
+14770,NlprFBwU,MP,14770@instance.com,3003,147,14770,thana
+14750,FBuriwg8,MS,14750@instance.com,3003,147,14750,thana
+147140,JRIBnT4f,PUW JF,147140@instance.com,3003,147,147140,thana
+14790,IWieEUxt,SU,14790@instance.com,3003,147,14790,thana
+147100,eKr0zosn,UAP,147100@instance.com,3003,147,147100,thana
+147130,UKt5TYlm,আজাদী সাংস্কৃতিক সংসদ,147130@instance.com,3003,147,147130,thana
+14830,pvKv5vSu,ইঞ্জিনিয়ারিং জোন,14830@instance.com,3005,148,14830,thana
+14870,27Ao2Jem,চেহেলগাজী,14870@instance.com,3005,148,14870,thana
+14840,zus15xUB,জিয়া হল,14840@instance.com,3005,148,14840,thana
+14890,yxha6bqv,ফাজিলপুর,14890@instance.com,3005,148,14890,thana
+14880,HwAVherB,ফার্মের হাট,14880@instance.com,3005,148,14880,thana
+14850,C7LAoAZ1,বিজয়-২৪ হল,14850@instance.com,3005,148,14850,thana
+14820,vqWSVsHw,বিবিএ জোন,14820@instance.com,3005,148,14820,thana
+14860,65jY4C6f,শহীদ আবরার ফাহাদ হল,14860@instance.com,3005,148,14860,thana
+14810,lxHq6Z75,সায়েন্স জোন,14810@instance.com,3005,148,14810,thana
+148100,DEqTHtGE,সুন্দরবন,148100@instance.com,3005,148,148100,thana
+14910,6nmB3BjG,ইন্জিনিয়ারিং অনুষদ,14910@instance.com,3010,149,14910,thana
+14970,ddwhVRPJ,চুড়ামনকাটি পশ্চিম,14970@instance.com,3010,149,14970,thana
+14980,mtEfPMBF,চুড়ামনকাটি পূর্ব,14980@instance.com,3010,149,14980,thana
+14920,Jz7d42yK,জীববিজ্ঞান অনুষদ,14920@instance.com,3010,149,14920,thana
+14990,OWWtvZaJ,তথ্য বিভাগ,14990@instance.com,3010,149,14990,thana
+14960,6otGkYFW,পদ্মা,14960@instance.com,3010,149,14960,thana
+149100,RXHd5kXT,ফোরাম,149100@instance.com,3010,149,149100,thana
+14940,HRob0wDk,বিজ্ঞান অনুষদ,14940@instance.com,3010,149,14940,thana
+14930,UgpWU9Ad,ব্যবসা অনুষদ,14930@instance.com,3010,149,14930,thana
+14950,eAjrFlHT,মেঘনা,14950@instance.com,3010,149,14950,thana
+401101,xv3RwSAh,শেরেবাংলা কৃষি বিশ্ববিদ্যালয়,401101@instance.com,3003,401,401101,thana
+40310,qHzcTjNk,মেধা কানন,40310@instance.com,3009,403,40310,thana
+40410,AFNEONV0,ক্যাম্পাস,40410@instance.com,3018,404,40410,thana
+40510,4OM0Ti5i,সবুজ ক্যাম্পাস,40510@instance.com,3009,405,40510,thana

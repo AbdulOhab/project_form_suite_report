@@ -15,8 +15,7 @@ router.post(
   authController.form_submit
 );
 
-router.use(authMiddleware);
-router.get("/check-user", authController.check);
-router.get("/logout", authController.logout);
+router.get("/check-user", authMiddleware, authController.check);
+router.get("/logout", authMiddleware, authController.logout);
 
 module.exports = () => router;
