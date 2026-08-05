@@ -35,49 +35,57 @@ module.exports = {
         return res.status(400).json("CSV file is empty");
       }
 
-      const bulkPassword = "";
-      let updated = 0;
-      let created = 0;
+      // Build one bulkWrite instead of a sequential findOne+updateOne/create
+      // per row — with thousands of rows the old per-row loop took long
+      // enough to blow past nginx's proxy_read_timeout (60s).
+      const bulkOps = [];
 
       for (const record of jsonArray) {
         const userId = Number(record.userId);
         if (!userId || isNaN(userId)) continue;
 
-        const existing = await thanaModel.findOne({ userId });
-
-        const updateData = {
+        const setData = {
           userName: record.userName,
-          email: record.email || undefined,
-          zonalCode: record.zonalCode ? Number(record.zonalCode) : undefined,
-          branchCode: record.branchCode ? Number(record.branchCode) : undefined,
-          thanaCode: record.thanaCode ? Number(record.thanaCode) : undefined,
           userRole: record.userRole,
         };
+        if (record.email) setData.email = record.email;
+        if (record.zonalCode) setData.zonalCode = Number(record.zonalCode);
+        if (record.branchCode) setData.branchCode = Number(record.branchCode);
+        if (record.thanaCode) setData.thanaCode = Number(record.thanaCode);
 
         // Hash password from CSV password column
         if (record.password && record.password.trim()) {
-          updateData.password = await bcrypt.hash(String(record.password), 10);
+          setData.password = await bcrypt.hash(String(record.password), 10);
         }
 
-        if (existing) {
-          await thanaModel.updateOne({ userId }, { $set: updateData });
-          updated++;
-        } else {
-          if (!updateData.password) {
-            updateData.password = await bcrypt.hash("1122", 10);
-          }
-          await thanaModel.create({ userId, ...updateData });
-          created++;
+        const setOnInsert = { userId };
+        if (!setData.password) {
+          setOnInsert.password = await bcrypt.hash("1122", 10);
         }
+
+        bulkOps.push({
+          updateOne: {
+            filter: { userId },
+            update: { $set: setData, $setOnInsert: setOnInsert },
+            upsert: true,
+          },
+        });
       }
 
       // Clean up uploaded file
       fs.unlink(req.file.path, () => {});
 
+      if (!bulkOps.length) {
+        return res.status(400).json("No valid rows found in CSV");
+      }
+
+      const result = await thanaModel.bulkWrite(bulkOps);
+      const updated = result.modifiedCount;
+      const created = result.upsertedCount;
+
       const msg = [];
       if (updated > 0) msg.push(`${updated} users updated`);
       if (created > 0) msg.push(`${created} users created`);
-      if (bulkPassword) msg.push("password reset for all");
 
       return res.status(200).json(msg.join(", ") || "No changes made");
     } catch (error) {
