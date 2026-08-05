@@ -3,8 +3,8 @@ const dbConnector = require("../../config/dbConnector");
 const bcrypt = require("bcryptjs");
 const thanaModel = require("../thanaModel");
 
-const PASSWORD = "1122";
-const OWNER_USER_ID = 100001;
+const PASSWORD = "tliqnSmH0BIPBM";
+const OWNER_USER_ID = 107466;
 
 const ownerSeeder = async () => {
   try {
