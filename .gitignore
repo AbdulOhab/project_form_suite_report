@@ -45,3 +45,5 @@ temp/
 x-note/*.pdf
 x-note/access.txt
 x-note/production.txt
+x-note/backup.txt
+backup

@@ -64,6 +64,8 @@ module.exports = {
       createdAt.getMonth() === today.getMonth() &&
       createdAt.getDate() === today.getDate();
 
+    // Branch gets a 2-hour grace window after timeEnd to edit submissions.
+    const EDIT_GRACE_MINUTES = 120;
     const isWithinTimeWindow = (start, end) => {
       if (!start || !end) return true;
       const [startH, startM] = start.split(":").map(Number);
@@ -71,7 +73,7 @@ module.exports = {
       const now = new Date();
       const nowMinutes = now.getHours() * 60 + now.getMinutes();
       const startMinutes = startH * 60 + startM;
-      const endMinutes = endH * 60 + endM;
+      const endMinutes = endH * 60 + endM + EDIT_GRACE_MINUTES;
       if (startMinutes <= endMinutes) {
         return nowMinutes >= startMinutes && nowMinutes <= endMinutes;
       }

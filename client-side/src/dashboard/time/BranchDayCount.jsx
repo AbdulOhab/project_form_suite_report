@@ -33,6 +33,8 @@ function BranchDayCount({
   const { userInfo } = useContext(AuthContext);
   const { dayId } = useParams();
 
+  // Branch can edit/submit up to 2 hours after the notice's timeEnd.
+  const EDIT_GRACE_MINUTES = 120;
   const isWithinTimeWindow = (start, end) => {
     if (!start || !end) return true;
     const [startH, startM] = start.split(":").map(Number);
@@ -40,7 +42,7 @@ function BranchDayCount({
     const now = new Date();
     const nowMinutes = now.getHours() * 60 + now.getMinutes();
     const startMinutes = startH * 60 + startM;
-    const endMinutes = endH * 60 + endM;
+    const endMinutes = endH * 60 + endM + EDIT_GRACE_MINUTES;
     if (startMinutes <= endMinutes) {
       return nowMinutes >= startMinutes && nowMinutes <= endMinutes;
     }
