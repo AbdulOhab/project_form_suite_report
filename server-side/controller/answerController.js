@@ -57,12 +57,21 @@ module.exports = {
 
     const notice = await formModel.findById(existing.noticeId).exec();
 
-    const createdAt = new Date(existing.createdAt);
-    const today = new Date();
+    // Notice deadlines (timeStart/timeEnd) are defined in Bangladesh time
+    // (UTC+6, no DST). The server/container clock may run in a different
+    // timezone (e.g. UTC in production), so shift both "now" and
+    // "createdAt" into Bangladesh wall-clock before reading date/time
+    // fields, using UTC getters on the shifted instant to stay
+    // independent of the host's local timezone.
+    const BD_OFFSET_MS = 6 * 60 * 60 * 1000;
+    const toBangladeshTime = (date) => new Date(date.getTime() + BD_OFFSET_MS);
+
+    const createdAt = toBangladeshTime(new Date(existing.createdAt));
+    const today = toBangladeshTime(new Date());
     const isSameDay =
-      createdAt.getFullYear() === today.getFullYear() &&
-      createdAt.getMonth() === today.getMonth() &&
-      createdAt.getDate() === today.getDate();
+      createdAt.getUTCFullYear() === today.getUTCFullYear() &&
+      createdAt.getUTCMonth() === today.getUTCMonth() &&
+      createdAt.getUTCDate() === today.getUTCDate();
 
     // Branch gets a 2-hour grace window after timeEnd to edit submissions.
     const EDIT_GRACE_MINUTES = 120;
@@ -70,8 +79,8 @@ module.exports = {
       if (!start || !end) return true;
       const [startH, startM] = start.split(":").map(Number);
       const [endH, endM] = end.split(":").map(Number);
-      const now = new Date();
-      const nowMinutes = now.getHours() * 60 + now.getMinutes();
+      const now = today;
+      const nowMinutes = now.getUTCHours() * 60 + now.getUTCMinutes();
       const startMinutes = startH * 60 + startM;
       const endMinutes = endH * 60 + endM + EDIT_GRACE_MINUTES;
       if (startMinutes <= endMinutes) {
