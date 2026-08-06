@@ -103,7 +103,7 @@ function ZonalDataInterface() {
               <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট</Typography>
             </Box>
             <Box sx={{ p: 1 }}>
-              <ZonalTableDataInterfce startDadeline={notice?.startDadeline} range={notice?.range} totalData={totalData} questions={notice?.questions} branchReport={branchReport} id={id} slug={buildNoticeSlug(notice)} />
+              <ZonalTableDataInterfce startDadeline={notice?.startDadeline} range={notice?.range} totalData={totalData} questions={notice?.questions} branchReport={branchReport} id={id} slug={buildNoticeSlug(notice)} documentName={notice?.document_name} />
             </Box>
           </Paper>
         </>

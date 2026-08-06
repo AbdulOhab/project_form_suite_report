@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BranchBangladayDate from "./BranchBangladayDate";
 import { useParams } from "react-router-dom";
 import Loader from "./Loader";
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -11,7 +12,13 @@ import {
   TableRow,
   Paper,
   Typography,
+  Button,
 } from "@mui/material";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import { AuthContext } from "../../contexts/AuthContext";
+import { buildExportFileName } from "../../utils/exportFileName";
 
 function ZonalDataPerDayInterface({
   startDadeline,
@@ -20,7 +27,9 @@ function ZonalDataPerDayInterface({
   thanaReport,
   totalData,
   branchName,
+  documentName,
 }) {
+  const { userInfo } = useContext(AuthContext);
   const { dayId } = useParams();
 
   const [dateList, setDateList] = useState([]);
@@ -103,6 +112,38 @@ function ZonalDataPerDayInterface({
     return sortableData;
   }, [thanaReport, sortConfig]);
 
+  const exportToExcel = () => {
+    const headers = ["থানা কোড", "থানা নাম", ...questions.map((q) => q.questionText)];
+
+    const data = sortedData.map((thana) => [
+      thana.thanaCode,
+      thana.userName,
+      ...questions.map((_, qIndex) => {
+        const answer = thana?.answer?.answers?.[qIndex];
+        return answer ? answer.data : 0;
+      }),
+    ]);
+
+    const totalRow = [
+      "",
+      "Total",
+      ...(totalData?.length
+        ? totalData.map((value, index) => value[index] || 0)
+        : questions.map(() => 0)),
+    ];
+    data.unshift(totalRow);
+
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...data]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Thana Report");
+
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    saveAs(blob, buildExportFileName(userInfo?.userId, "Zonal", documentName));
+  };
+
   return (
     <>
       {!dateList?.length ? (
@@ -118,12 +159,22 @@ function ZonalDataPerDayInterface({
                   dataUnSubmit={countUnSubmit}
                   dataSubmit={countSubmit}
                 />
-                <Typography
-                  variant="subtitle1"
-                  sx={{ color: "success.main", fontWeight: "bold" }}
-                >
-                  ব্রাঞ্চ নাম: {branchName?.userName}
-                </Typography>
+                <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1 }}>
+                  <Typography
+                    variant="subtitle1"
+                    sx={{ color: "success.main", fontWeight: "bold" }}
+                  >
+                    ব্রাঞ্চ নাম: {branchName?.userName}
+                  </Typography>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    startIcon={<FileDownloadIcon />}
+                    onClick={exportToExcel}
+                  >
+                    Export to Excel
+                  </Button>
+                </Box>
                 <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
                   <Table size="small" border={1}>
                     <TableHead>

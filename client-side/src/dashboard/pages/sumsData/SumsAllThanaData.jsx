@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import BASE_URL from "../../../auth/dbUrl";
+import { AuthContext } from "../../../contexts/AuthContext";
 import {
   Box,
   Button,
@@ -26,8 +27,10 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import Loader from "../../time/Loader";
 import { buildNoticeSlug } from "../../../utils/noticeSlug";
+import { buildExportFileName } from "../../../utils/exportFileName";
 
 const SumsAllThanaData = () => {
+  const { userInfo } = useContext(AuthContext);
   const location = useLocation();
   const id = location.state?.id;
   const [notice, setNotice] = useState("");
@@ -182,7 +185,7 @@ const SumsAllThanaData = () => {
     const blob = new Blob([excelBuffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
-    saveAs(blob, "ThanaData.xlsx");
+    saveAs(blob, buildExportFileName(userInfo?.userId, "Admin", `${notice?.document_name || ""} Page`));
   };
 
   const exportToExcelByTotal = () => {
@@ -216,7 +219,7 @@ const SumsAllThanaData = () => {
     const blob = new Blob([excelBuffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
-    saveAs(blob, "ThanaData.xlsx");
+    saveAs(blob, buildExportFileName(userInfo?.userId, "Admin", `${notice?.document_name || ""} All`));
   };
 
   const totalPages = Math.ceil(sortedData.length / usersPerPage);

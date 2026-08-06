@@ -3,7 +3,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Box,
   Button,
-  Paper,
   Typography,
   TextField,
   FormControlLabel,
@@ -16,16 +15,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-  Chip,
   Divider,
+  Stack,
 } from "@mui/material";
-import {
-  ArrowBack,
-  SendOutlined,
-  AssignmentOutlined,
-  NumbersSharp as SortNumericIcon,
-  ShortText as SortTextIcon,
-} from "@mui/icons-material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import BASE_URL from "../../../auth/dbUrl";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { buildNoticeSlug } from "../../../utils/noticeSlug";
@@ -113,146 +106,97 @@ function BranchEmptyNotice() {
 
   return (
     <>
-      <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, py: 2, maxWidth: 720, mx: "auto" }}>
-
-        {/* Compact top bar */}
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            mb: 2,
-            flexWrap: "wrap",
-            gap: 1,
-          }}
-        >
+      <Box sx={{ maxWidth: 720, mx: "auto" }}>
+        <Stack direction="row" alignItems="center" sx={{ mb: 2 }}>
           <Button
             component={Link}
             to={`/dashboard/branch-data-interface/${buildNoticeSlug(notice)}`}
             state={{ id: secondId }}
+            startIcon={<ArrowBackIcon fontSize="small" />}
             size="small"
-            startIcon={<ArrowBack />}
-            variant="text"
-            sx={{ fontWeight: 600 }}
+            variant="outlined"
+            sx={{
+              color: "text.secondary",
+              borderColor: "divider",
+              bgcolor: "#ffffff",
+              fontWeight: 600,
+              "&:hover": { bgcolor: "action.hover", borderColor: "divider" },
+            }}
           >
-            ফিরে যান
+            Back
           </Button>
-          <Box sx={{ textAlign: "center", flex: 1, minWidth: 0 }}>
-            <Typography variant="h6" fontWeight="bold" noWrap>
-              {notice?.document_name || "Loading..."}
-            </Typography>
-            {notice?.sub_title && (
-              <Typography variant="caption" color="text.secondary">
-                {notice.sub_title}
-              </Typography>
-            )}
-          </Box>
-          <Box sx={{ minWidth: 90 }} />
-        </Box>
+        </Stack>
 
-        {/* Notice description card */}
+        <Typography variant="h5" fontWeight={700} sx={{ mb: 0.5 }}>
+          {notice?.document_name || "Loading..."}
+        </Typography>
+        {notice?.sub_title && (
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            {notice.sub_title}
+          </Typography>
+        )}
+        {!notice?.sub_title && <Box sx={{ mb: 2 }} />}
+
         {notice?.doc_desc && (
-          <Paper
-            elevation={0}
-            sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden", mb: 3 }}
-          >
+          <>
+            <Typography variant="caption" fontWeight={600} color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
+              Description
+            </Typography>
             <Box
               sx={{
-                px: 2, py: 1.5,
-                bgcolor: "primary.main",
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
+                color: "text.primary",
+                mb: 3,
+                overflowWrap: "break-word",
+                wordBreak: "break-word",
+                "& p": { m: 0 },
               }}
-            >
-              <AssignmentOutlined fontSize="small" sx={{ color: "white" }} />
-              <Typography variant="subtitle2" fontWeight={600} color="white">
-                নোটিশের বিবরণ
-              </Typography>
-            </Box>
-            <Box sx={{ px: 2, py: 1.5 }}>
-              <Typography variant="body2" color="text.primary">
-                {notice.doc_desc}
-              </Typography>
-            </Box>
-          </Paper>
+              dangerouslySetInnerHTML={{ __html: notice.doc_desc }}
+            />
+          </>
         )}
 
-        {/* Form */}
-        <Box component="form" onSubmit={submitHandler}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1.5 }}>
-            <Typography variant="subtitle2" fontWeight={600} color="text.secondary">
-              প্রশ্নসমূহ
-            </Typography>
-            {notice?.questions?.length > 0 && (
-              <Chip
-                label={`${notice.questions.length} টি`}
-                size="small"
-                variant="outlined"
-                sx={{ fontSize: "0.72rem" }}
-              />
-            )}
-          </Box>
+        <Divider sx={{ my: 3 }} />
 
+        <Typography variant="subtitle2" fontWeight={600} color="text.secondary" sx={{ mb: 1.5 }}>
+          Questions
+        </Typography>
+
+        <Box component="form" onSubmit={submitHandler}>
           {notice?.questions?.map((question, qIndex) => (
-            <Paper
-              key={qIndex}
-              elevation={0}
-              sx={{
-                borderRadius: 2,
-                border: "1px solid",
-                borderColor: "divider",
-                p: 2,
-                mb: 1.5,
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1, mb: 1.5 }}>
-                <Chip
-                  label={qIndex + 1}
-                  size="small"
-                  color="primary"
-                  sx={{ minWidth: 28, height: 22, fontSize: "0.72rem", fontWeight: 700 }}
-                />
-                <Typography variant="body2" fontWeight={500} sx={{ pt: 0.2 }}>
-                  {question.questionText}
-                  {question.required && (
-                    <Typography component="span" color="error.main" sx={{ ml: 0.3 }}>*</Typography>
-                  )}
-                </Typography>
-              </Box>
+            <Box key={qIndex} sx={{ mb: 2.5 }}>
+              <Typography variant="body2" fontWeight={500} sx={{ mb: 1 }}>
+                {qIndex + 1}. {question.questionText}
+                {question.required && (
+                  <Typography component="span" color="error.main" sx={{ ml: 0.3 }}>*</Typography>
+                )}
+              </Typography>
 
               {question.questionType === "text" || question.questionType === "number" ? (
-                <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1 }}>
-                  {question.questionType === "number" ? (
-                    <SortNumericIcon fontSize="small" color="action" sx={{ mt: 1 }} />
-                  ) : (
-                    <SortTextIcon fontSize="small" color="action" sx={{ mt: 1 }} />
-                  )}
-                  <TextField
-                    type={question.questionType === "number" ? "number" : "text"}
-                    size="small"
-                    fullWidth
-                    required={question.required}
-                    placeholder={question.questionType === "number" ? "সংখ্যা লিখুন" : "উত্তর লিখুন"}
-                    multiline={question.questionType === "text"}
-                    rows={question.questionType === "text" ? 3 : undefined}
-                    value={
-                      typeof answer[qIndex]?.data === "string" ||
-                      typeof answer[qIndex]?.data === "number"
-                        ? answer[qIndex].data
-                        : ""
-                    }
-                    onChange={(e) =>
-                      selectInput(
-                        question.questionText,
-                        e.target.value,
-                        qIndex,
-                        question.required,
-                        question.questionType
-                      )
-                    }
-                  />
-                </Box>
+                <TextField
+                  type={question.questionType === "number" ? "number" : "text"}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                  required={question.required}
+                  placeholder={question.questionType === "number" ? "সংখ্যা লিখুন" : "উত্তর লিখুন"}
+                  multiline={question.questionType === "text"}
+                  rows={question.questionType === "text" ? 3 : undefined}
+                  value={
+                    typeof answer[qIndex]?.data === "string" ||
+                    typeof answer[qIndex]?.data === "number"
+                      ? answer[qIndex].data
+                      : ""
+                  }
+                  onChange={(e) =>
+                    selectInput(
+                      question.questionText,
+                      e.target.value,
+                      qIndex,
+                      question.required,
+                      question.questionType
+                    )
+                  }
+                />
               ) : (
                 question.options?.map((opText, oIndex) => (
                   <FormControlLabel
@@ -294,19 +238,21 @@ function BranchEmptyNotice() {
                   />
                 ))
               )}
-            </Paper>
+            </Box>
           ))}
 
-          <Divider sx={{ my: 2 }} />
+          <Divider sx={{ my: 3 }} />
 
-          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mb: 3 }}>
             <Button
-              type="submit"
-              variant="contained"
-              color="success"
-              startIcon={<SendOutlined />}
-              sx={{ fontWeight: 600, px: 3 }}
+              component={Link}
+              to={`/dashboard/branch-data-interface/${buildNoticeSlug(notice)}`}
+              state={{ id: secondId }}
+              variant="outlined"
             >
+              বাতিল
+            </Button>
+            <Button type="submit" variant="contained" size="large">
               সাবমিট করুন
             </Button>
           </Box>
@@ -323,7 +269,7 @@ function BranchEmptyNotice() {
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2 }}>
           <Button onClick={handleDenySave} color="inherit" size="small">বাতিল</Button>
-          <Button onClick={handleConfirmSave} variant="contained" color="success" size="small">
+          <Button onClick={handleConfirmSave} variant="contained" size="small">
             সংরক্ষণ করুন
           </Button>
         </DialogActions>
@@ -332,15 +278,13 @@ function BranchEmptyNotice() {
       {/* Snackbar */}
       <Snackbar
         open={snackbar.open}
-        autoHideDuration={4000}
+        autoHideDuration={3000}
         onClose={() => setSnackbar((p) => ({ ...p, open: false }))}
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert
           severity={snackbar.severity}
-          variant="filled"
           onClose={() => setSnackbar((p) => ({ ...p, open: false }))}
-          sx={{ width: "100%" }}
         >
           {snackbar.message}
         </Alert>

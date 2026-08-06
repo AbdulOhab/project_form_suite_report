@@ -68,7 +68,7 @@ function ZonalDataPerDayCount() {
                 <Typography variant="subtitle2" fontWeight={600} color="text.secondary">থানা রিপোর্ট</Typography>
               </Box>
               <Box sx={{ p: 1 }}>
-                <ZonalDataPerDayInterface startDadeline={notice?.startDadeline} range={notice?.range} questions={notice?.questions} thanaReport={thanaReport} totalData={totalData} branchName={branchName} />
+                <ZonalDataPerDayInterface startDadeline={notice?.startDadeline} range={notice?.range} questions={notice?.questions} thanaReport={thanaReport} totalData={totalData} branchName={branchName} documentName={notice?.document_name} />
               </Box>
             </Paper>
           </>

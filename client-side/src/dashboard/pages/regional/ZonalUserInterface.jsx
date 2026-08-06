@@ -66,7 +66,7 @@ function ZonalUserInterface() {
                 <Typography variant="subtitle2" fontWeight={600} color="text.secondary">ব্রাঞ্চ রিপোর্ট</Typography>
               </Box>
               <Box sx={{ p: 1 }}>
-                <ZonalDayCount startDadeline={notice?.startDadeline} range={notice?.range} questions={notice?.questions} branchReport={branchReport} totalData={totalData} noticeId={noticeId} slug={buildNoticeSlug(notice)} />
+                <ZonalDayCount startDadeline={notice?.startDadeline} range={notice?.range} questions={notice?.questions} branchReport={branchReport} totalData={totalData} noticeId={noticeId} slug={buildNoticeSlug(notice)} documentName={notice?.document_name} />
               </Box>
             </Paper>
           </>

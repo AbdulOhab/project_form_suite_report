@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import BASE_URL from "../../../auth/dbUrl";
+import { AuthContext } from "../../../contexts/AuthContext";
 import {
   Box,
   Button,
@@ -19,10 +20,12 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { ArrowBack } from "@mui/icons-material";
 import { buildNoticeSlug } from "../../../utils/noticeSlug";
+import { buildExportFileName } from "../../../utils/exportFileName";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
 const SumsAllZonalData = () => {
+  const { userInfo } = useContext(AuthContext);
   const location = useLocation();
   const id = location.state?.id;
 
@@ -135,7 +138,7 @@ const SumsAllZonalData = () => {
     const blob = new Blob([excelBuffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
-    saveAs(blob, "ZonalData.xlsx");
+    saveAs(blob, buildExportFileName(userInfo?.userId, "Admin", notice?.document_name));
   };
 
   const sortIndicator = (key) => {

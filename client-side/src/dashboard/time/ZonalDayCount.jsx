@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import ZonalBangladayDate from "./ZonalBangladayDate";
 import Loader from "./Loader";
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -12,6 +13,11 @@ import {
   Paper,
   Button,
 } from "@mui/material";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import { AuthContext } from "../../contexts/AuthContext";
+import { buildExportFileName } from "../../utils/exportFileName";
 
 function ZonalDayCount({
   startDadeline,
@@ -21,7 +27,9 @@ function ZonalDayCount({
   totalData,
   noticeId,
   slug,
+  documentName,
 }) {
+  const { userInfo } = useContext(AuthContext);
   const { dayId } = useParams();
 
   const [dateList, setDateList] = useState([]);
@@ -120,6 +128,35 @@ function ZonalDayCount({
     return sortableData;
   }, [branchData, sortConfig]);
 
+  const exportToExcel = () => {
+    const headers = ["ব্রাঞ্চ কোড", "ব্রাঞ্চ নাম", ...questions.map((q) => q.questionText)];
+
+    const data = sortedData.map((branch) => [
+      branch.branchCode,
+      branch.userName,
+      ...questions.map((_, qIndex) => branch.sums[qIndex] || 0),
+    ]);
+
+    const totalRow = [
+      "",
+      "Total",
+      ...(totalData?.length
+        ? totalData.map((value, index) => value[index] || 0)
+        : questions.map(() => 0)),
+    ];
+    data.unshift(totalRow);
+
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...data]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Branch Report");
+
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    saveAs(blob, buildExportFileName(userInfo?.userId, "Zonal", documentName));
+  };
+
   return (
     <>
       {!dateList?.length ? (
@@ -135,6 +172,16 @@ function ZonalDayCount({
                   dataUnSubmit={countUnSubmit}
                   dataSubmit={countSubmit}
                 />
+                <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 1 }}>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    startIcon={<FileDownloadIcon />}
+                    onClick={exportToExcel}
+                  >
+                    Export to Excel
+                  </Button>
+                </Box>
                 <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
                   <Table size="small" border={1}>
                     <TableHead>

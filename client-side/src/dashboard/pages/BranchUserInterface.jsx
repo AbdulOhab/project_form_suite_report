@@ -101,6 +101,7 @@ function BranchUserInterface() {
                   noticeId={noticeId}
                   timeStart={notice?.timeStart}
                   timeEnd={notice?.timeEnd}
+                  documentName={notice?.document_name}
                 />
               </Box>
             </Paper>
