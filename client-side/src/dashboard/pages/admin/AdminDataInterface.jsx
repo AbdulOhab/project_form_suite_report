@@ -161,6 +161,7 @@ function AdminDataInterface() {
                 zonalReport={zonalReport}
                 id={id}
                 slug={buildNoticeSlug(notice)}
+                documentName={notice?.document_name}
               />
             </Box>
           </Paper>

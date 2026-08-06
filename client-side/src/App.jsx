@@ -86,8 +86,8 @@ function App() {
 
             {/* Branch-only pages */}
             <Route path={"branch-interface/:dayId/:slug"} element={<RoleRoute roles={["branch"]}><BranchUserInterface /></RoleRoute>} />
-            <Route path={"branch-edit-answer/:formId/:answerId"} element={<RoleRoute roles={["branch"]}><EditQuestionAnswer /></RoleRoute>} />
-            <Route path={"branch-empty-answer/:firstId/:secondId"} element={<RoleRoute roles={["branch"]}><BranchEmptyNotice /></RoleRoute>} />
+            <Route path={"branch-edit-answer/:slug/:formId/:answerId"} element={<RoleRoute roles={["branch"]}><EditQuestionAnswer /></RoleRoute>} />
+            <Route path={"branch-empty-answer/:slug/:firstId/:secondId"} element={<RoleRoute roles={["branch"]}><BranchEmptyNotice /></RoleRoute>} />
             <Route path={"branch-data-interface/:slug"} element={<RoleRoute roles={["branch"]}><BranchDataInterface /></RoleRoute>} />
 
             {/* Zonal-only pages */}

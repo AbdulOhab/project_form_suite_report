@@ -89,6 +89,12 @@ module.exports = {
     }));
 
     // Prepare tempData
+    // Maps each question's text to its index so rows can also be read by
+    // numeric index (the frontend tables index into rows by question order).
+    const questionIndexByText = new Map(
+      (question?.questions || []).map((q, index) => [q.questionText, index])
+    );
+
     const tempData = tempZonal.map((zonal) => {
       const sumsThana = {
         zonalCode: zonal.zonalCode,
@@ -104,6 +110,10 @@ module.exports = {
                 const value = Number(data?.data) || 0;
                 sumsThana[questionText] =
                   (sumsThana[questionText] || 0) + value;
+                if (questionIndexByText.has(questionText)) {
+                  const qIndex = questionIndexByText.get(questionText);
+                  sumsThana[qIndex] = (sumsThana[qIndex] || 0) + value;
+                }
               }
             });
           });
@@ -312,6 +322,12 @@ module.exports = {
       [index]: sums[questionText] || 0,
     }));
 
+    // Maps each question's text to its index so rows can also be read by
+    // numeric index (the frontend tables index into rows by question order).
+    const questionIndexByText = new Map(
+      (question?.questions || []).map((q, index) => [q.questionText, index])
+    );
+
     let tempData = tempBranch?.map((branch) => {
       let sums = { branchCode: branch.branchCode, userName: branch.userName };
       if (branch?.tempThana && Array.isArray(branch?.tempThana)) {
@@ -326,6 +342,10 @@ module.exports = {
                   sums[questionText] = 0;
                 }
                 sums[questionText] += value;
+                if (questionIndexByText.has(questionText)) {
+                  const qIndex = questionIndexByText.get(questionText);
+                  sums[qIndex] = (sums[qIndex] || 0) + value;
+                }
               }
             });
           });
@@ -419,6 +439,12 @@ module.exports = {
       });
     });
 
+    // Maps each question's text to its index so rows can also be read by
+    // numeric index (the frontend tables index into rows by question order).
+    const questionIndexByText = new Map(
+      (question?.questions || []).map((q, index) => [q.questionText, index])
+    );
+
     // Prepare tempData
     const tempData = tempBranch.map((branch) => {
       const dsums = {
@@ -434,6 +460,10 @@ module.exports = {
               const questionText = data?.questionText;
               const value = Number(data?.data) || 0;
               dsums[questionText] = (dsums[questionText] || 0) + value;
+              if (questionIndexByText.has(questionText)) {
+                const qIndex = questionIndexByText.get(questionText);
+                dsums[qIndex] = (dsums[qIndex] || 0) + value;
+              }
             }
           });
         });
@@ -595,6 +625,12 @@ module.exports = {
 
     // let thanaSums = {};
 
+    // Maps each question's text to its index so rows can also be read by
+    // numeric index (the frontend tables index into rows by question order).
+    const questionIndexByText = new Map(
+      (question?.questions || []).map((q, index) => [q.questionText, index])
+    );
+
     let sumsThanaData = tempThana.map((thana) => {
       let dsums = {
         thanaCode: thana.thanaCode,
@@ -611,6 +647,10 @@ module.exports = {
             }
 
             dsums[questionText] += value;
+            if (questionIndexByText.has(questionText)) {
+              const qIndex = questionIndexByText.get(questionText);
+              dsums[qIndex] = (dsums[qIndex] || 0) + value;
+            }
           }
         });
       });
@@ -637,18 +677,25 @@ module.exports = {
       .sort({ _id: -1 })
       .exec();
 
-    // Group answers by thanaCode
+    // Group answers by thanaCode-branchCode-zonalCode (submitId isn't set by
+    // the thana/branch submit flows, so it can't be used as the join key).
     const answersByThana = answers.reduce((acc, answer) => {
-      if (!acc[answer.submitId]) {
-        acc[answer.submitId] = [];
+      const key = `${answer.thanaCode}-${answer.branchCode}-${answer.zonalCode}`;
+      if (!acc[key]) {
+        acc[key] = [];
       }
-      acc[answer.submitId].push(answer);
+      acc[key].push(answer);
       return acc;
     }, {});
 
     // Process each thana
     const sums = {};
     const allQuestions = new Set();
+    // Maps each question's text to its index so rows can also be read by
+    // numeric index (the frontend tables index into rows by question order).
+    const questionIndexByText = new Map(
+      (question?.questions || []).map((q, index) => [q.questionText, index])
+    );
     const sumsThanaData = tempThana.map((thana) => {
       const dsums = {
         thanaCode: thana.thanaCode,
@@ -657,7 +704,8 @@ module.exports = {
         userName: thana.userName,
       };
 
-      const thanaAnswers = answersByThana[thana.userId] || [];
+      const key = `${thana.thanaCode}-${thana.branchCode}-${thana.zonalCode}`;
+      const thanaAnswers = answersByThana[key] || [];
       thanaAnswers.forEach((ans) => {
         ans.answers.forEach((data) => {
           const questionText = data?.questionText;
@@ -671,6 +719,10 @@ module.exports = {
 
             // Update sums for this thana
             dsums[questionText] = (dsums[questionText] || 0) + value;
+            if (questionIndexByText.has(questionText)) {
+              const qIndex = questionIndexByText.get(questionText);
+              dsums[qIndex] = (dsums[qIndex] || 0) + value;
+            }
           }
         });
       });

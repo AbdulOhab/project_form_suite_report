@@ -29,6 +29,7 @@ function BranchDayCount({
   timeStart,
   timeEnd,
   documentName,
+  slug,
 }) {
   const { userInfo } = useContext(AuthContext);
   const { dayId } = useParams();
@@ -268,7 +269,7 @@ function BranchDayCount({
                                 size="small"
                                 disabled={!canEdit}
                                 component={Link}
-                                to={`/dashboard/branch-edit-answer/${noticeId}/${thana?.answer?._id}`}
+                                to={`/dashboard/branch-edit-answer/${slug}/${noticeId}/${thana?.answer?._id}`}
                               >
                                 এডিট
                               </Button>
@@ -279,7 +280,7 @@ function BranchDayCount({
                                 size="small"
                                 disabled={!canEdit}
                                 component={Link}
-                                to={`/dashboard/branch-empty-answer/${thana.thanaCode}/${noticeId}`}
+                                to={`/dashboard/branch-empty-answer/${slug}/${thana.thanaCode}/${noticeId}`}
                               >
                                 এডিট
                               </Button>

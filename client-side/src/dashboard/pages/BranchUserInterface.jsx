@@ -102,6 +102,7 @@ function BranchUserInterface() {
                   timeStart={notice?.timeStart}
                   timeEnd={notice?.timeEnd}
                   documentName={notice?.document_name}
+                  slug={buildNoticeSlug(notice)}
                 />
               </Box>
             </Paper>

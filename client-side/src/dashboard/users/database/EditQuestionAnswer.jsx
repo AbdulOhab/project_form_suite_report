@@ -23,13 +23,17 @@ import BASE_URL from "../../../auth/dbUrl";
 import { toEnglishDigits } from "../../../utils/convertDigits";
 
 function EditQuestionAnswer() {
-  const { formId, answerId } = useParams();
+  const { slug, formId, answerId } = useParams();
   const navigate = useNavigate();
+
+  const goBackToBranchReport = () =>
+    navigate(`/dashboard/branch-data-interface/${slug}`, { state: { id: formId } });
 
   const [notice, setNotice] = useState(null);
   const [answer, setAnswer] = useState([
     { questionText: "", data: "", questionType: "", required: false },
   ]);
+  const [loadError, setLoadError] = useState(null);
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
   const [confirmDialog, setConfirmDialog] = useState({ open: false });
 
@@ -49,9 +53,12 @@ function EditQuestionAnswer() {
         if (response.ok) {
           setNotice(data);
           setAnswer(data?.answers);
+        } else {
+          setLoadError(data?.message || "তথ্য খুঁজে পাওয়া যায়নি");
         }
       } catch (error) {
         console.error("Error fetching answer data:", error);
+        setLoadError("তথ্য লোড করতে সমস্যা হয়েছে");
       }
     };
     getAnswerFromDb();
@@ -96,7 +103,7 @@ function EditQuestionAnswer() {
   const handleConfirmSave = () => {
     setConfirmDialog({ open: false });
     setSnackbar({ open: true, message: "তথ্য সফলভাবে আপডেট হয়েছে", severity: "success" });
-    navigate(`/dashboard/branch-interface/${formId}`);
+    goBackToBranchReport();
   };
 
   const handleDenySave = () => {
@@ -110,7 +117,7 @@ function EditQuestionAnswer() {
         <Stack direction="row" alignItems="center" sx={{ mb: 2 }}>
           <Button
             startIcon={<ArrowBackIcon fontSize="small" />}
-            onClick={() => navigate(-1)}
+            onClick={goBackToBranchReport}
             size="small"
             variant="outlined"
             sx={{
@@ -126,12 +133,16 @@ function EditQuestionAnswer() {
         </Stack>
 
         <Typography variant="h5" fontWeight={700} sx={{ mb: 0.5 }}>
-          {notice?.document_name || (answerId ? "Loading..." : "")}
+          {notice?.document_name || (answerId && !loadError ? "Loading..." : "")}
         </Typography>
 
         {!answerId ? (
           <Typography color="text.secondary" sx={{ mt: 2 }}>
             রিপোর্ট থেকে Edit বাটনে ক্লিক করে আসুন।
+          </Typography>
+        ) : loadError ? (
+          <Typography color="error" sx={{ mt: 2 }}>
+            {loadError} — এই লিংকটি পুরনো বা সঠিক নয়। রিপোর্ট পেজে ফিরে গিয়ে আবার Edit বাটনে ক্লিক করুন।
           </Typography>
         ) : (
           <>
@@ -243,7 +254,7 @@ function EditQuestionAnswer() {
               <Divider sx={{ my: 3 }} />
 
               <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1, mb: 3 }}>
-                <Button onClick={() => navigate(-1)} variant="outlined">
+                <Button onClick={goBackToBranchReport} variant="outlined">
                   বাতিল
                 </Button>
                 <Button type="submit" variant="contained" size="large">

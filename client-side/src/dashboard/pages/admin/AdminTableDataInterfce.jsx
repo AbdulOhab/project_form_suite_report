@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useContext, useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../../time/Loader";
 import BangladayForOnce from "../../time/BangladayForOnce";
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -12,6 +13,11 @@ import {
   Paper,
   Button,
 } from "@mui/material";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { buildExportFileName } from "../../../utils/exportFileName";
 
 function AdminTableDataInterfce({
   startDadeline,
@@ -21,7 +27,9 @@ function AdminTableDataInterfce({
   zonalReport,
   id,
   slug,
+  documentName,
 }) {
+  const { userInfo } = useContext(AuthContext);
   const [dateList, setDateList] = useState([]);
   const [dataListByDate, setDataListByDate] = useState([]);
   const [sortConfig, setSortConfig] = useState({
@@ -139,11 +147,49 @@ function AdminTableDataInterfce({
     return sortableData;
   }, [dataListByDate, sortConfig]);
 
+  const exportToExcel = () => {
+    const headers = ["দিন ও তারিখ", ...questions.map((q) => q.questionText)];
+
+    const data = sortedData.map((row) => [
+      row.date,
+      ...questions.map((_, index) => row[index] || 0),
+    ]);
+
+    const totalRow = [
+      "Total",
+      ...(totalData?.length
+        ? totalData.map((value, index) => value[index] || 0)
+        : questions.map(() => 0)),
+    ];
+    data.unshift(totalRow);
+
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...data]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Daily Report");
+
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    saveAs(blob, buildExportFileName(userInfo?.userId, "Admin", documentName));
+  };
+
   return (
     <React.Fragment>
       {!sortedData.length ? (
         <Loader />
       ) : (
+        <>
+          <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 1 }}>
+            <Button
+              size="small"
+              variant="contained"
+              startIcon={<FileDownloadIcon />}
+              onClick={exportToExcel}
+            >
+              Export to Excel
+            </Button>
+          </Box>
         <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
           <Table size="small" border={1}>
             <TableHead>
@@ -221,6 +267,7 @@ function AdminTableDataInterfce({
             </TableBody>
           </Table>
         </TableContainer>
+        </>
       )}
     </React.Fragment>
   );
