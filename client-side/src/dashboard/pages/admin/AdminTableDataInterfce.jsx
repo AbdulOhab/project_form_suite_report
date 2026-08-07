@@ -75,7 +75,10 @@ function AdminTableDataInterfce({
                 thana.answer.forEach((ans) => {
                   dateList.forEach((date) => {
                     const formattedDate = formatDate(date);
-                    if (formattedDate === formatDate(ans.updatedAt)) {
+                    const ansDate = ans.reportDate
+                      ? formatDate(ans.reportDate)
+                      : formatDate(ans.createdAt);
+                    if (formattedDate === ansDate) {
                       if (!dayData[formattedDate]) {
                         dayData[formattedDate] = {};
                       }
