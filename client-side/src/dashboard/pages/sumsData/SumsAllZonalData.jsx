@@ -201,7 +201,7 @@ const SumsAllZonalData = () => {
                 <TableRow
                   sx={{
                     bgcolor: "primary.main",
-                    "& th": { color: "white", fontWeight: "bold", cursor: "pointer" },
+                    "& th": { color: "white", fontWeight: "bold", cursor: "pointer", textAlign: "center" },
                   }}
                 >
                   <TableCell onClick={() => handleSort("zonalCode")}>
@@ -219,7 +219,7 @@ const SumsAllZonalData = () => {
                       {sortIndicator(index)}
                     </TableCell>
                   ))}
-                  <TableCell>Action</TableCell>
+                  <TableCell sx={{ textAlign: "center" }}>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -227,16 +227,16 @@ const SumsAllZonalData = () => {
                 <TableRow
                   sx={{
                     bgcolor: "primary.main",
-                    "& th, & td": { color: "white", fontWeight: "bold" },
+                    "& th, & td": { color: "white", fontWeight: "bold", textAlign: "center" },
                   }}
                 >
-                  <TableCell colSpan={2} sx={{ color: "white", fontWeight: "bold" }}>
+                  <TableCell colSpan={2} sx={{ color: "white", fontWeight: "bold", textAlign: "center" }}>
                     Total
                   </TableCell>
                   {totalData?.length
                     ? totalData?.map((value, index) => (
                         <TableCell
-                          sx={{ color: "white", fontWeight: "bold" }}
+                          sx={{ color: "white", fontWeight: "bold", textAlign: "center" }}
                           key={index}
                         >
                           {value[index]}
@@ -244,7 +244,7 @@ const SumsAllZonalData = () => {
                       ))
                     : notice?.questions?.map((value, index) => (
                         <TableCell
-                          sx={{ color: "white", fontWeight: "bold" }}
+                          sx={{ color: "white", fontWeight: "bold", textAlign: "center" }}
                           key={index}
                         >
                           0
@@ -278,7 +278,8 @@ const SumsAllZonalData = () => {
                       <Stack direction="row" spacing={1} justifyContent="center">
                         <Button
                           component={Link}
-                          to={`/dashboard/sums-zonal-data-by-branch/${id}/${zonal.zonalCode}`}
+                          to={`/dashboard/sums-zonal-data-by-branch/${zonal.zonalCode}/${buildNoticeSlug(notice)}`}
+                          state={{ id }}
                           variant="outlined"
                           size="small"
                           startIcon={<AddIcon fontSize="small" />}
@@ -287,7 +288,8 @@ const SumsAllZonalData = () => {
                         </Button>
                         <Button
                           component={Link}
-                          to={`/dashboard/sums-day-by-day-zonal-data/${id}/${zonal.zonalCode}`}
+                          to={`/dashboard/sums-day-by-day-zonal-data/${zonal.zonalCode}/${buildNoticeSlug(notice)}`}
+                          state={{ id }}
                           variant="outlined"
                           size="small"
                           startIcon={<VisibilityIcon fontSize="small" />}

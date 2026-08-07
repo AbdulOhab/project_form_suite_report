@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo } from "react";
+import { useContext, useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import Loader from "../../time/Loader";
 import BangladayForOnce from "../../time/BangladayForOnce";
@@ -12,8 +12,10 @@ import {
   TableRow,
   Paper,
   Button,
+  Typography,
 } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import TableChartOutlined from "@mui/icons-material/TableChartOutlined";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -175,21 +177,39 @@ function AdminTableDataInterfce({
   };
 
   return (
-    <React.Fragment>
+    <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+      <Box
+        sx={{
+          px: 2,
+          py: 1.5,
+          bgcolor: "#ffffff",
+          borderBottom: "1px solid",
+          borderColor: "divider",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 1,
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <TableChartOutlined fontSize="small" color="action" />
+          <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট সারসংক্ষেপ</Typography>
+        </Box>
+        {!!sortedData.length && (
+          <Button
+            size="small"
+            variant="contained"
+            startIcon={<FileDownloadIcon />}
+            onClick={exportToExcel}
+          >
+            Export to Excel
+          </Button>
+        )}
+      </Box>
+      <Box sx={{ p: 1 }}>
       {!sortedData.length ? (
         <Loader />
       ) : (
-        <>
-          <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 1 }}>
-            <Button
-              size="small"
-              variant="contained"
-              startIcon={<FileDownloadIcon />}
-              onClick={exportToExcel}
-            >
-              Export to Excel
-            </Button>
-          </Box>
         <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
           <Table size="small" border={1}>
             <TableHead>
@@ -267,9 +287,9 @@ function AdminTableDataInterfce({
             </TableBody>
           </Table>
         </TableContainer>
-        </>
       )}
-    </React.Fragment>
+      </Box>
+    </Paper>
   );
 }
 

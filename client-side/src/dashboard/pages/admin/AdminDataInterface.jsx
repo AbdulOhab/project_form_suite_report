@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import AdminTableDataInterfce from "./AdminTableDataInterfce";
 import { Link, useLocation } from "react-router-dom";
-import { Box, Button, Paper, Typography, Chip } from "@mui/material";
+import { Box, Button, Typography, Chip } from "@mui/material";
 import {
   ArrowBack,
   AccountTreeOutlined,
   StorefrontOutlined,
   LocationCityOutlined,
-  TableChartOutlined,
 } from "@mui/icons-material";
 import BASE_URL from "../../../auth/dbUrl";
 import { buildNoticeSlug } from "../../../utils/noticeSlug";
@@ -147,24 +146,16 @@ function AdminDataInterface() {
           )}
 
           {/* ── Table card ── */}
-          <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
-            <Box sx={{ px: 2, py: 1.5, bgcolor: "#ffffff", borderBottom: "1px solid", borderColor: "divider", display: "flex", alignItems: "center", gap: 1 }}>
-              <TableChartOutlined fontSize="small" color="action" />
-              <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট সারসংক্ষেপ</Typography>
-            </Box>
-            <Box sx={{ p: 1 }}>
-              <AdminTableDataInterfce
-                startDadeline={notice?.startDadeline}
-                range={notice?.range}
-                totalData={totalData}
-                questions={notice?.questions}
-                zonalReport={zonalReport}
-                id={id}
-                slug={buildNoticeSlug(notice)}
-                documentName={notice?.document_name}
-              />
-            </Box>
-          </Paper>
+          <AdminTableDataInterfce
+            startDadeline={notice?.startDadeline}
+            range={notice?.range}
+            totalData={totalData}
+            questions={notice?.questions}
+            zonalReport={zonalReport}
+            id={id}
+            slug={buildNoticeSlug(notice)}
+            documentName={notice?.document_name}
+          />
         </>
       )}
 

@@ -204,6 +204,7 @@ const SumsAllBranchData = () => {
                         color: "white",
                         fontWeight: "bold",
                         cursor: "pointer",
+                        textAlign: "center",
                       },
                     }}
                   >
@@ -222,7 +223,7 @@ const SumsAllBranchData = () => {
                         {sortIndicator(index)}
                       </TableCell>
                     ))}
-                    <TableCell>Actions</TableCell>
+                    <TableCell sx={{ textAlign: "center" }}>Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -230,17 +231,17 @@ const SumsAllBranchData = () => {
                   <TableRow
                     sx={{
                       bgcolor: "primary.main",
-                      "& th, & td": { color: "white", fontWeight: "bold" },
+                      "& th, & td": { color: "white", fontWeight: "bold", textAlign: "center" },
                     }}
                   >
-                    <TableCell sx={{ color: "white", fontWeight: "bold" }}>
+                    <TableCell sx={{ color: "white", fontWeight: "bold", textAlign: "center" }}>
                       Total
                     </TableCell>
                     <TableCell sx={{ color: "white" }}></TableCell>
                     {data.totalData.length
                       ? data.totalData?.map((value, index) => (
                           <TableCell
-                            sx={{ color: "white", fontWeight: "bold" }}
+                            sx={{ color: "white", fontWeight: "bold", textAlign: "center" }}
                             key={index}
                           >
                             {value[index]}
@@ -248,7 +249,7 @@ const SumsAllBranchData = () => {
                         ))
                       : data.questions?.map((value, index) => (
                           <TableCell
-                            sx={{ color: "white", fontWeight: "bold" }}
+                            sx={{ color: "white", fontWeight: "bold", textAlign: "center" }}
                             key={index}
                           >
                             0
@@ -282,7 +283,8 @@ const SumsAllBranchData = () => {
                         <Stack direction="row" spacing={1} justifyContent="center">
                           <Button
                             component={Link}
-                            to={`/dashboard/sums-thana-by-branch/${id}/${branch?.branchCode}`}
+                            to={`/dashboard/sums-thana-by-branch/${branch?.branchCode}/${buildNoticeSlug(data.notice)}`}
+                            state={{ id }}
                             variant="outlined"
                             size="small"
                             startIcon={<AddIcon fontSize="small" />}
@@ -291,7 +293,8 @@ const SumsAllBranchData = () => {
                           </Button>
                           <Button
                             component={Link}
-                            to={`/dashboard/sums-day-by-day-branch-data/${id}/${branch?.zonalCode}/${branch?.branchCode}`}
+                            to={`/dashboard/sums-day-by-day-branch-data/${branch?.zonalCode}/${branch?.branchCode}/${buildNoticeSlug(data.notice)}`}
+                            state={{ id }}
                             variant="outlined"
                             size="small"
                             startIcon={<VisibilityIcon fontSize="small" />}

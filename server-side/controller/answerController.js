@@ -89,7 +89,12 @@ module.exports = {
       return nowMinutes >= startMinutes || nowMinutes <= endMinutes;
     };
 
-    if (!isSameDay || !isWithinTimeWindow(notice?.timeStart, notice?.timeEnd)) {
+    // The same-day/time-window rule exists to stop a branch from silently
+    // rewriting a past day's submission. Admin/owner edit for correction
+    // (e.g. fixing a mistyped value), often well after that window — they
+    // aren't bound by it.
+    const isAdmin = ["admin", "owner"].includes(req.userData?.userRole);
+    if (!isAdmin && (!isSameDay || !isWithinTimeWindow(notice?.timeStart, notice?.timeEnd))) {
       return res.status(403).json({ message: "নির্ধারিত দিনের বাইরে এডিট করা যাবে না" });
     }
 

@@ -155,7 +155,8 @@ const RoleActions = ({ userInfo, notice, onDelete, handleReload }) => {
         </Button>
         <Button
           component={Link}
-          to={`notice-edit/${notice?._id}`}
+          to={`notice-edit/${buildNoticeSlug(notice)}`}
+          state={{ id: notice?._id }}
           variant="outlined"
           size="small"
           sx={{ px: 1, minWidth: 0 }}

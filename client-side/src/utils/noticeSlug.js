@@ -19,6 +19,11 @@ export const buildNoticeSlug = (notice) => {
 // to /dashboard instead of restoring them.
 const STATE_ONLY_ROUTE_PREFIXES = [
   "/dashboard/notice-view/",
+  "/dashboard/notice-edit/",
+  "/dashboard/sums-thana-by-branch/",
+  "/dashboard/sums-day-by-day-branch-data/",
+  "/dashboard/sums-zonal-data-by-branch/",
+  "/dashboard/sums-day-by-day-zonal-data/",
   "/dashboard/thana-submission/",
   "/dashboard/branch-data-interface/",
   "/dashboard/branch-interface/",

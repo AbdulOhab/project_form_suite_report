@@ -66,7 +66,7 @@ const QuestionAnswer = () => {
     getQuestionFromDb();
   }, [id]);
 
-  const selectCheck = (qText, value, qIndex, required, questionType) => {
+  const selectCheck = (qText, value, qIndex, required, questionType, questionId) => {
     const newAnswer = [...answer];
     if (!Array.isArray(newAnswer[qIndex])) {
       newAnswer[qIndex] = [];
@@ -76,11 +76,12 @@ const QuestionAnswer = () => {
       data: value,
       required: required,
       questionType: questionType,
+      questionId: questionId,
     });
     setAnswer(newAnswer);
   };
 
-  const selectInput = (qText, value, qIndex, required, questionType) => {
+  const selectInput = (qText, value, qIndex, required, questionType, questionId) => {
     const data = questionType === "number" ? toEnglishDigits(value) : value;
     setAnswer((prevAnswer) => {
       const newAnswer = [...prevAnswer];
@@ -91,6 +92,7 @@ const QuestionAnswer = () => {
           data,
           questionType: questionType,
           required: required,
+          questionId: questionId,
         };
       } else {
         newAnswer[qIndex] = {
@@ -99,6 +101,7 @@ const QuestionAnswer = () => {
           data,
           required: required,
           questionType: questionType,
+          questionId: questionId,
         };
       }
 
@@ -404,7 +407,8 @@ const QuestionAnswer = () => {
                               opText?.optionsText,
                               question?.questionType,
                               qIndex,
-                              question?.required
+                              question?.required,
+                              question?.questionId
                             )
                           }
                         />
@@ -438,7 +442,8 @@ const QuestionAnswer = () => {
                               e.target.value,
                               qIndex,
                               question?.required,
-                              question?.questionType
+                              question?.questionType,
+                              question?.questionId
                             )
                           }
                           sx={{ mx: 1 }}

@@ -2,6 +2,28 @@ const answerModel = require("../model/answerModel");
 const formModel = require("../model/formModel");
 const thanaModel = require("../model/thanaModel");
 
+// Submitted answers carry a snapshot of the question they were answered
+// against (questionId — stable, added once a notice is edited/re-saved — and
+// questionText, kept for older submissions predating questionId). Reports
+// need to map that snapshot back to the question's CURRENT column position,
+// so editing a question's wording later doesn't orphan historical answers:
+// questionId survives edits, questionText only survives until the next edit.
+const buildQuestionIndexMaps = (question) => {
+  const byId = new Map();
+  const byText = new Map();
+  (question?.questions || []).forEach((q, index) => {
+    if (q?.questionId) byId.set(q.questionId, index);
+    if (q?.questionText) byText.set(q.questionText, index);
+  });
+  return { byId, byText };
+};
+
+const resolveQuestionIndex = ({ byId, byText }, data) => {
+  if (data?.questionId && byId.has(data.questionId)) return byId.get(data.questionId);
+  if (data?.questionText && byText.has(data.questionText)) return byText.get(data.questionText);
+  return undefined;
+};
+
 module.exports = {
   sumsZonalData: async (req, res, next) => {
     const { qId } = req.params;
@@ -53,7 +75,7 @@ module.exports = {
     });
 
     // Initialize the necessary variables
-    const allQuestions = new Set();
+    const questionIndexMaps = buildQuestionIndexMaps(question);
     const sums = {};
     let submittedData = 0;
     let unsubmittedData = 0;
@@ -70,31 +92,23 @@ module.exports = {
 
           thana.answer.forEach((ans) => {
             ans.answers.forEach((data) => {
-              const questionText = data?.questionText;
-              allQuestions.add(questionText);
-
-              if (data?.questionType === "number") {
-                const value = Number(data?.data) || 0;
-                sums[questionText] = (sums[questionText] || 0) + value;
-              }
+              if (data?.questionType !== "number") return;
+              const qIndex = resolveQuestionIndex(questionIndexMaps, data);
+              if (qIndex === undefined) return;
+              const value = Number(data?.data) || 0;
+              sums[qIndex] = (sums[qIndex] || 0) + value;
             });
           });
         });
       });
     });
 
-    // Convert sums to an array
-    const sumsArray = Array.from(allQuestions).map((questionText, index) => ({
-      [index]: sums[questionText] || 0,
+    // Convert sums to an array, in the notice's current question order
+    const sumsArray = (question?.questions || []).map((q, index) => ({
+      [index]: sums[index] || 0,
     }));
 
     // Prepare tempData
-    // Maps each question's text to its index so rows can also be read by
-    // numeric index (the frontend tables index into rows by question order).
-    const questionIndexByText = new Map(
-      (question?.questions || []).map((q, index) => [q.questionText, index])
-    );
-
     const tempData = tempZonal.map((zonal) => {
       const sumsThana = {
         zonalCode: zonal.zonalCode,
@@ -105,16 +119,11 @@ module.exports = {
         branch.tempThana.forEach((thana) => {
           thana.answer.forEach((ans) => {
             ans.answers.forEach((data) => {
-              if (data?.questionType === "number") {
-                const questionText = data?.questionText;
-                const value = Number(data?.data) || 0;
-                sumsThana[questionText] =
-                  (sumsThana[questionText] || 0) + value;
-                if (questionIndexByText.has(questionText)) {
-                  const qIndex = questionIndexByText.get(questionText);
-                  sumsThana[qIndex] = (sumsThana[qIndex] || 0) + value;
-                }
-              }
+              if (data?.questionType !== "number") return;
+              const qIndex = resolveQuestionIndex(questionIndexMaps, data);
+              if (qIndex === undefined) return;
+              const value = Number(data?.data) || 0;
+              sumsThana[qIndex] = (sumsThana[qIndex] || 0) + value;
             });
           });
         });
@@ -186,7 +195,7 @@ module.exports = {
     );
 
     // Initialize the necessary variables
-    const allQuestions = new Set();
+    const questionIndexMaps = buildQuestionIndexMaps(question);
     const sums = {};
 
     // Iterate through each branch object
@@ -198,21 +207,11 @@ module.exports = {
             item?.answer?.forEach((ans) => {
               if (ans.answers && Array.isArray(ans.answers)) {
                 ans.answers.forEach((data) => {
-                  let questionText = data?.questionText;
-                  allQuestions.add(questionText); // Add all questions to the set
-
-                  let value = 0;
-                  if (data?.questionType === "number") {
-                    value = Number(data?.data);
-                  }
-
-                  // Initialize the sum for this question if it doesn't exist
-                  if (!sums[questionText]) {
-                    sums[questionText] = 0;
-                  }
-
-                  // Add the value to the corresponding sum
-                  sums[questionText] += value;
+                  if (data?.questionType !== "number") return;
+                  const qIndex = resolveQuestionIndex(questionIndexMaps, data);
+                  if (qIndex === undefined) return;
+                  const value = Number(data?.data) || 0;
+                  sums[qIndex] = (sums[qIndex] || 0) + value;
                 });
               }
             });
@@ -221,11 +220,10 @@ module.exports = {
       }
     });
 
-    // Ensure all questions have an entry in the sums array
-    const sumsArray = Array.from(allQuestions).map((questionText, index) => ({
-      [index]: sums[questionText] || 0,
+    // Ensure all questions have an entry in the sums array, in question order
+    const sumsArray = (question?.questions || []).map((q, index) => ({
+      [index]: sums[index] || 0,
     }));
-    // console.log(sumsArray,'sumsArray');
 
     return res.status(200).json({ tempBranch, sumsArray, question });
   },
@@ -282,7 +280,7 @@ module.exports = {
     );
 
     // Initialize the necessary variables
-    const allQuestions = new Set();
+    const questionIndexMaps = buildQuestionIndexMaps(question);
     const sums = {};
 
     // Iterate through each branch object
@@ -294,21 +292,11 @@ module.exports = {
             item?.answer?.forEach((ans) => {
               if (ans.answers && Array.isArray(ans.answers)) {
                 ans.answers.forEach((data) => {
-                  let questionText = data?.questionText;
-                  allQuestions.add(questionText); // Add all questions to the set
-
-                  let value = 0;
-                  if (data?.questionType === "number") {
-                    value = Number(data?.data);
-                  }
-
-                  // Initialize the sum for this question if it doesn't exist
-                  if (!sums[questionText]) {
-                    sums[questionText] = 0;
-                  }
-
-                  // Add the value to the corresponding sum
-                  sums[questionText] += value;
+                  if (data?.questionType !== "number") return;
+                  const qIndex = resolveQuestionIndex(questionIndexMaps, data);
+                  if (qIndex === undefined) return;
+                  const value = Number(data?.data) || 0;
+                  sums[qIndex] = (sums[qIndex] || 0) + value;
                 });
               }
             });
@@ -317,16 +305,10 @@ module.exports = {
       }
     });
 
-    // Ensure all questions have an entry in the sums array
-    const sumsArray = Array.from(allQuestions).map((questionText, index) => ({
-      [index]: sums[questionText] || 0,
+    // Ensure all questions have an entry in the sums array, in question order
+    const sumsArray = (question?.questions || []).map((q, index) => ({
+      [index]: sums[index] || 0,
     }));
-
-    // Maps each question's text to its index so rows can also be read by
-    // numeric index (the frontend tables index into rows by question order).
-    const questionIndexByText = new Map(
-      (question?.questions || []).map((q, index) => [q.questionText, index])
-    );
 
     let tempData = tempBranch?.map((branch) => {
       let sums = { branchCode: branch.branchCode, userName: branch.userName };
@@ -334,19 +316,11 @@ module.exports = {
         branch.tempThana.forEach((thana) => {
           thana?.answer?.forEach((ans) => {
             ans?.answers?.forEach((data) => {
-              let questionText = data?.questionText;
-
-              if (data?.questionType === "number") {
-                let value = Number(data?.data);
-                if (!sums[questionText]) {
-                  sums[questionText] = 0;
-                }
-                sums[questionText] += value;
-                if (questionIndexByText.has(questionText)) {
-                  const qIndex = questionIndexByText.get(questionText);
-                  sums[qIndex] = (sums[qIndex] || 0) + value;
-                }
-              }
+              if (data?.questionType !== "number") return;
+              const qIndex = resolveQuestionIndex(questionIndexMaps, data);
+              if (qIndex === undefined) return;
+              const value = Number(data?.data) || 0;
+              sums[qIndex] = (sums[qIndex] || 0) + value;
             });
           });
         });
@@ -400,7 +374,7 @@ module.exports = {
     });
 
     // Initialize the necessary variables
-    const allQuestions = new Set();
+    const questionIndexMaps = buildQuestionIndexMaps(question);
     const sums = {};
 
     // Iterate through each branch object
@@ -408,21 +382,19 @@ module.exports = {
       branch.tempThana.forEach((thana) => {
         thana.answer.forEach((ans) => {
           ans.answers.forEach((data) => {
-            const questionText = data?.questionText;
-            allQuestions.add(questionText);
-
-            if (data?.questionType === "number") {
-              const value = Number(data?.data) || 0;
-              sums[questionText] = (sums[questionText] || 0) + value;
-            }
+            if (data?.questionType !== "number") return;
+            const qIndex = resolveQuestionIndex(questionIndexMaps, data);
+            if (qIndex === undefined) return;
+            const value = Number(data?.data) || 0;
+            sums[qIndex] = (sums[qIndex] || 0) + value;
           });
         });
       });
     });
 
-    // Convert sums to an array
-    const sumsArray = Array.from(allQuestions).map((questionText, index) => ({
-      [index]: sums[questionText] || 0,
+    // Convert sums to an array, in the notice's current question order
+    const sumsArray = (question?.questions || []).map((q, index) => ({
+      [index]: sums[index] || 0,
     }));
 
     // Calculate counts
@@ -439,12 +411,6 @@ module.exports = {
       });
     });
 
-    // Maps each question's text to its index so rows can also be read by
-    // numeric index (the frontend tables index into rows by question order).
-    const questionIndexByText = new Map(
-      (question?.questions || []).map((q, index) => [q.questionText, index])
-    );
-
     // Prepare tempData
     const tempData = tempBranch.map((branch) => {
       const dsums = {
@@ -456,15 +422,11 @@ module.exports = {
       branch.tempThana.forEach((thana) => {
         thana.answer.forEach((ans) => {
           ans.answers.forEach((data) => {
-            if (data?.questionType === "number") {
-              const questionText = data?.questionText;
-              const value = Number(data?.data) || 0;
-              dsums[questionText] = (dsums[questionText] || 0) + value;
-              if (questionIndexByText.has(questionText)) {
-                const qIndex = questionIndexByText.get(questionText);
-                dsums[qIndex] = (dsums[qIndex] || 0) + value;
-              }
-            }
+            if (data?.questionType !== "number") return;
+            const qIndex = resolveQuestionIndex(questionIndexMaps, data);
+            if (qIndex === undefined) return;
+            const value = Number(data?.data) || 0;
+            dsums[qIndex] = (dsums[qIndex] || 0) + value;
           });
         });
       });
@@ -509,8 +471,8 @@ module.exports = {
       })
     );
 
+    const questionIndexMaps = buildQuestionIndexMaps(question);
     let sums = {};
-    let allQuestions = new Set();
     // Iterate through each user object
 
     if (tempThana && Array.isArray(tempThana)) {
@@ -519,30 +481,21 @@ module.exports = {
           item.answer.forEach((ans) => {
             if (ans.answers && Array.isArray(ans.answers)) {
               ans.answers.forEach((data) => {
-                let questionText = data?.questionText;
-                allQuestions.add(questionText); // Add all questions to the set
-                let value = 0;
-                if (data.questionType === "number") {
-                  value = Number(data.data);
-                }
-                // Initialize the sum for this question if it doesn't exist
-                if (!sums[questionText]) {
-                  sums[questionText] = 0;
-                }
-
-                // Add the value to the corresponding sum
-                sums[questionText] += value;
+                if (data.questionType !== "number") return;
+                const qIndex = resolveQuestionIndex(questionIndexMaps, data);
+                if (qIndex === undefined) return;
+                const value = Number(data.data) || 0;
+                sums[qIndex] = (sums[qIndex] || 0) + value;
               });
-              value = 0;
             }
           });
         }
       });
     }
 
-    // Ensure all questions have an entry in the sums array
-    const sumsArray = Array.from(allQuestions).map((questionText, index) => ({
-      [index]: sums[questionText] || 0,
+    // Ensure all questions have an entry in the sums array, in question order
+    const sumsArray = (question?.questions || []).map((q, index) => ({
+      [index]: sums[index] || 0,
     }));
 
     return res.status(200).json({ question, tempThana, sumsArray });
@@ -588,8 +541,8 @@ module.exports = {
 
     // return;
 
+    const questionIndexMaps = buildQuestionIndexMaps(question);
     let sums = {};
-    let allQuestions = new Set();
 
     // Iterate through each user object
     tempThana?.forEach((item) => {
@@ -597,39 +550,21 @@ module.exports = {
         item?.answer?.forEach((ans) => {
           if (ans.answers && Array.isArray(ans.answers)) {
             ans.answers.forEach((data) => {
-              let questionText = data?.questionText;
-              allQuestions.add(questionText); // Add all questions to the set
-
-              let value = 0;
-              if (data?.questionType === "number") {
-                value = Number(data?.data);
-              }
-
-              // Initialize the sum for this question if it doesn't exist
-              if (!sums[questionText]) {
-                sums[questionText] = 0;
-              }
-
-              // Add the value to the corresponding sum
-              sums[questionText] += value;
+              if (data?.questionType !== "number") return;
+              const qIndex = resolveQuestionIndex(questionIndexMaps, data);
+              if (qIndex === undefined) return;
+              const value = Number(data?.data) || 0;
+              sums[qIndex] = (sums[qIndex] || 0) + value;
             });
           }
         });
       }
     });
 
-    // Ensure all questions have an entry in the sums array
-    const sumsArray = Array.from(allQuestions).map((questionText, index) => ({
-      [index]: sums[questionText] || 0,
+    // Ensure all questions have an entry in the sums array, in question order
+    const sumsArray = (question?.questions || []).map((q, index) => ({
+      [index]: sums[index] || 0,
     }));
-
-    // let thanaSums = {};
-
-    // Maps each question's text to its index so rows can also be read by
-    // numeric index (the frontend tables index into rows by question order).
-    const questionIndexByText = new Map(
-      (question?.questions || []).map((q, index) => [q.questionText, index])
-    );
 
     let sumsThanaData = tempThana.map((thana) => {
       let dsums = {
@@ -638,20 +573,11 @@ module.exports = {
       };
       thana?.answer?.forEach((ans) => {
         ans?.answers?.forEach((data) => {
-          if (data?.questionType === "number") {
-            let questionText = data?.questionText;
-            let value = Number(data.data) || 0;
-
-            if (!dsums[questionText]) {
-              dsums[questionText] = 0;
-            }
-
-            dsums[questionText] += value;
-            if (questionIndexByText.has(questionText)) {
-              const qIndex = questionIndexByText.get(questionText);
-              dsums[qIndex] = (dsums[qIndex] || 0) + value;
-            }
-          }
+          if (data?.questionType !== "number") return;
+          const qIndex = resolveQuestionIndex(questionIndexMaps, data);
+          if (qIndex === undefined) return;
+          const value = Number(data.data) || 0;
+          dsums[qIndex] = (dsums[qIndex] || 0) + value;
         });
       });
       return dsums;
@@ -690,12 +616,7 @@ module.exports = {
 
     // Process each thana
     const sums = {};
-    const allQuestions = new Set();
-    // Maps each question's text to its index so rows can also be read by
-    // numeric index (the frontend tables index into rows by question order).
-    const questionIndexByText = new Map(
-      (question?.questions || []).map((q, index) => [q.questionText, index])
-    );
+    const questionIndexMaps = buildQuestionIndexMaps(question);
     const sumsThanaData = tempThana.map((thana) => {
       const dsums = {
         thanaCode: thana.thanaCode,
@@ -708,31 +629,25 @@ module.exports = {
       const thanaAnswers = answersByThana[key] || [];
       thanaAnswers.forEach((ans) => {
         ans.answers.forEach((data) => {
-          const questionText = data?.questionText;
-          allQuestions.add(questionText);
+          if (data?.questionType !== "number") return;
+          const qIndex = resolveQuestionIndex(questionIndexMaps, data);
+          if (qIndex === undefined) return;
+          const value = Number(data?.data) || 0;
 
-          if (data?.questionType === "number") {
-            const value = Number(data?.data) || 0;
+          // Update sums for all questions
+          sums[qIndex] = (sums[qIndex] || 0) + value;
 
-            // Update sums for all questions
-            sums[questionText] = (sums[questionText] || 0) + value;
-
-            // Update sums for this thana
-            dsums[questionText] = (dsums[questionText] || 0) + value;
-            if (questionIndexByText.has(questionText)) {
-              const qIndex = questionIndexByText.get(questionText);
-              dsums[qIndex] = (dsums[qIndex] || 0) + value;
-            }
-          }
+          // Update sums for this thana
+          dsums[qIndex] = (dsums[qIndex] || 0) + value;
         });
       });
 
       return dsums;
     });
 
-    // Convert sums to an array
-    const sumsArray = Array.from(allQuestions).map((questionText, index) => ({
-      [index]: sums[questionText] || 0,
+    // Convert sums to an array, in the notice's current question order
+    const sumsArray = (question?.questions || []).map((q, index) => ({
+      [index]: sums[index] || 0,
     }));
 
     return res.status(200).json({ question, sumsArray, sumsThanaData,tempThana});
@@ -752,38 +667,27 @@ module.exports = {
       })
       // .sort({ _id: -1, createdAt: -1 })
       .exec();
+    const questionIndexMaps = buildQuestionIndexMaps(question);
     let sums = {};
-    let allQuestions = new Set();
 
     // Iterate through each user object
     if (answer && Array.isArray(answer)) {
       answer?.forEach((ans) => {
         if (ans.answers && Array.isArray(ans.answers)) {
           ans.answers.forEach((data) => {
-            let questionText = data?.questionText;
-            allQuestions.add(questionText); // Add all questions to the set
-
-            let value = 0;
-            if (data?.questionType === "number") {
-              value = Number(data?.data);
-            }
-
-            // Initialize the sum for this question if it doesn't exist
-            if (!sums[questionText]) {
-              sums[questionText] = 0;
-            }
-
-            // Add the value to the corresponding sum
-            sums[questionText] += value;
+            if (data?.questionType !== "number") return;
+            const qIndex = resolveQuestionIndex(questionIndexMaps, data);
+            if (qIndex === undefined) return;
+            const value = Number(data?.data) || 0;
+            sums[qIndex] = (sums[qIndex] || 0) + value;
           });
         }
       });
     }
-    // console.log(sums);
 
-    // Ensure all questions have an entry in the sums array
-    const sumsArray = Array.from(allQuestions).map((questionText, index) => ({
-      [index]: sums[questionText] || 0,
+    // Ensure all questions have an entry in the sums array, in question order
+    const sumsArray = (question?.questions || []).map((q, index) => ({
+      [index]: sums[index] || 0,
     }));
 
     return res.status(200).json({ answer, question, sumsArray });

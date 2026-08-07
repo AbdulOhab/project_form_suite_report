@@ -160,15 +160,7 @@ function DateByDayCount({
               </TableCell>
               {questions.map((question, index) => (
                 <TableCell
-                  sx={{
-                    color: "common.white",
-                    textAlign: "center",
-                    cursor: "pointer",
-                    minWidth: 140,
-                    maxWidth: 200,
-                    whiteSpace: "normal",
-                    wordBreak: "break-word",
-                  }}
+                  sx={{ color: "common.white", textAlign: "center", cursor: "pointer" }}
                   key={index}
                   onClick={() => handleSort(index)}
                 >

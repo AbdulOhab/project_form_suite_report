@@ -242,6 +242,7 @@ function SumsTotalDayThanaData() {
                     {sortIndicator(index)}
                   </TableCell>
                 ))}
+                <TableCell>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -269,6 +270,7 @@ function SumsTotalDayThanaData() {
                     0
                   </TableCell>
                 )}
+                <TableCell />
               </TableRow>
 
               {/* Data Rows */}
@@ -286,6 +288,20 @@ function SumsTotalDayThanaData() {
                       {data[qIndex] ? data[qIndex] : 0}
                     </TableCell>
                   ))}
+                  <TableCell sx={{ textAlign: "center" }}>
+                    {data.answerId ? (
+                      <Button
+                        component={Link}
+                        to={`/dashboard/branch-edit-answer/${buildNoticeSlug(notice)}/${qId}/${data.answerId}`}
+                        variant="outlined"
+                        size="small"
+                      >
+                        এডিট
+                      </Button>
+                    ) : (
+                      "—"
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -1,6 +1,18 @@
 const { json } = require("body-parser");
+const mongoose = require("mongoose");
 const formModel = require("../model/formModel");
 const { body, validationResult } = require("express-validator");
+
+// Every question gets a stable questionId that survives text edits/reorders,
+// so reports can keep matching historical answers to the right column after
+// a question's wording changes (see sumsDataController's resolveQuestionIndex).
+// Existing ids (round-tripped from the client after a GET) are kept as-is;
+// only questions with no id yet (newly added in the editor) get a fresh one.
+const assignQuestionIds = (questions) =>
+  (questions || []).map((q) => ({
+    ...q,
+    questionId: q?.questionId || new mongoose.Types.ObjectId().toString(),
+  }));
 
 const questionValidator = async (req) => {
   await body("document_name")
@@ -114,7 +126,7 @@ const noticeboardController = {
         document_name: data.document_name,
         sub_title: data.sub_title,
         doc_desc: data.doc_desc,
-        questions: data.question,
+        questions: assignQuestionIds(data.question),
         range: data.range,
         timeStart: data.timeStart,
         timeEnd: data.timeEnd,
@@ -144,7 +156,7 @@ const noticeboardController = {
           document_name: data.document_name,
           sub_title: data.sub_title,
           doc_desc: data.doc_desc,
-          questions: data.question,
+          questions: assignQuestionIds(data.question),
           range: data.range,
           timeStart: data.timeStart,
           timeEnd: data.timeEnd,

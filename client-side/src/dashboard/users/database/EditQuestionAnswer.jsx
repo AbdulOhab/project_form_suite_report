@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../../../contexts/AuthContext";
 import {
   Box,
   Button,
@@ -25,9 +26,15 @@ import { toEnglishDigits } from "../../../utils/convertDigits";
 function EditQuestionAnswer() {
   const { slug, formId, answerId } = useParams();
   const navigate = useNavigate();
+  const { userInfo } = useContext(AuthContext);
 
+  // Branch always lands here from its own report page; admin/owner reach
+  // this from a thana's day-by-day breakdown, several levels deeper, so
+  // there's no single fixed "back" URL for them — just retrace history.
   const goBackToBranchReport = () =>
-    navigate(`/dashboard/branch-data-interface/${slug}`, { state: { id: formId } });
+    userInfo?.userRole === "branch"
+      ? navigate(`/dashboard/branch-data-interface/${slug}`, { state: { id: formId } })
+      : navigate(-1);
 
   const [notice, setNotice] = useState(null);
   const [answer, setAnswer] = useState([
@@ -64,19 +71,19 @@ function EditQuestionAnswer() {
     getAnswerFromDb();
   }, [answerId]);
 
-  const selectInput = (qText, value, qIndex, required, questionType) => {
+  const selectInput = (qText, value, qIndex, required, questionType, questionId) => {
     const data = questionType === "number" ? toEnglishDigits(value) : value;
     setAnswer((prev) => {
       const updated = [...prev];
-      updated[qIndex] = { questionText: qText, data, questionType, required };
+      updated[qIndex] = { questionText: qText, data, questionType, required, questionId };
       return updated;
     });
   };
 
-  const selectCheck = (qText, value, qIndex, required, questionType) => {
+  const selectCheck = (qText, value, qIndex, required, questionType, questionId) => {
     const updated = [...answer];
     if (!Array.isArray(updated[qIndex])) updated[qIndex] = [];
-    updated[qIndex].push({ questionText: qText, data: value, required, questionType });
+    updated[qIndex].push({ questionText: qText, data: value, required, questionType, questionId });
     setAnswer(updated);
   };
 
@@ -203,7 +210,8 @@ function EditQuestionAnswer() {
                           e.target.value,
                           qIndex,
                           question.required,
-                          question.questionType
+                          question.questionType,
+                          question.questionId
                         )
                       }
                     />
@@ -223,7 +231,8 @@ function EditQuestionAnswer() {
                                   opText.optionsText,
                                   qIndex,
                                   question.required,
-                                  question.questionType
+                                  question.questionType,
+                                  question.questionId
                                 )
                               }
                             />
@@ -238,7 +247,8 @@ function EditQuestionAnswer() {
                                   opText.optionsText,
                                   qIndex,
                                   question.required,
-                                  question.questionType
+                                  question.questionType,
+                                  question.questionId
                                 )
                               }
                             />

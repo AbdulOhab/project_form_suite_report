@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { buildNoticeSlug } from "../../../utils/noticeSlug";
+import { buildExportFileName } from "../../../utils/exportFileName";
 import BASE_URL from "../../../auth/dbUrl";
+import { AuthContext } from "../../../contexts/AuthContext";
 import {
   Box,
   Button,
   Paper,
-  Stack,
   Table,
   TableBody,
   TableCell,
@@ -15,10 +16,18 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import Loader from "../../time/Loader";
 import BangladayDate from "../../time/BangladayDate";
 
 const SumsDayByDayBranchData = () => {
-  const { qId, zId, bId } = useParams();
+  const { userInfo } = useContext(AuthContext);
+  const { zId, bId } = useParams();
+  const location = useLocation();
+  const qId = location.state?.id;
 
   const [tempThana, setTempThana] = useState();
   const [notice, setNotice] = useState();
@@ -32,6 +41,8 @@ const SumsDayByDayBranchData = () => {
   });
 
   useEffect(() => {
+    if (!qId) return;
+
     const getThanaUsers = async () => {
       try {
         const response = await fetch(
@@ -147,137 +158,170 @@ const SumsDayByDayBranchData = () => {
     return sortConfig.direction === "ascending" ? " ▲" : " ▼";
   };
 
+  const exportToExcel = () => {
+    const questionList = questions?.questions || [];
+    const headers = ["দিন ও তারিখ", ...questionList.map((q) => q.questionText)];
+
+    const data = dataListByDate.map((row) => [
+      row.date,
+      ...questionList.map((_, index) => row[index] || 0),
+    ]);
+
+    const totalRow = [
+      "Total",
+      ...(totalData?.length
+        ? totalData.map((sum, index) => (sum ? sum[index] : 0))
+        : questionList.map(() => 0)),
+    ];
+    data.unshift(totalRow);
+
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...data]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Branch Day Report");
+
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    saveAs(blob, buildExportFileName(userInfo?.userId, "Admin", notice?.document_name));
+  };
+
   return (
-    <>
-      <Paper elevation={2} sx={{ p: 2, my: 1 }}>
-        {/* Header Section */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 2,
-            mb: 2,
-          }}
+    <Box sx={{ maxWidth: 1500, mx: "auto", px: { xs: 1, sm: 2, md: 3 }, py: 2 }}>
+      {/* Compact top bar */}
+      <Box sx={{
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        mb: 1, flexWrap: "wrap", gap: 1
+      }}>
+        <Button
+          component={Link}
+          to={`/dashboard/sums-all-branches-data/${buildNoticeSlug(notice)}`}
+          state={{ id: qId }}
+          size="small"
+          startIcon={<ArrowBack />}
+          variant="text"
+          sx={{ fontWeight: 600 }}
         >
-          {/* Title */}
-          <Box sx={{ textAlign: "center", flex: "2 1 auto" }}>
-            <Typography
-              variant="h5"
-              sx={{
-                textAlign: "center",
-                fontWeight: 600,
-                color: "primary.main",
-              }}
-            >
-              {notice?.document_name}
+          ফিরে যান
+        </Button>
+        <Box sx={{ textAlign: "center", flex: 1, minWidth: 0 }}>
+          <Typography variant="h6" fontWeight="bold" noWrap>
+            {notice?.document_name || (qId ? "Loading..." : "")}
+          </Typography>
+          {notice?.sub_title && (
+            <Typography variant="caption" color="text.secondary">{notice.sub_title}</Typography>
+          )}
+        </Box>
+      </Box>
+
+      {!qId ? (
+        <Typography color="text.secondary">
+          এক নজরে ব্রাঞ্চ থেকে দিনভিত্তিক বাটনে ক্লিক করে আসুন।
+        </Typography>
+      ) : (
+        <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+          <Box sx={{
+            px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider",
+            display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 1
+          }}>
+            <Typography variant="subtitle2" fontWeight={600} color="text.secondary">
+              দিনভিত্তিক সারসংক্ষেপ · শাখা কোড {bId} · অঞ্চল কোড {zId}
             </Typography>
-            {notice?.sub_title && (
-              <Typography variant="body2" sx={{ textAlign: "center" }}>
-                {notice?.sub_title}
-              </Typography>
+            {!!dataListByDate.length && (
+              <Button
+                size="small"
+                variant="contained"
+                startIcon={<FileDownloadIcon />}
+                onClick={exportToExcel}
+              >
+                Export to Excel
+              </Button>
             )}
           </Box>
-
-          {/* Right - Actions */}
-          <Stack
-            direction="column"
-            alignItems="flex-end"
-            justifyContent="flex-end"
-            spacing={1}
-            sx={{ flex: "1 1 auto", minWidth: 120 }}
-          >
-            <Button
-              component={Link}
-              variant="contained"
-              to={`/dashboard/sums-all-branches-data/${buildNoticeSlug(notice)}`}
-              state={{ id: qId }}
-            >
-              Back
-            </Button>
-          </Stack>
-        </Box>
-      </Paper>
-
-      {/* Day-by-Day Table */}
-      <Paper elevation={2} sx={{ p: 2, my: 2 }}>
-        <TableContainer>
-          <Table size="small">
-            <TableHead>
-              <TableRow
-                sx={{
-                  bgcolor: "primary.main",
-                  "& th": {
-                    color: "white",
-                    fontWeight: "bold",
-                    cursor: "pointer",
-                  },
-                }}
-              >
-                <TableCell onClick={() => handleSort("date")}>
-                  দিন ও তারিখ{sortIndicator("date")}
-                </TableCell>
-                {questions?.questions?.map((question, index) => (
-                  <TableCell
-                    key={index}
-                    onClick={() => handleSort(index)}
-                  >
-                    {question.questionText}
-                    {sortIndicator(index)}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {/* Total Row */}
-              <TableRow
-                sx={{
-                  bgcolor: "primary.main",
-                  "& th, & td": { color: "white", fontWeight: "bold" },
-                }}
-              >
-                <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                  Total
-                </TableCell>
-                {totalData?.length ? (
-                  totalData?.map((sum, sIndex) => (
-                    <TableCell
-                      sx={{ color: "white", fontWeight: "bold" }}
-                      key={sIndex}
+          <Box sx={{ p: 1 }}>
+            {dataListByDate.length ? (
+              <TableContainer component={Paper} variant="outlined">
+                <Table size="small">
+                  <TableHead>
+                    <TableRow
+                      sx={{
+                        bgcolor: "primary.main",
+                        "& th": {
+                          color: "white",
+                          fontWeight: "bold",
+                          cursor: "pointer",
+                          textAlign: "center",
+                        },
+                      }}
                     >
-                      {sum ? sum[sIndex] : 0}
-                    </TableCell>
-                  ))
-                ) : (
-                  <TableCell sx={{ color: "white", fontWeight: "bold" }}>
-                    0
-                  </TableCell>
-                )}
-              </TableRow>
+                      <TableCell onClick={() => handleSort("date")}>
+                        দিন ও তারিখ{sortIndicator("date")}
+                      </TableCell>
+                      {questions?.questions?.map((question, index) => (
+                        <TableCell
+                          key={index}
+                          onClick={() => handleSort(index)}
+                        >
+                          {question.questionText}
+                          {sortIndicator(index)}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {/* Total Row */}
+                    <TableRow
+                      sx={{
+                        bgcolor: "primary.main",
+                        "& th, & td": { color: "white", fontWeight: "bold", textAlign: "center" },
+                      }}
+                    >
+                      <TableCell sx={{ color: "white", fontWeight: "bold", textAlign: "center" }}>
+                        Total
+                      </TableCell>
+                      {totalData?.length ? (
+                        totalData?.map((sum, sIndex) => (
+                          <TableCell
+                            sx={{ color: "white", fontWeight: "bold", textAlign: "center" }}
+                            key={sIndex}
+                          >
+                            {sum ? sum[sIndex] : 0}
+                          </TableCell>
+                        ))
+                      ) : (
+                        <TableCell sx={{ color: "white", fontWeight: "bold", textAlign: "center" }}>
+                          0
+                        </TableCell>
+                      )}
+                    </TableRow>
 
-              {/* Data Rows */}
-              {dataListByDate?.map((data, index) => (
-                <TableRow
-                  key={index}
-                  hover
-                  sx={{ "&:hover": { bgcolor: "action.hover" } }}
-                >
-                  <TableCell sx={{ textAlign: "center" }}>
-                    <BangladayDate day={data.day + 1} date={data.date} />
-                  </TableCell>
-                  {questions?.questions?.map((question, qIndex) => (
-                    <TableCell key={qIndex} sx={{ textAlign: "center" }}>
-                      {data[qIndex] ? data[qIndex] : 0}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </>
+                    {/* Data Rows */}
+                    {dataListByDate?.map((data, index) => (
+                      <TableRow
+                        key={index}
+                        hover
+                        sx={{ "&:hover": { bgcolor: "action.hover" } }}
+                      >
+                        <TableCell sx={{ textAlign: "center" }}>
+                          <BangladayDate day={data.day + 1} date={data.date} />
+                        </TableCell>
+                        {questions?.questions?.map((question, qIndex) => (
+                          <TableCell key={qIndex} sx={{ textAlign: "center" }}>
+                            {data[qIndex] ? data[qIndex] : 0}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              <Loader />
+            )}
+          </Box>
+        </Paper>
+      )}
+    </Box>
   );
 };
 

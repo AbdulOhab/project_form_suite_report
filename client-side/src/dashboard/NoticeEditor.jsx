@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useLocation } from "react-router";
 import {
   Typography,
   FormControlLabel,
@@ -33,7 +33,8 @@ import BASE_URL from "../auth/dbUrl";
 import NOTICE_TYPE_OPTIONS from "../utils/noticeTypeOptions";
 
 const NoticeEditor = () => {
-  const { id } = useParams();
+  const location = useLocation();
+  const id = location.state?.id;
   const navigate = useNavigate();
 
   const [documentDescription, setdocumentDescription] = useState("");
@@ -50,6 +51,10 @@ const NoticeEditor = () => {
 
   // Load existing notice
   useEffect(() => {
+    if (!id) {
+      navigate("/dashboard");
+      return;
+    }
     const getQuestionFromDb = async () => {
       try {
         const response = await fetch(`${BASE_URL}/get-notice/${id}`, {
@@ -75,7 +80,7 @@ const NoticeEditor = () => {
       }
     };
     getQuestionFromDb();
-  }, [id]);
+  }, [id, navigate]);
 
   // Auto-compute endDadeline from startDadeline + range
   useEffect(() => {
@@ -144,7 +149,11 @@ const NoticeEditor = () => {
 
   function copyQuestion(i) {
     expandcloseAll();
-    setQuestion([...question, { ...question[i] }]);
+    // A copy is a distinct question, not the same one repeated — drop the
+    // source's questionId so the backend assigns the copy a fresh one
+    // instead of two rows silently sharing (and corrupting) one report column.
+    const { questionId, ...rest } = question[i];
+    setQuestion([...question, { ...rest }]);
   }
 
   function deleteQuestion(i) {

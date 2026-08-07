@@ -29,6 +29,12 @@ import Loader from "../../time/Loader";
 import { buildNoticeSlug } from "../../../utils/noticeSlug";
 import { buildExportFileName } from "../../../utils/exportFileName";
 
+// A fixed sentinel well above any realistic thana count, used for the
+// "All" rows-per-page option so the existing slice/pagination math (which
+// expects a plain number) doesn't need a special case.
+const ALL_ROWS = 100000;
+const ROWS_PER_PAGE_OPTIONS = [25, 50, 100, 500, ALL_ROWS];
+
 const SumsAllThanaData = () => {
   const { userInfo } = useContext(AuthContext);
   const location = useLocation();
@@ -163,40 +169,6 @@ const SumsAllThanaData = () => {
     ];
 
     // Extract table data excluding "Action" column
-    const data = paginatedData.map((thana) => [
-      thana.thanaCode,
-      thana.userName,
-      ...questions.map((q, index) => thana[index] || 0),
-    ]);
-
-    // Add total row (excluding "Action")
-    const totalRow = ["Total", "", ...totalData.map((value) => value || 0)];
-    data.unshift(totalRow); // Insert at the top
-
-    // Create worksheet
-    const ws = XLSX.utils.aoa_to_sheet([headers, ...data]);
-
-    // Create workbook and add worksheet
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Thana Data");
-
-    // Save file
-    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const blob = new Blob([excelBuffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    });
-    saveAs(blob, buildExportFileName(userInfo?.userId, "Admin", `${notice?.document_name || ""} Page`));
-  };
-
-  const exportToExcelByTotal = () => {
-    // Define headers excluding "Action"
-    const headers = [
-      "Thana Code",
-      "Thana Name",
-      ...questions.map((q) => q.questionText),
-    ];
-
-    // Extract table data excluding "Action" column
     const data = sortedData.map((thana) => [
       thana.thanaCode,
       thana.userName,
@@ -219,7 +191,7 @@ const SumsAllThanaData = () => {
     const blob = new Blob([excelBuffer], {
       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
-    saveAs(blob, buildExportFileName(userInfo?.userId, "Admin", `${notice?.document_name || ""} All`));
+    saveAs(blob, buildExportFileName(userInfo?.userId, "Admin", notice?.document_name));
   };
 
   const totalPages = Math.ceil(sortedData.length / usersPerPage);
@@ -290,22 +262,11 @@ const SumsAllThanaData = () => {
             <FormControl size="small" sx={{ minWidth: 100 }}>
               <InputLabel>Rows</InputLabel>
               <Select value={usersPerPage} onChange={selectHandler} label="Rows">
-                <MenuItem value={25}>25</MenuItem>
-                <MenuItem value={Math.ceil(sortedData?.length / 16 || 0)}>
-                  {Math.ceil(sortedData?.length / 16 || 0)}
-                </MenuItem>
-                <MenuItem value={Math.ceil(sortedData?.length / 8 || 0)}>
-                  {Math.ceil(sortedData?.length / 8 || 0)}
-                </MenuItem>
-                <MenuItem value={Math.ceil(sortedData?.length / 4 || 0)}>
-                  {Math.ceil(sortedData?.length / 4 || 0)}
-                </MenuItem>
-                <MenuItem value={Math.ceil(sortedData?.length / 2 || 0)}>
-                  {Math.ceil(sortedData?.length / 2 || 0)}
-                </MenuItem>
-                <MenuItem value={Math.ceil(sortedData?.length || 0)}>
-                  {Math.ceil(sortedData?.length || 0)}
-                </MenuItem>
+                {ROWS_PER_PAGE_OPTIONS.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option === ALL_ROWS ? "All" : option}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <Button
@@ -314,15 +275,7 @@ const SumsAllThanaData = () => {
               startIcon={<FileDownloadIcon />}
               onClick={exportToExcel}
             >
-              Export This Page
-            </Button>
-            <Button
-              size="small"
-              variant="outlined"
-              startIcon={<FileDownloadIcon />}
-              onClick={exportToExcelByTotal}
-            >
-              Export Total Thana Data
+              Export to Excel
             </Button>
             <TextField
               size="small"
