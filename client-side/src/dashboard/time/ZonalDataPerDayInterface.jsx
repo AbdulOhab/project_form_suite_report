@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import BranchBangladayDate from "./BranchBangladayDate";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Loader from "./Loader";
 import {
   Box,
@@ -28,9 +28,15 @@ function ZonalDataPerDayInterface({
   totalData,
   branchName,
   documentName,
+  id,
+  slug,
 }) {
   const { userInfo } = useContext(AuthContext);
   const { dayId } = useParams();
+  // Only admin/owner can edit a thana's answer from here (matches the
+  // backend's requireRole on get-answer/update-answer) — zonal, which also
+  // renders this same component, doesn't have that permission.
+  const canEdit = ["admin", "owner"].includes(userInfo?.userRole);
 
   const [dateList, setDateList] = useState([]);
   const [countUnSubmit, setCountUnSubmit] = useState(0);
@@ -208,6 +214,7 @@ function ZonalDataPerDayInterface({
                                 : " ▼")}
                           </TableCell>
                         ))}
+                        {canEdit && <TableCell sx={{ color: "common.white", textAlign: "center" }}>Action</TableCell>}
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -225,6 +232,7 @@ function ZonalDataPerDayInterface({
                                 0
                               </TableCell>
                             ))}
+                        {canEdit && <TableCell sx={{ color: "common.white" }} />}
                       </TableRow>
                     </TableBody>
                     <TableBody>
@@ -240,6 +248,22 @@ function ZonalDataPerDayInterface({
                               </TableCell>
                             );
                           })}
+                          {canEdit && (
+                            <TableCell sx={{ textAlign: "center" }}>
+                              {thana?.answer?._id ? (
+                                <Button
+                                  component={Link}
+                                  to={`/dashboard/branch-edit-answer/${slug}/${id}/${thana.answer._id}`}
+                                  variant="outlined"
+                                  size="small"
+                                >
+                                  এডিট
+                                </Button>
+                              ) : (
+                                "—"
+                              )}
+                            </TableCell>
+                          )}
                         </TableRow>
                       ))}
                     </TableBody>

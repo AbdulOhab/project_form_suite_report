@@ -2,13 +2,44 @@
 const answerModel = require("../model/answerModel");
 const formModel = require("../model/formModel");
 
+// Notice/report dates are Bangladesh wall-clock (UTC+6, no DST); the
+// server/container clock may run in a different timezone, so shift into
+// Bangladesh time before reading date/time fields, using UTC getters on the
+// shifted instant to stay independent of the host's local timezone.
+const BD_OFFSET_MS = 6 * 60 * 60 * 1000;
+const toBangladeshTime = (date) => new Date(date.getTime() + BD_OFFSET_MS);
+const isSameBangladeshDay = (a, b) => {
+  const bdA = toBangladeshTime(a);
+  const bdB = toBangladeshTime(b);
+  return (
+    bdA.getUTCFullYear() === bdB.getUTCFullYear() &&
+    bdA.getUTCMonth() === bdB.getUTCMonth() &&
+    bdA.getUTCDate() === bdB.getUTCDate()
+  );
+};
+
 module.exports = {
   createAnswer: async (req, res) => {
     let data = req.body;
-    // console.log(data);
 
-    await answerModel
-      .create({
+    try {
+      // Nothing previously stopped a double-click/retry from creating two
+      // documents for the same thana's same-day report — reports summing
+      // "every answer for this thana" (not just the latest) would silently
+      // double-count it. One submission per thana per notice per day.
+      const candidates = await answerModel
+        .find({ noticeId: data.noticeId, thanaCode: data.thanaCode })
+        .exec();
+      const alreadySubmittedToday = candidates.some((existing) =>
+        data.reportDate && existing.reportDate
+          ? existing.reportDate === data.reportDate
+          : isSameBangladeshDay(new Date(existing.createdAt), new Date())
+      );
+      if (alreadySubmittedToday) {
+        return res.status(409).json({ message: "আজকের রিপোর্ট ইতিমধ্যে জমা দেওয়া হয়েছে" });
+      }
+
+      await answerModel.create({
         document_name: data.document_name,
         doc_desc: data.doc_desc,
         noticeId: data.noticeId,
@@ -18,14 +49,12 @@ module.exports = {
         zonalCode: data.zonalCode,
         reportDate: data.reportDate,
         answers: data.answers,
-      })
-      .then(() => {
-        return res.status(200).json("answer inserted successfully");
-      })
-      .catch((error) => {
-        console.log(error);
-        return res.status(500).json("Error inserting answer");
       });
+      return res.status(200).json("answer inserted successfully");
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json("Error inserting answer");
+    }
   },
   getAnswer: async (req, res, next) => {
     const { id } = req.params;
@@ -56,15 +85,6 @@ module.exports = {
     }
 
     const notice = await formModel.findById(existing.noticeId).exec();
-
-    // Notice deadlines (timeStart/timeEnd) are defined in Bangladesh time
-    // (UTC+6, no DST). The server/container clock may run in a different
-    // timezone (e.g. UTC in production), so shift both "now" and
-    // "createdAt" into Bangladesh wall-clock before reading date/time
-    // fields, using UTC getters on the shifted instant to stay
-    // independent of the host's local timezone.
-    const BD_OFFSET_MS = 6 * 60 * 60 * 1000;
-    const toBangladeshTime = (date) => new Date(date.getTime() + BD_OFFSET_MS);
 
     const createdAt = toBangladeshTime(new Date(existing.createdAt));
     const today = toBangladeshTime(new Date());

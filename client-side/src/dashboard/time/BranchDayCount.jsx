@@ -282,7 +282,7 @@ function BranchDayCount({
                                 component={Link}
                                 to={`/dashboard/branch-empty-answer/${slug}/${thana.thanaCode}/${noticeId}`}
                               >
-                                এডিট
+                                সাবমিট
                               </Button>
                             )}
                           </TableCell>

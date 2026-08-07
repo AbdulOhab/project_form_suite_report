@@ -99,6 +99,8 @@ function AdminDataPerDayCount() {
                 thanaReport={thanaReport}
                 totalData={totalData}
                 branchName={branchName}
+                id={noticeId}
+                slug={buildNoticeSlug(notice)}
               />
             </Box>
           </Paper>
