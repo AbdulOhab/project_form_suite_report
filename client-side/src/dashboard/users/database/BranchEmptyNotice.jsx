@@ -25,7 +25,7 @@ import { buildNoticeSlug } from "../../../utils/noticeSlug";
 import { toEnglishDigits } from "../../../utils/convertDigits";
 
 function BranchEmptyNotice() {
-  const { firstId, secondId } = useParams();
+  const { firstId, secondId, date } = useParams();
   const { userInfo } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -86,6 +86,7 @@ function BranchEmptyNotice() {
         thanaCode: firstId,
         branchCode: userInfo?.branchCode,
         zonalCode: userInfo?.zonalCode,
+        reportDate: date,
         answers: answer,
       }),
     });

@@ -170,9 +170,9 @@ function BranchDayCount({
       ) : (
         dateList?.map((date, index) => {
           if (index + 1 === Number(dayId)) {
+            const formattedDate = date.toISOString().split("T")[0];
             const isToday =
-              date.toISOString().split("T")[0] ===
-              new Date().toISOString().split("T")[0];
+              formattedDate === new Date().toISOString().split("T")[0];
             const canEdit = isToday && isWithinTimeWindow(timeStart, timeEnd);
 
             return (
@@ -280,7 +280,7 @@ function BranchDayCount({
                                 size="small"
                                 disabled={!canEdit}
                                 component={Link}
-                                to={`/dashboard/branch-empty-answer/${slug}/${thana.thanaCode}/${noticeId}`}
+                                to={`/dashboard/branch-empty-answer/${slug}/${thana.thanaCode}/${noticeId}/${formattedDate}`}
                               >
                                 সাবমিট
                               </Button>
