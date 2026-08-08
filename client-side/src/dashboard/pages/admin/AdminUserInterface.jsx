@@ -4,7 +4,6 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
-  Paper,
   Typography,
 } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
@@ -125,38 +124,23 @@ function AdminUserInterface() {
 
           {/* Zonal Table */}
           {zonalShow && (
-            <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
-              <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
-                <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট</Typography>
-              </Box>
-              <Box sx={{ p: 1 }}>
-                <AdminZonalDayCount
-                  startDadeline={notice?.startDadeline}
-                  range={notice?.range}
-                  questions={notice?.questions}
-                  zonalReport={zonalReport}
-                  totalData={totalData}
-                  branchData={tempData}
-                  countUnSubmit={totalUnsubmitted}
-                  countSubmit={totalSubmitted}
-                  noticeId={noticeId}
-                  slug={buildNoticeSlug(notice)}
-                />
-              </Box>
-            </Paper>
+            <AdminZonalDayCount
+              startDadeline={notice?.startDadeline}
+              range={notice?.range}
+              questions={notice?.questions}
+              zonalReport={zonalReport}
+              totalData={totalData}
+              branchData={tempData}
+              countUnSubmit={totalUnsubmitted}
+              countSubmit={totalSubmitted}
+              noticeId={noticeId}
+              slug={buildNoticeSlug(notice)}
+              documentName={notice?.document_name}
+            />
           )}
 
           {/* Branch Table */}
-          {branchShow && (
-            <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
-              <Box sx={{ px: 2, py: 1.5, bgcolor: "grey.50", borderBottom: "1px solid", borderColor: "divider" }}>
-                <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট</Typography>
-              </Box>
-              <Box sx={{ p: 1 }}>
-                <AdminAllBranchDayCount />
-              </Box>
-            </Paper>
-          )}
+          {branchShow && <AdminAllBranchDayCount />}
         </>
       )}
     </Box>

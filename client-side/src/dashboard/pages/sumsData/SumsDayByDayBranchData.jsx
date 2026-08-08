@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { buildNoticeSlug } from "../../../utils/noticeSlug";
 import { buildExportFileName } from "../../../utils/exportFileName";
@@ -158,6 +158,30 @@ const SumsDayByDayBranchData = () => {
     return sortConfig.direction === "ascending" ? " ▲" : " ▼";
   };
 
+  const sortedDataListByDate = useMemo(() => {
+    const sortableData = Array.isArray(dataListByDate) ? [...dataListByDate] : [];
+
+    if (sortConfig.key === null) return sortableData;
+
+    sortableData.sort((a, b) => {
+      if (sortConfig.key === "date") {
+        const aValue = new Date(a.date);
+        const bValue = new Date(b.date);
+        return sortConfig.direction === "ascending"
+          ? aValue - bValue
+          : bValue - aValue;
+      }
+
+      const aValue = a[sortConfig.key] || 0;
+      const bValue = b[sortConfig.key] || 0;
+      return sortConfig.direction === "ascending"
+        ? aValue - bValue
+        : bValue - aValue;
+    });
+
+    return sortableData;
+  }, [dataListByDate, sortConfig]);
+
   const exportToExcel = () => {
     const questionList = questions?.questions || [];
     const headers = ["দিন ও তারিখ", ...questionList.map((q) => q.questionText)];
@@ -296,7 +320,7 @@ const SumsDayByDayBranchData = () => {
                     </TableRow>
 
                     {/* Data Rows */}
-                    {dataListByDate?.map((data, index) => (
+                    {sortedDataListByDate?.map((data, index) => (
                       <TableRow
                         key={index}
                         hover

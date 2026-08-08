@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import ZonalBangladayDate from "../../time/ZonalBangladayDate";
 import Loader from "../../time/Loader";
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -11,7 +12,14 @@ import {
   TableRow,
   Paper,
   Button,
+  Typography,
 } from "@mui/material";
+import TableChartOutlined from "@mui/icons-material/TableChartOutlined";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { buildExportFileName } from "../../../utils/exportFileName";
 
 function AdminZonalDayCount({
   startDadeline,
@@ -23,7 +31,9 @@ function AdminZonalDayCount({
   countSubmit,
   noticeId,
   slug,
+  documentName,
 }) {
+  const { userInfo } = useContext(AuthContext);
   const { dayId } = useParams();
 
   const [dateList, setDateList] = useState([]);
@@ -98,8 +108,79 @@ function AdminZonalDayCount({
     return sortableData;
   }, [branchData, sortConfig]);
 
+  const exportToExcel = () => {
+    const headers = [
+      "Zonal Code",
+      "Zonal Name",
+      "Total Thana",
+      "Submit",
+      "Unsubmit",
+      ...questions.map((q) => q.questionText),
+    ];
+
+    const data = sortedData.map((zonal) => [
+      zonal.zonalCode,
+      zonal.userName,
+      zonal.totalThana,
+      zonal.thanaAnsSubmit,
+      zonal.thanaAnsUnsubmit,
+      ...questions.map((_, qIndex) => zonal[qIndex] || 0),
+    ]);
+
+    const totalRow = [
+      "",
+      "Total",
+      "",
+      "",
+      "",
+      ...(totalData?.length
+        ? totalData.map((value, index) => value[index] || 0)
+        : questions.map(() => 0)),
+    ];
+    data.unshift(totalRow);
+
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...data]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Zonal Report");
+
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const blob = new Blob([excelBuffer], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+    saveAs(blob, buildExportFileName(userInfo?.userId, "Admin", documentName));
+  };
+
   return (
-    <>
+    <Paper elevation={0} sx={{ borderRadius: 2, border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
+      <Box
+        sx={{
+          px: 2,
+          py: 1.5,
+          bgcolor: "#ffffff",
+          borderBottom: "1px solid",
+          borderColor: "divider",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 1,
+        }}
+      >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <TableChartOutlined fontSize="small" color="action" />
+          <Typography variant="subtitle2" fontWeight={600} color="text.secondary">দৈনিক রিপোর্ট</Typography>
+        </Box>
+        {!!dateList?.length && (
+          <Button
+            size="small"
+            variant="contained"
+            startIcon={<FileDownloadIcon />}
+            onClick={exportToExcel}
+          >
+            Export to Excel
+          </Button>
+        )}
+      </Box>
+      <Box sx={{ p: 1 }}>
       {!dateList?.length ? (
         <Loader />
       ) : (
@@ -159,7 +240,14 @@ function AdminZonalDayCount({
                         </TableCell>
                         {questions?.map((question, index) => (
                           <TableCell
-                            sx={{ textAlign: "center", cursor: "pointer" }}
+                            sx={{
+                              textAlign: "center",
+                              cursor: "pointer",
+                              minWidth: 140,
+                              maxWidth: 200,
+                              whiteSpace: "normal",
+                              wordBreak: "break-word",
+                            }}
                             key={index}
                             onClick={() => handleSort(index)}
                           >
@@ -233,7 +321,8 @@ function AdminZonalDayCount({
           }
         })
       )}
-    </>
+      </Box>
+    </Paper>
   );
 }
 
