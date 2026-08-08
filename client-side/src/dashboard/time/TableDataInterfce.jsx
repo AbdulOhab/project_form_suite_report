@@ -63,6 +63,14 @@ function TableDataInterfce({
 
   useEffect(() => {
     const dayData = {};
+    // Questions can be reordered/inserted after submissions already exist,
+    // so an answer's position in its answers[] array no longer lines up
+    // with the current question list's position. Match by questionId
+    // (stable across edits) and only fall back to position for answers
+    // submitted before questionId existed.
+    const questionIndexById = new Map(
+      (questions || []).map((q, index) => [q.questionId, index])
+    );
 
     thanaReport?.forEach((thana) => {
       if (thana.answer && Array.isArray(thana.answer)) {
@@ -78,13 +86,18 @@ function TableDataInterfce({
               }
 
               let sums = dayData[formattedDate];
-              ans.answers.forEach((data, index) => {
+              ans.answers.forEach((data, position) => {
                 let value = 0;
                 if (data.questionType === "number") {
                   value = Number(data.data);
                 } else {
                   value = 0;
                 }
+
+                const index = data?.questionId
+                  ? questionIndexById.get(data.questionId)
+                  : position;
+                if (index === undefined) return;
 
                 if (!sums[index]) {
                   sums[index] = 0;

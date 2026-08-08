@@ -81,6 +81,22 @@ function DateByDayCount({
     setSortConfig({ key, direction });
   };
 
+  // Questions can be reordered/inserted after submissions already exist, so
+  // an answer's position in its answers[] array no longer lines up with the
+  // current question list's position. Match by questionId (stable across
+  // edits) and only fall back to position for answers submitted before
+  // questionId existed.
+  const getAnswerAt = (answersArr, qIndex) => {
+    if (!Array.isArray(answersArr)) return undefined;
+    const wantedId = questions?.[qIndex]?.questionId;
+    if (wantedId) {
+      const byId = answersArr.find((a) => a?.questionId === wantedId);
+      if (byId) return byId;
+      if (answersArr.some((a) => a?.questionId)) return undefined;
+    }
+    return answersArr[qIndex];
+  };
+
   const sortedData = useMemo(() => {
     if (!dateList.length || !questions.length) return [];
 
@@ -98,7 +114,7 @@ function DateByDayCount({
       questions.forEach((q, qIndex) => {
         dataForDate[qIndex] = matchingReports
           .flatMap((report) => {
-            const answer = report.answers?.[qIndex];
+            const answer = getAnswerAt(report.answers, qIndex);
             return answer ? [answer.data] : [];
           })
           .join("\n");

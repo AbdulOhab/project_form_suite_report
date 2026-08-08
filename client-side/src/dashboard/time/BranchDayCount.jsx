@@ -50,6 +50,22 @@ function BranchDayCount({
     return nowMinutes >= startMinutes || nowMinutes <= endMinutes;
   };
 
+  // Questions can be reordered/inserted after submissions already exist, so
+  // an answer's position in its answers[] array no longer lines up with the
+  // current question list's position. Match by questionId (stable across
+  // edits) and only fall back to position for answers submitted before
+  // questionId existed.
+  const getAnswerAt = (answersArr, qIndex) => {
+    if (!Array.isArray(answersArr)) return undefined;
+    const wantedId = questions?.[qIndex]?.questionId;
+    if (wantedId) {
+      const byId = answersArr.find((a) => a?.questionId === wantedId);
+      if (byId) return byId;
+      if (answersArr.some((a) => a?.questionId)) return undefined;
+    }
+    return answersArr[qIndex];
+  };
+
   const [dateList, setDateList] = useState([]);
 
   const [countUnSubmit, setCountUnSubmit] = useState();
@@ -111,8 +127,8 @@ function BranchDayCount({
           aValue = a.userName;
           bValue = b.userName;
         } else {
-          const aAnswer = a?.answer?.answers?.[sortConfig.key];
-          const bAnswer = b?.answer?.answers?.[sortConfig.key];
+          const aAnswer = getAnswerAt(a?.answer?.answers, sortConfig.key);
+          const bAnswer = getAnswerAt(b?.answer?.answers, sortConfig.key);
           aValue = aAnswer ? aAnswer.data : "";
           bValue = bAnswer ? bAnswer.data : "";
         }
@@ -138,7 +154,7 @@ function BranchDayCount({
       thana.thanaCode,
       thana.userName,
       ...questions.map((_, qIndex) => {
-        const answer = thana?.answer?.answers?.[qIndex];
+        const answer = getAnswerAt(thana?.answer?.answers, qIndex);
         return answer ? answer.data : 0;
       }),
     ]);
@@ -253,7 +269,7 @@ function BranchDayCount({
                           <TableCell sx={{ textAlign: "center" }}>{thana.thanaCode}</TableCell>
                           <TableCell sx={{ textAlign: "center" }}>{thana.userName}</TableCell>
                           {questions?.map((question, qIndex) => {
-                            const answer = thana?.answer?.answers?.[qIndex];
+                            const answer = getAnswerAt(thana?.answer?.answers, qIndex);
                             return (
                               <TableCell key={`${thanaIndex}-${qIndex}`} sx={{ textAlign: "center" }}>
                                 {answer ? answer.data : 0}

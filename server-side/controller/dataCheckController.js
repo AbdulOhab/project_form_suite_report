@@ -9,6 +9,18 @@ const thanaModel = require("../model/thanaModel");
 // process instead of just failing the one request.
 const isValidObjectId = (id) => !!id && mongoose.Types.ObjectId.isValid(id);
 
+// Questions can be reordered/inserted into a notice after submissions
+// already exist, so an answer entry's position in its answers[] array no
+// longer lines up with the current question list's position. Build a
+// questionId -> current-index map and use it to resolve each answer entry's
+// column, falling back to its raw position only for entries submitted
+// before questionId existed (no questionId on any entry in that answer).
+const buildQuestionIndex = (questions) =>
+  new Map((questions || []).map((q, index) => [q.questionId, index]));
+
+const resolveIndex = (questionIndexById, entry, position) =>
+  entry?.questionId ? questionIndexById.get(entry.questionId) : position;
+
 module.exports = {
   thanaData: async (req, res, next) => {
     const { id } = req.params;
@@ -34,10 +46,13 @@ module.exports = {
       .exec();
 
     const sums = {};
+    const questionIndexById = buildQuestionIndex(question.questions);
 
     answers?.forEach((answ) => {
-      answ?.answers?.forEach((ans, index) => {
+      answ?.answers?.forEach((ans, position) => {
         const { questionType, data } = ans;
+        const index = resolveIndex(questionIndexById, ans, position);
+        if (index === undefined) return;
         if (questionType === "number") {
           sums[index] = (sums[index] || 0) + Number(data);
         }
@@ -145,11 +160,14 @@ module.exports = {
       })
     );
     let sums = {};
+    const questionIndexById = buildQuestionIndex(question?.questions);
 
     // Iterate through each thana user
     tempThana.forEach((item) => {
       if (item.answer && Array.isArray(item.answer.answers)) {
-        item.answer.answers.forEach((answer, index) => {
+        item.answer.answers.forEach((answer, position) => {
+          const index = resolveIndex(questionIndexById, answer, position);
+          if (index === undefined) return;
           if (!sums[index]) sums[index] = 0;
           if (answer.questionType === "number") {
             sums[index] += Number(answer.data);
@@ -204,13 +222,16 @@ module.exports = {
       })
     );
     let sums = {};
+    const questionIndexById = buildQuestionIndex(question?.questions);
 
     // Iterate through each user object
     tempThana.forEach((item) => {
       if (item.answer && Array.isArray(item.answer)) {
         item.answer.forEach((ans) => {
           if (ans.answers && Array.isArray(ans.answers)) {
-            ans.answers.forEach((data, index) => {
+            ans.answers.forEach((data, position) => {
+              const index = resolveIndex(questionIndexById, data, position);
+              if (index === undefined) return;
               let value = 0;
               if (data?.questionType === "number") {
                 value = Number(data.data);
@@ -303,13 +324,16 @@ module.exports = {
 
     // Initialize the necessary variables
     const sums = {};
+    const questionIndexById = buildQuestionIndex(question?.questions);
 
     // Iterate through each branch object
     tempBranch?.forEach((branch) => {
       if (branch && Array.isArray(branch?.tempThana)) {
         branch?.tempThana?.forEach((item) => {
           if (item?.answer && Array.isArray(item.answer.answers)) {
-            item.answer.answers.forEach((data, index) => {
+            item.answer.answers.forEach((data, position) => {
+              const index = resolveIndex(questionIndexById, data, position);
+              if (index === undefined) return;
               let value = 0;
               if (data?.questionType === "number") {
                 value = Number(data?.data);
@@ -385,6 +409,7 @@ module.exports = {
       })
     );
     let sums = {};
+    const questionIndexById = buildQuestionIndex(question?.questions);
     // Iterate through each user object
 
     tempBranch.forEach((item) => {
@@ -393,7 +418,9 @@ module.exports = {
           if (item.answer && Array.isArray(item.answer)) {
             item.answer.forEach((ans) => {
               if (ans.answers && Array.isArray(ans.answers)) {
-                ans.answers.forEach((data, index) => {
+                ans.answers.forEach((data, position) => {
+                  const index = resolveIndex(questionIndexById, data, position);
+                  if (index === undefined) return;
                   let value = 0;
                   if (data.questionType === "number") {
                     value = Number(data.data);
@@ -476,11 +503,14 @@ module.exports = {
       })
     );
     let sums = {};
+    const questionIndexById = buildQuestionIndex(question?.questions);
 
     // Iterate through each user object
     tempThana.forEach((item) => {
       if (item.answer && Array.isArray(item.answer.answers)) {
-        item.answer.answers.forEach((answer, index) => {
+        item.answer.answers.forEach((answer, position) => {
+          const index = resolveIndex(questionIndexById, answer, position);
+          if (index === undefined) return;
           let value = 0;
           if (answer.questionType === "number") {
             value = Number(answer.data);
@@ -580,12 +610,15 @@ module.exports = {
 
     // Calculate sums
     const sums = {};
+    const questionIndexById = buildQuestionIndex(question.questions);
 
     tempZonal.forEach((zonal) => {
       zonal.tempBranch.forEach((branch) => {
         branch.tempThana.forEach((thana) => {
           thana.answer.forEach((ans) => {
-            ans.answers.forEach((data, index) => {
+            ans.answers.forEach((data, position) => {
+              const index = resolveIndex(questionIndexById, data, position);
+              if (index === undefined) return;
               if (data.questionType === "number") {
                 const value = Number(data.data) || 0;
                 sums[index] = (sums[index] || 0) + value;
@@ -644,6 +677,7 @@ module.exports = {
     }, {});
 
     // Process data in single pass
+    const questionIndexById = buildQuestionIndex(question.questions);
     const [sums, metrics] = zonal.reduce(
       ([sums, metrics], z) => {
         const zBranches = branches.filter((b) => b.zonalCode === z.zonalCode);
@@ -663,9 +697,11 @@ module.exports = {
             hasAnswers ? zSubmitted++ : zUnsubmitted++;
 
             answer.forEach(({ answers }) => {
-              answers.forEach(({ questionType, data }, index) => {
-                if (questionType === "number") {
-                  sums[index] = (sums[index] || 0) + Number(data);
+              answers.forEach((entry, position) => {
+                const index = resolveIndex(questionIndexById, entry, position);
+                if (index === undefined) return;
+                if (entry.questionType === "number") {
+                  sums[index] = (sums[index] || 0) + Number(entry.data);
                 }
               });
             });
@@ -701,9 +737,11 @@ module.exports = {
       ...z.tempBranch.reduce((acc, b) => {
         b.tempThana.forEach((t) => {
           t.answer.forEach(({ answers }) => {
-            answers.forEach(({ questionType, data }, index) => {
-              if (questionType === "number") {
-                acc[index] = (acc[index] || 0) + Number(data);
+            answers.forEach((entry, position) => {
+              const index = resolveIndex(questionIndexById, entry, position);
+              if (index === undefined) return;
+              if (entry.questionType === "number") {
+                acc[index] = (acc[index] || 0) + Number(entry.data);
               }
             });
           });
@@ -809,9 +847,12 @@ module.exports = {
     });
 
     // Calculate sums efficiently
+    const questionIndexById = buildQuestionIndex(question.questions);
     const [sums, branchSums] = answers.reduce(
       ([sums, branchSums], ans) => {
-        ans.answers.forEach((data, index) => {
+        ans.answers.forEach((data, position) => {
+          const index = resolveIndex(questionIndexById, data, position);
+          if (index === undefined) return;
           if (data.questionType !== "number") return;
 
           const val = Number(data.data) || 0;
@@ -898,6 +939,7 @@ module.exports = {
     const sums = {};
     let count = 0;
     let thanaLength = 0;
+    const questionIndexById = buildQuestionIndex(question?.questions);
 
     tempBranch.forEach((branch) => {
       let branchSubmitted = 0;
@@ -913,7 +955,9 @@ module.exports = {
         }
 
         thana.answers.forEach((ans) => {
-          ans.answers.forEach((data, index) => {
+          ans.answers.forEach((data, position) => {
+            const index = resolveIndex(questionIndexById, data, position);
+            if (index === undefined) return;
             if (data.questionType === "number") {
               sums[index] = (sums[index] || 0) + Number(data.data);
             }
@@ -943,7 +987,9 @@ module.exports = {
 
       branch.tempThana.forEach((thana) => {
         thana.answers.forEach((ans) => {
-          ans.answers.forEach((data, index) => {
+          ans.answers.forEach((data, position) => {
+            const index = resolveIndex(questionIndexById, data, position);
+            if (index === undefined) return;
             if (data.questionType === "number") {
               dsums[index] = (dsums[index] || 0) + Number(data.data);
             }
@@ -1006,11 +1052,14 @@ module.exports = {
       })
     );
     let sums = {};
+    const questionIndexById = buildQuestionIndex(question?.questions);
 
     // Iterate through each user object
     tempThana.forEach((item) => {
       if (item.answer && Array.isArray(item.answer.answers)) {
-        item.answer.answers.forEach((answer, index) => {
+        item.answer.answers.forEach((answer, position) => {
+          const index = resolveIndex(questionIndexById, answer, position);
+          if (index === undefined) return;
           let value = 0;
           if (answer?.questionType === "number") {
             value = Number(answer.data);

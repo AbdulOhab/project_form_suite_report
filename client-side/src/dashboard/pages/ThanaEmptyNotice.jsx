@@ -59,19 +59,19 @@ function ThanaEmptyNotice() {
     getQuestionFromDb();
   }, [id]);
 
-  const selectInput = (qText, value, qIndex, required, questionType) => {
+  const selectInput = (qText, value, qIndex, required, questionType, questionId) => {
     const data = questionType === "number" ? toEnglishDigits(value) : value;
     setAnswer((prev) => {
       const updated = [...prev];
-      updated[qIndex] = { questionText: qText, data, questionType, required };
+      updated[qIndex] = { questionText: qText, data, questionType, required, questionId };
       return updated;
     });
   };
 
-  const selectCheck = (qText, value, qIndex, required, questionType) => {
+  const selectCheck = (qText, value, qIndex, required, questionType, questionId) => {
     const updated = [...answer];
     if (!Array.isArray(updated[qIndex])) updated[qIndex] = [];
-    updated[qIndex].push({ questionText: qText, data: value, required, questionType });
+    updated[qIndex].push({ questionText: qText, data: value, required, questionType, questionId });
     setAnswer(updated);
   };
 
@@ -202,7 +202,8 @@ function ThanaEmptyNotice() {
                           e.target.value,
                           qIndex,
                           question.required,
-                          question.questionType
+                          question.questionType,
+                          question.questionId
                         )
                       }
                     />
@@ -222,7 +223,8 @@ function ThanaEmptyNotice() {
                                   opText.optionsText,
                                   qIndex,
                                   question.required,
-                                  question.questionType
+                                  question.questionType,
+                                  question.questionId
                                 )
                               }
                             />
@@ -237,7 +239,8 @@ function ThanaEmptyNotice() {
                                   opText.optionsText,
                                   qIndex,
                                   question.required,
-                                  question.questionType
+                                  question.questionType,
+                                  question.questionId
                                 )
                               }
                             />
